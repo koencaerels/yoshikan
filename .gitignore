@@ -1,0 +1,81 @@
+# Comment out the following line, if you wish to store your SQLite database in Git
+/var/data/*
+
+###> bolt/core ###
+config/bolt/*_local.yaml
+config/extensions/*_local.yaml
+/config/packages/local
+/config/routes/local
+/public/files/*
+!/public/files/.gitkeep
+!/public/files/index.html
+/public/thumbs/*
+!/public/thumbs/.gitkeep
+!/public/thumbs/index.html
+###< bolt/core ###
+
+/public/theme/build/*
+
+### NPM and frontend assets building cruft
+node_modules/
+npm-debug.log
+yarn-error.log
+build_assets.sh
+
+### File-system cruft and temporary files
+__*
+._*
+.*.swp
+.swp
+*.lock
+!composer.lock
+!symfony.lock
+*lock.json
+.buildpath
+
+### Platfom-specific files
+.DS_Store
+thumbs.db
+Vagrantfile
+.vagrant*
+.idea
+.php-version
+.vscode/*
+*.code-workspace
+appveyor.yml
+
+###> Docker ###
+docker-compose.override.yml
+docker-compose.override.yaml
+###< Docker ###
+###> symfony/framework-bundle ###
+.env
+.env.test
+.php-cs-fixer.cache
+.dockerignore
+
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/assets/
+/public/bundles/
+/var/cache/*
+!/var/cache/.gitkeep
+/var/log/*
+!/var/log/.gitkeep
+!/var/data/.gitkeep
+/var/sessions/*
+!/var/sessions/.gitkeep
+/vendor/
+.web-server-pid
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> qossmic/deptrac-shim ###
+/.deptrac.cache
+###< qossmic/deptrac-shim ###

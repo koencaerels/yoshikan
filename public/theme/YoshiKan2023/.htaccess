@@ -1,0 +1,4 @@
+<FilesMatch "\.(twig|md)$">
+Order allow,deny
+Deny from all
+</FilesMatch>

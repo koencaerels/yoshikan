@@ -1,0 +1,34 @@
+{% extends 'partials/_master.twig' %}
+
+{% block main %}
+
+    {% if record|default %}
+
+        <h1>{{ record|title }}</h1>
+
+        <div class="bg-gray-900 p-2 text-white rounded-lg">
+            Test own template.
+        </div>
+
+        {# Remove this block if you don't need it anymore. #}
+        {{ include('partials/_fresh_install.twig') }}
+
+        {# Output the `introduction` field. If it doesn't exist, 'default' to
+           the full excerpt of the current Record #}
+        {{ record.introduction|default(record|excerpt) }}
+
+        {% include 'partials/_image.twig' with ({'image': record|image}) %}
+
+        {{ record.content }}
+
+        {{ include('partials/_recordfooter.twig', { 'record': record }) }}
+
+    {% endif %}
+
+{% endblock main %}
+
+{% block aside %}
+
+    {{ include('partials/_aside.twig') }}
+
+{% endblock aside %}
