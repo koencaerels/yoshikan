@@ -5,9 +5,9 @@ services:
   mysql:
     image: mysql:5.7
     environment:
-      - MYSQL_USER=boltcms
-      - MYSQL_PASSWORD=boltcms
-      - MYSQL_DATABASE=boltcms
+      - MYSQL_USER=yoshikan
+      - MYSQL_PASSWORD=yoshikan
+      - MYSQL_DATABASE=yoshikan
       - MYSQL_ALLOW_EMPTY_PASSWORD=0
       - MYSQL_RANDOM_ROOT_PASSWORD=1
       - MYSQL_ONETIME_PASSWORD=0
@@ -37,7 +37,7 @@ services:
       - PHP_IDE_CONFIG=serverName=locodio-with-compose
       - PHP_DATE_TIMEZONE=Europe/Brussels
       - COMPOSER_ALLOW_SUPERUSER=1
-      # - DATABASE_URL="mysql://boltcms:boltcms@mysql:3306/boltcms"
+      # - DATABASE_URL="mysql://yoshikan:yoshikan@mysql:3306/yoshikan"
       - PHP_FPM_USER=wodby
       - PHP_FPM_GROUP=wodby
     volumes:

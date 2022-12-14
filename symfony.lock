@@ -363,6 +363,18 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "qossmic/deptrac-shim": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.19",
+            "ref": "3c3daab46226c37fc14e10faf81df737a3039d96"
+        },
+        "files": [
+            "deptrac.yaml"
+        ]
+    },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
