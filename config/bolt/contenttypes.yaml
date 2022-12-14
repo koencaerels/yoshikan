@@ -1,0 +1,353 @@
+# This file defines the content types on the website. See the documentation for
+# details: https://docs.bolt.cm/contenttypes/intro
+
+# The Homepage content type is a singleton: There can be only one record of this
+# content type.
+
+homepage:
+    name: Homepage
+    singular_name: Homepage
+    fields:
+        title:
+            type: text
+            class: large
+            group: content
+            localize: true
+            label: Title
+            postfix: |
+                The 'Homepage' can contain basic information about the website. This title will be
+                shown on the homepage of the website, as the name implies. To change the
+                <em><strong>name</strong></em> of the site, as is shown in the header, and the tab
+                in the webbrowser, edit <code>sitename:</code> in the configuration file.
+        image:
+            type: image
+        introduction:
+            type: redactor
+            localize: true
+        content:
+            type: redactor
+            localize: true
+        contentlink:
+            type: text
+            label: Link
+            placeholder: 'contentType/slug or https://example.org/'
+            postfix: "Use this to add a link for this Homepage. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`."
+            fixture_format: '{url}'
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+    viewless: false
+    taxonomy: [ categories, tags, foobars ]
+    locales: ['en', 'nl', 'pt_BR', 'es']
+    singleton: true
+    icon_many: "fa:home"
+    icon_one: "fa:home"
+
+
+# Pages can be used for the more 'static' pages on your site. This content-type
+# has a 'templateselect' field, which allows you to override the record_template
+# setting for an individual page.
+# The taxonomy for this ContentType is defined as 'groups', which is a so-called
+# "grouping taxonomy". This way you can easily group sets of pages that logically
+# belong together. If your site has a 'services' section, in which you'd like to
+# list the different types of services a company provides, you can group these
+# together.
+
+pages:
+    name: Pages
+    singular_name: Page
+    fields:
+        title:
+            type: text
+            class: large
+            group: content
+        teaser:
+            type: textarea
+            postfix: |
+                A text-only version of the content, that can be used to "tease"
+                the content when it's used in listing pages or search results.
+        image:
+            type: image
+            label: Highlighted image
+        body:
+            type: redactor
+            height: 300px
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+        template:
+            type: templateselect
+            filter: '/^[^_].*\.twig$/'
+    taxonomy: [ groups ]
+    records_per_page: 5
+    order: id
+
+
+# Entries can be used for things like 'news' or 'blogpostings'. They have a
+# 'teaser', which can be used for a short blurb on listing-pages, allowing
+# visitors to click-through to the rest of the entry. It also has fields for an
+# image and an optional video embed.
+# A relation is defined to the pages ContentType. This way you can refer to a
+# page from your news-item.
+# This ContentType defines 'categories' and 'tags' as taxonomies, allowing the
+# editor to use both to categorize a specific entry.
+# The 'order' is set to '-datepublish', which means that newer entries will be
+# shown above older entries.
+
+entries:
+    name: Entries
+    singular_name: Entry
+    fields:
+        title:
+            type: text
+            class: large
+            group: Entry
+        teaser:
+            type: textarea
+            postfix: |
+                A text-only version of the content, that can be used to "tease"
+                the content when it's used in listing pages or search results.
+        image:
+            type: image
+            upload: entries
+        body:
+            type: article
+        video:
+            type: embed
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+    relations:
+        pages:
+            multiple: false
+            order: title
+            label: Select a page
+        people:
+            multiple: false
+            label: Author of this Entry
+            required: false
+    taxonomy: [ categories, tags, groups ]
+    record_template: entry.twig
+    listing_template: listing.twig
+    listing_records: 10
+    default_status: published
+    order: -publishedAt
+    records_per_page: 10
+    icon_many: "fa:file-alt"
+    icon_one: "fa:file-alt"
+
+
+# The 'People' ContentType can be used to build pages about the people in your
+# company, organisation or any other kind of team.
+
+people:
+    name: People
+    singular_name: Person
+    title_format: "{name} ({description})"
+    fields:
+        name:
+            type: text
+            class: large
+            variant: inline
+            fixture_format: '{name}'
+        description:
+            type: text
+            variant: inline
+            postfix: This person's job description, title or somesuch
+            fixture_format: '{jobTitle}'
+        email:
+            type: text
+            variant: inline
+            fixture_format: '{safeEmail}'
+        image:
+            type: image
+        content:
+            type: redactor
+        contentlink:
+            type: text
+            label: Link
+            placeholder: 'contentType/slug or https://example.org/'
+            postfix: "Use this to add a link for this Person. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`. If left blank, it'll default to the internal link to this Record's detail page."
+            fixture_format: '{url}'
+        slug:
+            type: slug
+            uses: [ name ]
+    icon_one: fa:user
+    icon_many: fa:users
+
+
+# The 'Blocks' ContentType is a so-called 'resource ContentType'. This means
+# that it can be used to manage smaller pieces of content, like the 'about us'
+# text, an 'our address' in the footer, or similar short blurbs of text.
+# For more info, see: https://docs.bolt.cm/howto/resource-contenttype
+
+blocks:
+    name: Blocks
+    singular_name: Block
+    excerpt_format: '{teaser}'
+    fields:
+        title:
+            type: text
+            class: large
+            label: Title of this Block
+            group: Block
+        image:
+            type: image
+        teaser:
+            type: redactor
+            fixture_format: '{paragraph}'
+        content:
+            type: redactor
+        contentlink:
+            type: text
+            label: Link
+            placeholder: 'contentType/slug or https://example.org/'
+            postfix: "Use this to add a link for this Homepage. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`."
+            fixture_format: '{url}'
+        slug:
+            type: slug
+            uses: [ title ]
+            group: Meta
+    show_on_dashboard: true
+    viewless: true
+    default_status: published
+    searchable: false
+    order: title
+    icon_many: "fa:cubes"
+    icon_one: "fa:cube"
+
+
+# The 'Products' ContentType can be used to manage information about the
+# products or services you (or your company, organisation) provide.
+
+products:
+    name: Products
+    singular_name: Product
+    fields:
+        title:
+            type: text
+            class: large
+            variant: inline
+            label: Name of this product
+            group: Block
+            fixture_format: '{catchPhrase}'
+        feature_1:
+            type: text
+            variant: inline
+            fixture_format: '{bs}'
+            label: "Key feature 1"
+        feature_2:
+            type: text
+            variant: inline
+            fixture_format: '{bs}'
+            label: "Key feature 2"
+        feature_3:
+            type: text
+            variant: inline
+            fixture_format: '{bs}'
+            label: "Key feature 3"
+        price:
+            type: text
+            fixture_format: "€ {randomDigitNotNull}0,-"
+        image:
+            type: image
+        teaser:
+            type: redactor
+            fixture_format: '{paragraph}'
+        content:
+            type: redactor
+        slug:
+            type: slug
+            uses: [ title ]
+            group: Meta
+    show_on_dashboard: true
+    viewless: false
+    default_status: published
+    searchable: false
+    order: title
+    icon_many: "fa:gifts"
+    icon_one: "fa:gift"
+
+# Possible field types:
+#
+# text - varchar(256) - input type text.
+# number - double - Input field for numbers, with `mode: integer` or `mode: float`
+# imagelist - text (65kb) - Input type for imagelists. Add multiple images. Useful for image sliders, galleries, etcetera.
+# image - varchar(256) - image select/upload widget, stored as filename.
+# file - varchar(256) - file select/upload widget, stored as filename.
+# filelist - text (65kb) - Input type for a list of files. Including a description.
+# embed - text (65kb) - embed widget for video and audio. Stored as JSON.
+# html - text (65kb) - wysiwyg element.
+# textarea - varchar(32768) - Simple, plain < textarea > field.
+# markdown - varchar(32768) - wysiwyg element, which is parsed as Markdown text.
+# date - datetime - date selector widget, with `mode: date` or `mode: datetime`
+# email - text(65kb) - Input type for email.
+# select - varchar(256) - select with predefined values
+# templateselect - varchar(256) - select with template filenames
+# checkbox - integer - checkbox-field which is 1 (checked) or 0 (unchecked)
+# set - text (65kb) - Input type for sests. Group fields semantically into a combined set field.
+# collection - text (65kb) - Input type for collections. Add multiple fields of different types. Useful for lists.
+# data - text (65kb) - Read-only field, useful for storing (raw) data provided by an external source.
+# hidden - text (65kb) - Regular text field, except it is hidden from the content editor.
+# slug - text(65kb) - The slug for the record. Use with option `uses: [ title ]` to generate based on a title field.
+
+# Using YAML repeated nodes
+#
+# YAML allows the defining of "repeated nodes". These allow you to define a 'node'
+# with a 'key: &name' and referenced later with '<<: *name'
+#
+# Bolt allows you to define this with the special entry of '__nodes:' that itself
+# won't create a ContentType, but will allow you to use it in actual ContentTypes
+# to prevent repeating yourself.
+#
+# To achieve this, first create a key '__nodes:' and place it before your other contenttypes:
+#__nodes:
+#    field_defaults: &field_defaults
+#        title:
+#            type: text
+#            class: large
+#            group: main
+#        slug:
+#            type: slug
+#            uses: title
+#    template_defaults: &template_defaults
+#        template:
+#            type: templateselect
+#            filter: '*.twig'
+#            group: meta
+#
+# Then, as an example, you could create a ContentType with default fields, with
+# an additional 'image' field.
+#
+#contenttypeabc:
+#    name: ContentType Abc
+#    slug: contenttypeabc
+#    fields:
+#        <<: *field_defaults
+#        image:
+#            type: image
+#            attrib: title
+#            extensions: [ gif, jpg, png ]
+#        <<: *template_defaults
+#    taxonomy: [ chapters ]
+#    records_per_page: 10
+#
+# Alternatively, or additionally, you then can then create a ContentType with
+# default fields, and a 'select' field, and a different 'templateselect' option.
+#
+#contenttypexyz:
+#    name: ContentType Xyz
+#    slug: contenttypexyz
+#    fields:
+#        <<: *field_defaults
+#        selectfield:
+#            type: select
+#            values: [ none, foo, bar ]
+#        template:
+#            type: templateselect
+#            filter: '*_xyz.twig'
+#    taxonomy: [ tags ]
+#    records_per_page: 20
