@@ -49,6 +49,45 @@ homepage:
 # list the different types of services a company provides, you can group these
 # together.
 
+nieuws:
+    name: Nieuws
+    singular_name: Nieuws
+    fields:
+        title:
+            type: text
+            class: large
+            group: Entry
+        teaser:
+            type: redactor
+            postfix: |
+                A text-only version of the content, that can be used to "tease"
+                the content when it's used in listing pages or search results.
+        image:
+            type: image
+            upload: entries
+        body:
+            type: article
+        video:
+            type: embed
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+    relations:        
+        locatie:
+            multiple: true
+            label: Nieuws voor deze locatie
+            required: false
+    taxonomy: [ categories, tags, groups ]
+    record_template: entry.twig
+    listing_template: listing.twig
+    listing_records: 10
+    default_status: published
+    order: -publishedAt
+    records_per_page: 10
+    icon_many: "fa:newspaper"
+    icon_one: "fa:fa-bullhorn"
+
 pagina:
     name: Pagina
     singular_name: Pagina
@@ -123,6 +162,9 @@ locaties:
     records_per_page: 10
     icon_many: "fa:file-alt"
     icon_one: "fa:file-alt"
+
+
+
 
 
 # The 'People' ContentType can be used to build pages about the people in your
@@ -203,7 +245,7 @@ privacy:
             group: content
             label: Title
         content:
-            type: redactor
+            type: article
             group: content
         slug:
             type: slug
