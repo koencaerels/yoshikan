@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html lang="{{ htmllang() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {# make sure we always display a proper title: The record's title if there is one, appended with the
-           sitename. If there is no title, we append the sitename with the payoff, if there is one. #}
-        <title>
-            {%- if record|default and record.title -%}
-                {{- record.title ~ ' | ' -}}
-            {%- endif -%}
-            {{- config.get('general/sitename') -}}
-            {%- if record|default == null and config.has('general/payoff') -%}
-                {{- ' | ' ~ config.get('general/payoff') -}}
-            {%- endif -%}
-        </title>
-        <link rel="stylesheet" href="{{ asset('css/simple.css') }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {%- if record|default and record.title -%}
+            {{- record.title ~ ' - ' -}}
+        {%- endif -%}
+        {{- config.get('general/sitename') -}}
+        {%- if config.has('general/payoff') -%}
+            {{- ' - ' ~ config.get('general/payoff') -}}
+        {%- endif -%}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('tailwind', null, 'frontend') }}
+        {{ encore_entry_link_tags('app', null, 'frontend') }}
+        {{ encore_entry_link_tags('menu', null, 'frontend') }}
+    {% endblock %}
+    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
+    {% include 'cookie-consent.html.twig' %}
+    <script src="https://kit.fontawesome.com/840296b248.js" crossorigin="anonymous"></script>
+</head>
+<body>
+{{ include('partials/_header.twig') }}
 
-
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('tailwind', null, 'frontend') }}
-            {{ encore_entry_link_tags('app', null, 'frontend') }}
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('tailwind', null, 'frontend') }}
-            {{ encore_entry_script_tags('app', null, 'frontend') }}
-        {% endblock %}
-
-    </head>
-    <body>
-    {{ include('partials/_header.twig') }}
-
-    <main>
+<main>
     {% block body %}
 
+        {{ widgets('main_top') }}
+        {% block main %}
+        {% endblock main %}
+        {{ widgets('main_bottom') }}
 
-            {{ widgets('main_top') }}
+    {% endblock body %}
+</main>
 
-            {% block main %}
-            {% endblock main %}
+{% block aside %}
+{% endblock aside %}
 
-            {{ widgets('main_bottom') }}
+{{ include('partials/_footer.twig') }}
 
-        {% endblock body %}
-    </main>
-
-    {% block aside %}
-    {% endblock aside %}
-
-    {{ include('partials/_footer.twig') }}
-
-    </body>
+{% block javascripts %}
+    {{ encore_entry_script_tags('tailwind', null, 'frontend') }}
+    {{ encore_entry_script_tags('app', null, 'frontend') }}
+    {{ encore_entry_script_tags('menu', null, 'frontend') }}
+{% endblock %}
+</body>
 </html>

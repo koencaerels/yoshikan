@@ -11,8 +11,7 @@ homepage:
         title:
             type: text
             class: large
-            group: content
-            localize: true
+            group: content            
             label: Title
             postfix: |
                 The 'Homepage' can contain basic information about the website. This title will be
@@ -22,11 +21,9 @@ homepage:
         image:
             type: image
         introduction:
-            type: redactor
-            localize: true
+            type: redactor            
         content:
-            type: redactor
-            localize: true
+            type: redactor            
         contentlink:
             type: text
             label: Link
@@ -38,12 +35,10 @@ homepage:
             uses: title
             group: Meta
     viewless: false
-    taxonomy: [ categories, tags, foobars ]
-    locales: ['en', 'nl', 'pt_BR', 'es']
+    taxonomy: [ categories, tags, foobars ]    
     singleton: true
     icon_many: "fa:home"
     icon_one: "fa:home"
-
 
 # Pages can be used for the more 'static' pages on your site. This content-type
 # has a 'templateselect' field, which allows you to override the record_template
@@ -178,48 +173,6 @@ people:
     icon_one: fa:user
     icon_many: fa:users
 
-
-# The 'Blocks' ContentType is a so-called 'resource ContentType'. This means
-# that it can be used to manage smaller pieces of content, like the 'about us'
-# text, an 'our address' in the footer, or similar short blurbs of text.
-# For more info, see: https://docs.bolt.cm/howto/resource-contenttype
-
-blocks:
-    name: Blocks
-    singular_name: Block
-    excerpt_format: '{teaser}'
-    fields:
-        title:
-            type: text
-            class: large
-            label: Title of this Block
-            group: Block
-        image:
-            type: image
-        teaser:
-            type: redactor
-            fixture_format: '{paragraph}'
-        content:
-            type: redactor
-        contentlink:
-            type: text
-            label: Link
-            placeholder: 'contentType/slug or https://example.org/'
-            postfix: "Use this to add a link for this Homepage. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`."
-            fixture_format: '{url}'
-        slug:
-            type: slug
-            uses: [ title ]
-            group: Meta
-    show_on_dashboard: true
-    viewless: true
-    default_status: published
-    searchable: false
-    order: title
-    icon_many: "fa:cubes"
-    icon_one: "fa:cube"
-
-
 # The 'Products' ContentType can be used to manage information about the
 # products or services you (or your company, organisation) provide.
 
@@ -270,6 +223,57 @@ products:
     order: title
     icon_many: "fa:gifts"
     icon_one: "fa:gift"
+
+
+# The 'Blocks' ContentType is a so-called 'resource ContentType'. This means
+# that it can be used to manage smaller pieces of content, like the 'about us'
+# text, an 'our address' in the footer, or similar short blurbs of text.
+# For more info, see: https://docs.bolt.cm/howto/resource-contenttype
+
+blocks:
+    name: Blocks
+    singular_name: Block
+    excerpt_format: '{content}'
+    fields:
+        title:
+            type: text
+            class: large
+            label: Title of this Block
+            group: Block
+        content:
+            type: redactor
+        slug:
+            type: slug
+            uses: [ title ]
+            group: Meta
+    show_on_dashboard: true
+    viewless: true
+    default_status: published
+    searchable: false
+    order: title
+    icon_many: "fa:cubes"
+    icon_one: "fa:cube"
+
+# privacy pagee ---------------------------------------------------------
+
+privacy:
+    name: Privacy
+    singular_name: Privacy
+    fields:
+        title:
+            type: text
+            group: content
+            label: Title
+        content:
+            type: redactor
+            group: content
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+    singleton: true
+    icon_many: "fa:lock"
+    icon_one: "fa:lock"
 
 # Possible field types:
 #

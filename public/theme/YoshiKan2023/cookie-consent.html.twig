@@ -1,0 +1,80 @@
+<script>
+    window.CookieConsent.init({
+        modalMainTextMoreLink: null,
+        barTimeout: 50,
+        theme: {
+            barColor: "#30445a",
+            barTextColor: "#f4c404",
+            barMainButtonColor: "#f4c404",
+            barMainButtonTextColor: "#30445a",
+            modalMainButtonColor: "#30445a",
+            modalMainButtonTextColor: "#FFF"
+        },
+        language: {
+            current: "nl", locale: {
+                nl: {
+                    barMainText: "De Yoshi-Kan website gebruikt cookies voor een optimale gebruikers ervaring.",
+                    closeAriaLabel: "close",
+                    barLinkSetting: "Cookie Settings",
+                    barBtnAcceptAll: "Accepteer alle cookies",
+                    modalMainTitle: "Cookie settings",
+                    modalMainText: "Cookies zijn kleine stukjes gegevens die vanaf een website worden verzonden en door de webbrowser van de gebruiker op de computer van de gebruiker worden opgeslagen terwijl de gebruiker aan het browsen is. Uw browser slaat elk bericht op in een klein bestand, cookie genaamd. Wanneer u een andere pagina van de server opvraagt, stuurt uw browser de cookie terug naar de server. Cookies zijn ontworpen om een betrouwbaar mechanisme te zijn voor websites om informatie te onthouden of om de browse-activiteit van de gebruiker te registreren. We gebruiken cookies om de gebruikerservaring te verbeteren.",
+                    modalBtnSave: "Bewaar de huidige settings",
+                    modalBtnAcceptAll: "Accepteer alle cookies and sluit",
+                    modalAffectedSolutions: "Affected solutions:",
+                    learnMore: "Learn More",
+                    on: "On",
+                    off: "Off",
+                    enabled: "is enabled.",
+                    disabled: "is disabled.",
+                    checked: "checked",
+                    unchecked: "unchecked"
+                }
+            }
+        },
+        categories: {
+            necessary: {
+                needed: !0,
+                wanted: !0,
+                checked: !0,
+                language: {
+                    locale: {
+                        en: {
+                            name: "Noodzakelijke Cookies",
+                            description: "Sessiecookie gegenereerd door applicaties op basis van de PHP-taal. Dit is een algemene id die wordt gebruikt om gebruikerssessievariabelen te onderhouden. Het is normaal gesproken een willekeurig gegenereerd nummer, hoe het wordt gebruikt kan specifiek zijn voor de site, maar een goed voorbeeld is het handhaven van een ingelogde status voor een gebruiker tussen pagina's."
+                        }
+                    }
+                }
+            },
+            analytics: {
+                needed: !1,
+                wanted: !1,
+                checked: !1,
+                language: {
+                    locale: {
+                        en: {
+                            name: "Analytics Cookies",
+                            description: "This cookie is set by the Clicky web analytics service from Roxr Software. The cookie contains a random unique user identifier that is generated the first time someone visits a web site using the Clicky software. Its purpose is to identify new and unique visitors to a web site. The value of this cookie will also be set as a third party cookie with the name of cluid if such a cookie does not exist."
+                        }
+                    }
+                }
+            }
+        },
+        services: {
+            session: {
+                category: "necessary",
+                type: "dynamic-script",
+                search: "necessary",
+                cookies: [{name: "PHPSESSID", domain: `.${window.location.hostname}`}],
+                language: {locale: {en: {name: "PHP Session"}}}
+            },
+            analytics: {
+                category: "analytics",
+                type: "dynamic-script",
+                search: "analytics",
+                cookies: [{name: "_jsuid", domain: `.${window.location.hostname}`}],
+                language: {locale: {en: {name: "Clicky Analytics"}}}
+            }
+        }
+    });
+</script>

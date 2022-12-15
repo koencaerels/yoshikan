@@ -15,6 +15,7 @@ Encore
     // .setManifestKeyPrefix('theme/build/')
 
     .addEntry('app', './assets/app.js')
+    .addEntry('menu', './assets/menu.js')
     .addEntry('tailwind', './assets/tailwind.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

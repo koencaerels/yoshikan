@@ -1,3 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 body {
-    background-color: #0c223b;
+    background-color: whitesmoke;
+    font-family: 'Open Sans', sans-serif;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+header {
+    background-color: #30445a;
+}
+
+main {
+    background-color: whitesmoke;
+}
+
+footer {
+    background-color: whitesmoke;
+}
+
+.header-wrapper {
+    display: block;
+    max-width: 900px;
+    margin: auto;
+    background-color: silver;
+}
+
+.content-wrapper {
+    display: block;
+    max-width: 900px;
+    margin: auto;
+    background-color: white;
+}
+
+.content-wrapper h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.content-wrapper h2 {
+    font-size: 1em;
+}
+
+.content-wrapper h3 {
+    font-size: 1.2em;
+}
+
+.content-wrapper ul {
+    list-style: disc;
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+
+.content-wrapper a {
+    color: #0c223b;
+    text-decoration: underline;
+}
+
+.content-wrapper a:hover {
+    color: #0D47A1;
+}
+
+/* footer ------------------------------------------------------------------------ */
+
+.footer-wrapper {
+    display: block;
+    max-width: 900px;
+    margin: auto;
+    background-color: white;
 }

@@ -2,8 +2,8 @@
 # in the project root.
 
 # The name of the website
-sitename: Yoshi Kan Website
-payoff: Yoshi Kan, judoschool voor jong en oud.
+sitename: Yoshi Kan
+payoff: judoschool voor jong en oud
 
 secret: '%env(APP_SECRET)%'
 
@@ -232,8 +232,8 @@ user_avatar:
 # Settings for the reset password logic
 reset_password_settings:
     show_already_requested_password_notice: true
-    mail_from: "do-not-reply@example.org"
-    mail_name: "Bolt CMS"
+    mail_from: "do-not-reply@yoshikan.be"
+    mail_name: "Yoshi Kan vzw"
     mail_subject: "Your password reset request"
     mail_template: "reset_password/email.html.twig"
 

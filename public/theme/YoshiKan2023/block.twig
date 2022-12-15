@@ -1,0 +1,20 @@
+{% extends 'partials/_master.twig' %}
+
+{% block main %}
+    {% if record|default %}
+
+        {# banner ----------------------------------------------------------- #}
+        <div>
+            <img src="{{ asset('img/banner_1.jpg') }}"
+                 class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+                 border="0"/>
+        </div>
+
+        <div class="content-wrapper p-10">
+            <h1>{{ record|title }}</h1>
+            <div>
+                {{ record.content }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock main %}
