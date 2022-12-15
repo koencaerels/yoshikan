@@ -49,25 +49,20 @@ homepage:
 # list the different types of services a company provides, you can group these
 # together.
 
-pages:
-    name: Pages
-    singular_name: Page
+pagina:
+    name: Pagina
+    singular_name: Pagina
     fields:
         title:
             type: text
             class: large
             group: content
-        teaser:
-            type: textarea
-            postfix: |
-                A text-only version of the content, that can be used to "tease"
-                the content when it's used in listing pages or search results.
-        image:
-            type: image
-            label: Highlighted image
         body:
             type: redactor
-            height: 300px
+            height: 300px        
+        image:
+            type: image
+            label: Highlighted image        
         slug:
             type: slug
             uses: title
@@ -78,7 +73,6 @@ pages:
     taxonomy: [ groups ]
     records_per_page: 5
     order: id
-
 
 # Entries can be used for things like 'news' or 'blogpostings'. They have a
 # 'teaser', which can be used for a short blurb on listing-pages, allowing
@@ -91,9 +85,9 @@ pages:
 # The 'order' is set to '-datepublish', which means that newer entries will be
 # shown above older entries.
 
-entries:
-    name: Entries
-    singular_name: Entry
+locaties:
+    name: Locaties
+    singular_name: Locatie
     fields:
         title:
             type: text
@@ -116,13 +110,9 @@ entries:
             uses: title
             group: Meta
     relations:
-        pages:
-            multiple: false
-            order: title
-            label: Select a page
-        people:
-            multiple: false
-            label: Author of this Entry
+        trainer:
+            multiple: true
+            label: Trainer op deze plaats
             required: false
     taxonomy: [ categories, tags, groups ]
     record_template: entry.twig
@@ -138,9 +128,9 @@ entries:
 # The 'People' ContentType can be used to build pages about the people in your
 # company, organisation or any other kind of team.
 
-people:
-    name: People
-    singular_name: Person
+trainers:
+    name: Trainers
+    singular_name: Trainer
     title_format: "{name} ({description})"
     fields:
         name:
@@ -172,58 +162,6 @@ people:
             uses: [ name ]
     icon_one: fa:user
     icon_many: fa:users
-
-# The 'Products' ContentType can be used to manage information about the
-# products or services you (or your company, organisation) provide.
-
-products:
-    name: Products
-    singular_name: Product
-    fields:
-        title:
-            type: text
-            class: large
-            variant: inline
-            label: Name of this product
-            group: Block
-            fixture_format: '{catchPhrase}'
-        feature_1:
-            type: text
-            variant: inline
-            fixture_format: '{bs}'
-            label: "Key feature 1"
-        feature_2:
-            type: text
-            variant: inline
-            fixture_format: '{bs}'
-            label: "Key feature 2"
-        feature_3:
-            type: text
-            variant: inline
-            fixture_format: '{bs}'
-            label: "Key feature 3"
-        price:
-            type: text
-            fixture_format: "€ {randomDigitNotNull}0,-"
-        image:
-            type: image
-        teaser:
-            type: redactor
-            fixture_format: '{paragraph}'
-        content:
-            type: redactor
-        slug:
-            type: slug
-            uses: [ title ]
-            group: Meta
-    show_on_dashboard: true
-    viewless: false
-    default_status: published
-    searchable: false
-    order: title
-    icon_many: "fa:gifts"
-    icon_one: "fa:gift"
-
 
 # The 'Blocks' ContentType is a so-called 'resource ContentType'. This means
 # that it can be used to manage smaller pieces of content, like the 'about us'

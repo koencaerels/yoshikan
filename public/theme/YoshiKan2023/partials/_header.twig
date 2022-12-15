@@ -1,62 +1,16 @@
-<!-- Header bar -->
+<!-- Header navigation -->
 <header>
-
     <div class="header-wrapper">
         <div id="top-navigation">
-
             <nav>
                 <a id="resp-menu" class="responsive-menu" href="#"><i class="fa fa-reorder"></i> Menu</a>
-
                 <ul class="menu">
-
+                    {# home button ---------------------------------------------------------------- #}
                     <li><a class="home" href="/"><i class="fa fa-home"></i> Yoshi-Kan</a></li>
-
-                    <li><a href="#"><i class="fa fa-medal"></i> Judoschool</a>
-                        <ul class="sub-menu drop-shadow-lg">
-                            <li><a href="#">Missie</a></li>
-                            <li><a href="#">Visie</a>
-                            </li>
-                            <li><a href="#">Locaties</a>
-                                <ul>
-                                    <li><a href="#">Hofstade</a></li>
-                                    <li><a href="#">Haacht</a></li>
-                                    <li><a href="#">Heist-op-den-berg</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li><a href="#"><i class="fa fa-circle-info"></i> Praktische info</a>
-                        <ul class="sub-menu drop-shadow-lg">
-                            <li><a href="#">Lessenschema</a></li>
-                            <li><a href="#">Opleidingsplan jeugd</a></li>
-                            <li><a href="#">Tarieven</a></li>
-                            <li><a href="#">Reglement</a></li>
-                            <li><a href="#">GDPR - Privacy Verklaring</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="#"><i class="fa fa-users"></i> Over ons</a></li>
-                    <li><a href="#"><i class="fa fa-bullhorn"></i> Nieuws</a></li>
-                    <li><a href="#"><i class="fa fa-link"></i> Links</a></li>
-                    <li><a href="#"><i class="fa fa-envelope"></i> Contact</a></li>
-
+                    {# top menu ------------------------------------------------------------------- #}
+                    {{ menu(name = 'top', template='partials/_menu_header.twig', withsubmenus= true) }}
                 </ul>
             </nav>
-
         </div>
     </div>
-
-    {# the values in the 'config' object are taken directly from the file app/config/config.yml #}
-    {#    <h2><a href="{{ path('homepage') }}">{{ config.get('general/sitename') }}</a></h2> #}
-    {#    {% if config.has('general/payoff') and record is defined and record|feature == 'homepage' %} #}
-    {#        <p>{{ config.get('general/payoff') }}</p> #}
-    {#    {% endif %} #}
-    {# #}
-    {#    {{ menu( #}
-    {#        name = 'main', #}
-    {#        template = 'partials/_sub_menu_header.twig', #}
-    {#        withsubmenus = false #}
-    {#    ) }} #}
-
 </header>

@@ -2,48 +2,29 @@
 <footer>
 
     <div class="footer-wrapper mt-4 border-t-[1px]">
-
         <div class="footer-navigation-wrapper pt-4 text-gray-500">
             <div class="md:flex">
-                {# logo #}
+                {# logo ------------------------------------------------------------------ #}
                 <div class="ml-4 w-48 sm:max-md:mx-auto">
-                    <a href="#">
+                    <a href="/">
                         <img src="{{ asset('img/logo_yoshi_kan.jpg') }}" alt="Logo Yoshi Kan" width="140" border="0"/>
                     </a>
                 </div>
-                {# navigation #}
-                <div class="ml-4 md:flex md:flex-row w-full text-sm sm:max-md:mx-auto sm:max-md:w-64 sm:max-md:mt-4 sm:max-md:border-t-[1px]">
+                {# navigation ----------------------------------------------------------- #}
+                <div
+                    class="ml-4 md:flex md:flex-row w-full text-sm sm:max-md:mx-auto sm:max-md:w-64 sm:max-md:mt-4 sm:max-md:border-t-[1px]">
                     <div class="footer-nav ml-4 basis-1/3">
-                        <div>Missie</div>
-                        <div>Visie</div>
-                        <div>Locaties</div>
-                        <ul>
-                            <li>Hofstade</li>
-                            <li>Haacht</li>
-                            <li>Heist-op-den-berg</li>
-                        </ul>
+                        {{ menu(name = 'footer_c1', template='partials/_menu_footer.twig', withsubmenus= true) }}
                     </div>
                     <div class="footer-nav ml-4 basis-1/3">
-                        <div>Over ons</div>
-                        <div>Praktische informatie</div>
-                        <ul>
-                            <li>Lessenschema</li>
-                            <li>Opleidingsplan jeugd</li>
-                            <li>Tarieven</li>
-                            <li>Reglement</li>
-                            <li>GDPR - Privacy Verklaring</li>
-                        </ul>
+                        {{ menu(name = 'footer_c2', template='partials/_menu_footer.twig', withsubmenus= true) }}
                     </div>
                     <div class="footer-nav ml-4 basis-1/3">
-                        <div>Nieuws</div>
-                        <div>Links</div>
-                        <div>Sponsors</div>
-                        <div>Contact</div>
+                        {{ menu(name = 'footer_c3', template='partials/_menu_footer.twig', withsubmenus= true) }}
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="copyright-wrapper border-t-[1px] p-2 mt-4 text-xs text-gray-400">
             <div class="flex">
                 <div>© {{ "now"|date("Y") }} Judoschool Yoshi-Kan vzw</div>
@@ -53,22 +34,13 @@
                 <div class="ml-4">
                     <a href="/privacy">Privacy Verklaring</a>
                 </div>
+                <div class="ml-4">
+                    {{ __('general.phrase.built-with-bolt') }}
+                    En met ❤ .
+                </div>
             </div>
         </div>
 
     </div>
-
-    {#    <h4>{{ __('Menu') }}</h4> #}
-    {#    {{ menu(template = 'partials/_sub_menu.twig') }} #}
-    {#    <hr> #}
-    {#    <h4>{{ __('general.phrase.search') }}</h4> #}
-    {#    <form method="get" action="{{ path('search') }}" id="searchform-inline" enctype="text/plain"> #}
-    {#        <input type="search" value="{{ searchTerm|default() }}" placeholder="{{ __('general.phrase.search-ellipsis') }}" name="searchTerm" > #}
-    {#        <button type="submit">{{ __('action.search') }}</button> #}
-    {#    </form> #}
-    {#    <p> #}
-    {#        {{ __('general.phrase.built-with-bolt') }} #}
-    {#    </p> #}
-    {#    {{ widgets('footer') }} #}
 
 </footer>

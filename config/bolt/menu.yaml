@@ -1,27 +1,90 @@
 # This file defines the menus on the website. See the documentation for
 # details: https://docs.bolt.cm/menus
 
-main:
-  - label: Home
-    title: This is the <b>first<b> menu item.
-    link: homepage
-    class: homepage
-  - label: About
-    link: page/2
-    submenu:
-        - label: Sub 1
-          link: entry/39
-        - label: Sub 2
-          class: menu-item-class
-          link: entry/40
-        - link: entry/41 # These two have no `label`, so they will show up as the title
-        - class: sub-class
-          link: page/42
-  - label: All pages
-    link: pages/
-  - label: The Bolt site
-    link: https://boltcms.io
-    class: bolt-site
-    title: Visit the excellent Bolt website!
+# -- top navigation ------------------------------------------------------------------------------------------
 
-foo: bar
+top:
+    -   label: Judo School
+        class: fa fa-medal
+        submenu:
+            -   label: Onze Missie
+                link: pagina/105
+            -   label: Onze Visie
+                link: pagina/106
+            -   label: Locaties
+                submenu:
+                    -   label: Hofstade
+                        link: locatie/107
+                    -   label: Haacht
+                        link: locatie/108
+                    -   label: Heist op den Berg
+                        link: locatie/109
+    -   label: Praktische info
+        class: fa fa-circle-info
+        submenu:
+            -   label: Lessenschema
+                link: pagina/105
+            -   label: Opleidingsplan jeugd
+                link: pagina/105
+            -   label: Tarieven
+                link: pagina/105
+            -   label: Reglement
+                link: pagina/105
+            -   label: GDPR - Privacy Verklaring
+                link: pagina/105
+
+    -   label: Over ons
+        class: fa fa-users
+        link: trainers
+    -   label: Nieuws
+        class: fa fa-bullhorn
+        link: nieuws
+    -   label: Links
+        class: fa fa-link
+        link: pagina/links
+    -   label: Contact
+        class: fa fa-envelope
+        link: pagina/contact
+
+# -- footer colums ------------------------------------------------------------------------------------------
+
+footer_c1:
+    -   label: Onze Missie
+        link: pagina/105
+    -   label: Onze Visie
+        link: pagina/106
+    -   label: Locaties
+        submenu:
+            -   label: Hofstade
+                link: locatie/107
+            -   label: Haacht
+                link: locatie/108
+            -   label: Heist op den Berg
+                link: locatie/109
+
+footer_c2:
+    -   label: Over ons
+        link: pagina/105
+    -   label: Praktische informatie
+        submenu:
+            -   label: Lessenschema
+                link: pagina/107
+            -   label: Opleidingsplan jeugd
+                link: pagina/108
+            -   label: Tarieven
+                link: pagina/109
+            -   label: Reglement
+                link: pagina/109
+            -   label: GDPR - Privacy Verklaring
+                link: pagina/109
+
+footer_c3:
+    -   label: Nieuws
+        link: pagina/105
+    -   label: Links
+        link: pagina/106
+    -   label: Sponsors
+        link: pagina/106
+    -   label: Contact
+        link: pagina/106
+
