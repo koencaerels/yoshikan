@@ -22,3 +22,6 @@ services:
     Bolt\Redactor\:
         resource: '../vendor/bolt/redactor/src/*'
         exclude: '../vendor/bolt/redactor/src/{Entity,Exception}'
+    Jeschek\DragSort\:
+        resource: '../vendor/jeschek/dragsort/src/*'
+        exclude: '../vendor/jeschek/dragsort/src/{Entity,Exception}'

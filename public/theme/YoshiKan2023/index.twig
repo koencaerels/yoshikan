@@ -1,7 +1,6 @@
 {% extends 'partials/_master.twig' %}
 
 {% block main %}
-
     {% if record|default %}
 
         {# banner ----------------------------------------------------------- #}
@@ -13,38 +12,38 @@
 
         {# content ----------------------------------------------------------- #}
         <div class="content-wrapper p-4">
+
+            {# online inschrijven ------------------------------------------------------ #}
+            {% if (record.toonInschrijving) %}
+                <div>
+                    <div class="py-2">
+                        {{ record.textInschrijving | raw }}
+                    </div>
+                    <div style="width:250px;margin:auto;display: block;height:75px;" class="pt-2">
+                        <a href="/inschrijven"
+                           style="color:white;text-decoration: none;"
+                           class="w-full p-4 bg-blue-900 text-white rounded-lg text-xl uppercase hover:bg-blue-700">
+                            Online inschrijven
+                        </a>
+                    </div>
+                    <div class="mb-2">
+                        <hr>
+                    </div>
+                </div>
+            {% endif %}
+
+            {# introductie ------------------------------------------------------------ #}
             <div class="md:flex md:flex-row mb-4">
                 <div class="md:basis-1/2 mr-4">
-                    <h1>WELKOM BIJ JUDOCLUB YOSHI-KAN</h1>
+                    <h1 class="uppercase">{{ record.title }}</h1>
                     <div class="mt-2">
-                        <p>Judosport is één van de vele Olympische topsporten in ons land. Judo is de sport bij uitstek,
-                            om
-                            je zowel fysiek als mentaal te ontwikkelen. Met respect, zelfvertrouwen en discipline als
-                            belangrijkste peilers.
-                        </p>
-                        <p>
-                            Spelenderwijs leren kinderen een brede waaier aan valtechnieken, worpen
-                            en houdgrepen, leren ze omgaan met winst en verlies. Jongeren en volwassenen worden
-                            technisch
-                            begeleid. Dit alles in een ongedwongen clubsfeer, waar iedereen zich thuis voelt!
-                        </p>
+                        {{ record.content_1 | raw }}
                     </div>
                 </div>
                 <div class="md:basis-1/2">
-                    <h1>VOOR JONG EN OUD</h1>
+                    <h1 class="uppercase">{{ record.title_2 }}</h1>
                     <div class="mt-2">
-                        <p>
-                            Je kan in onze club terecht, voor zowel recreatief als competitief judo. Jongeren worden op
-                            respectvolle en verantwoorde wijze voorbereid en begeleid op wedstrijden, aangepast aan hun
-                            niveau.
-                        </p>
-                        <p>
-                            Kom je liever voor het plezier?
-                            Ook daar hebben we oog voor! Aarzel niet en kom zeker eens proeven van 2 gratis judolessen.
-                        </p>
-                        <p>
-                            <strong>Je bent van harte welkom!</strong>
-                        </p>
+                        {{ record.content_2 | raw }}
                     </div>
                 </div>
             </div>
@@ -52,48 +51,29 @@
             {# visuals ----------------------------------------------------------- #}
             <div class="flex flex-row">
                 <div class="basis-1/3 mr-4">
-                    <img src="{{ asset('img/stacks_image_94.jpg') }}"
+                    {% if (record.image_1) %}
+                    <img src="{{ thumbnail(record.image_1, 268, 403) }}"
                          class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
                          border="0"/>
+                    {% endif %}
                 </div>
                 <div class="basis-1/3 mr-4 ml-4">
-                    <img src="{{ asset('img/stacks_image_90.jpg') }}"
-                         class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
-                         border="0"/>
+                    {% if (record.image_2) %}
+                        <img src="{{ thumbnail(record.image_2, 268, 403) }}"
+                             class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+                             border="0"/>
+                    {% endif %}
                 </div>
                 <div class="basis-1/3 ml-4">
-                    <img src="{{ asset('img/stacks_image_92.jpg') }}"
-                         class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
-                         border="0"/>
+                    {% if (record.image_3) %}
+                        <img src="{{ thumbnail(record.image_3, 268, 403) }}"
+                             class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+                             border="0"/>
+                    {% endif %}
                 </div>
             </div>
 
-            {#            <h1>{{ record|title }}</h1> #}
-            {#            <div class="bg-gray-900 p-2 text-white rounded-lg"> #}
-            {#                Test own template. #}
-            {#            </div> #}
-            {#            <br>&nbsp; #}
-
         </div>
 
-        {# Remove this block if you don't need it anymore. #}
-        {#        {{ include('partials/_fresh_install.twig') }} #}
-        {# Output the `introduction` field. If it doesn't exist, 'default' to
-           the full excerpt of the current Record #}
-        {#        {{ record.introduction|default(record|excerpt) }} #}
-        {# #}
-        {#        {% include 'partials/_image.twig' with ({'image': record|image}) %} #}
-        {# #}
-        {#        {{ record.content }} #}
-        {# #}
-        {#        {{ include('partials/_recordfooter.twig', { 'record': record }) }} #}
-
     {% endif %}
-
 {% endblock main %}
-
-{# {% block aside %} #}
-{# #}
-{#    {{ include('partials/_aside.twig') }} #}
-{# #}
-{# {% endblock aside %} #}

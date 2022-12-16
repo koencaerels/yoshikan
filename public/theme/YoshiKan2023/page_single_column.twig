@@ -1,0 +1,16 @@
+{% extends 'partials/_master.twig' %}
+
+{% block main %}
+    {% if record|default %}
+
+        {% include 'partials/_image.twig' with ({'image': record|image}) %}
+
+        <div class="content-wrapper p-10">
+            <h3>{{ record|title }}</h3>
+            <div>
+                {{ record.body }}
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock main %}

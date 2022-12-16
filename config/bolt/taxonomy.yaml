@@ -5,7 +5,7 @@ tags:
     slug: tags
     singular_slug: tag
     behaves_like: tags
-    postfix: "Add some freeform tags. Start a new tag by typing a comma or space."
+    postfix: "Voeg een tag toe. Maak een nieuwe tag door een spatie of een komma te typen."
     allow_spaces: false
     #listing_template: tag-listing.twig #custom template
     required: false
@@ -25,5 +25,5 @@ categories:
     singular_slug: category
     behaves_like: categories
     multiple: true
-    options: [ news, events, movies, music, books, life, love, fun ]
+    options: [ nieuws, event, hofstade, haacht, heist op den berg ]
     required: false

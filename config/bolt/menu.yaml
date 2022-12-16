@@ -8,30 +8,32 @@ top:
         class: fa fa-medal
         submenu:
             -   label: Onze Missie
-                link: pagina/105
+                link: pagina/125
             -   label: Onze Visie
-                link: pagina/106
+                link: pagina/126
             -   label: Locaties
                 submenu:
                     -   label: Hofstade
-                        link: locatie/107
+                        link: locatie/122
                     -   label: Haacht
-                        link: locatie/108
+                        link: locatie/123
                     -   label: Heist op den Berg
-                        link: locatie/109
+                        link: locatie/124
     -   label: Praktische info
         class: fa fa-circle-info
         submenu:
             -   label: Lessenschema
-                link: pagina/105
+                link: pagina/130
             -   label: Opleidingsplan jeugd
-                link: pagina/105
+                link: pagina/131
             -   label: Tarieven
-                link: pagina/105
+                link: pagina/132
             -   label: Reglement
-                link: pagina/105
+                link: pagina/133
+            -   label: Online inschrijven
+                link: inschrijven
             -   label: GDPR - Privacy Verklaring
-                link: pagina/105
+                link: pagina/134
 
     -   label: Over ons
         class: fa fa-users
@@ -41,50 +43,52 @@ top:
         link: nieuws
     -   label: Links
         class: fa fa-link
-        link: pagina/links
+        link: pagina/128
     -   label: Contact
         class: fa fa-envelope
-        link: pagina/contact
+        link: pagina/127
 
 # -- footer colums ------------------------------------------------------------------------------------------
 
 footer_c1:
     -   label: Onze Missie
-        link: pagina/105
+        link: pagina/125
     -   label: Onze Visie
-        link: pagina/106
+        link: pagina/126
     -   label: Locaties
         submenu:
             -   label: Hofstade
-                link: locatie/107
+                link: locatie/122
             -   label: Haacht
-                link: locatie/108
+                link: locatie/123
             -   label: Heist op den Berg
-                link: locatie/109
+                link: locatie/124
 
 footer_c2:
     -   label: Over ons
-        link: pagina/105
+        link: trainers
     -   label: Praktische informatie
         submenu:
             -   label: Lessenschema
-                link: pagina/107
+                link: pagina/130
             -   label: Opleidingsplan jeugd
-                link: pagina/108
+                link: pagina/131
             -   label: Tarieven
-                link: pagina/109
+                link: pagina/132
             -   label: Reglement
-                link: pagina/109
+                link: pagina/133
             -   label: GDPR - Privacy Verklaring
-                link: pagina/109
+                link: pagina/134
 
 footer_c3:
+    -   label: Online inschrijven
+        link: inschrijven
     -   label: Nieuws
         link: pagina/105
     -   label: Links
-        link: pagina/106
+        link: pagina/128
     -   label: Sponsors
-        link: pagina/106
+        link: pagina/129
     -   label: Contact
-        link: pagina/106
+        link: pagina/127
 

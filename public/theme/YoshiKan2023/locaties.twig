@@ -1,0 +1,42 @@
+{% extends 'partials/_master.twig' %}
+
+{% block main %}
+
+    {# banner ----------------------------------------------------------- #}
+    <div>
+        <img src="{{ asset('img/banner_1.jpg') }}"
+             class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+             border="0"/>
+    </div>
+
+    {# content ----------------------------------------------------------- #}
+    <div class="content-wrapper p-2">
+        <div class="p-2">
+            <h3>Locaties</h3>
+            <hr>
+        </div>
+        <div>
+            {% for record in records %}
+                <article>
+
+                    <div class="p-4">
+                        <h3>{{ record|title }}</h3>
+                        <hr>
+                        <div class="md:flex md:flex-row p-2 mt-2">
+                            <div class="md:basis-1/2">
+                                <div id="schema">
+                                    {{ record.schema | raw }}
+                                </div>
+                            </div>
+                            <div class="md:basis-1/2 ml-4">
+                                {{ record.adres | raw }}
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock main %}

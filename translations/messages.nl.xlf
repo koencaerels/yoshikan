@@ -7,5 +7,17 @@
         <target>general.phrase.none</target>
       </segment>
     </unit>
+    <unit id="SXECSqW" name="your email">
+      <segment>
+        <source>your email</source>
+        <target>your email</target>
+      </segment>
+    </unit>
+    <unit id="JKqEovv">
+      <segment>
+        <source>Unfortunately, no content could be found. Try another page, or go to the &lt;a href="%paths_root%"&gt;homepage&lt;/a&gt;.</source>
+        <target><![CDATA[Unfortunately, no content could be found. Try another page, or go to the <a href="/">homepage</a>.]]></target>
+      </segment>
+    </unit>
   </file>
 </xliff>

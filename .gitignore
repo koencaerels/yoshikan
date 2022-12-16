@@ -1,3 +1,5 @@
+/_temp
+
 # Comment out the following line, if you wish to store your SQLite database in Git
 /var/data/*
 

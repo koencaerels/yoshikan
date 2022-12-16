@@ -3,6 +3,7 @@
 body {
     background-color: whitesmoke;
     font-family: 'Open Sans', sans-serif;
+    color:#4f4f4f;
 }
 
 * {
@@ -38,6 +39,8 @@ footer {
     background-color: silver;
 }
 
+/* content styles --------------------------------------------------------------------- */
+
 .content-wrapper {
     display: block;
     max-width: 900px;
@@ -51,7 +54,7 @@ footer {
 }
 
 .content-wrapper h2 {
-    font-size: 1em;
+    font-size: 2em;
 }
 
 .content-wrapper h3 {
@@ -71,6 +74,29 @@ footer {
 
 .content-wrapper a:hover {
     color: #0D47A1;
+}
+
+/* breadcrumb --------------------------------------------------------------------- */
+
+#breadcrumb a {
+    text-decoration: none;
+}
+
+#breadcrumb a:hover {
+    text-decoration: none;
+}
+
+/* breadcrumb --------------------------------------------------------------------- */
+
+#schema table {
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#schema table > tbody > tr > td {
+    border-bottom: 1px solid silver;
+    padding:10px;
 }
 
 /* footer ------------------------------------------------------------------------ */

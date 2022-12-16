@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ff91e94fbeeac8992c8ca6e41ef9ac2",
+    "content-hash": "05a4c008929a28c27abce60a7c5a2e21",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4372,6 +4372,54 @@
                 "source": "https://github.com/jasny/twig-extensions"
             },
             "time": "2019-12-10T16:04:23+00:00"
+        },
+        {
+            "name": "jeschek/dragsort",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/philippjeschek/bolt-dragsort.git",
+                "reference": "0e3522002e59536765376fd1c8621ba114d12558"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/philippjeschek/bolt-dragsort/zipball/0e3522002e59536765376fd1c8621ba114d12558",
+                "reference": "0e3522002e59536765376fd1c8621ba114d12558",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "twig/twig": "^2.12 | ^3.0"
+            },
+            "require-dev": {
+                "bolt/core": "^5.1",
+                "symplify/easy-coding-standard": "^9.4"
+            },
+            "type": "bolt-extension",
+            "extra": {
+                "entrypoint": "Jeschek\\DragSort\\Extension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jeschek\\DragSort\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Philipp Jeschek",
+                    "email": "mail@philippjeschek.me"
+                }
+            ],
+            "description": "This extension enables drag and drop sorting for records in the backend.",
+            "support": {
+                "issues": "https://github.com/philippjeschek/bolt-dragsort/issues",
+                "source": "https://github.com/philippjeschek/bolt-dragsort/tree/1.0.5"
+            },
+            "time": "2022-04-07T09:28:14+00:00"
         },
         {
             "name": "justinrainbow/json-schema",

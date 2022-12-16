@@ -1,0 +1,6 @@
+# Routes added by the dragsort extension
+
+dragsort_extension_controllers:
+  resource: '../../vendor/jeschek/dragsort/src/Controller/'
+  prefix: '%bolt.backend_url%/async'
+  type: annotation

@@ -1,0 +1,45 @@
+{% extends 'partials/_master.twig' %}
+{% block main %}
+    {% if record|default %}
+
+        {# banner ----------------------------------------------------------- #}
+        <div>
+            <img src="{{ asset('img/banner_7.jpg') }}"
+                 class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+                 border="0"/>
+        </div>
+
+        {# content ----------------------------------------------------------- #}
+        <div class="content-wrapper p-2">
+
+            {# -- breadcrumb #}
+            <div id="breadcrumb" class="text-gray-400 text-sm mt-2 mb-2">
+                <a href="/">Home</a>
+                &gt; <a href="/trainers">Over ons</a>
+                &gt; {{ record|title }}
+            </div>
+            <hr>
+            <div class="p-4">
+                <article>
+                    <div class="md:flex p-2">
+                        <div class="md:w-1/2">
+                            {% if (record.image) %}
+                                <img src="{{ thumbnail(record.image, 400, 267) }}"
+                                     width="400"
+                                     alt="{{ (record|image).alt|default(record|title) }}"
+                                     border="0"/>
+                            {% endif %}
+                        </div>
+                        <div class="md:w-1/2 md:ml-4">
+                            <h3>{{ record|title }}</h3>
+                            <div class="text-sm">
+                                {{ record.content | raw }}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock main %}

@@ -1,45 +1,65 @@
 # This file defines the content types on the website. See the documentation for
 # details: https://docs.bolt.cm/contenttypes/intro
 
-# The Homepage content type is a singleton: There can be only one record of this
-# content type.
+# --------------------------------------------------------------------------
+# The Homepage content type is a singleton: There can be only one record of 
+# this content type.
 
 homepage:
     name: Homepage
     singular_name: Homepage
-    fields:
+    fields:        
         title:
             type: text
             class: large
-            group: content            
-            label: Title
-            postfix: |
-                The 'Homepage' can contain basic information about the website. This title will be
-                shown on the homepage of the website, as the name implies. To change the
-                <em><strong>name</strong></em> of the site, as is shown in the header, and the tab
-                in the webbrowser, edit <code>sitename:</code> in the configuration file.
-        image:
-            type: image
-        introduction:
-            type: redactor            
-        content:
-            type: redactor            
-        contentlink:
+            group: Inhoud
+            label: Titel 1
+        content_1:
+            label: Inhoud 1
+            type: redactor
+            group: Inhoud
+        title_2:
             type: text
-            label: Link
-            placeholder: 'contentType/slug or https://example.org/'
-            postfix: "Use this to add a link for this Homepage. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`."
-            fixture_format: '{url}'
+            class: large
+            group: Inhoud
+            label: Titel 2
+        content_2:
+            label: Inhoud 2
+            type: redactor
+            group: Inhoud
+        toonInschrijving:
+            type: checkbox
+            label: Toon inschrijving?
+            group: Inschrijven
+        textInschrijving:
+            type: redactor
+            label: Text Inschrijving
+            group: Inschrijven
+        image_1:
+            label: Beeld 1
+            group: Beelden
+            type: image
+            upload: beelden
+        image_2:
+            label: Beeld 2
+            type: image
+            group: Beelden
+            upload: beelden
+        image_3:
+            label: Beeld 3
+            type: image
+            group: Beelden
+            upload: beelden
         slug:
             type: slug
             uses: title
             group: Meta
     viewless: false
-    taxonomy: [ categories, tags, foobars ]    
     singleton: true
     icon_many: "fa:home"
     icon_one: "fa:home"
 
+# ------------------------------------------------------------------------------
 # Pages can be used for the more 'static' pages on your site. This content-type
 # has a 'templateselect' field, which allows you to override the record_template
 # setting for an individual page.
@@ -73,7 +93,7 @@ nieuws:
             type: slug
             uses: title
             group: Meta
-    relations:        
+    relations:
         locatie:
             multiple: true
             label: Nieuws voor deze locatie
@@ -88,29 +108,38 @@ nieuws:
     icon_many: "fa:newspaper"
     icon_one: "fa:fa-bullhorn"
 
+# pagina's ----------------------------------------------------------------
+
 pagina:
     name: Pagina
     singular_name: Pagina
     fields:
         title:
+            label: Title
             type: text
             class: large
-            group: content
+            group: Inhoud
         body:
+            label: Content
+            type: article
+            group: Inhoud
+        body_extra:
+            label: Extra content
             type: redactor
-            height: 300px        
-        image:
+            group: Inhoud
+        banner:
+            label: Banner
             type: image
-            label: Highlighted image        
+            group: Beelden
+            upload: banners
         slug:
             type: slug
             uses: title
             group: Meta
         template:
             type: templateselect
-            filter: '/^[^_].*\.twig$/'
-    taxonomy: [ groups ]
-    records_per_page: 5
+            filter: '/^[^_].*\.twig$/'    
+    records_per_page: 20
     order: id
 
 # Entries can be used for things like 'news' or 'blogpostings'. They have a
@@ -129,21 +158,23 @@ locaties:
     singular_name: Locatie
     fields:
         title:
+            label: Locatie
             type: text
             class: large
-            group: Entry
-        teaser:
-            type: textarea
-            postfix: |
-                A text-only version of the content, that can be used to "tease"
-                the content when it's used in listing pages or search results.
-        image:
-            type: image
-            upload: entries
-        body:
-            type: article
-        video:
-            type: embed
+            group: Inhoud        
+        adres:
+            label: Adres
+            type: redactor
+            group: Inhoud
+        schema:
+            label: Trainings schema
+            type: redactor
+            group: Inhoud
+        sort:
+            type: number
+            mode: integer
+            default: 1
+            group: Inhoud
         slug:
             type: slug
             uses: title
@@ -151,21 +182,14 @@ locaties:
     relations:
         trainer:
             multiple: true
-            label: Trainer op deze plaats
-            required: false
-    taxonomy: [ categories, tags, groups ]
-    record_template: entry.twig
-    listing_template: listing.twig
+            label: Trainers op deze plaats
+            required: false        
     listing_records: 10
     default_status: published
-    order: -publishedAt
+    order: sort
     records_per_page: 10
-    icon_many: "fa:file-alt"
-    icon_one: "fa:file-alt"
-
-
-
-
+    icon_many: "fa:map"
+    icon_one: "fa:map"
 
 # The 'People' ContentType can be used to build pages about the people in your
 # company, organisation or any other kind of team.
@@ -173,35 +197,51 @@ locaties:
 trainers:
     name: Trainers
     singular_name: Trainer
-    title_format: "{name} ({description})"
-    fields:
+    title_format: "{name} (°{year_of_birth})"
+    fields:        
         name:
+            label: Naam
             type: text
             class: large
             variant: inline
             fixture_format: '{name}'
-        description:
+            group: Inhoud
+        year_of_birth:
+            label: Geboorte jaar
             type: text
-            variant: inline
-            postfix: This person's job description, title or somesuch
-            fixture_format: '{jobTitle}'
+            variant: inline            
+            group: Inhoud
         email:
+            label: Email
             type: text
             variant: inline
             fixture_format: '{safeEmail}'
-        image:
-            type: image
+            group: Inhoud
         content:
+            label: Bio
             type: redactor
-        contentlink:
-            type: text
-            label: Link
-            placeholder: 'contentType/slug or https://example.org/'
-            postfix: "Use this to add a link for this Person. This could either be an 'internal' link like <tt>page//about</tt>, if you use a contentType/slug combination. Otherwise use a proper URL, like `https://example.org`. If left blank, it'll default to the internal link to this Record's detail page."
-            fixture_format: '{url}'
+            group: Inhoud
+        image:
+            label: Beeld
+            type: image
+            group: Inhoud
+        sort:
+            type: number
+            mode: integer
+            default: 10
         slug:
             type: slug
             uses: [ name ]
+            group: Meta
+    relations:
+        locaties:
+            multiple: true
+            label: Is trainer op deze plaats 
+            required: false
+    listing_records: 20
+    default_status: published
+    order: sort
+    records_per_page: 20
     icon_one: fa:user
     icon_many: fa:users
 
@@ -234,7 +274,28 @@ blocks:
     icon_many: "fa:cubes"
     icon_one: "fa:cube"
 
-# privacy pagee ---------------------------------------------------------
+# inschrijving placeholder ----------------------------------------------------------------
+
+inschrijven:
+    name: Inschrijven
+    singular_name: Inschrijven
+    fields:
+        title:
+            type: text
+            group: content
+            label: Title
+        content:
+            type: redactor
+            group: content
+        slug:
+            type: slug
+            uses: title
+            group: Meta
+    singleton: true
+    icon_many: "fa:user-plus"
+    icon_one: "fa:user-plus"
+
+# privacy page --------------------------------------------------------------------------
 
 privacy:
     name: Privacy
@@ -255,6 +316,7 @@ privacy:
     icon_many: "fa:lock"
     icon_one: "fa:lock"
 
+# -------------------------------------------------------------------------------------------
 # Possible field types:
 #
 # text - varchar(256) - input type text.
