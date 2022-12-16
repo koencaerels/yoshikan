@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Infrastructure\Member\Database;
+namespace App\YoshiKan\Infrastructure\Database\Member;
 
 use App\YoshiKan\Domain\Model\Member\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -10,7 +10,9 @@ use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class MemberRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\MemberRepository
+final class MemberRepository
+    extends ServiceEntityRepository
+    implements \App\YoshiKan\Domain\Model\Member\MemberRepository
 {
     public const NO_ENTITY_FOUND = 'no_member_found';
 

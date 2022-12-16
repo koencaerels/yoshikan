@@ -1,0 +1,17 @@
+/* some style fixes for the general layout */
+
+.toolbar-item__brand {
+    display: none !important;
+}
+
+.admin__header--title {
+    display: none !important;
+}
+
+.admin__body--container {
+    padding: 0 !important;
+}
+
+.admin__header--topbar {
+    padding: 0 !important;
+}

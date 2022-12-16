@@ -1,9 +1,9 @@
 {% extends '@bolt/_base/layout.html.twig' %}
 
-{% block title %}
-    This is the title of the page
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block main %}
-    <p>This is the content for a user. It is currently empty.</p>
+    {{ vite_build_script_tags('mm_module','src/main.ts') }}
+    {{ vite_build_style_tags('mm_module','src/main.ts') }}
+    <div id="mm_module">Loading...</div>
 {% endblock %}
