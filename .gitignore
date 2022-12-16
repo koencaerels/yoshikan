@@ -14,6 +14,7 @@ config/extensions/*_local.yaml
 /public/thumbs/*
 !/public/thumbs/.gitkeep
 !/public/thumbs/index.html
+/public/mm_module
 ###< bolt/core ###
 
 /public/theme/build/*
