@@ -1,5 +1,5 @@
-Yoshi Kan Website + Ledenbeheer
-================================
+Yoshi-Kan Website + Ledenbeheer
+===============================
 
 Bolt CMS is an open source, adaptable platform for building and running modern websites. Built on PHP, Symfony and more. [Read the site](https://boltcms.io) for more info. 
 
