@@ -3,7 +3,9 @@
 {% block main %}
     {% if record|default %}
 
-        {% include 'partials/_image.twig' with ({'image': record|image}) %}
+        <div class="banner">
+            {% include 'partials/_image.twig' with ({'image': record|image}) %}
+        </div>
 
         <div class="content-wrapper p-10">
             <h3>{{ record|title }}</h3>

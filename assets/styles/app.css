@@ -3,7 +3,7 @@
 body {
     background-color: whitesmoke;
     font-family: 'Open Sans', sans-serif;
-    color:#4f4f4f;
+    color: #4f4f4f;
 }
 
 * {
@@ -76,6 +76,15 @@ footer {
     color: #0D47A1;
 }
 
+.banner {
+    width: 100%;
+    background-color: white;
+}
+
+.banner img {
+    margin: auto;
+}
+
 /* breadcrumb --------------------------------------------------------------------- */
 
 #breadcrumb a {
@@ -86,7 +95,7 @@ footer {
     text-decoration: none;
 }
 
-/* breadcrumb --------------------------------------------------------------------- */
+/* tables --------------------------------------------------------------------- */
 
 #schema table {
     display: block;
@@ -96,7 +105,15 @@ footer {
 
 #schema table > tbody > tr > td {
     border-bottom: 1px solid silver;
-    padding:10px;
+    padding: 10px;
+}
+
+.embed-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 /* footer ------------------------------------------------------------------------ */

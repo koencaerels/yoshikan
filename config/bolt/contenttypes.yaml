@@ -74,21 +74,30 @@ nieuws:
     singular_name: Nieuws
     fields:
         title:
+            label: Titel
             type: text
             class: large
-            group: Entry
+            group: Inhoud
         teaser:
+            label: Inleiding
             type: redactor
-            postfix: |
-                A text-only version of the content, that can be used to "tease"
-                the content when it's used in listing pages or search results.
+            group: Inhoud
         image:
+            label: Beeld
             type: image
-            upload: entries
-        body:
-            type: article
+            upload: nieuws
+            group: Inhoud        
         video:
+            label: Video
             type: embed
+            group: Inhoud
+        body:
+            label: Bericht
+            type: article
+            group: Inhoud
+        show_read_more:
+            label: Link naar detail
+            type: checkbox
         slug:
             type: slug
             uses: title
@@ -97,10 +106,7 @@ nieuws:
         locatie:
             multiple: true
             label: Nieuws voor deze locatie
-            required: false
-    taxonomy: [ categories, tags, groups ]
-    record_template: entry.twig
-    listing_template: listing.twig
+            required: false                
     listing_records: 10
     default_status: published
     order: -publishedAt

@@ -2,4 +2,80 @@
 
 {% block main %}
 
+    {% if record|default %}
+
+        <div class="content-wrapper p-2">
+
+            {# -- breadcrumb #}
+            <div id="breadcrumb" class="text-gray-400 text-sm mt-2 mb-2">
+                <a href="/">Home</a>
+                &gt; <a href="/nieuws">Nieuws</a>
+                &gt; {{ record|title }}
+            </div>
+            <hr>
+            <div class="p-2">
+                <div class="text-sm font-gray-700">{{ record.publishedAt|localdate("l F j, Y") }}</div>
+                <h2>{{ record|title }}</h2>
+
+                {% if record.teaser is not empty %}
+                    <div class="mt-2 mb-2">{{ record.teaser|raw }}</div>
+                {% endif %}
+
+                {# image field #}
+                {% if record.image.filename is not empty %}
+                    <div class="mt-2 mb-2">
+                        {{ record.image|showimage('900') }}
+                    </div>
+                {% endif %}
+
+                {# video field #}
+                {% if record.video.responsive|default is not empty %}
+                    <div class="embed-responsive"
+                         style="overflow: hidden; padding-bottom: 56.25%; position: relative; height: 0;">
+                        {{ record.video.responsive }}
+                    </div>
+                {% endif %}
+
+                {# body field #}
+                {% if record.body is not empty %}
+                    <div>{{ record.body|raw }}</div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="content-wrapper p-2">
+            {% for record in records %}
+
+                {# article rendering #}
+                <article>
+                    <div class="mt-4 mb-4"><hr></div>
+                    <div class="text-sm font-gray-700">{{ record.publishedAt|localdate("l F j, Y") }}</div>
+                    <h2>{{ record|title }}</h2>
+                    {% if record.teaser is not empty %}
+                        <div class="mt-2 mb-2">{{ record.teaser|raw }}</div>
+                    {% endif %}
+
+                    {# image field #}
+                    {% if record.image.filename is not empty %}
+                        <div class="mt-2 mb-2">
+                            {{ record.image|showimage('900') }}
+                        </div>
+                    {% endif %}
+
+                    {# video field #}
+                    {% if record.video.responsive|default is not empty %}
+                        <div class="embed-responsive"
+                             style="overflow: hidden; padding-bottom: 56.25%; position: relative; height: 0;">
+                            {{ record.video.responsive }}
+                        </div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
 {% endblock main %}
