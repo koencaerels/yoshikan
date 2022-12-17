@@ -1,5 +1,15 @@
 {% extends 'partials/_master.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('inschrijving', null, 'frontend') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('inschrijving', null, 'frontend') }}
+{% endblock %}
+
 {% block main %}
     {% if record|default %}
         <div class="content-wrapper p-10">
@@ -7,6 +17,11 @@
             <div>
                 {{ record.content }}
             </div>
+
+            <div id="appInschrijving">
+                Loading...
+            </div>
         </div>
+
     {% endif %}
 {% endblock main %}
