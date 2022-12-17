@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\YoshiKan\Domain\Model\Common;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
+
+trait IdEntity
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'uuid')]
+    private Uuid $uuid;
+
+    // ———————————————————————————————————————————————————————————————————
+    // Getters
+    // ———————————————————————————————————————————————————————————————————
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function getUuidAsString(): string
+    {
+        return $this->uuid->toRfc4122();
+    }
+
+    // ———————————————————————————————————————————————————————————————————
+    // Identify
+    // ———————————————————————————————————————————————————————————————————
+
+    public function identify(int $id, Uuid $uuid): void
+    {
+        $this->id = $id;
+        $this->uuid = $uuid;
+    }
+}

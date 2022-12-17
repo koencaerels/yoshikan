@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Member;
 
+use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
+use App\YoshiKan\Domain\Model\Common\IdEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -16,24 +18,17 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\MemberRepository::class)]
 class Member
 {
+    use IdEntity;
+    use ChecksumEntity;
     use BlameableEntity;
     use TimestampableEntity;
 
     // -------------------------------------------------------------- attributes
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(type: 'uuid')]
-    private Uuid $uuid;
-
     #[ORM\Column(length: 191)]
     private string $firstname;
 
     #[ORM\Column(length: 191)]
     private string $lastname;
-
 
     // ---------------------------------------------------------------- associations
 
@@ -45,7 +40,8 @@ class Member
         Uuid   $uuid,
         string $firstname,
         string $lastname,
-    ) {
+    )
+    {
         // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
         $this->firstname = $firstname;
@@ -62,7 +58,8 @@ class Member
         Uuid   $uuid,
         string $firstname,
         string $lastname,
-    ): self {
+    ): self
+    {
         return new self(
             $uuid,
             $firstname,
@@ -74,7 +71,8 @@ class Member
         Uuid   $uuid,
         string $firstname,
         string $lastname,
-    ): void {
+    ): void
+    {
         // -------------------------------------------------- set the attributes
         $this->firstname = $firstname;
         $this->lastname = $lastname;

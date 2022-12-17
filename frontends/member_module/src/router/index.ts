@@ -41,6 +41,11 @@ const router = createRouter({
                     component: () => import('../views/configuration/GradeView.vue')
                 },
                 {
+                    path: 'groepen',
+                    name: 'groups',
+                    component: () => import('../views/configuration/GroupView.vue')
+                },
+                {
                     path: 'locaties',
                     name: 'locations',
                     component: () => import('../views/configuration/LocationView.vue')

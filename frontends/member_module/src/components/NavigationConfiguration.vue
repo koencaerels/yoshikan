@@ -10,7 +10,7 @@ import {computed} from "vue";
 const items = computed(() => {
     let navigation = [
         {
-            label: 'Inschrijf periodes',
+            label: 'Periodes',
             icon: 'pi pi-calendar',
             to: '/configuratie/periodes'
         },
@@ -18,6 +18,11 @@ const items = computed(() => {
             label: 'Graden',
             icon: 'pi pi-star',
             to: '/configuratie/graden'
+        },
+        {
+            label: 'Groepen',
+            icon: 'pi pi-user',
+            to: '/configuratie/groepen'
         },
         {
             label: 'Locaties',

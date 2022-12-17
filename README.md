@@ -1,6 +1,17 @@
 Yoshi-Kan Website + Ledenbeheer
 ===============================
 
+### 4. Create & setup the database
+
+With following commands you can create an empty database with the table structure setup.
+If you are using docker, make sure you're in the container terminal (see above).
+
+```sh
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+```
+
+
 Bolt CMS is an open source, adaptable platform for building and running modern websites. Built on PHP, Symfony and more. [Read the site](https://boltcms.io) for more info. 
 
 ## The tests
