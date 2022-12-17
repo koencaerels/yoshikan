@@ -114,9 +114,9 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 // -- icons
-import {faTextSlash, faRectangleXmark} from '@fortawesome/free-solid-svg-icons';
+import {faMedal} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTextSlash, faRectangleXmark);
+library.add(faMedal);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 // ---------------------------------------------------------------------------------------

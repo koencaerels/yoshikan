@@ -1,5 +1,9 @@
 /* some style fixes for the general layout */
 
+body {
+    overflow: hidden;
+}
+
 .toolbar-item__brand {
     display: none !important;
 }
@@ -14,4 +18,31 @@
 
 .admin__header--topbar {
     padding: 0 !important;
+}
+
+/* -- tab fix */
+
+.p-menuitem-link:focus {
+    box-shadow: 0 0 0 0 !important;
+}
+
+/* -- toaster fix */
+
+.p-toast-message-content {
+    padding: 5px !important;
+    margin: 0 !important;
+    font-size: .9em;
+    border-width: 0 !important;
+}
+
+.p-toast-message-icon {
+    margin-left: 5px;
+}
+
+.p-toast-message-text {
+    padding-top: 6px !important;
+}
+
+.p-toast-bottom-right {
+    bottom: 30px !important;
 }

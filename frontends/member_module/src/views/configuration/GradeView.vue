@@ -1,6 +1,6 @@
 <template>
-    <div id="MemberDetailView">
-        lid detail view
+    <div id="GradeView">
+grade
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 
 <style scoped>
 
-#MemberDetailView {
+#GradeView {
 
 }
 

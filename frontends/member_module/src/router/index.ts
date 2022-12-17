@@ -28,7 +28,29 @@ const router = createRouter({
         {
             path: '/configuratie',
             name: 'member-configuration',
-            component: () => import('../views/ConfigurationView.vue')
+            component: () => import('../views/ConfigurationView.vue'),
+            children: [
+                {
+                    path: 'periodes',
+                    name: 'periods',
+                    component: () => import('../views/configuration/PeriodView.vue')
+                },
+                {
+                    path: 'graden',
+                    name: 'grades',
+                    component: () => import('../views/configuration/GradeView.vue')
+                },
+                {
+                    path: 'locaties',
+                    name: 'locations',
+                    component: () => import('../views/configuration/LocationView.vue')
+                },
+                {
+                    path: 'settings',
+                    name: 'settings',
+                    component: () => import('../views/configuration/SettingsView.vue')
+                },
+            ]
         },
     ]
 })

@@ -24,7 +24,6 @@ const items = computed(() => {
             icon: 'pi pi-cog',
             to: '/configuratie'
         },
-
     ];
     return navigation;
 });
