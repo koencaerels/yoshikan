@@ -13,34 +13,28 @@
             {{- ' - ' ~ config.get('general/payoff') -}}
         {%- endif -%}
     </title>
+    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
+    {% include 'cookie-consent.html.twig' %}
     {% block stylesheets %}
         {{ encore_entry_link_tags('tailwind', null, 'frontend') }}
         {{ encore_entry_link_tags('app', null, 'frontend') }}
         {{ encore_entry_link_tags('menu', null, 'frontend') }}
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
     {% endblock %}
-    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
-    {% include 'cookie-consent.html.twig' %}
-    <script src="https://kit.fontawesome.com/840296b248.js" crossorigin="anonymous"></script>
 </head>
 <body>
 {{ include('partials/_header.twig') }}
-
 <main>
     {% block body %}
-
         {{ widgets('main_top') }}
         {% block main %}
         {% endblock main %}
         {{ widgets('main_bottom') }}
-
     {% endblock body %}
 </main>
-
 {% block aside %}
 {% endblock aside %}
-
 {{ include('partials/_footer.twig') }}
-
 {% block javascripts %}
     {{ encore_entry_script_tags('tailwind', null, 'frontend') }}
     {{ encore_entry_script_tags('app', null, 'frontend') }}

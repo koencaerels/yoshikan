@@ -14,14 +14,15 @@
     {% if record|default %}
         <div class="content-wrapper p-10">
             <h1>{{ record|title }}</h1>
+            {# introduction #}
             <div>
                 {{ record.content }}
             </div>
-
+            {# inschrijvings modules #}
             <div id="appInschrijving">
-                Loading...
+                <img src="{{ asset('assets/oval.svg') }}" class="mx-auto"/>
             </div>
-        </div>
 
+        </div>
     {% endif %}
 {% endblock main %}
