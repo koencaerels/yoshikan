@@ -2,21 +2,21 @@
 
 namespace App\YoshiKan\Infrastructure\Web\Controller;
 
-use App\YoshiKan\Application\MemberCommandBus;
-use App\YoshiKan\Application\MemberQueryBus;
+use Symfony\Component\Routing\Annotation\Route;
+use App\YoshiKan\Application\CommandBus;
+use App\YoshiKan\Application\QueryBus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
-class MemberApiController extends AbstractController
+class ApiController extends AbstractController
 {
-    protected MemberCommandBus $commandBus;
-    protected MemberQueryBus $queryBus;
+    protected CommandBus $commandBus;
+    protected QueryBus $queryBus;
     protected array $apiAccess;
     protected string $uploadFolder;
 
@@ -39,7 +39,7 @@ class MemberApiController extends AbstractController
 
         $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
 
-        $this->queryBus = new MemberQueryBus(
+        $this->queryBus = new QueryBus(
             $this->security,
             $this->entityManager,
             $isolationMode,
@@ -47,7 +47,7 @@ class MemberApiController extends AbstractController
             $this->uploadFolder,
         );
 
-        $this->commandBus = new MemberCommandBus(
+        $this->commandBus = new CommandBus(
             $this->security,
             $this->entityManager,
             $isolationMode,
@@ -55,10 +55,14 @@ class MemberApiController extends AbstractController
         );
     }
 
-    #[Route('/mm/api', name: 'mm_api_index')]
+    // ———————————————————————————————————————————————————————————————————————————
+    // Index
+    // ———————————————————————————————————————————————————————————————————————————
+
+    #[Route('/inschrijving/api', name: 'api_index')]
     public function index(): Response
     {
-        $response = 'Yoshi Kan Member Module API';
+        $response = $this->queryBus->helloFromQueryBus();
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

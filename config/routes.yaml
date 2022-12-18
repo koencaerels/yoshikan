@@ -19,8 +19,6 @@ frontend:
 # ------------------------------------------------------------------------------
 # Place your own routes here, that have a LOWER priority than the default routes.
 
-
-
 # Routes for the project-specific functionality
 project:
     resource: '../src/Controller'
@@ -32,10 +30,10 @@ app_panel:
     prefix: '%bolt.backend_url%'
     type: annotation
 
-#member_api:
-#    resource: '../application/YoshiKan/Infrastructure/Web/Controller'
-#    prefix: /
-#    type: attribute
+member_api:
+    resource: '../application/YoshiKan/Infrastructure/Web/Controller'
+    prefix: /
+    type: annotation
     
 # ------------------------------------------------------------------------------
 # Examples:
