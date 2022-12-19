@@ -73,6 +73,19 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
         return $model;
     }
 
+    public function getActive(): Period
+    {
+        $model = $this->createQueryBuilder('t')
+            ->andWhere('t.isActive = :isActive')
+            ->setParameter('isActive', true)
+            ->getQuery()
+            ->getOneOrNullResult();
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
+        return $model;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Multiple entity functions
     // —————————————————————————————————————————————————————————————————————————
@@ -80,7 +93,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
     public function getAll(): array
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        $q->addOrderBy('t.id', 'DESC');
+        $q->addOrderBy('t.sequence', 'ASC');
         return $q->getQuery()->getResult();
     }
 }

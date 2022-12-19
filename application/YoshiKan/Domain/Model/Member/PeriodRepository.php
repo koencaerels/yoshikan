@@ -18,5 +18,7 @@ interface PeriodRepository
 
     public function getByUuid(Uuid $uuid): Period;
 
+    public function getActive(): Period;
+
     public function getAll(): array;
 }

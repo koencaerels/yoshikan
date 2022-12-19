@@ -10,9 +10,8 @@ class GroupReadModelCollection implements \JsonSerializable
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(protected array $collection)
+    public function __construct(protected array $collection = [])
     {
-        $this->collection = [];
     }
 
     // —————————————————————————————————————————————————————————————————————————

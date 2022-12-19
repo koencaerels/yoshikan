@@ -80,7 +80,7 @@ final class GradeRepository extends ServiceEntityRepository implements \App\Yosh
     public function getAll(): array
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        $q->addOrderBy('t.id', 'DESC');
+        $q->addOrderBy('t.sequence', 'ASC');
         return $q->getQuery()->getResult();
     }
 }

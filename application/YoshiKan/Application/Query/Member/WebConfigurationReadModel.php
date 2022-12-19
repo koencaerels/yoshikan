@@ -2,13 +2,12 @@
 
 namespace App\YoshiKan\Application\Query\Member;
 
-class ConfigurationReadModel implements \JsonSerializable
+class WebConfigurationReadModel implements \JsonSerializable
 {
     public function __construct(
         protected GradeReadModelCollection    $grades,
         protected LocationReadModelCollection $locations,
         protected GroupReadModelCollection    $groups,
-        protected PeriodReadModelCollection   $periods,
         protected PeriodReadModel             $activePeriod,
         protected SettingsReadModel           $settings
     ) {
@@ -24,7 +23,6 @@ class ConfigurationReadModel implements \JsonSerializable
         $json->grades = $this->getGrades()->getCollection();
         $json->locations = $this->getLocations()->getCollection();
         $json->groups = $this->getGroups()->getCollection();
-        $json->periods = $this->getPeriods()->getCollection();
         $json->activePeriod = $this->getActivePeriod();
         $json->settings = $this->getSettings();
 
@@ -58,10 +56,5 @@ class ConfigurationReadModel implements \JsonSerializable
     public function getSettings(): SettingsReadModel
     {
         return $this->settings;
-    }
-
-    public function getPeriods(): PeriodReadModelCollection
-    {
-        return $this->periods;
     }
 }
