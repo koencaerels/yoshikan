@@ -10,9 +10,12 @@ use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class GradeRepository extends ServiceEntityRepository
+final class GradeRepository
+    extends ServiceEntityRepository
+    implements \App\YoshiKan\Domain\Model\Member\GradeRepository
 {
-    public const NO_ENTITY_FOUND = 'no_grade_found';
+
+    const NO_ENTITY_FOUND = 'no_grade_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -27,4 +30,55 @@ final class GradeRepository extends ServiceEntityRepository
     {
         return Uuid::v4();
     }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Single entity functions
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function save(Grade $model): ?int
+    {
+        $model->setChecksum();
+        $em = $this->getEntityManager();
+        $em->persist($model);
+        $id = 0;
+        if ($model->getId()) $id = $model->getId();
+        return $id;
+    }
+
+    public function delete(Grade $model): bool
+    {
+        $em = $this->getEntityManager();
+        $em->remove($model);
+        return true;
+    }
+
+    public function getById(int $id): Grade
+    {
+        $model = $this->find($id);
+        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        return $model;
+    }
+
+    public function getByUuid(Uuid $uuid): Grade
+    {
+        $model = $this->createQueryBuilder('t')
+            ->andWhere('t.uuid = :uuid')
+            ->setParameter('uuid', $uuid, 'uuid')
+            ->getQuery()
+            ->getOneOrNullResult();
+        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        return $model;
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Multiple entity functions
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getAll(): array
+    {
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q->addOrderBy('t.id', 'DESC');
+        return $q->getQuery()->getResult();
+    }
+
 }

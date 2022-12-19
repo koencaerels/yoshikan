@@ -63,8 +63,7 @@ class Member
         Gender             $gender,
         Grade              $grade,
         Location           $location,
-    )
-    {
+    ) {
         // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
         $this->firstname = $firstname;
@@ -88,8 +87,7 @@ class Member
         Gender             $gender,
         Grade              $grade,
         Location           $location,
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $firstname,
@@ -104,8 +102,7 @@ class Member
     public function change(
         string $firstname,
         string $lastname,
-    ): void
-    {
+    ): void {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
     }
