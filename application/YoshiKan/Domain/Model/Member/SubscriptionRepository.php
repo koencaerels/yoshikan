@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface SubscriptionRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Subscription $model): ?int;
@@ -20,5 +19,4 @@ interface SubscriptionRepository
     public function getByUuid(Uuid $uuid): Subscription;
 
     public function getAll(): array;
-
 }

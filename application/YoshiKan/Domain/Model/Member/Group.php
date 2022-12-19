@@ -27,19 +27,89 @@ class Group
 
     // -------------------------------------------------------------- attributes
 
+    #[ORM\Column(length: 25)]
+    private string $code;
 
-    // ------------------------------------------------------------ associations
+    #[ORM\Column(length: 191)]
+    private string $name;
+
+    #[ORM\Column]
+    private int $minAge;
+
+    #[ORM\Column]
+    private int $maxAge;
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
+    private function __construct(
+        Uuid   $uuid,
+        string $code,
+        string $name,
+        int    $minAge,
+        int    $maxAge
+    ) {
+        $this->uuid = $uuid;
+        $this->code = $code;
+        $this->name = $name;
+        $this->minAge = $minAge;
+        $this->maxAge = $maxAge;
+    }
 
     // —————————————————————————————————————————————————————————————————————————
     // Maker and changers
     // —————————————————————————————————————————————————————————————————————————
 
+    public static function make(
+        Uuid   $uuid,
+        string $code,
+        string $name,
+        int    $minAge,
+        int    $maxAge,
+    ): self {
+        return new self(
+            $uuid,
+            $code,
+            $name,
+            $minAge,
+            $maxAge
+        );
+    }
+
+    public function change(
+        string $code,
+        string $name,
+        int    $minAge,
+        int    $maxAge,
+    ): void {
+        $this->code = $code;
+        $this->name = $name;
+        $this->minAge = $minAge;
+        $this->maxAge = $maxAge;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getMinAge(): int
+    {
+        return $this->minAge;
+    }
+
+    public function getMaxAge(): int
+    {
+        return $this->maxAge;
+    }
 }

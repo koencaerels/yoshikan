@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface SettingsRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Settings $model): ?int;
@@ -19,6 +18,7 @@ interface SettingsRepository
 
     public function getByUuid(Uuid $uuid): Settings;
 
-    public function getAll(): array;
+    public function findByCode(string $code): ?Settings;
 
+    public function getAll(): array;
 }

@@ -10,12 +10,9 @@ use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class LocationRepository
-    extends ServiceEntityRepository
-    implements \App\YoshiKan\Domain\Model\Member\LocationRepository
+final class LocationRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\LocationRepository
 {
-
-    const NO_ENTITY_FOUND = 'no_location_found';
+    public const NO_ENTITY_FOUND = 'no_location_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -41,7 +38,9 @@ final class LocationRepository
         $em = $this->getEntityManager();
         $em->persist($model);
         $id = 0;
-        if ($model->getId()) $id = $model->getId();
+        if ($model->getId()) {
+            $id = $model->getId();
+        }
         return $id;
     }
 
@@ -55,7 +54,9 @@ final class LocationRepository
     public function getById(int $id): Location
     {
         $model = $this->find($id);
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
 
@@ -66,7 +67,9 @@ final class LocationRepository
             ->setParameter('uuid', $uuid, 'uuid')
             ->getQuery()
             ->getOneOrNullResult();
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
 
@@ -80,5 +83,4 @@ final class LocationRepository
         $q->addOrderBy('t.id', 'DESC');
         return $q->getQuery()->getResult();
     }
-
 }

@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface PeriodRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Period $model): ?int;
@@ -20,5 +19,4 @@ interface PeriodRepository
     public function getByUuid(Uuid $uuid): Period;
 
     public function getAll(): array;
-
 }

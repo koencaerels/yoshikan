@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface LocationRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Location $model): ?int;
@@ -20,5 +19,4 @@ interface LocationRepository
     public function getByUuid(Uuid $uuid): Location;
 
     public function getAll(): array;
-
 }

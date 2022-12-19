@@ -28,6 +28,11 @@ class Location
 
     // -------------------------------------------------------------- attributes
 
+    #[ORM\Column(length: 25)]
+    private string $code;
+
+    #[ORM\Column(length: 191)]
+    private string $name;
 
     // ------------------------------------------------------------ associations
 
@@ -43,12 +48,65 @@ class Location
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
+    private function __construct(
+        Uuid   $uuid,
+        string $code,
+        string $name,
+    ) {
+        $this->uuid = $uuid;
+        $this->code = $code;
+        $this->name = $name;
+    }
 
     // —————————————————————————————————————————————————————————————————————————
     // Maker and changers
     // —————————————————————————————————————————————————————————————————————————
 
+    public static function make(
+        Uuid   $uuid,
+        string $code,
+        string $name,
+    ): self {
+        return new self(
+            $uuid,
+            $code,
+            $name,
+        );
+    }
+
+    public function change(
+        string $code,
+        string $name,
+    ): void {
+        $this->code = $code;
+        $this->name = $name;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Other model getters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getMembers(): array
+    {
+        return $this->members->getValues();
+    }
+
+    public function getSubscriptions(): array
+    {
+        return $this->subscriptions->getValues();
+    }
 }

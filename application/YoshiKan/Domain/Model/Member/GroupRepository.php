@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface GroupRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Group $model): ?int;
@@ -20,5 +19,4 @@ interface GroupRepository
     public function getByUuid(Uuid $uuid): Group;
 
     public function getAll(): array;
-
 }
