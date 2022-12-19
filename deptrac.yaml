@@ -15,11 +15,11 @@ parameters:
         - name: Domain
           collectors:
               - type: className
-                regex: .*\\Domain\\.*
+                regex: .*\\Domain\\.*        
     ruleset:
         Infrastructure:
             - Application
             - Domain
         Application:
-            - Domain
+            - Domain      
         Domain:
