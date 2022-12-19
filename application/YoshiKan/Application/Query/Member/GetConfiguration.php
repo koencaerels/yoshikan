@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
@@ -12,10 +23,10 @@ use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 class GetConfiguration
 {
     public function __construct(
-        protected GradeRepository    $gradeRepository,
+        protected GradeRepository $gradeRepository,
         protected LocationRepository $locationRepository,
-        protected GroupRepository    $groupRepository,
-        protected PeriodRepository   $periodRepository,
+        protected GroupRepository $groupRepository,
+        protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository
     ) {
     }

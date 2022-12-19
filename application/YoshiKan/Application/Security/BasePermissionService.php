@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Security;
 
 use Bolt\Entity\User;
@@ -15,9 +26,9 @@ class BasePermissionService
     // ————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected ?User                  $user,
+        protected ?User $user,
         protected EntityManagerInterface $entityManager,
-        protected bool                   $isolationMode = false
+        protected bool $isolationMode = false
     ) {
     }
 
@@ -41,7 +52,7 @@ class BasePermissionService
             }
             if (!$isAllowed) {
                 throw new \Exception(self::NOT_ALLOWED_ROLE);
-                exit();
+                exit;
             }
         }
     }

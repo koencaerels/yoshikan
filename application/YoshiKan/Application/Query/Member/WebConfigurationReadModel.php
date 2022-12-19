@@ -1,15 +1,26 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Query\Member;
 
 class WebConfigurationReadModel implements \JsonSerializable
 {
     public function __construct(
-        protected GradeReadModelCollection    $grades,
+        protected GradeReadModelCollection $grades,
         protected LocationReadModelCollection $locations,
-        protected GroupReadModelCollection    $groups,
-        protected PeriodReadModel             $activePeriod,
-        protected SettingsReadModel           $settings
+        protected GroupReadModelCollection $groups,
+        protected PeriodReadModel $activePeriod,
+        protected SettingsReadModel $settings
     ) {
     }
 

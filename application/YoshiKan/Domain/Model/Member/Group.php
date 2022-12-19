@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Member;
@@ -7,10 +16,10 @@ namespace App\YoshiKan\Domain\Model\Member;
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -44,11 +53,11 @@ class Group
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
-        int    $minAge,
-        int    $maxAge
+        int $minAge,
+        int $maxAge
     ) {
         $this->uuid = $uuid;
         $this->code = $code;
@@ -62,11 +71,11 @@ class Group
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
-        int    $minAge,
-        int    $maxAge,
+        int $minAge,
+        int $maxAge,
     ): self {
         return new self(
             $uuid,
@@ -80,8 +89,8 @@ class Group
     public function change(
         string $code,
         string $name,
-        int    $minAge,
-        int    $maxAge,
+        int $minAge,
+        int $maxAge,
     ): void {
         $this->code = $code;
         $this->name = $name;

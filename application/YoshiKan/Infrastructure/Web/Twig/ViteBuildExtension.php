@@ -53,6 +53,7 @@ class ViteBuildExtension extends AbstractExtension
 
     /**
      * @return array<mixed>
+     *
      * @throws \JsonException
      */
     private function readManifestFile(string $app): array

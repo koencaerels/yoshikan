@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Member;
@@ -7,11 +16,11 @@ namespace App\YoshiKan\Domain\Model\Member;
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -36,12 +45,12 @@ class Location
 
     // ------------------------------------------------------------ associations
 
-    #[ORM\OneToMany(mappedBy: "location", targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: "EXTRA_LAZY")]
-    #[ORM\OrderBy(["id" => "DESC"])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY')]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $members;
 
-    #[ORM\OneToMany(mappedBy: "location", targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: "EXTRA_LAZY")]
-    #[ORM\OrderBy(["id" => "DESC"])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $subscriptions;
 
     // —————————————————————————————————————————————————————————————————————————
@@ -49,7 +58,7 @@ class Location
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
     ) {
@@ -63,7 +72,7 @@ class Location
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
     ): self {

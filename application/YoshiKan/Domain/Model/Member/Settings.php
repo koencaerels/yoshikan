@@ -1,17 +1,24 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Member;
 
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
-use App\YoshiKan\Domain\Model\Common\SequenceEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @Audit\Auditable()
@@ -26,13 +33,11 @@ class Settings
 
     // -------------------------------------------------------------- attributes
 
-
     // ------------------------------------------------------------ associations
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
-
 
     // —————————————————————————————————————————————————————————————————————————
     // Maker and changers

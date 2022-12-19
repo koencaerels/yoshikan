@@ -1,16 +1,25 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Member;
 
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -39,15 +48,15 @@ class Member
 
     // ----------------------------------------------------------- associations
 
-    #[ORM\OneToMany(mappedBy: "member", targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: "EXTRA_LAZY")]
-    #[ORM\OrderBy(["id" => "DESC"])]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $subscriptions;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: "EXTRA_LAZY", inversedBy: "members")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: 'EXTRA_LAZY', inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private Grade $grade;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Location", fetch: "EXTRA_LAZY", inversedBy: "members")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Location", fetch: 'EXTRA_LAZY', inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
@@ -56,13 +65,13 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
+        Gender $gender,
+        Grade $grade,
+        Location $location,
     ) {
         // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
@@ -80,13 +89,13 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
+        Gender $gender,
+        Grade $grade,
+        Location $location,
     ): self {
         return new self(
             $uuid,

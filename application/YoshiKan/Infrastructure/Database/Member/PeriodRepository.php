@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Member;
@@ -41,6 +50,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
         if ($model->getId()) {
             $id = $model->getId();
         }
+
         return $id;
     }
 
@@ -48,6 +58,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
     {
         $em = $this->getEntityManager();
         $em->remove($model);
+
         return true;
     }
 
@@ -57,6 +68,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
         }
+
         return $model;
     }
 
@@ -70,6 +82,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
         }
+
         return $model;
     }
 
@@ -83,6 +96,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
         }
+
         return $model;
     }
 
@@ -94,6 +108,7 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
         $q->addOrderBy('t.sequence', 'ASC');
+
         return $q->getQuery()->getResult();
     }
 }

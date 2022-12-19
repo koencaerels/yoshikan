@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Infrastructure\Web\Controller;
 
 use App\YoshiKan\Application\MemberCommandBus;
@@ -50,14 +61,14 @@ class MemberApiController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected Environment            $twig,
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected Environment $twig,
     ) {
         $this->apiAccess = [];
         $isolationMode = false;
-        if ($this->appKernel->getEnvironment() == 'dev') {
-            $this->apiAccess = array('Access-Control-Allow-Origin' => '*');
+        if ('dev' == $this->appKernel->getEnvironment()) {
+            $this->apiAccess = ['Access-Control-Allow-Origin' => '*'];
             $isolationMode = true;
         }
 
@@ -98,6 +109,7 @@ class MemberApiController extends AbstractController
     public function index(): Response
     {
         $response = 'Yoshi-Kan: Member Module API';
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }
