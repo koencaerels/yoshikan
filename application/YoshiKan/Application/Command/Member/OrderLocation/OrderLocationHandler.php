@@ -25,8 +25,9 @@ class OrderLocationHandler
             $model = $this->repo->getById($sequenceId);
             $model->setSequence($sequence);
             $this->repo->save($model);
-            $sequence++;
+            ++$sequence;
         }
+
         return true;
     }
 }
