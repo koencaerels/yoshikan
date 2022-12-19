@@ -51,6 +51,7 @@ class ApiController extends AbstractController
             $this->security,
             $this->entityManager,
             $isolationMode,
+            $this->twig,
             $this->uploadFolder,
         );
     }
