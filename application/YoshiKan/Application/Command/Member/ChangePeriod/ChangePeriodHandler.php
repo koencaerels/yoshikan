@@ -1,8 +1,44 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Command\Member\ChangePeriod;
+
+use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 
 class ChangePeriodHandler
 {
+    // ———————————————————————————————————————————————————————————————
+    // Constructor
+    // ———————————————————————————————————————————————————————————————
 
+    public function __construct(protected PeriodRepository $repo)
+    {
+    }
+
+    // ———————————————————————————————————————————————————————————————
+    // Handle
+    // ———————————————————————————————————————————————————————————————
+
+    public function Change(ChangePeriod $command): bool
+    {
+        $model = $this->repo->getById($command->getId());
+        $model->change(
+            $command->getId(),
+            $command->getName(),
+            $command->getStartDate(),
+            $command->getEndDate(),
+        );
+        $this->repo->save($model);
+        return true;
+    }
 }

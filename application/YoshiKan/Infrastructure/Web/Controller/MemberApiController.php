@@ -22,14 +22,6 @@ use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_configuration;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_grade;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_group;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_location;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_member;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_period;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_settings;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\routes_subscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,15 +33,6 @@ use Twig\Environment;
 
 class MemberApiController extends AbstractController
 {
-    use routes_configuration;
-    use routes_grade;
-    use routes_group;
-    use routes_location;
-    use routes_member;
-    use routes_period;
-    use routes_settings;
-    use routes_subscription;
-
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
     protected array $apiAccess;

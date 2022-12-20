@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Query\Member\get_configuration;
+use App\YoshiKan\Application\Query\Member\get_member;
+use App\YoshiKan\Application\Query\Member\get_subscription;
 use App\YoshiKan\Application\Security\BasePermissionService;
-use App\YoshiKan\Application\Traits\Member\query_configuration;
-use App\YoshiKan\Application\Traits\Member\query_member;
-use App\YoshiKan\Application\Traits\Member\query_subscription;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
@@ -30,9 +30,9 @@ use Twig\Environment;
 
 class MemberQueryBus
 {
-    use query_configuration;
-    use query_subscription;
-    use query_member;
+    use get_configuration;
+    use get_subscription;
+    use get_member;
 
     protected BasePermissionService $permission;
 

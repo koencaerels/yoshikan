@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Traits\Member;
+namespace App\YoshiKan\Application\Query\Member;
 
-trait command_grade
+trait get_subscription
 {
 }

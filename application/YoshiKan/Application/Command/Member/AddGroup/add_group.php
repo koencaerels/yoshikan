@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Traits\Member;
+namespace App\YoshiKan\Application\Command\Member\AddGroup;
 
-trait query_configuration
+trait add_group
 {
 }

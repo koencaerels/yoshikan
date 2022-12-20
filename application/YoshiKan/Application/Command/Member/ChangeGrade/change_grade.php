@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
+namespace App\YoshiKan\Application\Command\Member\ChangeGrade;
 
-trait routes_location
+trait change_grade
 {
 }

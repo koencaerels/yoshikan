@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Traits\Member;
+namespace App\YoshiKan\Application\Command\Member\SaveSettings;
 
-trait query_subscription
+trait save_settings
 {
 }

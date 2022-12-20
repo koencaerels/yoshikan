@@ -85,7 +85,6 @@ class Grade
     }
 
     public function change(
-        Uuid $uuid,
         string $code,
         string $name,
         string $color,

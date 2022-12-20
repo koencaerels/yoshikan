@@ -13,14 +13,20 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Command\Member\AddGrade\add_grade;
+use App\YoshiKan\Application\Command\Member\AddGroup\add_group;
+use App\YoshiKan\Application\Command\Member\AddLocation\add_location;
+use App\YoshiKan\Application\Command\Member\AddPeriod\add_period;
+use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
+use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
+use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
+use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
+use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
+use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
+use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
+use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
+use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Security\BasePermissionService;
-use App\YoshiKan\Application\Traits\Member\command_grade;
-use App\YoshiKan\Application\Traits\Member\command_group;
-use App\YoshiKan\Application\Traits\Member\command_location;
-use App\YoshiKan\Application\Traits\Member\command_member;
-use App\YoshiKan\Application\Traits\Member\command_period;
-use App\YoshiKan\Application\Traits\Member\command_settings;
-use App\YoshiKan\Application\Traits\Member\command_subscription;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
@@ -34,13 +40,19 @@ use Twig\Environment;
 
 class MemberCommandBus
 {
-    use command_grade;
-    use command_group;
-    use command_location;
-    use command_period;
-    use command_settings;
-    use command_member;
-    use command_subscription;
+    use add_grade;
+    use change_grade;
+    use order_grade;
+    use add_group;
+    use change_group;
+    use order_group;
+    use add_period;
+    use change_period;
+    use order_period;
+    use add_location;
+    use change_location;
+    use order_location;
+    use save_settings;
 
     protected BasePermissionService $permission;
 
@@ -49,17 +61,17 @@ class MemberCommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security $security,
+        protected Security               $security,
         protected EntityManagerInterface $entityManager,
-        protected bool $isolationMode,
-        protected Environment $twig,
-        protected string $uploadFolder,
-        protected GradeRepository $gradeRepository,
-        protected GroupRepository $groupRepository,
-        protected LocationRepository $locationRepository,
-        protected MemberRepository $memberRepository,
-        protected PeriodRepository $periodRepository,
-        protected SettingsRepository $settingsRepository,
+        protected bool                   $isolationMode,
+        protected Environment            $twig,
+        protected string                 $uploadFolder,
+        protected GradeRepository        $gradeRepository,
+        protected GroupRepository        $groupRepository,
+        protected LocationRepository     $locationRepository,
+        protected MemberRepository       $memberRepository,
+        protected PeriodRepository       $periodRepository,
+        protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
     ) {
         $this->permission = new BasePermissionService(

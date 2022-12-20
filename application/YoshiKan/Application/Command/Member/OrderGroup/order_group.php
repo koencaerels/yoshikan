@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
+namespace App\YoshiKan\Application\Command\Member\OrderGroup;
 
-trait routes_subscription
+trait order_group
 {
 }
