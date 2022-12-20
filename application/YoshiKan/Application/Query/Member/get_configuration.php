@@ -15,4 +15,33 @@ namespace App\YoshiKan\Application\Query\Member;
 
 trait get_configuration
 {
+
+    public function getWebConfiguration(): WebConfigurationReadModel
+    {
+        $query = new GetConfiguration(
+            $this->gradeRepository,
+            $this->locationRepository,
+            $this->groupRepository,
+            $this->periodRepository,
+            $this->settingsRepository
+        );
+
+        return $query->getWebConfiguration();
+    }
+
+    public function getConfiguration(): ConfigurationReadModel
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $query = new GetConfiguration(
+            $this->gradeRepository,
+            $this->locationRepository,
+            $this->groupRepository,
+            $this->periodRepository,
+            $this->settingsRepository
+        );
+
+        return $query->getFullConfiguration();
+    }
+
 }

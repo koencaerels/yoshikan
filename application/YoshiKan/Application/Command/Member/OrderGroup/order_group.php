@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\OrderGroup;
 
 trait order_group
 {
+    public function orderGroup(\stdClass $jsonCommand): bool
+    {
+        $command = OrderGroup::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new OrderGroupHandler($this->groupRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }

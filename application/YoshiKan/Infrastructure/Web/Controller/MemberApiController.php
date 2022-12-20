@@ -22,6 +22,10 @@ use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,6 +37,12 @@ use Twig\Environment;
 
 class MemberApiController extends AbstractController
 {
+    use grade_routes;
+    use group_routes;
+    use period_routes;
+    use location_routes;
+    use configuration_routes;
+
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
     protected array $apiAccess;
@@ -44,9 +54,9 @@ class MemberApiController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security $security,
-        protected KernelInterface $appKernel,
-        protected Environment $twig,
+        protected Security               $security,
+        protected KernelInterface        $appKernel,
+        protected Environment            $twig,
     ) {
         $this->apiAccess = [];
         $isolationMode = false;

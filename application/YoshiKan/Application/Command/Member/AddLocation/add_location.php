@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\AddLocation;
 
 trait add_location
 {
+    public function addLocation(\stdClass $jsonCommand): bool
+    {
+        $command = AddLocation::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new AddLocationHandler($this->locationRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }

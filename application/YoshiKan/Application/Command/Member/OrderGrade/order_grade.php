@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\OrderGrade;
 
 trait order_grade
 {
+    public function orderGrade(\stdClass $jsonCommand): bool
+    {
+        $command = OrderGrade::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new OrderGradeHandler($this->gradeRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }

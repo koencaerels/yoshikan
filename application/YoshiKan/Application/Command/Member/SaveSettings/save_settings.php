@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\SaveSettings;
 
 trait save_settings
 {
+    public function saveSettings(\stdClass $jsonCommand): bool
+    {
+        $command = SaveSettings::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new SaveSettingsHandler($this->groupRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }

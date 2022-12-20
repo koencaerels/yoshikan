@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\OrderPeriod;
 
 trait order_period
 {
+    public function orderPeriod(\stdClass $jsonCommand): bool
+    {
+        $command = OrderPeriod::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new OrderPeriodHandler($this->periodRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }

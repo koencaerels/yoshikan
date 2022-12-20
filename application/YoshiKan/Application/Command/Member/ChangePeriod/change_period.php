@@ -15,4 +15,16 @@ namespace App\YoshiKan\Application\Command\Member\ChangePeriod;
 
 trait change_period
 {
+    public function changePeriod(\stdClass $jsonCommand): bool
+    {
+        $command = ChangePeriod::hydrateFromJson($jsonCommand);
+
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $handler = new ChangePeriodHandler($this->periodRepository);
+        $handler->go($command);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }
