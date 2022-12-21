@@ -5,8 +5,8 @@
             <tr class="border-b-[1px]">
                 <th width="5%">&nbsp;</th>
                 <th width="30%">Code</th>
-                <th width="30%">Name</th>
-                <th width="30%">Color</th>
+                <th width="30%">Naam</th>
+                <th width="30%">Kleur</th>
                 <th width="30%">&nbsp;</th>
             </tr>
             </thead>

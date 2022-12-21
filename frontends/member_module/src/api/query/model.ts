@@ -11,13 +11,13 @@ export interface Settings {
     id: number;
     uuid: string;
     code: string;
-    yearlyFee2Training: number;
-    yearlyFee1Training: number;
-    halfYearlyFee2Training: number;
-    halfYearlyFee1Training: number;
-    extraTrainingFee: number;
-    newMemberSubscriptionFee: number;
-    familyDiscount: number;
+    yearlyFee2Training: string;
+    yearlyFee1Training: string;
+    halfYearlyFee2Training: string;
+    halfYearlyFee1Training: string;
+    extraTrainingFee: string;
+    newMemberSubscriptionFee: string;
+    familyDiscount: string;
 }
 
 export interface Grade {

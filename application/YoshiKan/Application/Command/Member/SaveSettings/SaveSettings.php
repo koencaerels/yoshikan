@@ -28,7 +28,8 @@ class SaveSettings
         protected float  $extraTrainingFee,
         protected float  $newMemberSubscriptionFee,
         protected int    $familyDiscount,
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -39,13 +40,13 @@ class SaveSettings
     {
         return new self(
             $json->code,
-            $json->yearlyFee2Training,
-            $json->yearlyFee1Training,
-            $json->halfYearlyFee2Training,
-            $json->halfYearlyFee1Training,
-            $json->extraTrainingFee,
-            $json->newMemberSubscriptionFee,
-            $json->familyDiscount,
+            floatval($json->yearlyFee2Training),
+            floatval($json->yearlyFee1Training),
+            floatval($json->halfYearlyFee2Training),
+            floatval($json->halfYearlyFee1Training),
+            floatval($json->extraTrainingFee),
+            floatval($json->newMemberSubscriptionFee),
+            intval($json->familyDiscount),
         );
     }
 

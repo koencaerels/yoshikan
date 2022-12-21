@@ -27,6 +27,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,6 +43,7 @@ class MemberApiController extends AbstractController
     use group_routes;
     use period_routes;
     use location_routes;
+    use settings_routes;
     use configuration_routes;
 
     protected MemberCommandBus $commandBus;

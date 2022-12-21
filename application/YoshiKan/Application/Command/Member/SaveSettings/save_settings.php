@@ -21,7 +21,7 @@ trait save_settings
 
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $handler = new SaveSettingsHandler($this->groupRepository);
+        $handler = new SaveSettingsHandler($this->settingsRepository);
         $handler->go($command);
         $this->entityManager->flush();
 
