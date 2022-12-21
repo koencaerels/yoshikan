@@ -38,8 +38,8 @@ class ChangeGroup
             $json->id,
             $json->code,
             $json->name,
-            $json->minAge,
-            $json->maxAge,
+            intval($json->minAge),
+            intval($json->maxAge),
         );
     }
 

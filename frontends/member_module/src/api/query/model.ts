@@ -33,8 +33,8 @@ export interface Group {
     uuid: string;
     code: string;
     name: string;
-    minAge: number;
-    maxAge: number;
+    minAge: string;
+    maxAge: string;
 }
 
 export interface Location {

@@ -38,7 +38,6 @@ import {useToast} from "primevue/usetoast";
 
 const appStore = useAppStore();
 const toaster = useToast();
-const isSaving = ref<boolean>(false);
 const dragging = ref<boolean>(false);
 
 const sequence = computed((): OrderGradeCommand => {

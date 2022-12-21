@@ -12,6 +12,7 @@
                     <i v-if="v$.yearlyFee2Training.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -25,6 +26,7 @@
                     <i v-if="v$.yearlyFee1Training.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -38,6 +40,7 @@
                     <i v-if="v$.halfYearlyFee2Training.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -51,6 +54,7 @@
                     <i v-if="v$.halfYearlyFee1Training.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -64,6 +68,7 @@
                     <i v-if="v$.extraTrainingFee.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -77,6 +82,7 @@
                     <i v-if="v$.newMemberSubscriptionFee.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
@@ -90,6 +96,7 @@
                     <i v-if="v$.familyDiscount.$invalid" class="pi pi-times text-red-600"/>
                 </span>
             </div>
+            <div class="basis-1/12 mt-2 ml-2">%</div>
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">

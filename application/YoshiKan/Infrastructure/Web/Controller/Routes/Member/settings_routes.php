@@ -15,5 +15,4 @@ trait settings_routes
         $response = $this->commandBus->saveSettings($jsonCommand);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
-
 }

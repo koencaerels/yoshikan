@@ -8,11 +8,10 @@
 {#*/#}
 
 {% extends '@bolt/_base/layout.html.twig' %}
-
 {% block title %}{% endblock %}
 
 {% block main %}
+    <div id="mm_module">Loading...</div>
     {{ vite_build_script_tags('mm_module','src/main.ts') }}
     {{ vite_build_style_tags('mm_module','src/main.ts') }}
-    <div id="mm_module">Loading...</div>
 {% endblock %}

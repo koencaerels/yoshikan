@@ -26,14 +26,14 @@
         <td v-if="!isView">&nbsp;</td>
         <td v-if="!isView" class="pl-2">
             <span class="p-input-icon-right">
-                <InputText class="p-inputtext-sm" placeholder="code" v-model="command.code"/>
+                <InputText class="p-inputtext-sm w-full" placeholder="code" v-model="command.code"/>
                 <i v-if="!edit$.code.$invalid" class="pi pi-check text-green-600"/>
                 <i v-if="edit$.code.$invalid" class="pi pi-times text-red-600"/>
             </span>
         </td>
         <td v-if="!isView" class="pl-2">
             <span class="p-input-icon-right">
-                <InputText class="p-inputtext-sm" placeholder="name" v-model="command.name"/>
+                <InputText class="p-inputtext-sm w-full" placeholder="name" v-model="command.name"/>
                 <i v-if="!edit$.name.$invalid" class="pi pi-check text-green-600"/>
                 <i v-if="edit$.name.$invalid" class="pi pi-times text-red-600"/>
             </span>
@@ -41,7 +41,7 @@
         <td v-if="!isView" class="pl-2">
             <div class="flex">
                 <ColorPicker v-model="command.color"></ColorPicker>
-                <div class="pl-2 mt-2">#{{ command.color }}</div>
+                <div class="pl-2 mt-2 w-24">#{{ command.color }}</div>
                 <div class="pl-2 mt-2">
                     <i v-if="!edit$.color.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="edit$.color.$invalid" class="pi pi-times text-red-600"/>

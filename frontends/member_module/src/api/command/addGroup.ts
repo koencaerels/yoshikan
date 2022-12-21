@@ -2,13 +2,9 @@ import axios from "axios";
 
 export interface AddGroupCommand {
     code: string;
-
     name: string;
-
-    minAge: number;
-
-    maxAge: number;
-
+    minAge: string;
+    maxAge: string;
 }
 
 export async function addGroup(command: AddGroupCommand) {

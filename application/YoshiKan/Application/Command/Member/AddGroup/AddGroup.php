@@ -36,8 +36,8 @@ class AddGroup
         return new self(
             $json->code,
             $json->name,
-            $json->minAge,
-            $json->maxAge,
+            intval($json->minAge),
+            intval($json->maxAge),
         );
     }
 

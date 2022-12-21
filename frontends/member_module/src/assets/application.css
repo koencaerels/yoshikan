@@ -20,6 +20,15 @@ body {
     padding: 0 !important;
 }
 
+/* -- color picker fix -- */
+
+input[readonly] {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* -- drag and drop ghost -- */
+
 .ghost::after {
     background: white;
     position: absolute;

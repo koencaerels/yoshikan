@@ -28,8 +28,7 @@ class SaveSettings
         protected float  $extraTrainingFee,
         protected float  $newMemberSubscriptionFee,
         protected int    $familyDiscount,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
