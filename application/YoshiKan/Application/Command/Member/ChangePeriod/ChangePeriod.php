@@ -22,9 +22,12 @@ class ChangePeriod
     private function __construct(
         protected int                $id,
         protected string             $name,
+        protected string             $code,
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
-    ) {
+        protected bool               $isActive,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -35,9 +38,11 @@ class ChangePeriod
     {
         return new self(
             $json->id,
+            $json->code,
             $json->name,
             $json->startDate,
             $json->endDate,
+            $json->isActive,
         );
     }
 
@@ -48,6 +53,11 @@ class ChangePeriod
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
     }
 
     public function getName(): string
@@ -64,4 +74,10 @@ class ChangePeriod
     {
         return $this->endDate;
     }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
 }

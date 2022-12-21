@@ -1,17 +1,11 @@
 <template>
     <div id="PeriodView">
-period
+        <div class="configurationWrapper">
+            <periods/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-
+import Periods from "@/components/configuration/Periods.vue";
 </script>
-
-<style scoped>
-
-#PeriodView {
-
-}
-
-</style>

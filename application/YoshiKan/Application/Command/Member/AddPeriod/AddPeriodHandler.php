@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\AddPeriod;
 
+use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 
 class AddPeriodHandler
@@ -27,12 +28,15 @@ class AddPeriodHandler
 
     public function go(AddPeriod $command): bool
     {
-//        $command->getCode()
-//        $command->getName()
-//        $command->getStartDate()
-//        $command->getEndDate()
-//        $command->isActive()
-//        $this->repo->save($model);
+        $period = Period::make(
+            $this->repo->nextIdentity(),
+            $command->getCode(),
+            $command->getName(),
+            $command->getStartDate(),
+            $command->getEndDate(),
+        );
+        $period->setSequence($this->repo->getMaxSequence()+1);
+        $this->repo->save($period);
 
         return true;
     }

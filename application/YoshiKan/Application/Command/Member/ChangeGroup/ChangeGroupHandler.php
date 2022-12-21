@@ -32,16 +32,14 @@ class ChangeGroupHandler
     public function go(ChangeGroup $command): bool
     {
         $model = $this->repo->getById($command->getId());
-
-        // ...
-//        $command->getId()
-//        $command->getCode()
-//        $command->getName()
-//        $command->getMinAge()
-//        $command->getMaxAge()
-        // ...
-
+        $model->change(
+            $command->getCode(),
+            $command->getName(),
+            $command->getMinAge(),
+            $command->getMaxAge(),
+        );
         $this->repo->save($model);
+
         return true;
     }
 }

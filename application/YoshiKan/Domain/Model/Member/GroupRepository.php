@@ -28,4 +28,6 @@ interface GroupRepository
     public function getByUuid(Uuid $uuid): Group;
 
     public function getAll(): array;
+
+    public function getMaxSequence(): int;
 }

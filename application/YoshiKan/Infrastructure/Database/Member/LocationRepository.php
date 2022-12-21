@@ -86,6 +86,21 @@ final class LocationRepository extends ServiceEntityRepository implements \App\Y
         return $model;
     }
 
+    public function getMaxSequence(): int
+    {
+        $model = $this->createQueryBuilder('t')
+            ->addOrderBy('t.sequence', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (is_null($model)) {
+            return 0;
+        }
+
+        return $model->getSequence();
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Multiple entity functions
     // —————————————————————————————————————————————————————————————————————————

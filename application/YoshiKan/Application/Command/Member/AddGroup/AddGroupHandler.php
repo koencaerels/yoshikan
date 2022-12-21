@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\AddGroup;
 
+use App\YoshiKan\Domain\Model\Member\Group;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 
 class AddGroupHandler
@@ -31,13 +32,15 @@ class AddGroupHandler
 
     public function go(AddGroup $command): bool
     {
-        // ...
-//        $command->getCode()
-//        $command->getName()
-//        $command->getMinAge()
-//        $command->getMaxAge()
-        // ...
-//        $this->repo->save($model);
+        $group = Group::make(
+            $this->repo->nextIdentity(),
+            $command->getCode(),
+            $command->getName(),
+            $command->getMinAge(),
+            $command->getMaxAge(),
+        );
+        $group->setSequence($this->repo->getMaxSequence()+1);
+        $this->repo->save($group);
 
         return true;
     }

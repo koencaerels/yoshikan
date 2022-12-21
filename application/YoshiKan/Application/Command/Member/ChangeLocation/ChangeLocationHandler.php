@@ -31,13 +31,13 @@ class ChangeLocationHandler
 
     public function go(ChangeLocation $command): bool
     {
-        $model = $this->locationRepo->getById($command->getId());
+        $model = $this->repo->getById($command->getId());
+        $model->change(
+            $command->getCode(),
+            $command->getName(),
+        );
+        $this->repo->save($model);
 
-//        $command->getId()
-//        $command->getCode()
-//        $command->getName()
-
-        $this->locationRepo->save($model);
         return true;
     }
 }

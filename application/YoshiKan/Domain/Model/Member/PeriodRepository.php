@@ -30,4 +30,6 @@ interface PeriodRepository
     public function getActive(): Period;
 
     public function getAll(): array;
+
+    public function getMaxSequence(): int;
 }

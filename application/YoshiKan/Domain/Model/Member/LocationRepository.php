@@ -28,4 +28,6 @@ interface LocationRepository
     public function getByUuid(Uuid $uuid): Location;
 
     public function getAll(): array;
+
+    public function getMaxSequence(): int;
 }

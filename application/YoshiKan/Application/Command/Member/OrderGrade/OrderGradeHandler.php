@@ -29,7 +29,7 @@ class OrderGradeHandler
     // Handle
     // ———————————————————————————————————————————————————————————————
 
-    public function go(OrderGroup $command): bool
+    public function go(OrderGrade $command): bool
     {
         $sequence = 0;
         foreach ($command->getSequence() as $sequenceId) {

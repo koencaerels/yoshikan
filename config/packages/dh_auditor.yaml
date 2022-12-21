@@ -4,5 +4,9 @@ dh_auditor:
     enabled: true
     providers:
         doctrine:
+            viewer: true
             table_prefix: null
-            table_suffix: '_audit'
+            table_suffix: '_audit'            
+            ignored_columns:
+                - createdAt
+                - updatedAt

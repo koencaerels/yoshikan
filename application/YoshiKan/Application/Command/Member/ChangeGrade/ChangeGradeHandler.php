@@ -38,6 +38,7 @@ class ChangeGradeHandler
             $command->getColor()
         );
         $this->gradeRepo->save($model);
+
         return true;
     }
 }

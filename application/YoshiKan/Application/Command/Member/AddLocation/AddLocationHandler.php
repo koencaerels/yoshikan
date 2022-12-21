@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\AddLocation;
 
+use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 
 class AddLocationHandler
@@ -31,9 +32,13 @@ class AddLocationHandler
 
     public function go(AddLocation $command): bool
     {
-//        $command->getCode()
-//        $command->getName()
-//        $this->locationRepo->save($model);
+        $location = Location::make(
+            $this->repo->nextIdentity(),
+            $command->getCode(),
+            $command->getName(),
+        );
+        $location->setSequence($this->repo->getMaxSequence()+1);
+        $this->repo->save($location);
 
         return true;
     }

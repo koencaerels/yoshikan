@@ -1,17 +1,11 @@
 <template>
     <div id="SettingsView">
-settings
+        <div class="configurationWrapper">
+            <settings/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-
+import Settings from "@/components/configuration/Settings.vue";
 </script>
-
-<style scoped>
-
-#SettingsView {
-
-}
-
-</style>

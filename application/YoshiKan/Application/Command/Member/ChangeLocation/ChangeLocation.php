@@ -15,4 +15,47 @@ namespace App\YoshiKan\Application\Command\Member\ChangeLocation;
 
 class ChangeLocation
 {
+    // —————————————————————————————————————————————————————————————————————————
+    // Constructor
+    // —————————————————————————————————————————————————————————————————————————
+
+    private function __construct(
+        protected int    $id,
+        protected string $code,
+        protected string $name,
+    )
+    {
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Hydrate from a json command
+    // —————————————————————————————————————————————————————————————————————————
+
+    public static function hydrateFromJson($json): self
+    {
+        return new self(
+            $json->id,
+            $json->code,
+            $json->name,
+        );
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Getters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

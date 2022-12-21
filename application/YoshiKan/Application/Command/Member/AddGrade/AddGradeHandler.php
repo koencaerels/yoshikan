@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\AddGrade;
 
+use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 
 class AddGradeHandler
 {
@@ -31,10 +33,14 @@ class AddGradeHandler
 
     public function go(AddGrade $command): bool
     {
-//        $command->getCode()
-//        $command->getName()
-//        $command->getColor()
-//        $this->gradeRepo->save($model);
+        $grade = Grade::make(
+            $this->gradeRepo->nextIdentity(),
+            $command->getCode(),
+            $command->getName(),
+            $command->getColor(),
+        );
+        $grade->setSequence($this->gradeRepo->getMaxSequence()+1);
+        $this->gradeRepo->save($grade);
 
         return true;
     }

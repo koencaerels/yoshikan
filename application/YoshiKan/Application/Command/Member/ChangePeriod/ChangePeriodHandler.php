@@ -33,12 +33,25 @@ class ChangePeriodHandler
     {
         $model = $this->repo->getById($command->getId());
         $model->change(
-            $command->getId(),
+            $command->getCode(),
             $command->getName(),
             $command->getStartDate(),
             $command->getEndDate(),
         );
+
+        if ($command->isActive()) {
+            $periods = $this->repo->getAll();
+            foreach ($periods as $period) {
+                $period->deactivate();
+                $this->repo->save($period);
+            }
+            $model->activate();
+        } else {
+            $model->deactivate();
+        }
+
         $this->repo->save($model);
+
         return true;
     }
 }

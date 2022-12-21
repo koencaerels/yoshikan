@@ -26,6 +26,7 @@ use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
+use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
@@ -53,6 +54,7 @@ class MemberCommandBus
     use change_location;
     use order_location;
     use save_settings;
+    use setup_configuration;
 
     protected BasePermissionService $permission;
 
@@ -73,7 +75,8 @@ class MemberCommandBus
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-    ) {
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

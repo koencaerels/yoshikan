@@ -25,6 +25,7 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
