@@ -72,8 +72,7 @@ class Settings
         float  $extraTrainingFee,
         float  $newMemberSubscriptionFee,
         int    $familyDiscount,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->code = $code;
         $this->yearlyFee2Training = $yearlyFee2Training;
@@ -100,8 +99,7 @@ class Settings
         float  $newMemberSubscriptionFee,
         int    $familyDiscount,
 
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $code,
@@ -123,8 +121,7 @@ class Settings
         float  $extraTrainingFee,
         float  $newMemberSubscriptionFee,
         int    $familyDiscount,
-    ): void
-    {
+    ): void {
         $this->yearlyFee2Training = $yearlyFee2Training;
         $this->yearlyFee1Training = $yearlyFee1Training;
         $this->halfYearlyFee2Training = $halfYearlyFee2Training;
@@ -177,5 +174,4 @@ class Settings
     {
         return $this->familyDiscount;
     }
-
 }

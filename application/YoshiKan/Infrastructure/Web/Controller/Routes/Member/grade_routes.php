@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 trait grade_routes
 {
-
     #[Route('/mm/api/member/grade/order', methods: ['POST', 'PUT'])]
     public function orderGrade(Request $request): JsonResponse
     {

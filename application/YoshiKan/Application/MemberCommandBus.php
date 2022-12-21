@@ -75,8 +75,7 @@ class MemberCommandBus
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-    )
-    {
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

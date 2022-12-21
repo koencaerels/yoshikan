@@ -33,7 +33,7 @@ class SaveSettingsHandler
     public function go(SaveSettings $command): bool
     {
         $settings = $this->repo->findByCode($command->getCode());
-        if(is_null($settings)) {
+        if (is_null($settings)) {
             $settings = Settings::make(
                 $this->repo->nextIdentity(),
                 $command->getCode(),
@@ -59,5 +59,4 @@ class SaveSettingsHandler
         $this->repo->save($settings);
         return true;
     }
-
 }

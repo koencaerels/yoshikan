@@ -26,8 +26,7 @@ class ChangePeriod
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
         protected bool               $isActive,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -79,5 +78,4 @@ class ChangePeriod
     {
         return $this->isActive;
     }
-
 }

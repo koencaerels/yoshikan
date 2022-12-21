@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 trait group_routes
 {
     #[Route('/mm/api/member/group/order', methods: ['POST', 'PUT'])]
-    public function orderGroup(Request $request) : JsonResponse
+    public function orderGroup(Request $request): JsonResponse
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderGroup($jsonCommand);

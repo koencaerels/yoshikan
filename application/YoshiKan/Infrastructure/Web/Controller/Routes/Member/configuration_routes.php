@@ -21,5 +21,4 @@ trait configuration_routes
         $response = $this->commandBus->setupConfiguration();
         return new JsonResponse($response, 200, $this->apiAccess);
     }
-
 }

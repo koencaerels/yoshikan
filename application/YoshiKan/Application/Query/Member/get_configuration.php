@@ -15,7 +15,6 @@ namespace App\YoshiKan\Application\Query\Member;
 
 trait get_configuration
 {
-
     public function getWebConfiguration(): WebConfigurationReadModel
     {
         $query = new GetConfiguration(
@@ -43,5 +42,4 @@ trait get_configuration
 
         return $query->getFullConfiguration();
     }
-
 }

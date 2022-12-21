@@ -23,8 +23,7 @@ class ChangeLocation
         protected int    $id,
         protected string $code,
         protected string $name,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

@@ -15,7 +15,6 @@ namespace App\YoshiKan\Application\Command\Member\SaveSettings;
 
 class SaveSettings
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -29,8 +28,7 @@ class SaveSettings
         protected float  $extraTrainingFee,
         protected float  $newMemberSubscriptionFee,
         protected int    $familyDiscount,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -94,5 +92,4 @@ class SaveSettings
     {
         return $this->familyDiscount;
     }
-
 }
