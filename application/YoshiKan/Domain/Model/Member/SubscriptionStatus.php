@@ -19,5 +19,6 @@ enum SubscriptionStatus: string
     case AWAITING_PAYMENT = 'wachtend op betaling';
     case PAYED = 'betaald';
     case COMPLETE = 'afgewerkt';
+    case REJECTED = 'afgewezen';
 
 }
