@@ -36,6 +36,7 @@ use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
@@ -67,6 +68,7 @@ class MemberCommandBus
         protected EntityManagerInterface $entityManager,
         protected bool                   $isolationMode,
         protected Environment            $twig,
+        protected MailerInterface        $mailer,
         protected string                 $uploadFolder,
         protected GradeRepository        $gradeRepository,
         protected GroupRepository        $groupRepository,
@@ -75,7 +77,8 @@ class MemberCommandBus
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-    ) {
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

@@ -21,8 +21,8 @@ class ChangePeriod
 
     private function __construct(
         protected int                $id,
-        protected string             $name,
         protected string             $code,
+        protected string             $name,
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
         protected bool               $isActive,
@@ -39,8 +39,8 @@ class ChangePeriod
             $json->id,
             $json->code,
             $json->name,
-            $json->startDate,
-            $json->endDate,
+            new \DateTimeImmutable($json->startDate),
+            new \DateTimeImmutable($json->endDate),
             $json->isActive,
         );
     }

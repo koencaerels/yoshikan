@@ -9,6 +9,6 @@ export interface ChangeLocationCommand {
 export async function changeLocation(command: ChangeLocationCommand) {
     const formData = new FormData();
     formData.append('location', JSON.stringify(command));
-    const response = await axios.post<boolean>(`/member/location/add/${command.id}`, formData);
+    const response = await axios.post<boolean>(`/member/location/${command.id}`, formData);
     return response.data;
 }

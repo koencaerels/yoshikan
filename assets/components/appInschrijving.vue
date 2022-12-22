@@ -1,11 +1,19 @@
 <template>
-    <div id="appInschrijving">
+    <div v-if="step === 0">
+        Loading settings...
+    </div>
+    <div id="appInschrijving" v-if="step === 1">
         <hr>
         <div class="flex flex-row mt-4 mb-4">
             <div class="basis-1/4 mr-4 text-right"><i class="mdi mdi-calendar text-2xl"></i></div>
             <div class="basis-3/4">
-                <strong>September 2023 tot en met juni 2024</strong>
+                <strong>{{ settings.activePeriod.name }}</strong>
             </div>
+        </div>
+        <div class="url-field-wrapper">
+            <o-input id="ti_url"
+                     v-model="subscription.honeyPot"
+                     type="text"/>
         </div>
         <hr>
         <!-- -- contact ----------------------------------------- -->
@@ -115,11 +123,11 @@
                 <div class="flex flex-row">
                     <div class="basis-1/4 text-right mr-4">Nieuw lid</div>
                     <div class="basis-3/4">
-                        <o-radio name="gender" :native-value="true"
+                        <o-radio name="newMember" :native-value="true"
                                  v-model="subscription.newMember" variant="info">
                             Ja
                         </o-radio>
-                        <o-radio name="gender" :native-value="false"
+                        <o-radio name="newMember" :native-value="false"
                                  v-model="subscription.newMember" variant="info">
                             Nee
                         </o-radio>
@@ -129,27 +137,26 @@
                 <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4">Locatie</div>
                     <div class="basis-3/4">
-                        <o-radio name="gender" :native-value="1" v-model="subscription.location" variant="info">
-                            Hofstade
-                        </o-radio>
-                        <o-radio name="gender" :native-value="2" v-model="subscription.location" variant="info">
-                            Haacht
-                        </o-radio>
-                        <o-radio name="gender" :native-value="3" v-model="subscription.location" variant="info">
-                            Heist op den Berg
-                        </o-radio>
+                        <span v-for="location in settings.locations">
+                            <o-radio name="location"
+                                     :native-value="location.id"
+                                     v-model="subscription.location"
+                                     variant="info">
+                                {{ location.name }}
+                            </o-radio>
+                        </span>
                     </div>
                 </div>
                 <!-- duur ------------------------------------------ -->
                 <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right mr-4">Duur</div>
+                    <div class="basis-1/4 text-right mr-4">Type</div>
                     <div class="basis-3/4">
-                        <o-radio name="gender" native-value="full"
-                                 v-model="subscription.duration" variant="info">
+                        <o-radio name="type" native-value="full"
+                                 v-model="subscription.type" variant="info">
                             Volledig jaar
                         </o-radio>
-                        <o-radio name="gender" native-value="half"
-                                 v-model="subscription.duration" variant="info">
+                        <o-radio name="type" native-value="half"
+                                 v-model="subscription.type" variant="info">
                             Half jaar
                         </o-radio>
                     </div>
@@ -159,19 +166,19 @@
                     <div class="basis-1/4 text-right mr-4">Aantal</div>
                     <div class="basis-3/4">
                         <div>
-                            <o-radio name="gender" :native-value="1"
+                            <o-radio name="numberOfTraining" :native-value="1"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 1 training per week
                             </o-radio>
                         </div>
                         <div class="mt-2">
-                            <o-radio name="gender" :native-value="2"
+                            <o-radio name="numberOfTraining" :native-value="2"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 2 trainingen per week
                             </o-radio>
                         </div>
                         <div class="mt-2">
-                            <o-radio name="gender" :native-value="3"
+                            <o-radio name="numberOfTraining" :native-value="3"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 3 tot 5 trainingen per week
                             </o-radio>
@@ -237,28 +244,52 @@
                     <o-button variant="info" class="w-full" disabled>Inschrijven</o-button>
                 </div>
                 <div v-else>
-                    <o-button variant="info" class="w-full">Inschrijven</o-button>
+                    <o-button variant="info" class="w-full" @click="subscribe">Inschrijven</o-button>
                 </div>
                 <div class="mt-2 text-xs">
                     (*) verplichte velden
                 </div>
             </div>
         </div>
-
         <div class="text-xs"><code>{{ subscription }}</code></div>
-
     </div>
+
+    <div v-if="step === 2">
+        <div style="height: 250px">
+            Inschrijven...
+        </div>
+    </div>
+    <div v-if="step === 3">
+        <div style="height: 250px">
+            <hr>
+            <br>
+            <p>
+                We hebben je inschrijving goed ontvangen.
+                <br>We hebben ook een email als bevestiging verzonden naar <strong>{{
+                    subscription.contactEmail
+                }}</strong>.
+                <br>Dit is je referentie "{{ subscriptionResult.reference }}".
+            </p>
+            <p>
+                <span class="underline text-blue-700 cursor-pointer"
+                      @click="resetSubscription">Nog een inschrijving?</span>
+            </p>
+        </div>
+    </div>
+
 </template>
 
 <script setup>
 import {computed, onMounted, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {minValue, required, email, numeric, maxValue} from "@vuelidate/validators";
+import axios from "axios";
 
 const step = ref(0);
 const isSaving = ref(false);
+const settings = ref({});
 const subscription = ref({
-    periodId: 1,
+    periodId: 0,
     contactFirstname: '',
     contactLastname: '',
     contactEmail: '',
@@ -272,18 +303,65 @@ const subscription = ref({
     gender: 'M',
     newMember: true,
     location: 1,
-    duration: 'full',
+    type: 'full',
     numberOfTraining: 1,
     extraTraining: false,
     reductionFamily: false,
     judogiBelt: false,
-    remarks: ''
+    remarks: '',
+    honeyPot: ''
 });
+const subscriptionResult = ref({});
 
 onMounted(() => {
     v$.value.$touch();
-    // -- load the settings...
+    loadSettings();
 });
+
+function loadSettings() {
+    axios.get('/inschrijving/api/configuration').then(response => (loadSettingsHandler(response.data)));
+}
+
+function loadSettingsHandler(data) {
+    settings.value = data;
+    step.value = 1;
+    subscription.value.periodId = settings.value.activePeriod.id;
+    subscription.value.location = settings.value.locations[0].id;
+}
+
+function subscribe() {
+    step.value = 2;
+    const formData = new FormData();
+    formData.append('subscription', JSON.stringify(subscription.value));
+    axios.post('/inschrijving/api/subscribe', formData).then(response => (subscribeHandler(response.data)));
+}
+
+function subscribeHandler(data) {
+    step.value = 3;
+    subscriptionResult.value = data;
+}
+
+function resetSubscription() {
+    step.value = 1;
+    subscription.contactFirstname = '';
+    subscription.contactLastname = '';
+    subscription.contactEmail = '';
+    subscription.contactPhone = '';
+    subscription.firstname = '';
+    subscription.lastname = '';
+    subscription.dateOfBirthDD = '';
+    subscription.dateOfBirthMM = '';
+    subscription.dateOfBirthYYYY = '';
+    subscription.dateOfBirth = new Date();
+    subscription.gender = 'M';
+    subscription.newMember = true;
+    subscription.type = 'full';
+    subscription.numberOfTraining = 1;
+    subscription.extraTraining = false;
+    subscription.reductionFamily = false;
+    subscription.judogiBelt = false;
+    subscription.remarks = '';
+}
 
 // -- validation ---------------------------------------
 

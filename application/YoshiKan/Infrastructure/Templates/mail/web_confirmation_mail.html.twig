@@ -1,0 +1,51 @@
+{% extends 'mail/base_mail.html.twig' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block body %}
+    <p>Dag {{ subscription.contactFirstname }},</p>
+    <p>
+        Bedankt voor je inschrijving van
+        <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
+        (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        {% if(subscription.isNewMember) %}
+            als nieuw lid.
+        {% else %}
+            .
+        {% endif %}
+    </p>
+    <p>
+        <strong>Referentie: YK-{{ subscription.id }}</strong>
+        <br><br><strong>{{ subscription.period.name }}</strong>
+        <br>- Locatie: {{ subscription.location.name }}
+        <br>- Type: {{ subscription.type.value }},
+        {% if(subscription.numberOfTraining == 1) %}
+            1 training per week
+        {% else %}
+            2 trainingen per week
+        {% endif %}
+        {% if(subscription.isExtraTraining) %}
+            <br>- Extra supplement 3 tot 5 trainingen per week.
+        {% endif %}
+        {% if(subscription.isNewMember) %}
+            <br>- Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak voor judopak.
+        {% endif %}
+        {% if(subscription.isJudogiBelt) %}
+            <br>- Judopak + gordel
+        {% endif %}
+        {% if(subscription.isReductionFamily) %}
+            <br>- 10% Korting als 2e en 3e kind van éénzelfde familie.
+        {% endif %}
+    </p>
+    <p>
+        We kijken alles nog eens na. Van zodra alles in orde is,
+        krijg je van ons een definitieve bevestiging en de betalingsinstructies.
+    </p>
+    <p>
+        Tot binnenkort.
+    </p>
+    <p>
+        Met vriendelijke groeten,
+        <br>Team Yoshi-Kan.
+    </p>
+{% endblock %}

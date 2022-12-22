@@ -77,25 +77,16 @@ class GetConfiguration
         $activePeriod = $this->periodRepository->getActive();
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
 
-        $gradeCollection = new GradeReadModelCollection();
-        foreach ($grades as $grade) {
-            $gradeCollection->addItem(GradeReadModel::hydrateFromModel($grade));
-        }
         $locationCollection = new LocationReadModelCollection();
         foreach ($locations as $location) {
             $locationCollection->addItem(LocationReadModel::hydrateFromModel($location));
         }
-        $groupCollection = new GroupReadModelCollection();
-        foreach ($groups as $group) {
-            $groupCollection->addItem(GroupReadModel::hydrateFromModel($group));
-        }
+
         $activePeriodReadModel = PeriodReadModel::hydrateFromModel($activePeriod);
         $settingsReadModel = SettingsReadModel::hydrateFromModel($settings);
 
         return new WebConfigurationReadModel(
-            $gradeCollection,
             $locationCollection,
-            $groupCollection,
             $activePeriodReadModel,
             $settingsReadModel
         );

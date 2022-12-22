@@ -86,6 +86,21 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         return $model;
     }
 
+    public function getMaxId(): int
+    {
+        $model = $this->createQueryBuilder('t')
+            ->addOrderBy('t.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (is_null($model)) {
+            return 0;
+        }
+
+        return $model->getId();
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Multiple entity functions
     // —————————————————————————————————————————————————————————————————————————

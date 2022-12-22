@@ -2,6 +2,7 @@ import axios from "axios";
 
 export interface ChangePeriodCommand {
     id: number;
+    code: string;
     name: string;
     startDate: Date;
     endDate: Date;
@@ -11,6 +12,6 @@ export interface ChangePeriodCommand {
 export async function changePeriod(command: ChangePeriodCommand) {
     const formData = new FormData();
     formData.append('period', JSON.stringify(command));
-    const response = await axios.post<boolean>(`/member/period/add/${command.id}`, formData);
+    const response = await axios.post<boolean>(`/member/period/${command.id}`, formData);
     return response.data;
 }

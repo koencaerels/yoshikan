@@ -1,5 +1,5 @@
 <template>
-    <tr id="Component_Edit_Grade"
+    <tr id="Component_Edit_Group"
         class="border-b-[1px]"
         v-on:keyup.enter="save"
         v-on:keyup.esc="viewForm">
@@ -13,7 +13,11 @@
                 <edit-button @click="editForm"/>
             </div>
         </td>
-        <td v-if="isView"><strong>{{ item.code }}</strong></td>
+        <td v-if="isView">
+            <div class="px-2 bg-sky-600 rounded-full text-white font-bold w-24 text-center">
+            {{ item.code }}
+            </div>
+        </td>
         <td v-if="isView">{{ item.name }}</td>
         <td v-if="isView">{{ item.minAge }}</td>
         <td v-if="isView">{{ item.maxAge }}</td>

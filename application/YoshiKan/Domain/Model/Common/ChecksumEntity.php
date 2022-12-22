@@ -45,6 +45,7 @@ trait ChecksumEntity
                 || 'lazyPropertiesDefaults' === $property->getName()
                 || 'subscriptions' === $property->getName()
                 || 'members' === $property->getName()
+                || 'member' === $property->getName()
             )) {
                 match (gettype($this->{$property->getName()})) {
                     'string' => $contentString .= $this->{$property->getName()},

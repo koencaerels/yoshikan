@@ -41,7 +41,7 @@ class Period
     private string $code;
 
     #[ORM\Column(length: 191)]
-    private string $label;
+    private string $name;
 
     #[ORM\Column]
     private \DateTimeImmutable $startDate;
@@ -50,7 +50,7 @@ class Period
     private \DateTimeImmutable $endDate;
 
     #[ORM\Column(options: ['default' => 0])]
-    private bool $isActive;
+    private bool $isActive = false;
 
     // ------------------------------------------------------------ associations
     #[ORM\OneToMany(mappedBy: 'period', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
@@ -64,13 +64,13 @@ class Period
     private function __construct(
         Uuid $uuid,
         string $code,
-        string $label,
+        string $name,
         \DateTimeImmutable $startDate,
         \DateTimeImmutable $endDate,
     ) {
         $this->uuid = $uuid;
         $this->code = $code;
-        $this->label = $label;
+        $this->name = $name;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
@@ -82,14 +82,14 @@ class Period
     public static function make(
         Uuid $uuid,
         string $code,
-        string $label,
+        string $name,
         \DateTimeImmutable $startDate,
         \DateTimeImmutable $endDate,
     ): self {
         return new self(
             $uuid,
             $code,
-            $label,
+            $name,
             $startDate,
             $endDate
         );
@@ -97,12 +97,12 @@ class Period
 
     public function change(
         string $code,
-        string $label,
+        string $name,
         \DateTimeImmutable $startDate,
         \DateTimeImmutable $endDate
     ): void {
         $this->code = $code;
-        $this->label = $label;
+        $this->name = $name;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
@@ -126,9 +126,9 @@ class Period
         return $this->code;
     }
 
-    public function getLabel(): string
+    public function getName(): string
     {
-        return $this->label;
+        return $this->name;
     }
 
     public function getStartDate(): \DateTimeImmutable

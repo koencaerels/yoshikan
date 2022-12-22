@@ -37,6 +37,7 @@ import DataView from 'primevue/dataview';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import Image from 'primevue/image';
+import Calendar from 'primevue/calendar';
 
 // ----------------------------------------------------------------------------------- services
 import ToastService from "primevue/toastservice";
@@ -87,6 +88,7 @@ app.component("DataView", DataView);
 app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("Image", Image);
+app.component("Calendar", Calendar);
 
 app.directive('tooltip', Tooltip);
 

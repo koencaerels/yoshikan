@@ -29,7 +29,7 @@ class ChangePeriodHandler
     // Handle
     // ———————————————————————————————————————————————————————————————
 
-    public function Change(ChangePeriod $command): bool
+    public function go(ChangePeriod $command): bool
     {
         $model = $this->repo->getById($command->getId());
         $model->change(

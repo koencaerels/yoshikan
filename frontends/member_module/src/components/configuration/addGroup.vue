@@ -1,5 +1,5 @@
 <template>
-    <tr id="Component_Add_Grade"
+    <tr id="Component_Add_Group"
         v-on:keyup.enter="save"
         v-on:keyup.esc="viewForm">
 

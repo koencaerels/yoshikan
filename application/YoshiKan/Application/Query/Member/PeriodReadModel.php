@@ -26,7 +26,7 @@ class PeriodReadModel implements \JsonSerializable
         protected string $uuid,
         protected int $sequence,
         protected string $code,
-        protected string $label,
+        protected string $name,
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
         protected bool $isActive,
@@ -44,9 +44,9 @@ class PeriodReadModel implements \JsonSerializable
         $json->uuid = $this->getUuid();
         $json->sequence = $this->getSequence();
         $json->code = $this->getCode();
-        $json->label = $this->getLabel();
-        $json->startDate = $this->getStartDate();
-        $json->endDate = $this->getEndDate();
+        $json->name = $this->getName();
+        $json->startDate = $this->getStartDate()->format(\DateTimeInterface::ATOM);
+        $json->endDate = $this->getEndDate()->format(\DateTimeInterface::ATOM);
         $json->isActive = $this->isActive();
 
         return $json;
@@ -63,7 +63,7 @@ class PeriodReadModel implements \JsonSerializable
             $model->getUuid()->toRfc4122(),
             $model->getSequence(),
             $model->getCode(),
-            $model->getLabel(),
+            $model->getName(),
             $model->getStartDate(),
             $model->getEndDate(),
             $model->isActive(),
@@ -94,9 +94,9 @@ class PeriodReadModel implements \JsonSerializable
         return $this->code;
     }
 
-    public function getLabel(): string
+    public function getName(): string
     {
-        return $this->label;
+        return $this->name;
     }
 
     public function getStartDate(): \DateTimeImmutable

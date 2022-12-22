@@ -36,8 +36,8 @@ class AddPeriod
         return new self(
             $json->code,
             $json->name,
-            $json->startDate,
-            $json->endDate,
+            new \DateTimeImmutable($json->startDate),
+            new \DateTimeImmutable($json->endDate),
         );
     }
 

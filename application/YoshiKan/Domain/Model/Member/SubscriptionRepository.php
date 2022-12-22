@@ -28,4 +28,6 @@ interface SubscriptionRepository
     public function getByUuid(Uuid $uuid): Subscription;
 
     public function getAll(): array;
+
+    public function getMaxId(): int;
 }
