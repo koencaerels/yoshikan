@@ -29,5 +29,7 @@ interface SubscriptionRepository
 
     public function getAll(): array;
 
+    public function getTodoByPeriod(Period $period): array;
+
     public function getMaxId(): int;
 }

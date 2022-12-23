@@ -10,6 +10,23 @@ const router = createRouter({
             name: 'home',
             component: HomeView
         },
+        {
+            path: '/inschrijvingen',
+            name: 'inschrijvingen',
+            component: HomeView,
+            children: [
+                {
+                    path: 'todo',
+                    name: 'active',
+                    component: () => import('../views/subscription/SubscriptionStartView.vue')
+                },
+                {
+                    path: 'archief',
+                    name: 'archive',
+                    component: () => import('../views/subscription/SubscriptionArchiveView.vue')
+                },
+            ]
+        },
         // member routes --------------------------------------------------------
         {
             path: '/leden',

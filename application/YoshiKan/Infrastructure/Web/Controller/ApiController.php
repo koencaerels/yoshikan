@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Web\Controller;
 
-use App\YoshiKan\Application\Command\Member\WebConfirmationMail\WebConfirmationMail;
-use App\YoshiKan\Application\Command\Member\WebConfirmationMail\WebConfirmationMailHandler;
 use App\YoshiKan\Application\CommandBus;
 use App\YoshiKan\Application\QueryBus;
 use App\YoshiKan\Domain\Model\Member\Grade;

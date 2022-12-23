@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Member;
 
+use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -112,4 +114,19 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
 
         return $q->getQuery()->getResult();
     }
+
+    public function getTodoByPeriod(Period $period): array
+    {
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q->andWhere('t.status = :new OR t.status = :awaiting_payment OR t.status = :payed');
+        $q->setParameter('new',SubscriptionStatus::NEW->value);
+        $q->setParameter('awaiting_payment',SubscriptionStatus::AWAITING_PAYMENT->value);
+        $q->setParameter('payed',SubscriptionStatus::PAYED->value);
+        $q->andWhere('t.period = :periodId');
+        $q->setParameter('periodId', $period->getId());
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
 }

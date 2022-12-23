@@ -330,10 +330,13 @@ function loadSettingsHandler(data) {
 }
 
 function subscribe() {
-    step.value = 2;
-    const formData = new FormData();
-    formData.append('subscription', JSON.stringify(subscription.value));
-    axios.post('/inschrijving/api/subscribe', formData).then(response => (subscribeHandler(response.data)));
+    v$.value.$touch();
+    if(!v$.$invalid) {
+        step.value = 2;
+        const formData = new FormData();
+        formData.append('subscription', JSON.stringify(subscription.value));
+        axios.post('/inschrijving/api/subscribe', formData).then(response => (subscribeHandler(response.data)));
+    }
 }
 
 function subscribeHandler(data) {

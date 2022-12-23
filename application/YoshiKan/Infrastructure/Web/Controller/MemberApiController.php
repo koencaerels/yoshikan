@@ -28,6 +28,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,6 +49,7 @@ class MemberApiController extends AbstractController
     use location_routes;
     use settings_routes;
     use configuration_routes;
+    use subscription_routes;
 
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
@@ -129,4 +131,5 @@ class MemberApiController extends AbstractController
         $response = 'Yoshi-Kan: Member Module API';
         return new JsonResponse($response, 200, $this->apiAccess);
     }
+
 }

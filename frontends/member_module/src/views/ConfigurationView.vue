@@ -16,6 +16,3 @@
 import NavigationConfiguration from "@/components/NavigationConfiguration.vue";
 
 </script>
-
-<style scoped>
-</style>

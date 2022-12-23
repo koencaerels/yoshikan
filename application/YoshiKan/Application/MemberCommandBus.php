@@ -27,6 +27,7 @@ use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
+use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
@@ -56,6 +57,7 @@ class MemberCommandBus
     use order_location;
     use save_settings;
     use setup_configuration;
+    use web_subscribe;
 
     protected BasePermissionService $permission;
 
