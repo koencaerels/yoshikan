@@ -21,11 +21,15 @@ use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
+use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscription;
+use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subscription_status;
+use App\YoshiKan\Application\Command\Member\ConnectMemberToSubscription\connect_member_to_subscription;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
+use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment_overview_mail;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
@@ -43,6 +47,7 @@ use Twig\Environment;
 
 class MemberCommandBus
 {
+    // -- configuration --------------------------------------------------------
     use add_grade;
     use change_grade;
     use order_grade;
@@ -57,7 +62,13 @@ class MemberCommandBus
     use order_location;
     use save_settings;
     use setup_configuration;
+
+    // -- subscription --------------------------------------------------------
     use web_subscribe;
+    use change_subscription;
+    use change_subscription_status;
+    use connect_member_to_subscription;
+    use send_payment_overview_mail;
 
     protected BasePermissionService $permission;
 
@@ -79,8 +90,7 @@ class MemberCommandBus
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-    )
-    {
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

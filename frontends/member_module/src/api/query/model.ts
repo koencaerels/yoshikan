@@ -53,3 +53,26 @@ export interface Period {
     endDate: Date;
     isActive: boolean;
 }
+
+export interface Subscription {
+    id: number;
+    uuid: string;
+    status: string;
+    contactFirstname: string;
+    contactLastname: string;
+    contactEmail: string;
+    contactPhone: string;
+    firstname: string;
+    lastname: string;
+    dateOfBirth: Date;
+    gender: string;
+    type: string;
+    numberOfTraining: number;
+    isExtraTraining: boolean;
+    isNewMember: boolean;
+    isReductionFamily: boolean;
+    isJudogiBelt: boolean;
+    remarks: string;
+    period:Period;
+    location:Location;
+}

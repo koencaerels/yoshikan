@@ -10,13 +10,11 @@ use Twig\Environment;
 
 class WebConfirmationMailHandler
 {
-
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
         protected Environment            $twig,
         protected MailerInterface        $mailer
-    )
-    {
+    ) {
     }
 
     public function go(WebConfirmationMail $command): bool
@@ -26,7 +24,11 @@ class WebConfirmationMailHandler
 
         $mailTemplate = $this->twig->render(
             'mail/web_confirmation_mail.html.twig',
-            ['subject' => $subject, 'subscription' => $subscription, 'url'=> $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']]
+            [
+                'subject' => $subject,
+                'subscription' => $subscription,
+                'url'=> $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST']
+            ]
         );
 
         $message = (new Email())

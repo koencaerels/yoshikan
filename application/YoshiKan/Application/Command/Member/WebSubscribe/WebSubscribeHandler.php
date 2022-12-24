@@ -17,8 +17,7 @@ class WebSubscribeHandler
         protected LocationRepository     $locationRepository,
         protected PeriodRepository       $periodRepository,
         protected EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function go(WebSubscribe $command): \stdClass
@@ -67,7 +66,6 @@ class WebSubscribeHandler
             $result->id = $subscriptionId;
             $result->reference = 'YK-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
             return $result;
-
         } else {
 
             // -- the honey-pot field was not empty
@@ -75,7 +73,6 @@ class WebSubscribeHandler
             $result->id = 0;
             $result->reference = 'YK-0';
             return $result;
-
         }
     }
 }

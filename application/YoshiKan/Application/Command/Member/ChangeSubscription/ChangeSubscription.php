@@ -1,15 +1,19 @@
 <?php
 
-namespace App\YoshiKan\Application\Command\Member\WebSubscribe;
+namespace App\YoshiKan\Application\Command\Member\ChangeSubscription;
 
-class WebSubscribe
+use App\YoshiKan\Domain\Model\Member\Gender;
+use App\YoshiKan\Domain\Model\Member\SubscriptionType;
+
+class ChangeSubscription
 {
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int                $periodId,
+        protected int                $id,
         protected string             $contactFirstname,
         protected string             $contactLastname,
         protected string             $contactEmail,
@@ -20,17 +24,17 @@ class WebSubscribe
         protected string             $dateOfBirthMM,
         protected string             $dateOfBirthYYYY,
         protected \DateTimeImmutable $dateOfBirth,
-        protected string             $gender,
+        protected Gender             $gender,
         protected bool               $newMember,
-        protected string             $type,
+        protected SubscriptionType   $type,
         protected int                $locationId,
         protected int                $numberOfTraining,
         protected bool               $extraTraining,
         protected bool               $reductionFamily,
         protected bool               $judogiBelt,
         protected string             $remarks,
-        protected string             $honeyPot
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -42,27 +46,26 @@ class WebSubscribe
     public static function hydrateFromJson($json): self
     {
         return new self(
-            intval($json->periodId),
-            filter_var(trim($json->contactFirstname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactLastname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactEmail), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactPhone), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->firstname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->lastname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            intval($json->id),
+            trim($json->contactFirstname),
+            trim($json->contactLastname),
+            trim($json->contactEmail),
+            trim($json->contactPhone),
+            trim($json->firstname),
+            trim($json->lastname),
             intval($json->dateOfBirthDD),
             intval($json->dateOfBirthMM),
             intval($json->dateOfBirthYYYY),
             new \DateTimeImmutable($json->dateOfBirth),
-            filter_var(trim($json->gender), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            Gender::from($json->gender),
             boolval($json->newMember),
-            filter_var(trim($json->type), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            intval($json->location),
+            SubscriptionType::from($json->type),
+            intval($json->locationId),
             intval($json->numberOfTraining),
             boolval($json->extraTraining),
             boolval($json->reductionFamily),
             boolval($json->judogiBelt),
-            filter_var(trim($json->remarks), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->honeyPot), FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+            trim($json->remarks),
         );
     }
 
@@ -70,9 +73,9 @@ class WebSubscribe
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getPeriodId(): int
+    public function getId(): int
     {
-        return $this->periodId;
+        return $this->id;
     }
 
     public function getContactFirstname(): string
@@ -125,7 +128,7 @@ class WebSubscribe
         return $this->dateOfBirth;
     }
 
-    public function getGender(): string
+    public function getGender(): Gender
     {
         return $this->gender;
     }
@@ -133,6 +136,16 @@ class WebSubscribe
     public function isNewMember(): bool
     {
         return $this->newMember;
+    }
+
+    public function getType(): SubscriptionType
+    {
+        return $this->type;
+    }
+
+    public function getLocationId(): int
+    {
+        return $this->locationId;
     }
 
     public function getNumberOfTraining(): int
@@ -160,18 +173,4 @@ class WebSubscribe
         return $this->remarks;
     }
 
-    public function getHoneyPot(): string
-    {
-        return $this->honeyPot;
-    }
-
-    public function getLocationId(): int
-    {
-        return $this->locationId;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
 }

@@ -128,5 +128,4 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
 
         return $q->getQuery()->getResult();
     }
-
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\YoshiKan\Application\Command\Member\WebConfirmationMail;
+namespace App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail;
 
-class WebConfirmationMail
+class SendPaymentOverviewMail
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

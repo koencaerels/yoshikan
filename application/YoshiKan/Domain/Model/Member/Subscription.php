@@ -119,8 +119,7 @@ class Subscription
         string             $remarks,
         Period             $period,
         Location           $location,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -164,8 +163,7 @@ class Subscription
         string             $remarks,
         Period             $period,
         Location           $location,
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $contactFirstname,

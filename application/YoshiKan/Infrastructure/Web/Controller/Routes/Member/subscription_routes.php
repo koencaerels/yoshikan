@@ -3,6 +3,7 @@
 namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 trait subscription_routes
@@ -23,4 +24,11 @@ trait subscription_routes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/subscription/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getSubscriptionById(int $id, Request $request): JsonResponse
+    {
+        $response = $this->queryBus->getSubscriptionById($id);
+        usleep(500000);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 }

@@ -15,6 +15,11 @@ const items = computed(() => {
             to: '/inschrijvingen/todo'
         },
         {
+            label: 'Export',
+            icon: 'pi pi-export',
+            to: '/inschrijvingen/export'
+        },
+        {
             label: 'Archief',
             icon: 'pi pi-bars',
             to: '/inschrijvingen/archief'

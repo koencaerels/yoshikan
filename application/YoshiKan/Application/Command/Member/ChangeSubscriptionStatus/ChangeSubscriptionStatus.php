@@ -1,45 +1,45 @@
 <?php
 
-declare(strict_types=1);
+namespace App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus;
 
-namespace App\YoshiKan\Application\Query\Member;
+use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 
-class SubscriptionReadModelCollection implements \JsonSerializable
+class ChangeSubscriptionStatus
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(protected array $collection)
+    private function __construct(
+        protected int $id,
+        protected SubscriptionStatus $status
+    )
     {
-        $this->collection = [];
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // What to render as json
+    // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
-    public function jsonSerialize(): \stdClass
+    public static function hydrateFromJson($json): self
     {
-        $json = new \stdClass();
-        $json->collection = $this->getCollection();
-        return $json;
-    }
-
-    public function addItem(SubscriptionReadModel $readModel)
-    {
-        $this->collection[] = $readModel;
+        return new self(
+            intval($json->id),
+            SubscriptionStatus::from($json->status),
+        );
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    /**
-     * @return SubscriptionReadModel[]
-     */
-    public function getCollection(): array
+    public function getId(): int
     {
-        return $this->collection;
+        return $this->id;
+    }
+
+    public function getStatus(): SubscriptionStatus
+    {
+        return $this->status;
     }
 }

@@ -8,12 +8,32 @@
  */
 
 import {defineStore} from 'pinia'
+import type {Subscription} from "@/api/query/model";
+import {getSubscriptionTodo} from "@/api/query/getSubscriptionTodo";
+import {getSubscriptionById} from "@/api/query/getSubscriptionById";
 
-export type MemberState = {}
+export type MemberState = {
+    isLoading: boolean;
+    subscriptionTodos: Subscription[];
+    subscriptionDetail?: Subscription;
+}
 
 export const useMemberStore = defineStore({
     id: "member",
-    state: (): MemberState => ({}),
-    actions: {},
+    state: (): MemberState => ({
+        isLoading: false,
+        subscriptionTodos: [],
+        subscriptionDetail: undefined,
+    }),
+    actions: {
+        async loadSubscriptionTodo() {
+            this.subscriptionTodos = await getSubscriptionTodo()
+        },
+        async loadSubscriptionDetail(id: number) {
+            this.isLoading = true;
+            this.subscriptionDetail = await getSubscriptionById(id);
+            this.isLoading = false;
+        }
+    },
     getters: {},
 });

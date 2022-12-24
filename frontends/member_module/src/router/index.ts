@@ -17,8 +17,13 @@ const router = createRouter({
             children: [
                 {
                     path: 'todo',
-                    name: 'active',
+                    name: 'todo',
                     component: () => import('../views/subscription/SubscriptionStartView.vue')
+                },
+                {
+                    path: 'export',
+                    name: 'export',
+                    component: () => import('../views/subscription/ExportView.vue')
                 },
                 {
                     path: 'archief',

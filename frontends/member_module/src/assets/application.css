@@ -52,6 +52,12 @@ th {
     text-align: left !important;
 }
 
+label {
+    display: inline !important;
+    margin-bottom:0px !important;
+    font-weight:normal !important;
+}
+
 /* -- toaster fix */
 
 .p-toast-message-content {

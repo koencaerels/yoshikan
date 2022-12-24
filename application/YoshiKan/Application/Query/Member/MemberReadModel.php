@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Member\Member;
 
-class SubscriptionReadModel implements \JsonSerializable
+class MemberReadModel implements \JsonSerializable
 {
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -16,25 +17,14 @@ class SubscriptionReadModel implements \JsonSerializable
         protected int                $id,
         protected string             $uuid,
         protected string             $status,
-        protected string             $contactFirstname,
-        protected string             $contactLastname,
-        protected string             $contactEmail,
-        protected string             $contactPhone,
         protected string             $firstname,
         protected string             $lastname,
         protected \DateTimeImmutable $dateOfBirth,
         protected string             $gender,
-        protected string             $type,
-        protected int                $numberOfTraining,
-        protected bool               $isExtraTraining,
-        protected bool               $isNewMember,
-        protected bool               $isReductionFamily,
-        protected bool               $isJudogiBelt,
-        protected string             $remarks,
-        protected PeriodReadModel    $period,
+        protected GradeReadModel     $grade,
         protected LocationReadModel  $location,
-        protected ?MemberReadModel $member,
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -47,24 +37,12 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
         $json->status = $this->getStatus();
-        $json->contactFirstname = $this->getContactFirstname();
-        $json->contactLastname = $this->getContactLastname();
-        $json->contactEmail = $this->getContactEmail();
-        $json->contactPhone = $this->getContactPhone();
         $json->firstname = $this->getFirstname();
         $json->lastname = $this->getLastname();
-        $json->dateOfBirth = $this->getDateOfBirth()->format(\DateTimeInterface::ATOM);
+        $json->dateOfBirth = $this->getDateOfBirth();
         $json->gender = $this->getGender();
-        $json->type = $this->getType();
-        $json->numberOfTraining = $this->getNumberOfTraining();
-        $json->isExtraTraining = $this->isExtraTraining();
-        $json->isNewMember = $this->isNewMember();
-        $json->isReductionFamily = $this->isReductionFamily();
-        $json->isJudogiBelt = $this->isJudogiBelt();
-        $json->remarks = $this->getRemarks();
-        $json->period = $this->getPeriod();
+        $json->grade = $this->getGrade();
         $json->location = $this->getLocation();
-        $json->member = $this->getMember();
 
         return $json;
     }
@@ -73,35 +51,18 @@ class SubscriptionReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(Subscription $model): self
+    public static function hydrateFromModel(Member $model): self
     {
-        $memberReadModel = null;
-        if(!is_null($model->getMember())) {
-            $memberReadModel = MemberReadModel::hydrateFromModel($model->getMember());
-        }
-
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
             $model->getStatus()->value,
-            $model->getContactFirstname(),
-            $model->getContactLastname(),
-            $model->getContactEmail(),
-            $model->getContactPhone(),
             $model->getFirstname(),
             $model->getLastname(),
             $model->getDateOfBirth(),
             $model->getGender()->value,
-            $model->getType()->value,
-            $model->getNumberOfTraining(),
-            $model->isExtraTraining(),
-            $model->isNewMember(),
-            $model->isReductionFamily(),
-            $model->isJudogiBelt(),
-            $model->getRemarks(),
-            PeriodReadModel::hydrateFromModel($model->getPeriod()),
+            GradeReadModel::hydrateFromModel($model->getGrade()),
             LocationReadModel::hydrateFromModel($model->getLocation()),
-            $memberReadModel
         );
     }
 
@@ -124,26 +85,6 @@ class SubscriptionReadModel implements \JsonSerializable
         return $this->status;
     }
 
-    public function getContactFirstname(): string
-    {
-        return $this->contactFirstname;
-    }
-
-    public function getContactLastname(): string
-    {
-        return $this->contactLastname;
-    }
-
-    public function getContactEmail(): string
-    {
-        return $this->contactEmail;
-    }
-
-    public function getContactPhone(): string
-    {
-        return $this->contactPhone;
-    }
-
     public function getFirstname(): string
     {
         return $this->firstname;
@@ -164,54 +105,14 @@ class SubscriptionReadModel implements \JsonSerializable
         return $this->gender;
     }
 
-    public function getType(): string
+    public function getGrade(): GradeReadModel
     {
-        return $this->type;
-    }
-
-    public function getNumberOfTraining(): int
-    {
-        return $this->numberOfTraining;
-    }
-
-    public function isExtraTraining(): bool
-    {
-        return $this->isExtraTraining;
-    }
-
-    public function isNewMember(): bool
-    {
-        return $this->isNewMember;
-    }
-
-    public function isReductionFamily(): bool
-    {
-        return $this->isReductionFamily;
-    }
-
-    public function isJudogiBelt(): bool
-    {
-        return $this->isJudogiBelt;
-    }
-
-    public function getRemarks(): string
-    {
-        return $this->remarks;
-    }
-
-    public function getPeriod(): PeriodReadModel
-    {
-        return $this->period;
+        return $this->grade;
     }
 
     public function getLocation(): LocationReadModel
     {
         return $this->location;
-    }
-
-    public function getMember(): ?MemberReadModel
-    {
-        return $this->member;
     }
 
 }

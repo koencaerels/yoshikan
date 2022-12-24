@@ -51,8 +51,7 @@ class ApiController extends AbstractController
         protected KernelInterface        $appKernel,
         protected Environment            $twig,
         protected MailerInterface        $mailer,
-    )
-    {
+    ) {
         $this->apiAccess = [];
         $isolationMode = false;
         if ('dev' == $this->appKernel->getEnvironment()) {

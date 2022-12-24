@@ -18,7 +18,6 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 
 class GetSubscription
 {
-
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
         protected PeriodRepository       $periodRepository
@@ -37,6 +36,11 @@ class GetSubscription
         }
 
         return $collection;
+    }
+
+    public function getById(int $id): SubscriptionReadModel
+    {
+        return SubscriptionReadModel::hydrateFromModel($this->subscriptionRepository->getById($id));
     }
 
 }

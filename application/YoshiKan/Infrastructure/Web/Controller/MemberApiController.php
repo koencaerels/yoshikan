@@ -66,8 +66,7 @@ class MemberApiController extends AbstractController
         protected KernelInterface        $appKernel,
         protected Environment            $twig,
         protected MailerInterface        $mailer,
-    )
-    {
+    ) {
         $this->apiAccess = [];
         $isolationMode = false;
         if ('dev' == $this->appKernel->getEnvironment()) {
@@ -131,5 +130,4 @@ class MemberApiController extends AbstractController
         $response = 'Yoshi-Kan: Member Module API';
         return new JsonResponse($response, 200, $this->apiAccess);
     }
-
 }

@@ -207,17 +207,21 @@
             </div>
         </div>
 
-        <div class="text-xs"><code>{{ subscription }}</code></div>
-
         <div class="mt-3">
             <hr>
         </div>
         <div class="flex flex-row mt-4">
             <div class="basis-1/4 text-right">&nbsp;</div>
             <div class="basis-1/2 ml-4">
-                <Button label="Schrijf in"
+                <Button v-if="!isSaving"
+                        label="Schrijf in"
                         :disabled="add$.$invalid"
                         icon="pi pi-save"
+                        @click="subscribe"
+                        class="w-full p-button-success"/>
+                <Button v-else label="Schrijf in"
+                        disabled
+                        icon="pi pi-spinner pi-spin"
                         class="w-full p-button-success"/>
             </div>
         </div>
@@ -230,6 +234,7 @@ import {useAppStore} from "@/store/app";
 import {onMounted, ref} from "vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import {subscribeAction} from "@/api/command/subscribeAction";
 
 const appStore = useAppStore();
 const emit = defineEmits(["subscribed"]);
@@ -264,7 +269,7 @@ const subscription = ref({
 
 // -- validation ---------------------------------------
 
-const dateValidator = function (value) {
+const dateValidator = function (value: string) {
     if (subscription.value.dateOfBirthDD.length !== 0
         && subscription.value.dateOfBirthMM.length !== 0
         && subscription.value.dateOfBirthYYYY.length !== 0
@@ -307,9 +312,10 @@ const isSaving = ref<boolean>(false);
 
 async function subscribe() {
     add$.value.$touch();
-    if (!add$.$invalid) {
+    if (!add$.value.$invalid) {
         isSaving.value = true;
-        // todo subscribe to the backend
+        await subscribeAction(subscription.value);
+        isSaving.value = false;
         emit('subscribed');
     }
 }
