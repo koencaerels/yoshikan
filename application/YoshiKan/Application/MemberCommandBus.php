@@ -15,10 +15,12 @@ namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Command\Member\AddGrade\add_grade;
 use App\YoshiKan\Application\Command\Member\AddGroup\add_group;
+use App\YoshiKan\Application\Command\Member\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Member\AddLocation\add_location;
 use App\YoshiKan\Application\Command\Member\AddPeriod\add_period;
 use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
+use App\YoshiKan\Application\Command\Member\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscription;
@@ -26,6 +28,7 @@ use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subs
 use App\YoshiKan\Application\Command\Member\ConnectMemberToSubscription\connect_member_to_subscription;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
+use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
@@ -35,6 +38,7 @@ use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
+use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
@@ -62,6 +66,9 @@ class MemberCommandBus
     use order_location;
     use save_settings;
     use setup_configuration;
+    use add_judogi;
+    use change_judogi;
+    use order_judogi;
 
     // -- subscription --------------------------------------------------------
     use web_subscribe;
@@ -90,7 +97,9 @@ class MemberCommandBus
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-    ) {
+        protected JudogiRepository       $judogiRepository,
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

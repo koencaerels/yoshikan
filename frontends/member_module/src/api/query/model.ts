@@ -3,6 +3,7 @@ export interface Configuration {
     locations: Location[];
     groups: Group[];
     periods: Period[];
+    judogi: Judogi[];
     activePeriod: Period;
     settings: Settings;
 }
@@ -52,6 +53,15 @@ export interface Period {
     startDate: Date;
     endDate: Date;
     isActive: boolean;
+}
+
+export interface Judogi {
+    id: number;
+    uuid: string;
+    code: string;
+    name: string;
+    size: string;
+    price: number;
 }
 
 export interface Subscription {

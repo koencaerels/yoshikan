@@ -17,6 +17,7 @@ use App\YoshiKan\Application\MemberCommandBus;
 use App\YoshiKan\Application\MemberQueryBus;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\Group;
+use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
@@ -25,6 +26,7 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\judogi_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
@@ -48,6 +50,7 @@ class MemberApiController extends AbstractController
     use period_routes;
     use location_routes;
     use settings_routes;
+    use judogi_routes;
     use configuration_routes;
     use subscription_routes;
 
@@ -89,7 +92,8 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Member::class),
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
-            $this->entityManager->getRepository(Subscription::class)
+            $this->entityManager->getRepository(Subscription::class),
+            $this->entityManager->getRepository(Judogi::class),
         );
 
         $this->commandBus = new MemberCommandBus(
@@ -105,7 +109,8 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Member::class),
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
-            $this->entityManager->getRepository(Subscription::class)
+            $this->entityManager->getRepository(Subscription::class),
+            $this->entityManager->getRepository(Judogi::class),
         );
     }
 

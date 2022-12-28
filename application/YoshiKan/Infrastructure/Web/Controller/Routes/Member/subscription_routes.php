@@ -25,10 +25,42 @@ trait subscription_routes
     }
 
     #[Route('/mm/api/subscription/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function getSubscriptionById(int $id, Request $request): JsonResponse
+    public function getSubscriptionById(int $id): JsonResponse
     {
         $response = $this->queryBus->getSubscriptionById($id);
         usleep(500000);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
+
+    #[Route('/mm/api/subscription/{id}', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeSubscription(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('subscription'));
+        $response = $this->commandBus->changeSubscription($jsonCommand);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/subscription/{id}/change-status', methods: ['POST', 'PUT'])]
+    public function changeSubscriptionStatus(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('change-status'));
+        $response = $this->commandBus->changeSubscriptionStatus($jsonCommand);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/subscription/{id}/mail-payment-information', methods: ['GET'])]
+    public function sendPaymentOverviewMail(int $id, Request $request): JsonResponse
+    {
+        $response = $this->commandBus->sendPaymentOverviewMail($id);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/subscription/{id}/connect-member', methods: ['POST', 'PUT'])]
+    public function connectMemberToSubscription(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('connect-member'));
+        $response = $this->commandBus->connectMemberToSubscription($jsonCommand);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
 }

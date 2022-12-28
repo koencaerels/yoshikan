@@ -96,6 +96,7 @@ class Subscription
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -138,6 +139,16 @@ class Subscription
         $this->remarks = $remarks;
         $this->period = $period;
         $this->location = $location;
+    }
+
+    public function changeStatus(SubscriptionStatus $status)
+    {
+        $this->status = $status->value;
+    }
+
+    public function setMember(Member $member)
+    {
+        $this->member = $member;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -186,7 +197,41 @@ class Subscription
         );
     }
 
-    // Changer..
+    public function change(
+        string             $contactFirstname,
+        string             $contactLastname,
+        string             $contactEmail,
+        string             $contactPhone,
+        string             $firstname,
+        string             $lastname,
+        \DateTimeImmutable $dateOfBirth,
+        Gender             $gender,
+        SubscriptionType   $type,
+        int                $numberOfTraining,
+        bool               $isExtraTraining,
+        bool               $isNewMember,
+        bool               $isReductionFamily,
+        bool               $isJudogiBelt,
+        string             $remarks,
+        Location           $location,
+    ): void {
+        $this->contactFirstname = $contactFirstname;
+        $this->contactLastname = $contactLastname;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->dateOfBirth = $dateOfBirth;
+        $this->gender = $gender->value;
+        $this->type = $type->value;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->isExtraTraining = $isExtraTraining;
+        $this->isNewMember = $isNewMember;
+        $this->isReductionFamily = $isReductionFamily;
+        $this->isJudogiBelt = $isJudogiBelt;
+        $this->remarks = $remarks;
+        $this->location = $location;
+    }
 
 
     // —————————————————————————————————————————————————————————————————————————

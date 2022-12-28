@@ -58,6 +58,11 @@ const router = createRouter({
                     component: () => import('../views/configuration/PeriodView.vue')
                 },
                 {
+                    path: 'judogi',
+                    name: 'judogi',
+                    component: () => import('../views/configuration/JudogiView.vue')
+                },
+                {
                     path: 'graden',
                     name: 'grades',
                     component: () => import('../views/configuration/GradeView.vue')

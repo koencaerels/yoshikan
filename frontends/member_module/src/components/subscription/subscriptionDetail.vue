@@ -211,6 +211,7 @@
             </div>
             <div class="basis-1/2 mr-4">
                 <Button v-if="!isSaving"
+                        @click="changeSubscriptionHandler"
                         label="Wijzig details"
                         icon="pi pi-save"
                         class="w-full p-button-success p-button-sm"/>
@@ -223,69 +224,33 @@
 
         <!-- -- step 2 -- change the status -->
         <div class="bg-gray-700 text-white p-2">Stap 2: wijzig de status van de inschrijving.</div>
-        <div class="px-4 py-2" v-if="memberStore.subscriptionDetail">
-            <div class="flex flex-row">
-                <div class="basis-1/2">
-                    <div class="px-2 bg-sky-400 rounded-full text-white text-xs w-32 text-center">
-                        {{ memberStore.subscriptionDetail.location.name }}
-                    </div>
-                    <subscription-tag :subscription="memberStore.subscriptionDetail" class="mt-2"/>
-                    <div class="mt-2">
-                        <strong>{{ memberStore.subscriptionDetail.firstname }}
-                            {{ memberStore.subscriptionDetail.lastname }}</strong>
-                        <span class="text-xs"> (°
-                            {{ moment(memberStore.subscriptionDetail.dateOfBirth).format("DD/MM/YYYY") }}
-                        - {{ memberStore.subscriptionDetail.gender }}
-                        )</span>
-                    </div>
-                </div>
-                <div class="basis-1/2">
-                    <div class="flex">
-                        <div class="w-full">
-                            <Dropdown class="w-full" v-model="newStatus" :options="status"/>
-                        </div>
-                        <div>
-                            <Button icon="pi pi-save" class="p-button-success"/>
-                        </div>
-                    </div>
-                    <div class="mt-2 pb-2">
-                        <div class="cursor-pointer">
-                            <i class="pi pi-envelope"></i> Verzend email met betalings instructies.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SubscriptionDetailStatus/>
 
         <!-- -- step 3 -- connect to member -->
         <div class="bg-gray-700 text-white p-2">Stap 3: koppel bestaand lid of maak nieuw lid aan.</div>
-        <div class="px-4 py-2">
-            <div>
-                <Button label="Maak nieuw lid aan" class="p-button-success p-button-sm" icon="pi pi-user"/>
-            </div>
-        </div>
+        <SubscriptionDetailMember/>
 
     </div>
 </template>
 
 <script setup lang="ts">
 import {useMemberStore} from "@/store/member";
-import SubscriptionTag from "@/components/subscription/subscriptionTag.vue";
 import {ref} from "vue";
-import type {changeSubscriptionCommand} from "@/api/command/changeSubscription";
+import type {ChangeSubscriptionCommand} from "@/api/command/changeSubscription";
 import moment from "moment";
 import {useAppStore} from "@/store/app";
 import DetailWrapper from "@/components/wrapper/detailWrapper.vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import {changeSubscription} from "@/api/command/changeSubscription";
+import {useToast} from "primevue/usetoast";
+import SubscriptionDetailStatus from "@/components/subscription/subscriptionDetailStatus.vue";
+import SubscriptionDetailMember from "@/components/subscription/subscriptionDetailMember.vue";
 
-const memberStore = useMemberStore();
 const appStore = useAppStore();
-const status = ['nieuw', 'wachtend op betaling', 'betaald', 'afgewezen'];
-const newStatus = ref<string>(memberStore.subscriptionDetail?.status ?? 'nieuw');
-const isSaving = ref<boolean>(false);
+const memberStore = useMemberStore();
 
-const command = ref<changeSubscriptionCommand>({
+const command = ref<ChangeSubscriptionCommand>({
     id: memberStore.subscriptionDetail?.id ?? 0,
     contactFirstname: memberStore.subscriptionDetail?.contactFirstname ?? '',
     contactLastname: memberStore.subscriptionDetail?.contactLastname ?? '',
@@ -308,7 +273,7 @@ const command = ref<changeSubscriptionCommand>({
     remarks: memberStore.subscriptionDetail?.remarks ?? '',
 });
 
-// -- validation ---------------------------------------
+// -- validation ------------------------------------------
 
 const dateValidator = function (value: string) {
     if (command.value.dateOfBirthDD.length !== 0
@@ -346,5 +311,26 @@ const rules = {
 };
 
 const change$ = useVuelidate(rules, command);
+
+// -- change subscription ---------------------------------------------
+
+const isSaving = ref<boolean>(false);
+const toaster = useToast();
+
+async function changeSubscriptionHandler() {
+    change$.value.$touch();
+    if (!change$.value.$invalid) {
+        isSaving.value = true;
+        await changeSubscription(command.value);
+        toaster.add({
+            severity: "success",
+            summary: "Inschrijving gewijzigd.",
+            detail: "",
+            life: appStore.toastLifeTime,
+        });
+        memberStore.increaseCounter();
+        isSaving.value = false;
+    }
+}
 
 </script>

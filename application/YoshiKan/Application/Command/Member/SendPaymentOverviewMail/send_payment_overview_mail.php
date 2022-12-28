@@ -5,7 +5,7 @@ namespace App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail;
 trait send_payment_overview_mail
 {
 
-    public function SendPaymentOverviewMail(int $subscriptionId): bool
+    public function sendPaymentOverviewMail(int $subscriptionId): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 

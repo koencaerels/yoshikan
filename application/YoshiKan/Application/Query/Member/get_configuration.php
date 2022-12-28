@@ -22,7 +22,8 @@ trait get_configuration
             $this->locationRepository,
             $this->groupRepository,
             $this->periodRepository,
-            $this->settingsRepository
+            $this->settingsRepository,
+            $this->judogiRepository,
         );
 
         return $query->getWebConfiguration();
@@ -37,7 +38,8 @@ trait get_configuration
             $this->locationRepository,
             $this->groupRepository,
             $this->periodRepository,
-            $this->settingsRepository
+            $this->settingsRepository,
+            $this->judogiRepository,
         );
 
         return $query->getFullConfiguration();

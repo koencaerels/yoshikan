@@ -16,6 +16,7 @@ export type MemberState = {
     isLoading: boolean;
     subscriptionTodos: Subscription[];
     subscriptionDetail?: Subscription;
+    refreshCounter: number;
 }
 
 export const useMemberStore = defineStore({
@@ -24,6 +25,7 @@ export const useMemberStore = defineStore({
         isLoading: false,
         subscriptionTodos: [],
         subscriptionDetail: undefined,
+        refreshCounter: 0,
     }),
     actions: {
         async loadSubscriptionTodo() {
@@ -33,7 +35,13 @@ export const useMemberStore = defineStore({
             this.isLoading = true;
             this.subscriptionDetail = await getSubscriptionById(id);
             this.isLoading = false;
-        }
+        },
+        async reloadSubscriptionDetail(id: number) {
+            this.subscriptionDetail = await getSubscriptionById(id);
+        },
+        increaseCounter() {
+            this.refreshCounter++;
+        },
     },
     getters: {},
 });

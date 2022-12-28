@@ -15,6 +15,11 @@ const items = computed(() => {
             to: '/configuratie/periodes'
         },
         {
+            label: 'Judogi',
+            icon: 'pi pi-shopping-cart',
+            to: '/configuratie/judogi'
+        },
+        {
             label: 'Graden',
             icon: 'pi pi-star',
             to: '/configuratie/graden'
@@ -38,9 +43,3 @@ const items = computed(() => {
     return navigation;
 });
 </script>
-
-<style scoped>
-#NavigationConfiguration {
-
-}
-</style>

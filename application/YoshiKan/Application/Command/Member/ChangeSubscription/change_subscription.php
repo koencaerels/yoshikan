@@ -11,10 +11,12 @@ trait change_subscription
         $command = ChangeSubscription::hydrateFromJson($jsonCommand);
         $commandHandler = new ChangeSubscriptionHandler(
             $this->subscriptionRepository,
-            $this->locationRepository,
-            $this->periodRepository
+            $this->locationRepository
         );
 
-        return $commandHandler->go($command);
+        $result = $commandHandler->go($command);
+        $this->entityManager->flush();
+
+        return $result;
     }
 }
