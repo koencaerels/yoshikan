@@ -38,12 +38,11 @@
                 <div class="mt-2 pb-2">
                     <div v-if="memberStore.subscriptionDetail">
                         <div v-if="memberStore.subscriptionDetail.status === 'wachtend op betaling'">
-                            <div class="cursor-pointer text-sm" @click="showMailPreviewDialog">
-                                <i class="pi pi-envelope"></i> Verzend betalings instructies
-                                <span v-if="memberStore.subscriptionDetail.isPaymentOverviewSend">
-                                    <strong>opnieuw</strong>
-                                </span>
-                            </div>
+                            <Button class="p-button-sm w-full"
+                                    icon="pi pi-envelope"
+                                    @click="showMailPreviewDialog"
+                                    :label="buttonLabel"
+                            />
                         </div>
                     </div>
                 </div>
@@ -84,6 +83,15 @@ const changeSubscriptionStatusCommand = computed((): ChangeSubscriptionStatusCom
         status: newStatus.value
     };
 });
+
+const buttonLabel = computed((): string => {
+    let label = 'Verzend betalings instructies';
+    if (memberStore.subscriptionDetail && memberStore.subscriptionDetail.isPaymentOverviewSend) {
+        label = 'Verzend overzicht opnieuw';
+    }
+    return label;
+});
+
 
 function showMailPreviewDialog() {
     showMailPreview.value = true;

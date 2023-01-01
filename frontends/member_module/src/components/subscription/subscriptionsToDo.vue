@@ -102,7 +102,7 @@
 <script setup lang="ts">
 import ListWrapper from "@/components/wrapper/listWrapper.vue";
 import {useAppStore} from "@/store/app";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import SubscriptionAdd from "@/components/subscription/subscriptionAdd.vue";
 import {useMemberStore} from "@/store/member";
 import type {Subscription} from "@/api/query/model";
@@ -123,6 +123,12 @@ const todoItems = ref<Subscription[]>([]);
 
 onMounted(() => {
     void filterTodoItems();
+});
+
+const counter = computed((): number => memberStore.refreshCounter);
+
+watch(counter, (): void => {
+   void filterTodoItems();
 });
 
 async function filterTodoItems() {

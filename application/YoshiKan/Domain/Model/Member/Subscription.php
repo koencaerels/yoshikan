@@ -136,8 +136,7 @@ class Subscription
         Period             $period,
         Location           $location,
         array              $settings,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -183,8 +182,7 @@ class Subscription
         Period             $period,
         Location           $location,
         array              $settings
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $contactFirstname,
@@ -226,8 +224,7 @@ class Subscription
         string             $remarks,
         float              $total,
         Location           $location,
-    ): void
-    {
+    ): void {
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
         $this->contactEmail = $contactEmail;
@@ -443,5 +440,4 @@ class Subscription
         }
         return $fee;
     }
-
 }
