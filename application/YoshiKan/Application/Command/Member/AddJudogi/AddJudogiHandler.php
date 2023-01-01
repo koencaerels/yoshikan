@@ -9,7 +9,6 @@ use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 
 class AddJudogiHandler
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————

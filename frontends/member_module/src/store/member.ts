@@ -43,5 +43,29 @@ export const useMemberStore = defineStore({
             this.refreshCounter++;
         },
     },
-    getters: {},
+    getters: {
+        subscriptionFee() {
+            let fee = 0;
+            if (this.subscriptionDetail) {
+                if (this.subscriptionDetail.type === 'volledig jaar') {
+                    if (this.subscriptionDetail.numberOfTraining === 1) {
+                        fee = parseFloat(this.subscriptionDetail.settings.yearlyFee1Training);
+                    } else {
+                        fee = parseFloat(this.subscriptionDetail.settings.yearlyFee2Training);
+                    }
+                } else {
+                    if (this.subscriptionDetail.numberOfTraining === 1) {
+                        fee = parseFloat(this.subscriptionDetail.settings.halfYearlyFee1Training);
+                    } else {
+                        fee = parseFloat(this.subscriptionDetail.settings.halfYearlyFee2Training);
+                    }
+                }
+                if (this.subscriptionDetail.isReductionFamily) {
+                    let reduction = (parseFloat(this.subscriptionDetail.settings.familyDiscount) * fee) / 100;
+                    fee = Math.ceil(fee - reduction);
+                }
+            }
+            return fee;
+        }
+    },
 });

@@ -30,10 +30,15 @@ class SubscriptionReadModel implements \JsonSerializable
         protected bool               $isNewMember,
         protected bool               $isReductionFamily,
         protected bool               $isJudogiBelt,
+        protected float              $judogiPrice,
         protected string             $remarks,
+        protected float              $total,
+        protected bool               $isPaymentOverviewSend,
         protected PeriodReadModel    $period,
         protected LocationReadModel  $location,
-        protected ?MemberReadModel $member,
+        protected array              $settings,
+        protected ?MemberReadModel   $member,
+        protected ?JudogiReadModel   $judogi,
     ) {
     }
 
@@ -61,10 +66,15 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->isNewMember = $this->isNewMember();
         $json->isReductionFamily = $this->isReductionFamily();
         $json->isJudogiBelt = $this->isJudogiBelt();
+        $json->judogiPrice = $this->getJudogiPrice();
         $json->remarks = $this->getRemarks();
+        $json->total = $this->getTotal();
+        $json->isPaymentOverviewSend = $this->isPaymentOverviewSend();
+        $json->settings = $this->getSettings();
         $json->period = $this->getPeriod();
         $json->location = $this->getLocation();
         $json->member = $this->getMember();
+        $json->judogi = $this->getJudogi();
 
         return $json;
     }
@@ -76,8 +86,12 @@ class SubscriptionReadModel implements \JsonSerializable
     public static function hydrateFromModel(Subscription $model): self
     {
         $memberReadModel = null;
-        if(!is_null($model->getMember())) {
+        if (!is_null($model->getMember())) {
             $memberReadModel = MemberReadModel::hydrateFromModel($model->getMember());
+        }
+        $judogiReadModel = null;
+        if (!is_null($model->getJudogi())) {
+            $judogiReadModel = JudogiReadModel::hydrateFromModel($model->getJudogi());
         }
 
         return new self(
@@ -98,10 +112,15 @@ class SubscriptionReadModel implements \JsonSerializable
             $model->isNewMember(),
             $model->isReductionFamily(),
             $model->isJudogiBelt(),
+            $model->getJudogiPrice(),
             $model->getRemarks(),
+            $model->getTotal(),
+            $model->isPaymentOverviewSend(),
             PeriodReadModel::hydrateFromModel($model->getPeriod()),
             LocationReadModel::hydrateFromModel($model->getLocation()),
-            $memberReadModel
+            $model->getSettings(),
+            $memberReadModel,
+            $judogiReadModel,
         );
     }
 
@@ -214,4 +233,28 @@ class SubscriptionReadModel implements \JsonSerializable
         return $this->member;
     }
 
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    public function getJudogi(): ?JudogiReadModel
+    {
+        return $this->judogi;
+    }
+
+    public function getJudogiPrice(): float
+    {
+        return $this->judogiPrice;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    public function isPaymentOverviewSend(): bool
+    {
+        return $this->isPaymentOverviewSend;
+    }
 }

@@ -18,6 +18,7 @@ use App\YoshiKan\Application\Query\Member\get_subscription;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
+use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
@@ -40,18 +41,19 @@ class QueryBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security $security,
+        protected Security               $security,
         protected EntityManagerInterface $entityManager,
-        protected bool $isolationMode,
-        protected Environment $twig,
-        protected string $uploadFolder,
-        protected GradeRepository $gradeRepository,
-        protected GroupRepository $groupRepository,
-        protected LocationRepository $locationRepository,
-        protected MemberRepository $memberRepository,
-        protected PeriodRepository $periodRepository,
-        protected SettingsRepository $settingsRepository,
+        protected bool                   $isolationMode,
+        protected Environment            $twig,
+        protected string                 $uploadFolder,
+        protected GradeRepository        $gradeRepository,
+        protected GroupRepository        $groupRepository,
+        protected LocationRepository     $locationRepository,
+        protected MemberRepository       $memberRepository,
+        protected PeriodRepository       $periodRepository,
+        protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
+        protected JudogiRepository       $judogiRepository
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

@@ -2,14 +2,21 @@
 
 namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
 
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 trait judogi_routes
 {
+    #[Route('/mm/api/member/judogi/order', methods: ['POST', 'PUT'])]
+    public function orderJudogi(Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('sequence'));
+        $response = $this->commandBus->orderJudogi($jsonCommand);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 
-    #[Route('/mm/api/member/judogi/add', methods: ['POST','PUT'])]
+    #[Route('/mm/api/member/judogi/add', methods: ['POST', 'PUT'])]
     public function addJudogi(Request $request): JsonResponse
     {
         $jsonCommand = json_decode($request->request->get('judogi'));
@@ -17,12 +24,11 @@ trait judogi_routes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
-    #[Route('/mm/api/member/judogi/{id}', requirements: ['id' => '\d+'], methods: ['POST','PUT'])]
+    #[Route('/mm/api/member/judogi/{id}', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
     public function changeJudogi(int $id, Request $request): JsonResponse
     {
         $jsonCommand = json_decode($request->request->get('judogi'));
         $response = $this->commandBus->changeJudogi($jsonCommand);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
-
 }

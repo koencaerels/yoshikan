@@ -6,7 +6,6 @@ namespace App\YoshiKan\Application\Query\Member;
 
 class JudogiReadModelCollection implements \JsonSerializable
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -43,5 +42,4 @@ class JudogiReadModelCollection implements \JsonSerializable
     {
         return $this->collection;
     }
-
 }

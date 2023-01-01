@@ -6,20 +6,16 @@ namespace App\YoshiKan\Application\Command\Member\AddJudogi;
 
 class AddJudogi
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
-        protected string $uuid,
         protected string $code,
         protected string $name,
         protected string $size,
         protected float  $price,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -29,28 +25,16 @@ class AddJudogi
     public static function hydrateFromJson($json): self
     {
         return new self(
-            $json->id,
-            $json->uuid,
-            $json->code,
-            $json->name,
-            $json->size,
-            $json->price,
+            trim($json->code),
+            trim($json->name),
+            trim($json->size),
+            floatval($json->price),
         );
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
 
     public function getCode(): string
     {
@@ -71,5 +55,4 @@ class AddJudogi
     {
         return $this->price;
     }
-
 }

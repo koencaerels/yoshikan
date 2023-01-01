@@ -10,7 +10,9 @@ trait change_subscription_status
 
         $command = ChangeSubscriptionStatus::hydrateFromJson($jsonCommand);
         $commandHandler = new ChangeSubscriptionStatusHandler($this->subscriptionRepository);
+        $result = $commandHandler->go($command);
+        $this->entityManager->flush();
 
-        return $commandHandler->go($command);
+        return $result;
     }
 }

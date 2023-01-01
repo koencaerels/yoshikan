@@ -11,6 +11,7 @@ trait web_subscribe
             $this->subscriptionRepository,
             $this->locationRepository,
             $this->periodRepository,
+            $this->settingsRepository,
             $this->entityManager,
         );
         $result = $commandHandler->go($command);

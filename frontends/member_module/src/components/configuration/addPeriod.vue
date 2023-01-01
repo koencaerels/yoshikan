@@ -1,5 +1,5 @@
 <template>
-    <tr id="Component_Add_Location"
+    <tr id="Component_Add_Period"
         v-on:keyup.enter="save"
         v-on:keyup.esc="viewForm">
 

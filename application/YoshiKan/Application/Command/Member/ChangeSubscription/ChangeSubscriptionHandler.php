@@ -2,8 +2,8 @@
 
 namespace App\YoshiKan\Application\Command\Member\ChangeSubscription;
 
+use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
-use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 
 class ChangeSubscriptionHandler
@@ -11,8 +11,8 @@ class ChangeSubscriptionHandler
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
         protected LocationRepository     $locationRepository,
-    )
-    {
+        protected JudogiRepository       $judogiRepository,
+    ) {
     }
 
     public function go(ChangeSubscription $command): bool
@@ -35,9 +35,17 @@ class ChangeSubscriptionHandler
             $command->isReductionFamily(),
             $command->isJudogiBelt(),
             $command->getRemarks(),
+            $command->getTotal(),
             $location,
         );
+
+        if ($command->getJudogiId() != 0) {
+            $judogi = $this->judogiRepository->getById($command->getJudogiId());
+            $subscription->setJudogi($judogi, $command->getJudogiPrice());
+        } else {
+            $subscription->resetJudogi();
+        }
+
         return true;
     }
-
 }

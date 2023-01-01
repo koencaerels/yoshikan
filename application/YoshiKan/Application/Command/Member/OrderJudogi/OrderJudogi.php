@@ -29,5 +29,4 @@ class OrderJudogi
     {
         return $this->sequence;
     }
-
 }

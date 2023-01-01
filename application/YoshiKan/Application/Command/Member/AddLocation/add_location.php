@@ -17,10 +17,9 @@ trait add_location
 {
     public function addLocation(\stdClass $jsonCommand): bool
     {
-        $command = AddLocation::hydrateFromJson($jsonCommand);
-
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
+        $command = AddLocation::hydrateFromJson($jsonCommand);
         $handler = new AddLocationHandler($this->locationRepository);
         $handler->go($command);
         $this->entityManager->flush();

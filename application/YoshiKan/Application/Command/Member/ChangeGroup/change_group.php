@@ -17,10 +17,9 @@ trait change_group
 {
     public function changeGroup(\stdClass $jsonCommand): bool
     {
-        $command = ChangeGroup::hydrateFromJson($jsonCommand);
-
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
+        $command = ChangeGroup::hydrateFromJson($jsonCommand);
         $handler = new ChangeGroupHandler($this->groupRepository);
         $handler->go($command);
         $this->entityManager->flush();

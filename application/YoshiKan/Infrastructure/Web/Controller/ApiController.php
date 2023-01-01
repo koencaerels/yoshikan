@@ -17,6 +17,7 @@ use App\YoshiKan\Application\CommandBus;
 use App\YoshiKan\Application\QueryBus;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\Group;
+use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
@@ -74,7 +75,8 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Member::class),
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
-            $this->entityManager->getRepository(Subscription::class)
+            $this->entityManager->getRepository(Subscription::class),
+            $this->entityManager->getRepository(Judogi::class)
         );
 
         $this->commandBus = new CommandBus(
@@ -87,6 +89,8 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(Location::class),
             $this->entityManager->getRepository(Period::class),
+            $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(Settings::class),
         );
     }
 
@@ -97,7 +101,7 @@ class ApiController extends AbstractController
         $twigLoaders = $twigLoaders instanceof ChainLoader ?
             $twigLoaders->getLoaders() :
             [$twigLoaders];
-        $path =  $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
+        $path = $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
         foreach ($twigLoaders as $twigLoader) {
             if ($twigLoader instanceof FilesystemLoader) {
                 $twigLoader->prependPath($path, '__main__');

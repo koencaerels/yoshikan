@@ -6,20 +6,17 @@ namespace App\YoshiKan\Application\Command\Member\ChangeJudogi;
 
 class ChangeJudogi
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
         protected int    $id,
-        protected string $uuid,
         protected string $code,
         protected string $name,
         protected string $size,
         protected float  $price,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -30,11 +27,10 @@ class ChangeJudogi
     {
         return new self(
             $json->id,
-            $json->uuid,
-            $json->code,
-            $json->name,
-            $json->size,
-            $json->price,
+            trim($json->code),
+            trim($json->name),
+            trim($json->size),
+            floatval($json->price),
         );
     }
 
@@ -45,11 +41,6 @@ class ChangeJudogi
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
     }
 
     public function getCode(): string
@@ -71,5 +62,4 @@ class ChangeJudogi
     {
         return $this->price;
     }
-
 }

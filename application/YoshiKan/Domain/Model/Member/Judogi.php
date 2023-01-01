@@ -7,12 +7,12 @@ namespace App\YoshiKan\Domain\Model\Member;
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
-use Doctrine\ORM\Mapping as ORM;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Uid\Uuid;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 
 /**
  * @Audit\Auditable()
@@ -53,8 +53,7 @@ class Judogi
         string $name,
         string $size,
         float  $price,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->code = $code;
         $this->name = $name;
@@ -72,8 +71,7 @@ class Judogi
         string $name,
         string $size,
         float  $price,
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $code,
@@ -88,8 +86,7 @@ class Judogi
         string $name,
         string $size,
         float  $price,
-    ): void
-    {
+    ): void {
         $this->code = $code;
         $this->name = $name;
         $this->size = $size;
@@ -124,5 +121,4 @@ class Judogi
     {
         return $this->subscriptions->getValues();
     }
-
 }

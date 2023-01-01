@@ -1,8 +1,8 @@
 <?php
 
-namespace App\YoshiKan\Application\Command\Member\ConnectMemberToSubscription;
+namespace App\YoshiKan\Application\Command\Member\ConnectSubscriptionToMember;
 
-class ConnectMemberToSubscription
+class ConnectSubscriptionToMember
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -11,8 +11,7 @@ class ConnectMemberToSubscription
     private function __construct(
         protected int $id,
         protected int $memberId,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

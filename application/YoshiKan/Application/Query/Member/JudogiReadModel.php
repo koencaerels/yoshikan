@@ -8,7 +8,6 @@ use App\YoshiKan\Domain\Model\Member\Judogi;
 
 class JudogiReadModel implements \JsonSerializable
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -20,8 +19,7 @@ class JudogiReadModel implements \JsonSerializable
         protected string $name,
         protected string $size,
         protected float  $price,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

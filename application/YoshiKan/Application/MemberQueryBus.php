@@ -55,8 +55,7 @@ class MemberQueryBus
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
-    )
-    {
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

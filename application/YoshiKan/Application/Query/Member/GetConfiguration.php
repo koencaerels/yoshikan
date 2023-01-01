@@ -30,8 +30,7 @@ class GetConfiguration
         protected PeriodRepository   $periodRepository,
         protected SettingsRepository $settingsRepository,
         protected JudogiRepository   $judogiRepository,
-    )
-    {
+    ) {
     }
 
     public function getFullConfiguration(): ConfigurationReadModel
@@ -64,7 +63,7 @@ class GetConfiguration
         $settingsReadModel = SettingsReadModel::hydrateFromModel($settings);
 
         $judogiCollection = new JudogiReadModelCollection();
-        foreach ($judogi as $judogiItem){
+        foreach ($judogi as $judogiItem) {
             $judogiCollection->addItem(JudogiReadModel::hydrateFromModel($judogiItem));
         }
 

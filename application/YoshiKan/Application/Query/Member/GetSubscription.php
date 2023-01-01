@@ -21,8 +21,7 @@ class GetSubscription
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
         protected PeriodRepository       $periodRepository
-    )
-    {
+    ) {
     }
 
     public function getSubscriptionTodos(): SubscriptionReadModelCollection
@@ -42,5 +41,4 @@ class GetSubscription
     {
         return SubscriptionReadModel::hydrateFromModel($this->subscriptionRepository->getById($id));
     }
-
 }

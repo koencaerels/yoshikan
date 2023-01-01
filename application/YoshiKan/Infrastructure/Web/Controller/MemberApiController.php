@@ -49,8 +49,8 @@ class MemberApiController extends AbstractController
     use group_routes;
     use period_routes;
     use location_routes;
-    use settings_routes;
     use judogi_routes;
+    use settings_routes;
     use configuration_routes;
     use subscription_routes;
 

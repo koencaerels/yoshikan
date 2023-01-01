@@ -11,7 +11,8 @@ trait change_subscription
         $command = ChangeSubscription::hydrateFromJson($jsonCommand);
         $commandHandler = new ChangeSubscriptionHandler(
             $this->subscriptionRepository,
-            $this->locationRepository
+            $this->locationRepository,
+            $this->judogiRepository,
         );
 
         $result = $commandHandler->go($command);

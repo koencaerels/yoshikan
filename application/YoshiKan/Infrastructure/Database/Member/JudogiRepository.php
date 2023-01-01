@@ -14,8 +14,7 @@ final class JudogiRepository
     extends ServiceEntityRepository
     implements \App\YoshiKan\Domain\Model\Member\JudogiRepository
 {
-
-    const NO_ENTITY_FOUND = 'no_judogi_found';
+    public const NO_ENTITY_FOUND = 'no_judogi_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -41,7 +40,9 @@ final class JudogiRepository
         $em = $this->getEntityManager();
         $em->persist($model);
         $id = 0;
-        if ($model->getId()) $id = $model->getId();
+        if ($model->getId()) {
+            $id = $model->getId();
+        }
         return $id;
     }
 
@@ -55,7 +56,9 @@ final class JudogiRepository
     public function getById(int $id): Judogi
     {
         $model = $this->find($id);
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
 
@@ -66,7 +69,9 @@ final class JudogiRepository
             ->setParameter('uuid', $uuid, 'uuid')
             ->getQuery()
             ->getOneOrNullResult();
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
 
@@ -77,8 +82,8 @@ final class JudogiRepository
     public function getAll(): array
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        $q->addOrderBy('t.id', 'DESC');
+        $q->addOrderBy('t.sequence', 'ASC');
+
         return $q->getQuery()->getResult();
     }
-
 }

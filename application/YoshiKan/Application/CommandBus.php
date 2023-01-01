@@ -16,9 +16,11 @@ namespace App\YoshiKan\Application;
 use App\YoshiKan\Application\Command\Member\WebConfirmationMail\web_confirmation_mail;
 use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
+use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
+use App\YoshiKan\Infrastructure\Database\Member\SettingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -36,15 +38,17 @@ class CommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security $security,
+        protected Security               $security,
         protected EntityManagerInterface $entityManager,
-        protected bool $isolationMode,
-        protected Environment $twig,
-        protected MailerInterface $mailer,
-        protected string $uploadFolder,
+        protected bool                   $isolationMode,
+        protected Environment            $twig,
+        protected MailerInterface        $mailer,
+        protected string                 $uploadFolder,
         protected SubscriptionRepository $subscriptionRepository,
-        protected LocationRepository $locationRepository,
-        protected PeriodRepository $periodRepository
+        protected LocationRepository     $locationRepository,
+        protected PeriodRepository       $periodRepository,
+        protected JudogiRepository       $judogiRepository,
+        protected SettingsRepository     $settingsRepository
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

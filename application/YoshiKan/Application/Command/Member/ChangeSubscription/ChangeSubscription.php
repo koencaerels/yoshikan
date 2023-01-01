@@ -7,7 +7,6 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionType;
 
 class ChangeSubscription
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -33,8 +32,10 @@ class ChangeSubscription
         protected bool               $reductionFamily,
         protected bool               $judogiBelt,
         protected string             $remarks,
-    )
-    {
+        protected float              $total,
+        protected int                $judogiId,
+        protected float              $judogiPrice,
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -66,6 +67,9 @@ class ChangeSubscription
             boolval($json->reductionFamily),
             boolval($json->judogiBelt),
             trim($json->remarks),
+            floatval($json->total),
+            intval($json->judogiId),
+            floatval($json->judogiPrice),
         );
     }
 
@@ -173,4 +177,18 @@ class ChangeSubscription
         return $this->remarks;
     }
 
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    public function getJudogiId(): int
+    {
+        return $this->judogiId;
+    }
+
+    public function getJudogiPrice(): float
+    {
+        return $this->judogiPrice;
+    }
 }

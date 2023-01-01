@@ -83,10 +83,10 @@
                     <div class="basis-1/4 ml-4">
                         <div class="mb-1"><label> / YYYY</label></div>
                         <span class="p-input-icon-right w-full">
-                        <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthYYYY"/>
-                        <i v-if="!change$.dateOfBirthYYYY.$invalid" class="pi pi-check text-green-600"/>
-                        <i v-if="change$.dateOfBirthYYYY.$invalid" class="pi pi-times text-red-600"/>
-                    </span>
+                            <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthYYYY"/>
+                            <i v-if="!change$.dateOfBirthYYYY.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.dateOfBirthYYYY.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
                     </div>
                 </div>
 
@@ -118,12 +118,12 @@
                     </div>
                     <div class="basis-3/4 ml-4">
                         <div v-if="appStore.configuration">
-                        <span v-for="location in appStore.configuration.locations" class="mr-4">
-                            <RadioButton name="location" :value="location.id"
-                                         v-model="command.locationId"
-                                         :input-id="location.name"/>
-                            <label :for="location.name" class="ml-2"> {{ location.name }} </label>
-                        </span>
+                            <span v-for="location in appStore.configuration.locations" class="mr-4">
+                                <RadioButton name="location" :value="location.id"
+                                             v-model="command.locationId"
+                                             :input-id="location.name"/>
+                                <label :for="location.name" class="ml-2"> {{ location.name }} </label>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -163,39 +163,71 @@
                     <hr>
                 </div>
                 <!-- -- extra switches ---------------------------------- -->
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right">
-                        3 tot 5 trainingen
-                    </div>
-                    <div class="basis-1/4 ml-4">
-                        <InputSwitch v-model="command.extraTraining"/>
-                    </div>
-                </div>
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right">
-                        Nieuw lid
-                    </div>
-                    <div class="basis-1/4 ml-4">
-                        <InputSwitch v-model="command.newMember"/>
-                    </div>
-                </div>
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right">
-                        Judopak + gordel
-                    </div>
-                    <div class="basis-1/4 ml-4">
-                        <InputSwitch v-model="command.judogiBelt"/>
-                    </div>
-                </div>
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right">
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/4 text-right mr-4">
                         Gezinskorting
                     </div>
-                    <div class="basis-1/4 ml-4">
+                    <div class="basis-2/12">
                         <InputSwitch v-model="command.reductionFamily"/>
                     </div>
+                    <div class="basis-2/3">
+                        <span class="font-bold text-base">
+                            {{ subscriptionFee }} €
+                        </span>
+                    </div>
                 </div>
-                <div class="flex flex-row mt-4">
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/4 text-right mr-4">
+                        3 tot 5 trainingen
+                    </div>
+                    <div class="basis-2/12">
+                        <InputSwitch v-model="command.extraTraining"/>
+                    </div>
+                    <div class="basis-2/3">
+                        <div v-if="command.extraTraining && memberStore.subscriptionDetail" class="font-bold text-base">
+                            + {{ memberStore.subscriptionDetail.settings.extraTrainingFee }} €
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/4 text-right mr-4">
+                        Nieuw lid
+                    </div>
+                    <div class="basis-2/12">
+                        <InputSwitch v-model="command.newMember"/>
+                    </div>
+                    <div class="basis-2/3">
+                        <div v-if="command.newMember && memberStore.subscriptionDetail" class="font-bold text-base">
+                            + {{ memberStore.subscriptionDetail.settings.newMemberSubscriptionFee }} €
+                            (Inschrijvingspakket)
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/4 text-right mr-4">
+                        Judopak + gordel
+                    </div>
+                    <div class="basis-2/12">
+                        <InputSwitch v-model="command.judogiBelt" v-on:change="changeJudogi"/>
+                    </div>
+                    <div class="basis-1/3">
+                        <Dropdown class="w-full"
+                                  v-if="command.judogiBelt"
+                                  :show-clear="true"
+                                  v-on:change="changeJudogiSize"
+                                  v-model="command.judogiId"
+                                  option-label="name" option-value="id"
+                                  :options="appStore.configuration.judogi"/>
+                    </div>
+                    <div class="basis-1/3">
+                        <span class="p-input-icon-right w-full pl-2" v-if="command.judogiBelt">
+                            <InputText class="w-full p-inputtext-sm" v-model="command.judogiPrice"/>
+                            <i v-if="!change$.judogiPrice.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.judogiPrice.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex flex-row mt-4 pb-4">
                     <div class="basis-1/4 text-right">
                         Opmerkingen
                     </div>
@@ -205,17 +237,30 @@
                 </div>
             </div>
         </detail-wrapper>
-        <div class="flex flex-row pt-2 pb-2 bg-gray-100">
+        <div class="flex flex-row pt-2 pb-2 bg-gray-300">
             <div class="basis-1/2 text-xl ml-4">
-                Totaal : xxx €
+                <div class="flex">
+                    <div class="mt-0.5">Totaal</div>
+                    <div class="mr-2 ml-2 text-sm">
+                        <span class="p-input-icon-right w-full">
+                            <InputText class="w-full p-inputtext-sm" v-model="command.total"/>
+                            <i v-if="!change$.total.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.total.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
+                    </div>
+                    <div class="mt-0.5 mr-4">€</div>
+                    <div class="w-1-2 mr-4 text-sm">
+                        <Button icon="pi pi-calculator" @click="calculate" class="p-button-sm"/>
+                    </div>
+                </div>
             </div>
             <div class="basis-1/2 mr-4">
                 <Button v-if="!isSaving"
                         @click="changeSubscriptionHandler"
-                        label="Wijzig details"
+                        label="Bewaar inschrijving"
                         icon="pi pi-save"
                         class="w-full p-button-success p-button-sm"/>
-                <Button v-else label="Wijzig details"
+                <Button v-else label="Bewaar inschrijving"
                         disabled
                         icon="pi pi-spinner pi-spin"
                         class="w-full p-button-success p-button-sm"/>
@@ -235,7 +280,7 @@
 
 <script setup lang="ts">
 import {useMemberStore} from "@/store/member";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import type {ChangeSubscriptionCommand} from "@/api/command/changeSubscription";
 import moment from "moment";
 import {useAppStore} from "@/store/app";
@@ -270,7 +315,10 @@ const command = ref<ChangeSubscriptionCommand>({
     extraTraining: memberStore.subscriptionDetail?.isExtraTraining ?? false,
     reductionFamily: memberStore.subscriptionDetail?.isReductionFamily ?? false,
     judogiBelt: memberStore.subscriptionDetail?.isJudogiBelt ?? false,
+    judogiPrice: memberStore.subscriptionDetail?.judogiPrice ?? '0',
+    judogiId: memberStore.subscriptionDetail?.judogi?.id ?? 0,
     remarks: memberStore.subscriptionDetail?.remarks ?? '',
+    total: memberStore.subscriptionDetail?.total ?? '0',
 });
 
 // -- validation ------------------------------------------
@@ -308,9 +356,67 @@ const rules = {
     dateOfBirthMM: {required, numeric, maxValueValue: maxValue(12), minValueValue: minValue(1), dateValidator},
     dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2200), dateValidator},
     locationId: {minValueValue: minValue(1)},
+    judogiPrice: {required, numeric},
+    total: {required, numeric},
 };
 
 const change$ = useVuelidate(rules, command);
+
+// -- calculate this subscription  ------------------------------------
+
+const subscriptionFee = computed((): number => {
+    let fee = 0;
+    if (memberStore.subscriptionDetail) {
+        if (command.value.type === 'volledig jaar') {
+            if (command.value.numberOfTraining === 1) {
+                fee = parseFloat(memberStore.subscriptionDetail.settings.yearlyFee1Training);
+            } else {
+                fee = parseFloat(memberStore.subscriptionDetail.settings.yearlyFee2Training);
+            }
+        } else {
+            if (command.value.numberOfTraining === 1) {
+                fee = parseFloat(memberStore.subscriptionDetail.settings.halfYearlyFee1Training);
+            } else {
+                fee = parseFloat(memberStore.subscriptionDetail.settings.halfYearlyFee2Training);
+            }
+        }
+    }
+    if (command.value.reductionFamily && memberStore.subscriptionDetail) {
+        let reduction = (parseFloat(memberStore.subscriptionDetail.settings.familyDiscount) * fee) / 100;
+        fee = Math.ceil(fee - reduction);
+    }
+    return fee;
+});
+
+function calculate(): void {
+    let fee = subscriptionFee.value;
+    if (command.value.extraTraining && memberStore.subscriptionDetail) {
+        fee = fee + parseFloat(memberStore.subscriptionDetail.settings.extraTrainingFee);
+    }
+    if (command.value.newMember && memberStore.subscriptionDetail) {
+        fee = fee + parseFloat(memberStore.subscriptionDetail.settings.newMemberSubscriptionFee);
+    }
+    fee = fee + parseFloat(command.value.judogiPrice.toString());
+    command.value.total = fee.toString();
+}
+
+function changeJudogi() {
+    if (!command.value.judogiBelt) {
+        command.value.judogiPrice = '0';
+        command.value.judogiId = 0;
+    }
+}
+
+function changeJudogiSize() {
+    if (command.value.judogiId && appStore.configuration) {
+        let judogi = appStore.configuration.judogi.find(c => c.id === command.value.judogiId);
+        if (judogi) {
+            command.value.judogiPrice = judogi.price;
+        }
+    } else {
+        command.value.judogiPrice = '0';
+    }
+}
 
 // -- change subscription ---------------------------------------------
 
@@ -324,10 +430,11 @@ async function changeSubscriptionHandler() {
         await changeSubscription(command.value);
         toaster.add({
             severity: "success",
-            summary: "Inschrijving gewijzigd.",
+            summary: "Inschrijving bewaard.",
             detail: "",
             life: appStore.toastLifeTime,
         });
+        memberStore.reloadSubscriptionDetail(command.value.id);
         memberStore.increaseCounter();
         isSaving.value = false;
     }

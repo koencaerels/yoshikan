@@ -13,8 +13,7 @@ class ChangeSubscriptionStatus
     private function __construct(
         protected int $id,
         protected SubscriptionStatus $status
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

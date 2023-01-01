@@ -2,8 +2,11 @@
 
 namespace App\YoshiKan\Application\Command\Member\WebSubscribe;
 
+use App\YoshiKan\Application\Query\Member\SettingsReadModel;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\SettingsCode;
+use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionType;
@@ -16,6 +19,7 @@ class WebSubscribeHandler
         protected SubscriptionRepository $subscriptionRepository,
         protected LocationRepository     $locationRepository,
         protected PeriodRepository       $periodRepository,
+        protected SettingsRepository     $settingsRepository,
         protected EntityManagerInterface $entityManager,
     ) {
     }
@@ -25,6 +29,7 @@ class WebSubscribeHandler
         if ($command->getHoneyPot() === '') {
             $location = $this->locationRepository->getById($command->getLocationId());
             $period = $this->periodRepository->getById($command->getPeriodId());
+            $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
             if ($command->getNumberOfTraining() === 3) {
                 $finalNumberOfTraining = 2;
                 $extraFeeTraining = true;
@@ -56,6 +61,7 @@ class WebSubscribeHandler
                 $command->getRemarks(),
                 $period,
                 $location,
+                json_decode(json_encode(SettingsReadModel::hydrateFromModel($settings)),true),
             );
             $this->subscriptionRepository->save($subscription);
             $this->entityManager->flush();

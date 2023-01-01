@@ -5,7 +5,7 @@ export interface ChangeJudogiCommand {
     code: string;
     name: string;
     size: string;
-    price: number;
+    price: string;
 }
 
 export async function changeJudogi(command: ChangeJudogiCommand) {

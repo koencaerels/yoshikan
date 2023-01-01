@@ -61,7 +61,7 @@ export interface Judogi {
     code: string;
     name: string;
     size: string;
-    price: number;
+    price: string;
 }
 
 export interface Subscription {
@@ -82,7 +82,12 @@ export interface Subscription {
     isNewMember: boolean;
     isReductionFamily: boolean;
     isJudogiBelt: boolean;
+    judogiPrice: string;
     remarks: string;
-    period:Period;
-    location:Location;
+    total: string;
+    period: Period;
+    location: Location;
+    judogi?: Judogi;
+    settings: Settings;
+    isPaymentOverviewSend:boolean;
 }

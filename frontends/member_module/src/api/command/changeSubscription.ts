@@ -20,7 +20,10 @@ export interface ChangeSubscriptionCommand {
     extraTraining: boolean;
     reductionFamily: boolean;
     judogiBelt: boolean;
+    judogiPrice: string;
     remarks: string;
+    judogiId?:number;
+    total: string;
 }
 
 export async function changeSubscription(command: ChangeSubscriptionCommand) {

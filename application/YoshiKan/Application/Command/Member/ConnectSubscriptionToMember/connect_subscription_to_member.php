@@ -1,10 +1,10 @@
 <?php
 
-namespace App\YoshiKan\Application\Command\Member\ConnectMemberToSubscription;
+namespace App\YoshiKan\Application\Command\Member\ConnectSubscriptionToMember;
 
-trait connect_member_to_subscription
+trait connect_subscription_to_member
 {
-    public function connectMemberToSubscription(\stdClass $jsonCommand): bool
+    public function connectSubscriptionToMember(\stdClass $jsonCommand): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 

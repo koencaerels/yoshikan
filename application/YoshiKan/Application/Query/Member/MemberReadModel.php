@@ -8,7 +8,6 @@ use App\YoshiKan\Domain\Model\Member\Member;
 
 class MemberReadModel implements \JsonSerializable
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -23,8 +22,7 @@ class MemberReadModel implements \JsonSerializable
         protected string             $gender,
         protected GradeReadModel     $grade,
         protected LocationReadModel  $location,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -114,5 +112,4 @@ class MemberReadModel implements \JsonSerializable
     {
         return $this->location;
     }
-
 }

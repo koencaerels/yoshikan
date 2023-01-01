@@ -48,7 +48,7 @@ trait subscription_routes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
-    #[Route('/mm/api/subscription/{id}/mail-payment-information', methods: ['GET'])]
+    #[Route('/mm/api/subscription/{id}/mail-payment-information', methods: ['POST', 'PUT'])]
     public function sendPaymentOverviewMail(int $id, Request $request): JsonResponse
     {
         $response = $this->commandBus->sendPaymentOverviewMail($id);
@@ -59,8 +59,14 @@ trait subscription_routes
     public function connectMemberToSubscription(int $id, Request $request): JsonResponse
     {
         $jsonCommand = json_decode($request->request->get('connect-member'));
-        $response = $this->commandBus->connectMemberToSubscription($jsonCommand);
+        $response = $this->commandBus->connectSubscriptionToMember($jsonCommand);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/subscription/{id}/create-member', methods: ['POST', 'PUT'])]
+    public function createMemberFromSubscription(int $id, Request $request): JsonResponse
+    {
+        $response = $this->commandBus->create ($id);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 }

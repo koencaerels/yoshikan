@@ -79,8 +79,20 @@ class Subscription
     #[ORM\Column(options: ["default" => 0])]
     private bool $isJudogiBelt = false;
 
+    #[ORM\Column(options: ["default" => 0])]
+    private float $judogiPrice = 0;
+
     #[ORM\Column(type: 'text')]
     private string $remarks;
+
+    #[ORM\Column(options: ["default" => 0])]
+    private float $total = 0;
+
+    #[ORM\Column(type: 'json')]
+    private array $settings;
+
+    #[ORM\Column(options: ["default" => 0])]
+    private bool $isPaymentOverviewSend = false;
 
     // ------------------------------------------------------------ associations
 
@@ -96,6 +108,9 @@ class Subscription
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Judogi", fetch: "EXTRA_LAZY", inversedBy: "subscriptions")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Judogi $judogi;
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -120,7 +135,9 @@ class Subscription
         string             $remarks,
         Period             $period,
         Location           $location,
-    ) {
+        array              $settings,
+    )
+    {
         $this->uuid = $uuid;
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -139,16 +156,7 @@ class Subscription
         $this->remarks = $remarks;
         $this->period = $period;
         $this->location = $location;
-    }
-
-    public function changeStatus(SubscriptionStatus $status)
-    {
-        $this->status = $status->value;
-    }
-
-    public function setMember(Member $member)
-    {
-        $this->member = $member;
+        $this->settings = $settings;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -174,7 +182,9 @@ class Subscription
         string             $remarks,
         Period             $period,
         Location           $location,
-    ): self {
+        array              $settings
+    ): self
+    {
         return new self(
             $uuid,
             $contactFirstname,
@@ -194,6 +204,7 @@ class Subscription
             $remarks,
             $period,
             $location,
+            $settings
         );
     }
 
@@ -213,8 +224,10 @@ class Subscription
         bool               $isReductionFamily,
         bool               $isJudogiBelt,
         string             $remarks,
+        float              $total,
         Location           $location,
-    ): void {
+    ): void
+    {
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
         $this->contactEmail = $contactEmail;
@@ -230,9 +243,36 @@ class Subscription
         $this->isReductionFamily = $isReductionFamily;
         $this->isJudogiBelt = $isJudogiBelt;
         $this->remarks = $remarks;
+        $this->total = $total;
         $this->location = $location;
     }
 
+    public function changeStatus(SubscriptionStatus $status): void
+    {
+        $this->status = $status->value;
+    }
+
+    public function setMember(Member $member): void
+    {
+        $this->member = $member;
+    }
+
+    public function setJudogi(Judogi $judogi, float $price): void
+    {
+        $this->judogi = $judogi;
+        $this->judogiPrice = $price;
+    }
+
+    public function resetJudogi(): void
+    {
+        $this->judogi = null;
+        $this->judogiPrice = 0;
+    }
+
+    public function flagPaymentOverviewMailSend(): void
+    {
+        $this->isPaymentOverviewSend = true;
+    }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
@@ -328,9 +368,29 @@ class Subscription
         return $this->isJudogiBelt;
     }
 
+    public function getJudogiPrice(): float
+    {
+        return $this->judogiPrice;
+    }
+
     public function getRemarks(): string
     {
         return $this->remarks;
+    }
+
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    public function isPaymentOverviewSend(): bool
+    {
+        return $this->isPaymentOverviewSend;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -342,6 +402,11 @@ class Subscription
         return $this->member;
     }
 
+    public function getJudogi(): ?Judogi
+    {
+        return $this->judogi;
+    }
+
     public function getPeriod(): Period
     {
         return $this->period;
@@ -351,4 +416,32 @@ class Subscription
     {
         return $this->location;
     }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Subscription fee calculation function
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getSubscriptionFee(): float
+    {
+        $fee = 0;
+        if ($this->type === SubscriptionType::FULL_YEAR->value) {
+            if ($this->numberOfTraining === 1) {
+                $fee = floatval($this->settings['yearlyFee1Training']);
+            } else {
+                $fee = floatval($this->settings['yearlyFee2Training']);
+            }
+        } else {
+            if ($this->numberOfTraining === 1) {
+                $fee = floatval($this->settings['halfYearlyFee1Training']);
+            } else {
+                $fee = floatval($this->settings['halfYearlyFee2Training']);
+            }
+        }
+        if ($this->isReductionFamily) {
+            $reduction = floatval($this->settings['familyDiscount']) * $fee / 100;
+            $fee = ceil($fee - $reduction);
+        }
+        return $fee;
+    }
+
 }

@@ -1,0 +1,61 @@
+{% extends 'mail/base_mail.html.twig' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block body %}
+    <p>Dag {{ subscription.contactFirstname }},</p>
+
+    <p>
+        We hebben de inschrijving van
+        <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
+        (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        {% if(subscription.isNewMember) %} als nieuw lid {% endif %}
+        goed ontvangen en nagekeken.
+    </p>
+    <p>
+        <strong>{{ subscription.period.name }}</strong>
+        <br>- Locatie: {{ subscription.location.name }}
+        <br>- {{ subscription.type.value | capitalize }},
+        {% if(subscription.numberOfTraining == 1) %}
+            1 training per week
+        {% else %}
+            2 trainingen per week
+        {% endif %}
+        = {{ subscription.getSubscriptionFee }} €
+        {% if(subscription.isReductionFamily) %}
+            (met {{ subscription.settings.familyDiscount }}% gezinskorting)
+        {% endif %}
+        {% if(subscription.isExtraTraining) %}
+            <br>- 3 tot 5 trainingen per week
+            = {{ subscription.settings.extraTrainingFee }} €
+        {% endif %}
+        {% if(subscription.isNewMember) %}
+            <br>- Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak
+            = {{ subscription.settings.newMemberSubscriptionFee }} €
+        {% endif %}
+        {% if(subscription.isJudogiBelt) %}
+            <br>- Judopak + gordel (maat {{ subscription.judogi.name}}) = {{ subscription.judogiPrice }} €
+        {% endif %}
+    </p>
+    {% if(subscription.remarks != '') %}
+        <p>
+            <strong>Opmerkingen:</strong>
+            <br>{{ subscription.remarks | nl2br }}
+        </p>
+    {% endif %}
+
+    <p>
+        <strong>Totaal: {{ subscription.total }} €</strong>
+        <br>Gelieve bovenstaand bedrag over te schrijven
+        <br>op rekeningnummer BE37 7330 0101 8328 (BIC KREDBEBB)
+        <br>met als referentie: "YK-{{ subscription.id }}
+        {{ subscription.firstname }} {{ subscription.lastname }}".
+    </p>
+    <p>
+        Alvast bedankt.
+    </p>
+    <p>
+        Met vriendelijke groeten,
+        <br>Team Yoshi-Kan.
+    </p>
+{% endblock %}

@@ -8,15 +8,13 @@ use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 
 class ChangeJudogiHandler
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
         protected JudogiRepository $judogiRepo
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

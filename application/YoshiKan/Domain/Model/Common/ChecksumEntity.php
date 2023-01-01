@@ -46,6 +46,7 @@ trait ChecksumEntity
                 || 'subscriptions' === $property->getName()
                 || 'members' === $property->getName()
                 || 'member' === $property->getName()
+                || 'judogi' === $property->getName()
             )) {
                 match (gettype($this->{$property->getName()})) {
                     'string' => $contentString .= $this->{$property->getName()},
