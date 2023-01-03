@@ -86,6 +86,34 @@ final class GradeRepository extends ServiceEntityRepository implements \App\Yosh
         return $model;
     }
 
+    public function getByCode(string $code): Grade
+    {
+        $model = $this->createQueryBuilder('t')
+            ->andWhere('t.code = :code')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->getOneOrNullResult();
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
+
+        return $model;
+    }
+
+    public function getFirst(): Grade
+    {
+        $model = $this->createQueryBuilder('t')
+            ->addOrderBy('t.sequence', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
+
+        return $model;
+    }
+
     public function getMaxSequence(): int
     {
         $model = $this->createQueryBuilder('t')

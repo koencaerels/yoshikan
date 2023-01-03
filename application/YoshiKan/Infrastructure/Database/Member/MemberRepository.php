@@ -85,4 +85,24 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
 
         return $model;
     }
+
+    public function findByNameAndDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): ?Member
+    {
+        $model = $this->createQueryBuilder('t')
+            ->andWhere('LOWER(t.firstname) = :firstname')
+            ->setParameter('firstname', trim(strtolower($firstname)))
+            ->andWhere('LOWER(t.lastname) = :lastname')
+            ->setParameter('lastname', trim(strtolower($lastname)))
+            ->andWhere('t.dateOfBirth = :dateOfBirth')
+            ->setParameter('dateOfBirth', $dateOfBirth)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $model;
+    }
+
+    public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array
+    {
+        // TODO: Implement findByNameOrDateOfBirth() method.
+    }
 }

@@ -66,7 +66,7 @@ trait subscription_routes
     #[Route('/mm/api/subscription/{id}/create-member', methods: ['POST', 'PUT'])]
     public function createMemberFromSubscription(int $id, Request $request): JsonResponse
     {
-        $response = $this->commandBus->create ($id);
+        $response = $this->commandBus->createMemberFromSubscription($id);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

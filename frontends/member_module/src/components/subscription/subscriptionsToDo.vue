@@ -11,7 +11,7 @@
             </div>
             <form v-on:submit.prevent>
                 <div class="flex flex-row mt-2">
-                    <div class="basis-1/3 text-right mr-2 mt-1">Naam</div>
+                    <div class="basis-1/3 text-right mr-2 mt-1">Naam of code</div>
                     <div class="basis-2/3">
                         <InputText class="w-full p-inputtext-sm"
                                    v-model="searchModel.keyword"/>
@@ -142,11 +142,12 @@ async function filterTodoItems() {
         const filterValue = searchModel.value.keyword.toLowerCase();
         let conditions: any = [];
         if (searchModel.value.keyword.length !== 0) {
-            conditions.push((event: { contactFirstname: string; contactLastname: string; firstname: string; lastname: string; contactEmail: string; }) => (event.contactFirstname.toLowerCase().includes(filterValue)
+            conditions.push((event: { id:number; contactFirstname: string; contactLastname: string; firstname: string; lastname: string; contactEmail: string; }) => (event.contactFirstname.toLowerCase().includes(filterValue)
                 || event.contactLastname.toLowerCase().includes(filterValue)
                 || event.firstname.toLowerCase().includes(filterValue)
                 || event.lastname.toLowerCase().includes(filterValue)
                 || event.contactEmail.toLowerCase().includes(filterValue)
+                || event.id.toString().toLowerCase().includes(filterValue)
             ));
         }
         if (searchModel.value.locationId) {

@@ -33,7 +33,9 @@ class Member
     use BlameableEntity;
     use TimestampableEntity;
 
-    // ------------------------------------------------------------- attributes
+    #[ORM\Column(length:36)]
+    private string $status = 'actief';
+
     #[ORM\Column(length: 191)]
     private string $firstname;
 
@@ -73,13 +75,14 @@ class Member
         Grade $grade,
         Location $location,
     ) {
-        // -------------------------------------------------- set the attributes
+
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->dateOfBirth = $dateOfBirth;
         $this->gender = $gender->value;
-        // ------------------------------------------------ set the associations
+        $this->status = 'actief';
+
         $this->grade = $grade;
         $this->location = $location;
     }
@@ -145,9 +148,15 @@ class Member
         return $this->gender;
     }
 
-    // —————————————————————————————————————————————————————————————————————————
-    // Other model getters
-    // —————————————————————————————————————————————————————————————————————————
+    public function getStatus(): MemberStatus
+    {
+        return MemberStatus::from($this->status);
+    }
+
+    public function getStatusAsString(): string
+    {
+        return $this->status;
+    }
 
     public function getGrade(): Grade
     {
@@ -163,4 +172,5 @@ class Member
     {
         return $this->subscriptions->getValues();
     }
+
 }

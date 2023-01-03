@@ -9,7 +9,8 @@ trait create_member_from_subscription
         $command = new CreateMemberFromSubscription($id);
         $commandHandler = new CreateMemberFromSubscriptionHandler(
             $this->subscriptionRepository,
-            $this->memberRepository
+            $this->memberRepository,
+            $this->gradeRepository
         );
         $result = $commandHandler->go($command);
         $this->entityManager->flush();

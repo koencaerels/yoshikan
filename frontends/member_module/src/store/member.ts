@@ -36,8 +36,10 @@ export const useMemberStore = defineStore({
             this.subscriptionDetail = await getSubscriptionById(id);
             this.isLoading = false;
         },
-        async reloadSubscriptionDetail(id: number) {
-            this.subscriptionDetail = await getSubscriptionById(id);
+        async reloadSubscriptionDetail() {
+            if (this.subscriptionDetail) {
+                this.subscriptionDetail = await getSubscriptionById(this.subscriptionDetail.id);
+            }
         },
         increaseCounter() {
             this.refreshCounter++;

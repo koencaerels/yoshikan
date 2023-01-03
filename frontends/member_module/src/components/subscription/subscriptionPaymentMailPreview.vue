@@ -1,9 +1,7 @@
 <template>
     <div id="subscriptionPaymentMailPreview" style="width: 450px;">
         <div v-if="memberStore.subscriptionDetail" id="messageWrapper" class="text-sm">
-
             <p>naar: {{ memberStore.subscriptionDetail.contactEmail }}</p>
-
             <p>Dag {{ memberStore.subscriptionDetail.contactFirstname }},</p>
             <p>
                 We hebben de inschrijving van
@@ -16,35 +14,35 @@
             </p>
             <p>
                 <strong>{{memberStore.subscriptionDetail.period.name}}</strong>
-            <ul>
-                <li>Locatie: {{ memberStore.subscriptionDetail.location.name }}</li>
-                <li>
-                    {{ memberStore.subscriptionDetail.type }},
-                    <span v-if="memberStore.subscriptionDetail.numberOfTraining === 1">
-                                1 training per week
-                            </span>
-                    <span v-else>
-                                2 trainingen per week
-                            </span>
-                    <span>
-                                 = {{ memberStore.subscriptionFee }} €
-                            </span>
-                    <span v-if="memberStore.subscriptionDetail.isReductionFamily">
-                                (met {{ memberStore.subscriptionDetail.settings.familyDiscount }}% gezinskorting)
-                            </span>
-                </li>
-                <li v-if="memberStore.subscriptionDetail.isExtraTraining">
-                    3 tot 5 trainingen per week = {{ memberStore.subscriptionDetail.settings.extraTrainingFee }} €
-                </li>
-                <li v-if="memberStore.subscriptionDetail.isNewMember">
-                    Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak voor judopak
-                    = {{ memberStore.subscriptionDetail.settings.newMemberSubscriptionFee }} €
-                </li>
-                <li v-if="memberStore.subscriptionDetail.isJudogiBelt">
-                    Judopak + gordel (maat {{ memberStore.subscriptionDetail.judogi.name }})
-                    = {{ memberStore.subscriptionDetail.judogiPrice }} €
-                </li>
-            </ul>
+                <ul>
+                    <li>Locatie: {{ memberStore.subscriptionDetail.location.name }}</li>
+                    <li>
+                        {{ memberStore.subscriptionDetail.type }},
+                        <span v-if="memberStore.subscriptionDetail.numberOfTraining === 1">
+                          1 training per week
+                        </span>
+                        <span v-else>
+                           2 trainingen per week
+                        </span>
+                        <span>
+                           = {{ memberStore.subscriptionFee }} €
+                        </span>
+                        <span v-if="memberStore.subscriptionDetail.isReductionFamily">
+                          (met {{ memberStore.subscriptionDetail.settings.familyDiscount }}% gezinskorting)
+                        </span>
+                    </li>
+                    <li v-if="memberStore.subscriptionDetail.isExtraTraining">
+                        3 tot 5 trainingen per week = {{ memberStore.subscriptionDetail.settings.extraTrainingFee }} €
+                    </li>
+                    <li v-if="memberStore.subscriptionDetail.isNewMember">
+                        Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak voor judopak
+                        = {{ memberStore.subscriptionDetail.settings.newMemberSubscriptionFee }} €
+                    </li>
+                    <li v-if="memberStore.subscriptionDetail.isJudogiBelt && memberStore.subscriptionDetail.judogi">
+                        Judopak + gordel (maat {{ memberStore.subscriptionDetail.judogi.name }})
+                        = {{ memberStore.subscriptionDetail.judogiPrice }} €
+                    </li>
+                </ul>
             </p>
             <p v-if="memberStore.subscriptionDetail.remarks.length != 0">
                 <span class="font-bold text-xs">Opmerkingen:</span>
@@ -54,7 +52,7 @@
                 <strong>Totaal: {{ memberStore.subscriptionDetail.total }} €</strong>
                 <br>Gelieve bovenstaand bedrag over te schrijven
                 <br>op rekeningnr. BE37 7330 0101 8328 (BIC KREDBEBB)
-                <br>met als referentie: "YK-{{ memberStore.subscriptionDetail.id }}
+                <br>met als referentie: "YKS-{{ memberStore.subscriptionDetail.id }}
                 {{ memberStore.subscriptionDetail.firstname }} {{ memberStore.subscriptionDetail.lastname }}".
                 <br>Alvast bedankt.
             </p>
@@ -111,7 +109,7 @@ const buttonLabel = computed((): string => {
 async function sendPaymentOverview() {
     isSending.value = true;
     let result = await sendPaymentOverviewEmail(memberStore.subscriptionDetail?.id ?? 0);
-    await memberStore.reloadSubscriptionDetail(memberStore.subscriptionDetail?.id ?? 0);
+    await memberStore.reloadSubscriptionDetail();
     isSending.value = false;
     toaster.add({
         severity: "success",

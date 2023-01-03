@@ -89,5 +89,18 @@ export interface Subscription {
     location: Location;
     judogi?: Judogi;
     settings: Settings;
-    isPaymentOverviewSend:boolean;
+    isPaymentOverviewSend: boolean;
+    member?: Member;
+}
+
+export interface Member {
+    id: number;
+    uuid: string;
+    status: string;
+    firstname: string;
+    lastname: string;
+    dateOfBirth: Date;
+    gender: string;
+    grade: Grade;
+    location: Location;
 }

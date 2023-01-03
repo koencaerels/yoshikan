@@ -52,7 +52,7 @@
 
     <!-- preview of the mail that is going te be send -->
     <Dialog v-model:visible="showMailPreview" v-if="memberStore.subscriptionDetail"
-            :header="'Email met betalings overzicht voor YK-'+memberStore.subscriptionDetail.id"
+            :header="'Email met betalings overzicht voor YKS-'+memberStore.subscriptionDetail.id"
             :modal="true">
         <subscription-payment-mail-preview v-on:send="hideMailPreviewDialog"/>
     </Dialog>
@@ -104,7 +104,7 @@ function hideMailPreviewDialog() {
 async function changeStatus() {
     isSaving.value = true;
     let result = await changeSubscriptionStatus(changeSubscriptionStatusCommand.value);
-    await memberStore.reloadSubscriptionDetail(changeSubscriptionStatusCommand.value.id);
+    await memberStore.reloadSubscriptionDetail();
     await memberStore.loadSubscriptionTodo();
     memberStore.increaseCounter();
     toaster.add({

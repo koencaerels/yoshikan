@@ -27,6 +27,10 @@ interface GradeRepository
 
     public function getByUuid(Uuid $uuid): Grade;
 
+    public function getByCode(string $code): Grade;
+
+    public function getFirst(): Grade;
+
     public function getAll(): array;
 
     public function getMaxSequence(): int;

@@ -21,7 +21,8 @@ class WebSubscribeHandler
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected EntityManagerInterface $entityManager,
-    ) {
+    )
+    {
     }
 
     public function go(WebSubscribe $command): \stdClass
@@ -61,7 +62,7 @@ class WebSubscribeHandler
                 $command->getRemarks(),
                 $period,
                 $location,
-                json_decode(json_encode(SettingsReadModel::hydrateFromModel($settings)),true),
+                json_decode(json_encode(SettingsReadModel::hydrateFromModel($settings)), true),
             );
             $this->subscriptionRepository->save($subscription);
             $this->entityManager->flush();
@@ -70,14 +71,14 @@ class WebSubscribeHandler
 
             $result = new \stdClass();
             $result->id = $subscriptionId;
-            $result->reference = 'YK-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
+            $result->reference = 'YKS-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
             return $result;
         } else {
 
             // -- the honey-pot field was not empty
             $result = new \stdClass();
             $result->id = 0;
-            $result->reference = 'YK-0';
+            $result->reference = 'YKS-0';
             return $result;
         }
     }

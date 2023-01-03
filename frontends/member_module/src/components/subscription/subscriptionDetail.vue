@@ -1,7 +1,9 @@
 <template>
     <div id="subscriptionDetail">
         <!-- -- step 1 -- check subscription -->
-        <div class="bg-gray-700 text-white p-2">Stap 1: controleer en vervolledig de inschrijving.</div>
+        <div class="bg-gray-700 text-white p-2" v-if="memberStore.subscriptionDetail">
+            Stap 1: controleer en vervolledig de inschrijving: YKS-{{memberStore.subscriptionDetail.id}}.
+        </div>
         <detail-wrapper :estate-height="600" class="bg-gray-100">
             <div class="px-4 text-sm" v-if="appStore.configuration">
                 <div class="flex flex-row mt-2">
@@ -268,11 +270,18 @@
         </div>
 
         <!-- -- step 2 -- change the status -->
-        <div class="bg-gray-700 text-white p-2">Stap 2: wijzig de status van de inschrijving.</div>
+        <div class="bg-gray-700 text-white p-2" v-if="memberStore.subscriptionDetail">
+            Stap 2: wijzig de status van de inschrijving: YKS-{{memberStore.subscriptionDetail.id}}.
+        </div>
         <SubscriptionDetailStatus/>
 
         <!-- -- step 3 -- connect to member -->
-        <div class="bg-gray-700 text-white p-2">Stap 3: koppel bestaand lid of maak nieuw lid aan.</div>
+        <div v-if="memberStore.subscriptionDetail.member">
+            <div class="bg-gray-700 text-white p-2">Stap 3: gekoppeld lid voor deze inschrijving.</div>
+        </div>
+        <div v-else>
+            <div class="bg-gray-700 text-white p-2">Stap 3: koppel bestaand lid of maak nieuw lid aan.</div>
+        </div>
         <SubscriptionDetailMember/>
 
     </div>
@@ -422,7 +431,6 @@ function changeJudogiSize() {
 
 const isSaving = ref<boolean>(false);
 const toaster = useToast();
-
 async function changeSubscriptionHandler() {
     change$.value.$touch();
     if (!change$.value.$invalid) {
@@ -434,7 +442,7 @@ async function changeSubscriptionHandler() {
             detail: "",
             life: appStore.toastLifeTime,
         });
-        memberStore.reloadSubscriptionDetail(command.value.id);
+        await memberStore.reloadSubscriptionDetail();
         memberStore.increaseCounter();
         isSaving.value = false;
     }
