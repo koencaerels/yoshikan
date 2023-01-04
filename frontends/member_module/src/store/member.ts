@@ -11,12 +11,16 @@ import {defineStore} from 'pinia'
 import type {Subscription} from "@/api/query/model";
 import {getSubscriptionTodo} from "@/api/query/getSubscriptionTodo";
 import {getSubscriptionById} from "@/api/query/getSubscriptionById";
+import {getSubscriptionByActivePeriod} from "@/api/query/getSubscriptionByActivePeriod";
+import {getSubscriptionAll} from "@/api/query/getSubscriptionAll";
 
 export type MemberState = {
     isLoading: boolean;
     subscriptionTodos: Subscription[];
     subscriptionDetail?: Subscription;
     refreshCounter: number;
+    subscriptionsActivePeriod: Subscription[];
+    subscriptionsArchive: Subscription[];
 }
 
 export const useMemberStore = defineStore({
@@ -26,11 +30,27 @@ export const useMemberStore = defineStore({
         subscriptionTodos: [],
         subscriptionDetail: undefined,
         refreshCounter: 0,
+        subscriptionsActivePeriod: [],
+        subscriptionsArchive: []
     }),
     actions: {
+
+        // -- subscription lists -------------------------------------------------
+
         async loadSubscriptionTodo() {
-            this.subscriptionTodos = await getSubscriptionTodo()
+            this.subscriptionTodos = await getSubscriptionTodo();
         },
+        async loadSubscriptionsByActivePeriod()
+        {
+            this.subscriptionsActivePeriod = await getSubscriptionByActivePeriod();
+        },
+        async loadSubscriptionsArchive()
+        {
+            this.subscriptionsArchive = await getSubscriptionAll();
+        },
+
+        // -- subscription detail ------------------------------------------------
+
         async loadSubscriptionDetail(id: number) {
             this.isLoading = true;
             this.subscriptionDetail = await getSubscriptionById(id);

@@ -1,21 +1,21 @@
 <template>
     <div id="subscriptionDetailMember">
-
-        <div v-if="memberStore.subscriptionDetail.member" class="p-2">
-            <member-badge :member="memberStore.subscriptionDetail.member"/>
-        </div>
-        <div v-else>
-            <div class="px-4 py-2">
-                <div>
-                    <Button
-                        @click="createMemberFromSubscriptionHandler"
-                        label="Maak nieuw lid aan"
-                        icon="pi pi-user"
-                        class="p-button-success p-button-sm"/>
+        <div v-if="memberStore.subscriptionDetail">
+            <div v-if="memberStore.subscriptionDetail.member" class="p-2">
+                <member-badge :member="memberStore.subscriptionDetail.member"/>
+            </div>
+            <div v-else>
+                <div class="px-4 py-2">
+                    <div>
+                        <Button
+                            @click="createMemberFromSubscriptionHandler"
+                            label="Maak nieuw lid aan"
+                            icon="pi pi-user"
+                            class="p-button-success p-button-sm"/>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -35,7 +35,7 @@ const isLinking = ref<boolean>(false);
 
 async function createMemberFromSubscriptionHandler() {
     isCreating.value = true;
-    await createMemberFromSubscription(memberStore.subscriptionDetail?.id??0);
+    await createMemberFromSubscription(memberStore.subscriptionDetail?.id ?? 0);
     await memberStore.reloadSubscriptionDetail();
     toaster.add({
         severity: "success",

@@ -91,6 +91,7 @@ export interface Subscription {
     settings: Settings;
     isPaymentOverviewSend: boolean;
     member?: Member;
+    selected:boolean;
 }
 
 export interface Member {

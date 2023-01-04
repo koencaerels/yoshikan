@@ -16,7 +16,6 @@ class CreateMemberFromSubscriptionHandler
     )
     {
     }
-
     public function go(CreateMemberFromSubscription $command): bool
     {
         $subscription = $this->subscriptionRepository->getById($command->getId());

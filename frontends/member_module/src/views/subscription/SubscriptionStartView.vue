@@ -1,6 +1,5 @@
 <template>
     <div id="SubscriptionStartView">
-
         <Splitter>
             <SplitterPanel :size="50">
                 <subscriptions-to-do/>
@@ -19,7 +18,6 @@
                 </div>
             </SplitterPanel>
         </Splitter>
-
     </div>
 </template>
 

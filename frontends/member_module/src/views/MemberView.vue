@@ -1,11 +1,11 @@
 <template>
     <div id="MemberView">
-        leden
+        <member/>
     </div>
 </template>
 
 <script setup lang="ts">
-
+import Member from "@/components/member/member.vue";
 </script>
 
 <style scoped>

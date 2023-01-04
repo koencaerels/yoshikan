@@ -24,6 +24,23 @@ trait subscription_routes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/subscription/active-period', methods: ['GET'])]
+    public function getSubscriptionsByActivePeriod(): JsonResponse
+    {
+        $response = $this->queryBus->getSubscriptionsByActivePeriod();
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/subscription/all', methods: ['GET'])]
+    public function getAllSubscriptions(): JsonResponse
+    {
+        $response = $this->queryBus->getAllSubscriptions();
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    // mark as completed.
+
+
     #[Route('/mm/api/subscription/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function getSubscriptionById(int $id): JsonResponse
     {

@@ -16,7 +16,7 @@ const items = computed(() => {
         },
         {
             label: 'Export',
-            icon: 'pi pi-export',
+            icon: 'pi pi-file-excel',
             to: '/inschrijvingen/export'
         },
         {

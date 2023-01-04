@@ -21,7 +21,8 @@ class GetSubscription
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
         protected PeriodRepository       $periodRepository
-    ) {
+    )
+    {
     }
 
     public function getSubscriptionTodos(): SubscriptionReadModelCollection
@@ -33,7 +34,29 @@ class GetSubscription
             $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
             $collection->addItem($subscriptionRM);
         }
+        return $collection;
+    }
 
+    public function getSubscriptionsByActivePeriod(): SubscriptionReadModelCollection
+    {
+        $activePeriod = $this->periodRepository->getActive();
+        $subscriptions = $this->subscriptionRepository->getByPeriod($activePeriod);
+        $collection = new SubscriptionReadModelCollection([]);
+        foreach ($subscriptions as $subscription) {
+            $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
+            $collection->addItem($subscriptionRM);
+        }
+        return $collection;
+    }
+
+    public function getAllSubscriptions(): SubscriptionReadModelCollection
+    {
+        $subscriptions = $this->subscriptionRepository->getAll();
+        $collection = new SubscriptionReadModelCollection([]);
+        foreach ($subscriptions as $subscription) {
+            $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
+            $collection->addItem($subscriptionRM);
+        }
         return $collection;
     }
 

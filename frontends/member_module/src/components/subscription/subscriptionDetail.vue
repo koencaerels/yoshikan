@@ -276,11 +276,13 @@
         <SubscriptionDetailStatus/>
 
         <!-- -- step 3 -- connect to member -->
-        <div v-if="memberStore.subscriptionDetail.member">
-            <div class="bg-gray-700 text-white p-2">Stap 3: gekoppeld lid voor deze inschrijving.</div>
-        </div>
-        <div v-else>
-            <div class="bg-gray-700 text-white p-2">Stap 3: koppel bestaand lid of maak nieuw lid aan.</div>
+        <div v-if="memberStore.subscriptionDetail">
+            <div v-if="memberStore.subscriptionDetail.member">
+                <div class="bg-gray-700 text-white p-2">Stap 3: gekoppeld lid voor deze inschrijving.</div>
+            </div>
+            <div v-else>
+                <div class="bg-gray-700 text-white p-2">Stap 3: koppel bestaand lid of maak nieuw lid aan.</div>
+            </div>
         </div>
         <SubscriptionDetailMember/>
 
