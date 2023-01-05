@@ -27,6 +27,7 @@ use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscripti
 use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subscription_status;
 use App\YoshiKan\Application\Command\Member\ConnectSubscriptionToMember\connect_subscription_to_member;
 use App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription\create_member_from_subscription;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionsAsFinished\mark_subscriptions_as_finished;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
@@ -78,6 +79,7 @@ class MemberCommandBus
     use send_payment_overview_mail;
     use connect_subscription_to_member;
     use create_member_from_subscription;
+    use mark_subscriptions_as_finished;
 
     // -- members  -------------------------------------------------------------
 

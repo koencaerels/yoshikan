@@ -75,7 +75,6 @@ class Member
         Grade $grade,
         Location $location,
     ) {
-
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -172,5 +171,4 @@ class Member
     {
         return $this->subscriptions->getValues();
     }
-
 }

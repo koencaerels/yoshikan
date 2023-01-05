@@ -33,5 +33,7 @@ interface SubscriptionRepository
 
     public function getByPeriod(Period $period): array;
 
+    public function getByListId(array $list): array;
+
     public function getMaxId(): int;
 }

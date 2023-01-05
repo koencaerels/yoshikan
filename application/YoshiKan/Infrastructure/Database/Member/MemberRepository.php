@@ -90,9 +90,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     {
         $model = $this->createQueryBuilder('t')
             ->andWhere('LOWER(t.firstname) = :firstname')
-            ->setParameter('firstname', trim(strtolower($firstname)))
+            ->setParameter('firstname', trim(mb_strtolower($firstname)))
             ->andWhere('LOWER(t.lastname) = :lastname')
-            ->setParameter('lastname', trim(strtolower($lastname)))
+            ->setParameter('lastname', trim(mb_strtolower($lastname)))
             ->andWhere('t.dateOfBirth = :dateOfBirth')
             ->setParameter('dateOfBirth', $dateOfBirth)
             ->getQuery()

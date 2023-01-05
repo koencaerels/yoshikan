@@ -21,8 +21,7 @@ class WebSubscribeHandler
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
         protected EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function go(WebSubscribe $command): \stdClass

@@ -139,4 +139,14 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         return $q->getQuery()->getResult();
     }
 
+    public function getByListId(array $list): array
+    {
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q->andWhere('t.id IN (:listId)');
+        $q->setParameter('listId', array_values($list));
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
 }

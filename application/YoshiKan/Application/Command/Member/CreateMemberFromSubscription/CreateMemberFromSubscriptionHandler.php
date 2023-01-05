@@ -13,8 +13,7 @@ class CreateMemberFromSubscriptionHandler
         protected SubscriptionRepository $subscriptionRepository,
         protected MemberRepository       $memberRepository,
         protected GradeRepository        $gradeRepository,
-    )
-    {
+    ) {
     }
     public function go(CreateMemberFromSubscription $command): bool
     {

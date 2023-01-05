@@ -17,6 +17,7 @@
         "damienharper/auditor-bundle": "^5.2",
         "jeschek/dragsort": "^1.0",
         "nelmio/security-bundle": "^2.12",
+        "phpoffice/phpspreadsheet": "^1.26",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/flex": "^2.0",
         "symfony/uid": "^5.1"

@@ -13,8 +13,17 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Member;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 trait get_subscription
 {
+    public function exportSubscriptions(array $listIds): Spreadsheet
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+        $exporter = new ExportSubscriptions($this->subscriptionRepository,$this->periodRepository);
+        return $exporter->exportSubscriptions($listIds);
+    }
+
     public function getTodoSubscription(): array
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
