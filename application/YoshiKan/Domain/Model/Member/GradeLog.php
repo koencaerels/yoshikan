@@ -6,11 +6,11 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Uid\Uuid;
-use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 
 /**
  * @Audit\Auditable()
@@ -55,8 +55,7 @@ class GradeLog
         Member             $member,
         Grade              $fromGrade,
         Grade              $toGrade,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->date = $date;
         $this->remark = $remark;
@@ -76,8 +75,7 @@ class GradeLog
         Member             $member,
         Grade              $fromGrade,
         Grade              $toGrade,
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $date,
@@ -120,5 +118,4 @@ class GradeLog
     {
         return $this->toGrade;
     }
-
 }

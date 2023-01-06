@@ -8,7 +8,6 @@ use App\YoshiKan\Domain\Model\Member\GradeLog;
 
 class GradeLogReadModel implements \JsonSerializable
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -89,5 +88,4 @@ class GradeLogReadModel implements \JsonSerializable
     {
         return $this->toGrade;
     }
-
 }

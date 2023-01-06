@@ -65,7 +65,7 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
-    #[ORM\OneToMany(mappedBy:"member",targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch:"EXTRA_LAZY")]
+    #[ORM\OneToMany(mappedBy: "member", targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: "EXTRA_LAZY")]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\OrderBy(["id" => "ASC"])]
     private ?Collection $gradelogs;
@@ -82,8 +82,7 @@ class Member
         Gender             $gender,
         Grade              $grade,
         Location           $location,
-    )
-    {
+    ) {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -92,6 +91,7 @@ class Member
         $this->status = 'actief';
         $this->grade = $grade;
         $this->location = $location;
+        $this->remarks = '';
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -106,8 +106,7 @@ class Member
         Gender             $gender,
         Grade              $grade,
         Location           $location,
-    ): self
-    {
+    ): self {
         return new self(
             $uuid,
             $firstname,
@@ -120,12 +119,19 @@ class Member
     }
 
     public function changeDetails(
-        string $firstname,
-        string $lastname,
-    ): void
-    {
+        string             $firstname,
+        string             $lastname,
+        Gender             $gender,
+        \DateTimeImmutable $dateOfBirth,
+        MemberStatus       $status,
+        Location           $location
+    ): void {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+        $this->gender = $gender->value;
+        $this->dateOfBirth = $dateOfBirth;
+        $this->status = $status->value;
+        $this->location = $location;
     }
 
     public function changeGrade(Grade $grade): void

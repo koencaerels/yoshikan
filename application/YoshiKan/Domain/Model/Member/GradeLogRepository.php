@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface GradeLogRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(GradeLog $model): ?int;
@@ -18,5 +17,4 @@ interface GradeLogRepository
     public function getById(int $id): GradeLog;
 
     public function getByUuid(Uuid $uuid): GradeLog;
-
 }

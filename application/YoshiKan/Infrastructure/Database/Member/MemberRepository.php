@@ -92,9 +92,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     {
         $model = $this->createQueryBuilder('t')
             ->andWhere('LOWER(t.firstname) = :firstname')
-            ->setParameter('firstname', trim(strtolower($firstname)))
+            ->setParameter('firstname', trim(mb_strtolower($firstname)))
             ->andWhere('LOWER(t.lastname) = :lastname')
-            ->setParameter('lastname', trim(strtolower($lastname)))
+            ->setParameter('lastname', trim(mb_strtolower($lastname)))
             ->andWhere('t.dateOfBirth = :dateOfBirth')
             ->setParameter('dateOfBirth', $dateOfBirth)
             ->getQuery()
@@ -107,9 +107,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     {
         $q = $this->createQueryBuilder('t')
             ->orWhere('LOWER(t.firstname) = :firstname')
-            ->setParameter('firstname', trim(strtolower($firstname)))
+            ->setParameter('firstname', trim(mb_strtolower($firstname)))
             ->orWhere('LOWER(t.lastname) = :lastname')
-            ->setParameter('lastname', trim(strtolower($lastname)))
+            ->setParameter('lastname', trim(mb_strtolower($lastname)))
             ->orWhere('t.dateOfBirth = :dateOfBirth')
             ->setParameter('dateOfBirth', $dateOfBirth)
             ->addOrderBy('t.id', 'DESC');
@@ -121,12 +121,11 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         int       $yearOfBirth = 0,
         ?Location $location = null,
         ?Grade    $grade = null
-    ): array
-    {
+    ): array {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        if (!is_null($keyword) && strlen(trim($keyword)) != 0) {
+        if (!is_null($keyword) && mb_strlen(trim($keyword)) != 0) {
             $q->andWhere("LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id")
-                ->setParameter('keyword', '%' . strtolower($keyword) . '%')
+                ->setParameter('keyword', '%' . mb_strtolower($keyword) . '%')
                 ->setParameter('id', intval($keyword));
         }
         if (!is_null($location)) {
@@ -137,7 +136,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
             $q->andWhere("t.grade = :gradeId")
                 ->setParameter('gradeId', $grade->getId());
         }
-        if($yearOfBirth !== 0) {
+        if ($yearOfBirth !== 0) {
             $q->andWhere("YEAR(t.dateOfBirth) = :yearOfBirth")
                 ->setParameter('yearOfBirth', $yearOfBirth);
         }

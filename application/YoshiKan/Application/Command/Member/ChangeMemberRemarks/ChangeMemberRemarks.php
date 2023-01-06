@@ -11,8 +11,7 @@ class ChangeMemberRemarks
     private function __construct(
         protected int    $id,
         protected string $remarks,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

@@ -88,7 +88,7 @@
             <div class="w-16 ml-2">Graad</div>
         </div>
 
-        <list-wrapper :estate-height="400">
+        <list-wrapper :estate-height="375">
             <div v-for="member in members"
                  :class="selectedClass(member.id)"
                  class="border-b-[1px] border-gray-300">
@@ -149,7 +149,7 @@ onMounted(() => {
 
 function selectedClass(id: number) {
     let style = '';
-    if(id === memberStore.memberId) {
+    if (id === memberStore.memberId) {
         style = 'bg-blue-100';
     }
     return style;

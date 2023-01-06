@@ -38,5 +38,4 @@ class ChangeMemberGradeHandler
         $this->memberRepository->save($member);
         return true;
     }
-
 }

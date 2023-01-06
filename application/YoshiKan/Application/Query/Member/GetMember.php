@@ -23,8 +23,7 @@ class GetMember
         protected MemberRepository   $memberRepository,
         protected LocationRepository $locationRepository,
         protected GradeRepository    $gradeRepository
-    )
-    {
+    ) {
     }
 
     public function search(MemberSearchModel $searchModel): MemberReadModelCollection
@@ -55,5 +54,4 @@ class GetMember
         $member = $this->memberRepository->getById($id);
         return MemberReadModel::hydrateFromModel($member, true);
     }
-
 }

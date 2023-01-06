@@ -4,7 +4,6 @@ namespace App\YoshiKan\Application\Command\Member\ChangeMemberGrade;
 
 class ChangeMemberGrade
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -13,8 +12,7 @@ class ChangeMemberGrade
         protected int    $id,
         protected int    $gradeId,
         protected string $remark,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -48,5 +46,4 @@ class ChangeMemberGrade
     {
         return $this->remark;
     }
-
 }

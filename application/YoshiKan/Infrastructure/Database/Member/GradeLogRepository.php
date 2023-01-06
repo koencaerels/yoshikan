@@ -14,8 +14,7 @@ final class GradeLogRepository
     extends ServiceEntityRepository
     implements \App\YoshiKan\Domain\Model\Member\GradeLogRepository
 {
-
-    const NO_ENTITY_FOUND = 'no_grade_log_found';
+    public const NO_ENTITY_FOUND = 'no_grade_log_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -41,7 +40,9 @@ final class GradeLogRepository
         $em = $this->getEntityManager();
         $em->persist($model);
         $id = 0;
-        if ($model->getId()) $id = $model->getId();
+        if ($model->getId()) {
+            $id = $model->getId();
+        }
         return $id;
     }
 
@@ -55,7 +56,9 @@ final class GradeLogRepository
     public function getById(int $id): GradeLog
     {
         $model = $this->find($id);
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
 
@@ -66,8 +69,9 @@ final class GradeLogRepository
             ->setParameter('uuid', $uuid, 'uuid')
             ->getQuery()
             ->getOneOrNullResult();
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
         return $model;
     }
-
 }

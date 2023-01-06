@@ -105,5 +105,15 @@ export interface Member {
     grade: Grade;
     location: Location;
     remarks: string;
-    subscriptions?: Subscription[]
+    subscriptions?: Subscription[];
+    gradeLogs: GradeLog[];
+}
+
+export interface GradeLog {
+    id: number;
+    uuid: string;
+    date: Date;
+    remark: string;
+    fromGrade: Grade;
+    toGrade: Grade;
 }

@@ -4,7 +4,6 @@ namespace App\YoshiKan\Application\Command\Member\ChangeMemberDetails;
 
 class ChangeMemberDetails
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -17,8 +16,7 @@ class ChangeMemberDetails
         protected \DateTimeImmutable $dateOfBirth,
         protected string             $gender,
         protected int                $locationId,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -32,9 +30,9 @@ class ChangeMemberDetails
             $json->status,
             $json->firstname,
             $json->lastname,
-            $json->dateOfBirth,
+            new \DateTimeImmutable($json->dateOfBirth),
             $json->gender,
-            $json->locationId,
+            intval($json->locationId),
         );
     }
 
@@ -76,5 +74,4 @@ class ChangeMemberDetails
     {
         return $this->locationId;
     }
-
 }

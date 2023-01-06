@@ -5,6 +5,9 @@ export interface ChangeMemberDetailsCommand {
     status: string;
     firstname: string;
     lastname: string;
+    dateOfBirthDD:string;
+    dateOfBirthMM:string;
+    dateOfBirthYYYY:string;
     dateOfBirth: Date;
     gender: string;
     locationId: number;

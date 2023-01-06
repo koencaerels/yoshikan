@@ -4,7 +4,6 @@ namespace App\YoshiKan\Application\Query\Member;
 
 class MemberSearchModel
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -14,8 +13,7 @@ class MemberSearchModel
         protected int    $locationId,
         protected int    $gradeId,
         protected int    $yearOfBirth,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

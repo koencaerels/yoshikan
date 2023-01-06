@@ -113,13 +113,11 @@ class MemberCommandBus
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
         protected GradeLogRepository     $gradeLogRepository
-    )
-    {
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,
             $this->isolationMode
         );
     }
-
 }

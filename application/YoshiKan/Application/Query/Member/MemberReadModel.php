@@ -25,8 +25,7 @@ class MemberReadModel implements \JsonSerializable
         protected ?SubscriptionReadModelCollection $subscriptions = null,
         protected ?string                          $remarks = null,
         protected ?GradeLogReadModelCollection     $gradeLogs = null
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -167,5 +166,4 @@ class MemberReadModel implements \JsonSerializable
     {
         return $this->gradeLogs;
     }
-
 }
