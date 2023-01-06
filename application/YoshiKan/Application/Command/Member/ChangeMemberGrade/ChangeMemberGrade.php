@@ -10,8 +10,9 @@ class ChangeMemberGrade
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int $id,
-        protected int $gradeId,
+        protected int    $id,
+        protected int    $gradeId,
+        protected string $remark,
     )
     {
     }
@@ -25,6 +26,7 @@ class ChangeMemberGrade
         return new self(
             $json->id,
             $json->grade->id,
+            $json->remark
         );
     }
 
@@ -40,6 +42,11 @@ class ChangeMemberGrade
     public function getGradeId(): int
     {
         return $this->gradeId;
+    }
+
+    public function getRemark(): string
+    {
+        return $this->remark;
     }
 
 }

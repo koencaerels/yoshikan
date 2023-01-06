@@ -16,6 +16,7 @@ namespace App\YoshiKan\Infrastructure\Web\Controller;
 use App\YoshiKan\Application\MemberCommandBus;
 use App\YoshiKan\Application\MemberQueryBus;
 use App\YoshiKan\Domain\Model\Member\Grade;
+use App\YoshiKan\Domain\Model\Member\GradeLog;
 use App\YoshiKan\Domain\Model\Member\Group;
 use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
@@ -113,6 +114,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(GradeLog::class),
         );
     }
 

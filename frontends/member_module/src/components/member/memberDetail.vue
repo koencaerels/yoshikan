@@ -28,7 +28,7 @@
                  class="border-b-[1px] border-gray-300 pt-2 pb-2">
                 <div class="flex">
                     <div class="w-16">
-                        <div class="text-center rounded-full bg-green-600 text-white px-2 font-bold text-xs mt-1.5">
+                        <div class="text-center rounded-full bg-green-800 text-white px-2 font-bold text-xs mt-1.5">
                             YKS-{{ subscription.id }}
                         </div>
                     </div>
@@ -46,8 +46,11 @@
             <div class="border-b-[1px] border-gray-300 pt-2 pb-2 font-bold text-xs">
                 Opmerkingen
             </div>
-            <div v-html="memberStore.memberDetail.remarks">
+            <div class="content-wrapper p-4 text-sm">
+                <div v-html="memberStore.memberDetail.remarks">
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -57,7 +60,7 @@
             v-if="memberStore.memberDetail"
             :header="'Wijzig details voor '+memberStore.memberDetail.firstname+' '+memberStore.memberDetail.lastname"
             :modal="true">
-        <dialog-change-details/>
+        <dialog-change-details v-on:saved="hideDetailDialog"/>
     </Dialog>
 
     <Dialog v-model:visible="showDialogGrade"
@@ -65,7 +68,7 @@
             v-if="memberStore.memberDetail"
             :header="'Wijzig graad voor '+memberStore.memberDetail.firstname+' '+memberStore.memberDetail.lastname"
             :modal="true">
-        <dialog-change-grade/>
+        <dialog-change-grade v-on:saved="hideGradeDialog"/>
     </Dialog>
 
     <Dialog v-model:visible="showDialogRemarks"
@@ -73,7 +76,7 @@
             v-if="memberStore.memberDetail"
             :header="'Wijzig opmerkingen voor '+memberStore.memberDetail.firstname+' '+memberStore.memberDetail.lastname"
             :modal="true">
-        <dialog-change-remarks/>
+        <dialog-change-remarks v-on:saved="hideRemarksDialog"/>
     </Dialog>
 
 </template>
@@ -90,5 +93,20 @@ const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
 const showDialogGrade = ref<boolean>(false);
 const showDialogRemarks = ref<boolean>(false);
+
+function hideRemarksDialog()
+{
+    showDialogRemarks.value = false;
+}
+
+function hideGradeDialog()
+{
+    showDialogGrade.value = false;
+}
+
+function hideDetailDialog()
+{
+    showDialogDetails.value = false;
+}
 
 </script>

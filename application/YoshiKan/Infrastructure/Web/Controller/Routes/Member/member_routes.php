@@ -23,4 +23,28 @@ trait member_routes
         usleep(500000);
         return new JsonResponse($response, 200, $this->apiAccess);
     }
+
+    #[Route('/mm/api/member/{id}/change-details', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberDetails(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeMemberDetails($command);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/{id}/change-grade', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberGrade(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeMemberGrade($command);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/{id}/change-remarks', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberRemarks(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeMemberRemarks($command);
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 }

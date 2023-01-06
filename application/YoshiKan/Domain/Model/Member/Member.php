@@ -65,6 +65,11 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
+    #[ORM\OneToMany(mappedBy:"member",targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch:"EXTRA_LAZY")]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OrderBy(["id" => "ASC"])]
+    private ?Collection $gradelogs;
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -85,7 +90,6 @@ class Member
         $this->dateOfBirth = $dateOfBirth;
         $this->gender = $gender->value;
         $this->status = 'actief';
-
         $this->grade = $grade;
         $this->location = $location;
     }
@@ -191,5 +195,10 @@ class Member
     public function getRemarks(): string
     {
         return $this->remarks;
+    }
+
+    public function getGradeLogs(): array
+    {
+        return $this->gradelogs->getValues();
     }
 }

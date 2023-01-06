@@ -3,7 +3,7 @@
 
         <div>
             <Dropdown class="w-full" v-if="appStore.configuration"
-                      v-model="selectedGrade"
+                      v-model="command.grade"
                       placeholder="selecteer een graad"
                       :options="appStore.configuration.grades">
                 <template #value="slotProps">
@@ -25,13 +25,23 @@
                 </template>
             </Dropdown>
         </div>
-
+        <div class="mt-2">
+            <Textarea auto-resize v-model="command.remark"
+                      placeholder="opmerking"
+                      class="w-full"></Textarea>
+        </div>
         <div class="mt-4">
-            <Button label="Bewaar nieuwe graad"
+            <Button v-if="!isSaving"
+                    label="Bewaar nieuwe graad"
+                    @click="saveGrade"
                     icon="pi pi-save"
                     class="p-button-success p-button-sm w-full"/>
+            <Button v-else
+                    label="Bewaar nieuwe graad"
+                    disabled
+                    icon="pi pi-spinner pi-spin"
+                    class="p-button-success p-button-sm w-full"/>
         </div>
-
     </div>
 </template>
 
@@ -40,9 +50,36 @@ import {useMemberStore} from "@/store/member";
 import {useAppStore} from "@/store/app";
 import type {Grade} from "@/api/query/model";
 import {ref} from "vue";
+import type {ChangeMemberGradeCommand} from "@/api/command/changeMemberGrade";
+import {useToast} from "primevue/usetoast";
+import {changeMemberRemarks} from "@/api/command/changeMemberRemarks";
+import {changeMemberGrade} from "@/api/command/changeMemberGrade";
 
 const appStore = useAppStore();
 const memberStore = useMemberStore();
-const selectedGrade = ref<Grade>(memberStore.memberDetail?.grade ?? {id: 0, code: '', color: '', name: '', uuid: ''});
+const isSaving = ref<boolean>(false);
+const emit = defineEmits(["saved"]);
+const toaster = useToast();
+
+const command = ref<ChangeMemberGradeCommand>({
+    id: memberStore.memberId,
+    grade: memberStore.memberDetail?.grade ?? {id: 0, code: '', color: '', name: '', uuid: ''},
+    remark: ''
+});
+
+async function saveGrade() {
+    isSaving.value = true;
+    let result = await changeMemberGrade(command.value);
+    await memberStore.reloadMemberDetail();
+    toaster.add({
+        severity: "success",
+        summary: "Graad gewijzigd.",
+        detail: "",
+        life: appStore.toastLifeTime,
+    });
+    isSaving.value = false;
+    emit('saved');
+}
+
 
 </script>

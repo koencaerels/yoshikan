@@ -4,6 +4,7 @@ import type {Grade} from "@/api/query/model";
 export interface ChangeMemberGradeCommand {
     id: number;
     grade: Grade;
+    remark: string;
 }
 
 export async function changeMemberGrade(command: ChangeMemberGradeCommand) {

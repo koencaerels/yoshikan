@@ -17,10 +17,9 @@ trait change_location
 {
     public function changeLocation(\stdClass $jsonCommand): bool
     {
-        $command = ChangeLocation::hydrateFromJson($jsonCommand);
-
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
+        $command = ChangeLocation::hydrateFromJson($jsonCommand);
         $handler = new ChangeLocationHandler($this->locationRepository);
         $handler->go($command);
         $this->entityManager->flush();

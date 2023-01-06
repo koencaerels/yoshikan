@@ -22,7 +22,9 @@ class MemberReadModel implements \JsonSerializable
         protected string                           $gender,
         protected GradeReadModel                   $grade,
         protected LocationReadModel                $location,
-        protected ?SubscriptionReadModelCollection $subscriptions = null
+        protected ?SubscriptionReadModelCollection $subscriptions = null,
+        protected ?string                          $remarks = null,
+        protected ?GradeLogReadModelCollection     $gradeLogs = null
     )
     {
     }
@@ -46,6 +48,13 @@ class MemberReadModel implements \JsonSerializable
         if (!is_null($this->getSubscriptions())) {
             $json->subscriptions = $this->getSubscriptions()->getCollection();
         }
+        if (!is_null($this->getRemarks())) {
+            $json->remarks = $this->getRemarks();
+        }
+        if (!is_null($this->getGradeLogs())) {
+            $json->gradeLogs = $this->getGradeLogs()->getCollection();
+        }
+
         return $json;
     }
 
@@ -60,6 +69,11 @@ class MemberReadModel implements \JsonSerializable
             foreach ($model->getSubscriptions() as $subscription) {
                 $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
             }
+            $gradeLogs = new GradeLogReadModelCollection([]);
+            foreach ($model->getGradeLogs() as $gradeLog) {
+                $gradeLogs->addItem(GradeLogReadModel::hydrateFromModel($gradeLog));
+            }
+
             $rm = new self(
                 $model->getId(),
                 $model->getUuid()->toRfc4122(),
@@ -70,7 +84,9 @@ class MemberReadModel implements \JsonSerializable
                 $model->getGender()->value,
                 GradeReadModel::hydrateFromModel($model->getGrade()),
                 LocationReadModel::hydrateFromModel($model->getLocation()),
-                $subscriptions
+                $subscriptions,
+                $model->getRemarks(),
+                $gradeLogs
             );
         } else {
             $rm = new self(
@@ -141,4 +157,15 @@ class MemberReadModel implements \JsonSerializable
     {
         return $this->subscriptions;
     }
+
+    public function getRemarks(): ?string
+    {
+        return $this->remarks;
+    }
+
+    public function getGradeLogs(): ?GradeLogReadModelCollection
+    {
+        return $this->gradeLogs;
+    }
+
 }

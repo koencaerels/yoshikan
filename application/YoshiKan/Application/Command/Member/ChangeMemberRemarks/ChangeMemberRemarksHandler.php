@@ -13,7 +13,8 @@ class ChangeMemberRemarksHandler
     public function go(ChangeMemberRemarks $command): bool
     {
         $member = $this->memberRepository->getById($command->getId());
-
+        $member->changeRemarks($command->getRemarks());
+        $this->memberRepository->save($member);
         return true;
     }
 }

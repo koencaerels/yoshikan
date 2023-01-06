@@ -24,6 +24,7 @@ use App\YoshiKan\Application\Command\Member\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\change_member_details;
 use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grade;
+use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscription;
 use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subscription_status;
@@ -40,6 +41,7 @@ use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
+use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\JudogiRepository;
@@ -86,7 +88,7 @@ class MemberCommandBus
     // -- members --------------------------------------------------------------
     use change_member_details;
     use change_member_grade;
-    use change_member_details;
+    use change_member_remarks;
 
     // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
@@ -110,6 +112,7 @@ class MemberCommandBus
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
+        protected GradeLogRepository     $gradeLogRepository
     )
     {
         $this->permission = new BasePermissionService(
@@ -119,7 +122,4 @@ class MemberCommandBus
         );
     }
 
-    // ——————————————————————————————————————————————————————————————————————————
-    // —— Input
-    // ——————————————————————————————————————————————————————————————————————————
 }
