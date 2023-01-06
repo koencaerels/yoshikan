@@ -22,6 +22,8 @@ use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
 use App\YoshiKan\Application\Command\Member\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
+use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\change_member_details;
+use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grade;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscription;
 use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subscription_status;
@@ -81,8 +83,12 @@ class MemberCommandBus
     use create_member_from_subscription;
     use mark_subscriptions_as_finished;
 
-    // -- members  -------------------------------------------------------------
+    // -- members --------------------------------------------------------------
+    use change_member_details;
+    use change_member_grade;
+    use change_member_details;
 
+    // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -104,7 +110,8 @@ class MemberCommandBus
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
-    ) {
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

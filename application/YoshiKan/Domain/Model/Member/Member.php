@@ -33,7 +33,7 @@ class Member
     use BlameableEntity;
     use TimestampableEntity;
 
-    #[ORM\Column(length:36)]
+    #[ORM\Column(length: 36)]
     private string $status = 'actief';
 
     #[ORM\Column(length: 191)]
@@ -70,14 +70,15 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid $uuid,
-        string $firstname,
-        string $lastname,
+        Uuid               $uuid,
+        string             $firstname,
+        string             $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender $gender,
-        Grade $grade,
-        Location $location,
-    ) {
+        Gender             $gender,
+        Grade              $grade,
+        Location           $location,
+    )
+    {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -94,14 +95,15 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid $uuid,
-        string $firstname,
-        string $lastname,
+        Uuid               $uuid,
+        string             $firstname,
+        string             $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender $gender,
-        Grade $grade,
-        Location $location,
-    ): self {
+        Gender             $gender,
+        Grade              $grade,
+        Location           $location,
+    ): self
+    {
         return new self(
             $uuid,
             $firstname,
@@ -113,12 +115,23 @@ class Member
         );
     }
 
-    public function change(
+    public function changeDetails(
         string $firstname,
         string $lastname,
-    ): void {
+    ): void
+    {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+    }
+
+    public function changeGrade(Grade $grade): void
+    {
+        $this->grade = $grade;
+    }
+
+    public function changeRemarks(string $remarks): void
+    {
+        $this->remarks = $remarks;
     }
 
     // —————————————————————————————————————————————————————————————————————————
