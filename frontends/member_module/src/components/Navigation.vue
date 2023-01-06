@@ -12,7 +12,7 @@ const items = computed(() => {
         {
             label: 'Inschrijvingen',
             icon: 'pi pi-user-plus',
-            to: '/'
+            to: '/inschrijvingen/todo'
         },
         {
             label: 'Leden',
@@ -22,7 +22,7 @@ const items = computed(() => {
         {
             label: 'Configuratie',
             icon: 'pi pi-cog',
-            to: '/configuratie'
+            to: '/configuratie/periodes'
         },
     ];
     return navigation;

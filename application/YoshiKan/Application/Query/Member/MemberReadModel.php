@@ -13,16 +13,18 @@ class MemberReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int                $id,
-        protected string             $uuid,
-        protected string             $status,
-        protected string             $firstname,
-        protected string             $lastname,
-        protected \DateTimeImmutable $dateOfBirth,
-        protected string             $gender,
-        protected GradeReadModel     $grade,
-        protected LocationReadModel  $location,
-    ) {
+        protected int                              $id,
+        protected string                           $uuid,
+        protected string                           $status,
+        protected string                           $firstname,
+        protected string                           $lastname,
+        protected \DateTimeImmutable               $dateOfBirth,
+        protected string                           $gender,
+        protected GradeReadModel                   $grade,
+        protected LocationReadModel                $location,
+        protected ?SubscriptionReadModelCollection $subscriptions = null
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -41,7 +43,9 @@ class MemberReadModel implements \JsonSerializable
         $json->gender = $this->getGender();
         $json->grade = $this->getGrade();
         $json->location = $this->getLocation();
-
+        if (!is_null($this->getSubscriptions())) {
+            $json->subscriptions = $this->getSubscriptions()->getCollection();
+        }
         return $json;
     }
 
@@ -49,19 +53,39 @@ class MemberReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(Member $model): self
+    public static function hydrateFromModel(Member $model, bool $full = false): self
     {
-        return new self(
-            $model->getId(),
-            $model->getUuid()->toRfc4122(),
-            $model->getStatus()->value,
-            $model->getFirstname(),
-            $model->getLastname(),
-            $model->getDateOfBirth(),
-            $model->getGender()->value,
-            GradeReadModel::hydrateFromModel($model->getGrade()),
-            LocationReadModel::hydrateFromModel($model->getLocation()),
-        );
+        if ($full) {
+            $subscriptions = new SubscriptionReadModelCollection([]);
+            foreach ($model->getSubscriptions() as $subscription) {
+                $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
+            }
+            $rm = new self(
+                $model->getId(),
+                $model->getUuid()->toRfc4122(),
+                $model->getStatus()->value,
+                $model->getFirstname(),
+                $model->getLastname(),
+                $model->getDateOfBirth(),
+                $model->getGender()->value,
+                GradeReadModel::hydrateFromModel($model->getGrade()),
+                LocationReadModel::hydrateFromModel($model->getLocation()),
+                $subscriptions
+            );
+        } else {
+            $rm = new self(
+                $model->getId(),
+                $model->getUuid()->toRfc4122(),
+                $model->getStatus()->value,
+                $model->getFirstname(),
+                $model->getLastname(),
+                $model->getDateOfBirth(),
+                $model->getGender()->value,
+                GradeReadModel::hydrateFromModel($model->getGrade()),
+                LocationReadModel::hydrateFromModel($model->getLocation()),
+            );
+        }
+        return $rm;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -111,5 +135,10 @@ class MemberReadModel implements \JsonSerializable
     public function getLocation(): LocationReadModel
     {
         return $this->location;
+    }
+
+    public function getSubscriptions(): ?SubscriptionReadModelCollection
+    {
+        return $this->subscriptions;
     }
 }

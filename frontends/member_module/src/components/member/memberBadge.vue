@@ -25,7 +25,7 @@
                 </div>
                 <div class="mt-2 pr-8">
                     <div :style="'background-color: #'+member.grade.color"
-                         class="rounded-full text-white px-2 font-bold text-center w-32 uppercase text-sm">
+                         class="rounded-full text-white px-2 font-bold text-center w-32 text-sm">
                         {{ member.grade.name }}
                     </div>
                 </div>

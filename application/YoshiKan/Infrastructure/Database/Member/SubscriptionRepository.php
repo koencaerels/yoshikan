@@ -117,7 +117,7 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
 
     public function getTodoByPeriod(Period $period): array
     {
-        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q = $this->createQueryBuilder('t');
         $q->andWhere('t.status = :new OR t.status = :awaiting_payment OR t.status = :payed');
         $q->setParameter('new', SubscriptionStatus::NEW->value);
         $q->setParameter('awaiting_payment', SubscriptionStatus::AWAITING_PAYMENT->value);
@@ -131,7 +131,7 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
 
     public function getByPeriod(Period $period): array
     {
-        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q = $this->createQueryBuilder('t');
         $q->andWhere('t.period = :periodId');
         $q->setParameter('periodId', $period->getId());
         $q->addOrderBy('t.id', 'DESC');
@@ -141,7 +141,7 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
 
     public function getByListId(array $list): array
     {
-        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q = $this->createQueryBuilder('t');
         $q->andWhere('t.id IN (:listId)');
         $q->setParameter('listId', array_values($list));
         $q->addOrderBy('t.id', 'DESC');

@@ -43,6 +43,9 @@ doctrine:
                 JSON_SEARCH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonSearch
                 JSON_UNQUOTE: Bolt\Doctrine\Functions\JsonUnquote
                 CAST: Bolt\Doctrine\Query\Cast
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                DAY: DoctrineExtensions\Query\Mysql\Day
             numeric_functions:
                 RAND: Bolt\Doctrine\Functions\Rand
 

@@ -28,6 +28,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\judogi_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
@@ -53,6 +54,7 @@ class MemberApiController extends AbstractController
     use settings_routes;
     use configuration_routes;
     use subscription_routes;
+    use member_routes;
 
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;

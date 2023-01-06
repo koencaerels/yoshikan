@@ -91,7 +91,7 @@ export interface Subscription {
     settings: Settings;
     isPaymentOverviewSend: boolean;
     member?: Member;
-    selected:boolean;
+    selected: boolean;
 }
 
 export interface Member {
@@ -104,4 +104,6 @@ export interface Member {
     gender: string;
     grade: Grade;
     location: Location;
+    remarks: string;
+    subscriptions?: Subscription[]
 }

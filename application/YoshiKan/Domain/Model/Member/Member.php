@@ -48,6 +48,9 @@ class Member
     #[ORM\Column(length: 36)]
     private string $gender;
 
+    #[ORM\Column(type: 'text')]
+    private string $remarks;
+
     // ----------------------------------------------------------- associations
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
@@ -170,5 +173,10 @@ class Member
     public function getSubscriptions(): array
     {
         return $this->subscriptions->getValues();
+    }
+
+    public function getRemarks(): string
+    {
+        return $this->remarks;
     }
 }

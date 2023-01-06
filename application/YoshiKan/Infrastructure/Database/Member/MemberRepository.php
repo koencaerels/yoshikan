@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Member;
 
+use App\YoshiKan\Domain\Model\Member\Grade;
+use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
@@ -90,9 +92,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     {
         $model = $this->createQueryBuilder('t')
             ->andWhere('LOWER(t.firstname) = :firstname')
-            ->setParameter('firstname', trim(mb_strtolower($firstname)))
+            ->setParameter('firstname', trim(strtolower($firstname)))
             ->andWhere('LOWER(t.lastname) = :lastname')
-            ->setParameter('lastname', trim(mb_strtolower($lastname)))
+            ->setParameter('lastname', trim(strtolower($lastname)))
             ->andWhere('t.dateOfBirth = :dateOfBirth')
             ->setParameter('dateOfBirth', $dateOfBirth)
             ->getQuery()
@@ -103,6 +105,43 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
 
     public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array
     {
-        // TODO: Implement findByNameOrDateOfBirth() method.
+        $q = $this->createQueryBuilder('t')
+            ->orWhere('LOWER(t.firstname) = :firstname')
+            ->setParameter('firstname', trim(strtolower($firstname)))
+            ->orWhere('LOWER(t.lastname) = :lastname')
+            ->setParameter('lastname', trim(strtolower($lastname)))
+            ->orWhere('t.dateOfBirth = :dateOfBirth')
+            ->setParameter('dateOfBirth', $dateOfBirth)
+            ->addOrderBy('t.id', 'DESC');
+        return $q->getQuery()->getResult();
+    }
+
+    public function search(
+        string    $keyword = '',
+        int       $yearOfBirth = 0,
+        ?Location $location = null,
+        ?Grade    $grade = null
+    ): array
+    {
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        if (!is_null($keyword) && strlen(trim($keyword)) != 0) {
+            $q->andWhere("LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id")
+                ->setParameter('keyword', '%' . strtolower($keyword) . '%')
+                ->setParameter('id', intval($keyword));
+        }
+        if (!is_null($location)) {
+            $q->andWhere("t.location = :locationId")
+                ->setParameter('locationId', $location->getId());
+        }
+        if (!is_null($grade)) {
+            $q->andWhere("t.grade = :gradeId")
+                ->setParameter('gradeId', $grade->getId());
+        }
+        if($yearOfBirth !== 0) {
+            $q->andWhere("YEAR(t.dateOfBirth) = :yearOfBirth")
+                ->setParameter('yearOfBirth', $yearOfBirth);
+        }
+        $q->addOrderBy('t.id', 'DESC');
+        return $q->getQuery()->getResult();
     }
 }

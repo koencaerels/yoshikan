@@ -8,11 +8,12 @@
  */
 
 import {defineStore} from 'pinia'
-import type {Subscription} from "@/api/query/model";
+import type {Member, Subscription} from "@/api/query/model";
 import {getSubscriptionTodo} from "@/api/query/getSubscriptionTodo";
 import {getSubscriptionById} from "@/api/query/getSubscriptionById";
 import {getSubscriptionByActivePeriod} from "@/api/query/getSubscriptionByActivePeriod";
 import {getSubscriptionAll} from "@/api/query/getSubscriptionAll";
+import {getMemberById} from "@/api/query/getMemberById";
 
 export type MemberState = {
     isLoading: boolean;
@@ -21,6 +22,9 @@ export type MemberState = {
     refreshCounter: number;
     subscriptionsActivePeriod: Subscription[];
     subscriptionsArchive: Subscription[];
+    isMemberLoading: boolean;
+    memberId: number;
+    memberDetail?: Member;
 }
 
 export const useMemberStore = defineStore({
@@ -31,7 +35,10 @@ export const useMemberStore = defineStore({
         subscriptionDetail: undefined,
         refreshCounter: 0,
         subscriptionsActivePeriod: [],
-        subscriptionsArchive: []
+        subscriptionsArchive: [],
+        isMemberLoading: false,
+        memberId: 0,
+        memberDetail: undefined
     }),
     actions: {
 
@@ -40,12 +47,10 @@ export const useMemberStore = defineStore({
         async loadSubscriptionTodo() {
             this.subscriptionTodos = await getSubscriptionTodo();
         },
-        async loadSubscriptionsByActivePeriod()
-        {
+        async loadSubscriptionsByActivePeriod() {
             this.subscriptionsActivePeriod = await getSubscriptionByActivePeriod();
         },
-        async loadSubscriptionsArchive()
-        {
+        async loadSubscriptionsArchive() {
             this.subscriptionsArchive = await getSubscriptionAll();
         },
 
@@ -64,6 +69,21 @@ export const useMemberStore = defineStore({
         increaseCounter() {
             this.refreshCounter++;
         },
+
+        // -- member detail -------------------------------------------------------
+
+        async loadMemberDetail(id: number) {
+            this.memberId = id;
+            this.isMemberLoading = true;
+            this.memberDetail = await getMemberById(id);
+            this.isMemberLoading = false;
+        },
+        async reloadMemberDetail() {
+            if (this.memberId != 0) {
+                this.memberDetail = await getMemberById(this.memberId);
+            }
+        }
+
     },
     getters: {
         subscriptionFee() {

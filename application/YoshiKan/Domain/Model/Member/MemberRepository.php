@@ -30,4 +30,11 @@ interface MemberRepository
     public function findByNameAndDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): ?Member;
 
     public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array;
+
+    public function search(
+        string      $keyword = ''
+        , int       $yearOfBirth = 0
+        , ?Location $location = null
+        , ?Grade    $grade = null
+    ): array;
 }
