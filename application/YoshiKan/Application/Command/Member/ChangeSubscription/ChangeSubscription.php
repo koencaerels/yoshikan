@@ -46,8 +46,7 @@ class ChangeSubscription
         protected float              $total,
         protected int                $judogiId,
         protected float              $judogiPrice,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

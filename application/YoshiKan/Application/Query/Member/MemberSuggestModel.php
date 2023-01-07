@@ -12,8 +12,7 @@ class MemberSuggestModel
         protected string             $firstname,
         protected string             $lastname,
         protected \DateTimeImmutable $dateOfBirth,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -49,5 +48,4 @@ class MemberSuggestModel
     {
         return $this->dateOfBirth;
     }
-
 }

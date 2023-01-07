@@ -54,8 +54,13 @@ class ExportSubscriptions
             $sheet->setCellValue([3, $rowCounter], $subscription->getLastname());
             $sheet->setCellValue([4, $rowCounter], $subscription->getDateOfBirth()->format('d/m/Y'));
             $sheet->setCellValue([5, $rowCounter], $subscription->getGenderAsString());
-            $sheet->setCellValue([6, $rowCounter], 'YK-' . $subscription->getMember()->getId());
-            $sheet->setCellValue([7, $rowCounter], $subscription->getMember()->getGrade()->getName());
+            if (!is_null($subscription->getMember())) {
+                $sheet->setCellValue([6, $rowCounter], 'YK-' . $subscription->getMember()->getId());
+                $sheet->setCellValue([7, $rowCounter], $subscription->getMember()->getGrade()->getName());
+            } else {
+                $sheet->setCellValue([6, $rowCounter], 'n/a');
+                $sheet->setCellValue([7, $rowCounter], 'n/a');
+            }
             $sheet->setCellValue([8, $rowCounter], $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname());
             $sheet->setCellValue([9, $rowCounter], $subscription->getContactEmail());
             $rowCounter++;
@@ -63,7 +68,7 @@ class ExportSubscriptions
 
         // -- first row bold ------------------------------------------------------
         $highestColumn = $sheet->getHighestColumn();
-        $sheet->getStyle('A1:' . $highestColumn . '1' )->getFont()->setBold(true);
+        $sheet->getStyle('A1:' . $highestColumn . '1')->getFont()->setBold(true);
         $sheet->setSelectedCell('A1');
 
         // -- autosize the columns ------------------------------------------------

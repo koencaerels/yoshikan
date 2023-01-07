@@ -41,8 +41,7 @@ class WebSubscribe
         protected bool               $judogiBelt,
         protected string             $remarks,
         protected string             $honeyPot
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

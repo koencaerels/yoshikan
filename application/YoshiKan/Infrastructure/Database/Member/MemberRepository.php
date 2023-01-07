@@ -125,8 +125,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         int       $yearOfBirth = 0,
         ?Location $location = null,
         ?Grade    $grade = null
-    ): array
-    {
+    ): array {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
         if (!is_null($keyword) && mb_strlen(trim($keyword)) != 0) {
             $q->andWhere("LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id")
