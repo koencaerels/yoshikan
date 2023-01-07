@@ -27,6 +27,14 @@ trait member_routes
         return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/member/suggest', methods: ['GET', 'POST', 'PUT'])]
+    public function suggestMembers(Request $request): JsonResponse
+    {
+        $suggestModel = json_decode($request->request->get('suggest-model'));
+        $response = $this->queryBus->suggestMember($suggestModel);
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
     #[Route('/mm/api/member/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function getMemberById(int $id): JsonResponse
     {

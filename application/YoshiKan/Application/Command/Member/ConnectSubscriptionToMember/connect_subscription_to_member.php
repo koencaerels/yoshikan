@@ -19,12 +19,14 @@ trait connect_subscription_to_member
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = ConnectMemberToSubscription::hydrateFromJson($jsonCommand);
-        $commandHandler = new ConnectMemberToSubscriptionHandler(
+        $command = ConnectSubscriptionToMember::hydrateFromJson($jsonCommand);
+        $commandHandler = new ConnectSubscriptionToMemberHandler(
             $this->subscriptionRepository,
             $this->memberRepository
         );
+        $result = $commandHandler->go($command);
+        $this->entityManager->flush();
 
-        return $commandHandler->go($command);
+        return $result;
     }
 }

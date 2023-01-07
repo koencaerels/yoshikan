@@ -5,7 +5,10 @@
     <div id="appInschrijving" v-if="step === 1">
         <hr>
         <div class="flex flex-row mt-4 mb-4">
-            <div class="basis-1/4 mr-4 text-right"><i class="mdi mdi-calendar text-2xl"></i></div>
+            <div class="basis-1/4 mr-4 text-right">
+                <span><strong>Periode&nbsp;&nbsp;</strong></span>
+                <i class="mdi mdi-calendar text-2xl"></i>
+            </div>
             <div class="basis-3/4">
                 <strong>{{ settings.activePeriod.name }}</strong>
             </div>
@@ -18,7 +21,10 @@
         <hr>
         <!-- -- contact ----------------------------------------- -->
         <div class="md:flex md:flex-row mt-2 mb-4">
-            <div class="basis-1/4 mr-4 text-right"><i class="mdi mdi-email text-2xl"></i></div>
+            <div class="basis-1/4 mr-4 text-right">
+                <span><strong>Contact&nbsp;&nbsp;</strong></span>
+                <i class="mdi mdi-email text-2xl"></i>
+            </div>
             <div class="basis-3/4">
                 <div class="md:flex md:flex-row">
                     <div class="basis-1/2">
@@ -57,7 +63,10 @@
         </div>
         <hr>
         <div class="md:flex md:flex-row mt-2 mb-4">
-            <div class="basis-1/4 mr-4 text-right"><i class="mdi mdi-account-circle text-2xl"></i></div>
+            <div class="basis-1/4 mr-4 text-right">
+                <span><strong>Judoka&nbsp;&nbsp;</strong></span>
+               <i class="mdi mdi-account-circle text-2xl"></i>
+            </div>
             <div class="basis-3/4">
                 <!-- -- judoka ----------------------------------------- -->
                 <div class="md:flex md:flex-row">
@@ -217,14 +226,14 @@
             </div>
         </div>
         <!-- calculation --------------------------------------- -->
-        <hr>
-        <div class="flex flex-row mt-4 mb-4">
-            <div class="basis-1/4 mr-4 text-right text-xl"><strong>Totaal :</strong></div>
-            <div class="basis-3/4 text-xl">
-                (260 € - 10%) + 10 € + 50 € = <strong>294 €</strong>
-                (+ judopak en gordel)
-            </div>
-        </div>
+        <!--        <hr>-->
+        <!--        <div class="flex flex-row mt-4 mb-4">-->
+        <!--            <div class="basis-1/4 mr-4 text-right text-xl"><strong>Totaal :</strong></div>-->
+        <!--            <div class="basis-3/4 text-xl">-->
+        <!--                (260 € - 10%) + 10 € + 50 € = <strong>294 €</strong>-->
+        <!--                (+ judopak en gordel)-->
+        <!--            </div>-->
+        <!--        </div>-->
         <!-- remarks ------------------------------------------- -->
         <hr>
         <div class="flex flex-row mt-4 mb-4">
@@ -251,7 +260,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-xs"><code>{{ subscription }}</code></div>
+        <!--        <div class="text-xs"><code>{{ subscription }}</code></div>-->
     </div>
 
     <div v-if="step === 2">
@@ -331,7 +340,7 @@ function loadSettingsHandler(data) {
 
 function subscribe() {
     v$.value.$touch();
-    if(!v$.$invalid) {
+    if (!v$.$invalid) {
         step.value = 2;
         const formData = new FormData();
         formData.append('subscription', JSON.stringify(subscription.value));
@@ -345,25 +354,25 @@ function subscribeHandler(data) {
 }
 
 function resetSubscription() {
+    subscription.value.contactFirstname = '';
+    subscription.value.contactLastname = '';
+    subscription.value.contactEmail = '';
+    subscription.value.contactPhone = '';
+    subscription.value.firstname = '';
+    subscription.value.lastname = '';
+    subscription.value.dateOfBirthDD = '';
+    subscription.value.dateOfBirthMM = '';
+    subscription.value.dateOfBirthYYYY = '';
+    subscription.value.dateOfBirth = new Date();
+    subscription.value.gender = 'M';
+    subscription.value.newMember = true;
+    subscription.value.type = 'full';
+    subscription.value.numberOfTraining = 1;
+    subscription.value.extraTraining = false;
+    subscription.value.reductionFamily = false;
+    subscription.value.judogiBelt = false;
+    subscription.value.remarks = '';
     step.value = 1;
-    subscription.contactFirstname = '';
-    subscription.contactLastname = '';
-    subscription.contactEmail = '';
-    subscription.contactPhone = '';
-    subscription.firstname = '';
-    subscription.lastname = '';
-    subscription.dateOfBirthDD = '';
-    subscription.dateOfBirthMM = '';
-    subscription.dateOfBirthYYYY = '';
-    subscription.dateOfBirth = new Date();
-    subscription.gender = 'M';
-    subscription.newMember = true;
-    subscription.type = 'full';
-    subscription.numberOfTraining = 1;
-    subscription.extraTraining = false;
-    subscription.reductionFamily = false;
-    subscription.judogiBelt = false;
-    subscription.remarks = '';
 }
 
 // -- validation ---------------------------------------

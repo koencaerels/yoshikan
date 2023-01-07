@@ -30,9 +30,9 @@ class ChangeSubscription
         protected string             $contactPhone,
         protected string             $firstname,
         protected string             $lastname,
-        protected string             $dateOfBirthDD,
-        protected string             $dateOfBirthMM,
-        protected string             $dateOfBirthYYYY,
+        protected int                $dateOfBirthDD,
+        protected int                $dateOfBirthMM,
+        protected int                $dateOfBirthYYYY,
         protected \DateTimeImmutable $dateOfBirth,
         protected Gender             $gender,
         protected bool               $newMember,
@@ -46,7 +46,8 @@ class ChangeSubscription
         protected float              $total,
         protected int                $judogiId,
         protected float              $judogiPrice,
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -123,17 +124,17 @@ class ChangeSubscription
         return $this->lastname;
     }
 
-    public function getDateOfBirthDD(): string
+    public function getDateOfBirthDD(): int
     {
         return $this->dateOfBirthDD;
     }
 
-    public function getDateOfBirthMM(): string
+    public function getDateOfBirthMM(): int
     {
         return $this->dateOfBirthMM;
     }
 
-    public function getDateOfBirthYYYY(): string
+    public function getDateOfBirthYYYY(): int
     {
         return $this->dateOfBirthYYYY;
     }

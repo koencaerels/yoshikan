@@ -27,9 +27,9 @@ class WebSubscribe
         protected string             $contactPhone,
         protected string             $firstname,
         protected string             $lastname,
-        protected string             $dateOfBirthDD,
-        protected string             $dateOfBirthMM,
-        protected string             $dateOfBirthYYYY,
+        protected int                $dateOfBirthDD,
+        protected int                $dateOfBirthMM,
+        protected int                $dateOfBirthYYYY,
         protected \DateTimeImmutable $dateOfBirth,
         protected string             $gender,
         protected bool               $newMember,
@@ -41,7 +41,8 @@ class WebSubscribe
         protected bool               $judogiBelt,
         protected string             $remarks,
         protected string             $honeyPot
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -54,26 +55,26 @@ class WebSubscribe
     {
         return new self(
             intval($json->periodId),
-            filter_var(trim($json->contactFirstname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactLastname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactEmail), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->contactPhone), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->firstname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->lastname), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            trim($json->contactFirstname),
+            trim($json->contactLastname),
+            trim($json->contactEmail),
+            trim($json->contactPhone),
+            trim($json->firstname),
+            trim($json->lastname),
             intval($json->dateOfBirthDD),
             intval($json->dateOfBirthMM),
             intval($json->dateOfBirthYYYY),
             new \DateTimeImmutable($json->dateOfBirth),
-            filter_var(trim($json->gender), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            trim($json->gender),
             boolval($json->newMember),
-            filter_var(trim($json->type), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            trim($json->type),
             intval($json->location),
             intval($json->numberOfTraining),
             boolval($json->extraTraining),
             boolval($json->reductionFamily),
             boolval($json->judogiBelt),
-            filter_var(trim($json->remarks), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var(trim($json->honeyPot), FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+            trim($json->remarks),
+            trim($json->honeyPot),
         );
     }
 
@@ -116,17 +117,17 @@ class WebSubscribe
         return $this->lastname;
     }
 
-    public function getDateOfBirthDD(): string
+    public function getDateOfBirthDD(): int
     {
         return $this->dateOfBirthDD;
     }
 
-    public function getDateOfBirthMM(): string
+    public function getDateOfBirthMM(): int
     {
         return $this->dateOfBirthMM;
     }
 
-    public function getDateOfBirthYYYY(): string
+    public function getDateOfBirthYYYY(): int
     {
         return $this->dateOfBirthYYYY;
     }

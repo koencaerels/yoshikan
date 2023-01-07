@@ -95,8 +95,10 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
             ->setParameter('firstname', trim(mb_strtolower($firstname)))
             ->andWhere('LOWER(t.lastname) = :lastname')
             ->setParameter('lastname', trim(mb_strtolower($lastname)))
-            ->andWhere('t.dateOfBirth = :dateOfBirth')
-            ->setParameter('dateOfBirth', $dateOfBirth)
+            ->andWhere('YEAR(t.dateOfBirth) = :year AND MONTH(t.dateOfBirth) = :month AND DAY(t.dateOfBirth) = :day')
+            ->setParameter('year', $dateOfBirth->format('Y'))
+            ->setParameter('month', $dateOfBirth->format('m'))
+            ->setParameter('day', $dateOfBirth->format('d'))
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -106,13 +108,15 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array
     {
         $q = $this->createQueryBuilder('t')
-            ->orWhere('LOWER(t.firstname) = :firstname')
-            ->setParameter('firstname', trim(mb_strtolower($firstname)))
-            ->orWhere('LOWER(t.lastname) = :lastname')
-            ->setParameter('lastname', trim(mb_strtolower($lastname)))
-            ->orWhere('t.dateOfBirth = :dateOfBirth')
-            ->setParameter('dateOfBirth', $dateOfBirth)
+            ->where('LOWER(t.firstname) LIKE :firstname AND LOWER(t.lastname) LIKE :lastname')
+            ->setParameter('firstname', '%' . trim(mb_strtolower($firstname)) . '%')
+            ->setParameter('lastname', '%' . trim(mb_strtolower($lastname)) . '%')
+            ->orWhere('YEAR(t.dateOfBirth) = :year AND MONTH(t.dateOfBirth) = :month AND DAY(t.dateOfBirth) = :day')
+            ->setParameter('year', $dateOfBirth->format('Y'))
+            ->setParameter('month', $dateOfBirth->format('m'))
+            ->setParameter('day', $dateOfBirth->format('d'))
             ->addOrderBy('t.id', 'DESC');
+
         return $q->getQuery()->getResult();
     }
 
@@ -121,7 +125,8 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         int       $yearOfBirth = 0,
         ?Location $location = null,
         ?Grade    $grade = null
-    ): array {
+    ): array
+    {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
         if (!is_null($keyword) && mb_strlen(trim($keyword)) != 0) {
             $q->andWhere("LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id")
@@ -141,6 +146,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
                 ->setParameter('yearOfBirth', $yearOfBirth);
         }
         $q->addOrderBy('t.id', 'DESC');
+
         return $q->getQuery()->getResult();
     }
 }

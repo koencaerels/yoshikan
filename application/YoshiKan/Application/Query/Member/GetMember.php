@@ -23,7 +23,8 @@ class GetMember
         protected MemberRepository   $memberRepository,
         protected LocationRepository $locationRepository,
         protected GradeRepository    $gradeRepository
-    ) {
+    )
+    {
     }
 
     public function search(MemberSearchModel $searchModel): MemberReadModelCollection
@@ -41,6 +42,20 @@ class GetMember
             $searchModel->getYearOfBirth(),
             $location,
             $grade
+        );
+        $collection = new MemberReadModelCollection([]);
+        foreach ($members as $member) {
+            $collection->addItem(MemberReadModel::hydrateFromModel($member));
+        }
+        return $collection;
+    }
+
+    public function suggest(MemberSuggestModel $suggestModel): MemberReadModelCollection
+    {
+        $members = $this->memberRepository->findByNameOrDateOfBirth(
+            $suggestModel->getFirstname(),
+            $suggestModel->getLastname(),
+            $suggestModel->getDateOfBirth()
         );
         $collection = new MemberReadModelCollection([]);
         foreach ($members as $member) {

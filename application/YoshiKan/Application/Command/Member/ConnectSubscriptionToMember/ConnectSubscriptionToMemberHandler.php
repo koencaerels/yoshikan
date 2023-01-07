@@ -28,9 +28,8 @@ class ConnectSubscriptionToMemberHandler
     {
         $subscription = $this->subscriptionRepository->getById($command->getId());
         $member = $this->memberRepository->getById($command->getMemberId());
-
         $subscription->setMember($member);
-
+        $this->subscriptionRepository->save($subscription);
         return true;
     }
 }

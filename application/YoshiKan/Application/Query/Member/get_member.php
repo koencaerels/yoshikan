@@ -17,13 +17,23 @@ trait get_member
 {
     public function searchMembers(\stdClass $jsonSearchModel): MemberReadModelCollection
     {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $searchModel = MemberSearchModel::hydrateFromJson($jsonSearchModel);
         $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
         return $query->search($searchModel);
     }
 
+    public function suggestMember(\stdClass $jsonSuggestModel): MemberReadModelCollection
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+        $suggestModel = MemberSuggestModel::hydrateFromJson($jsonSuggestModel);
+        $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
+        return $query->suggest($suggestModel);
+    }
+
     public function getMemberById(int $id): MemberReadModel
     {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
         return $query->getById($id);
     }
