@@ -123,7 +123,7 @@
 
 <script setup lang="ts">
 import {useAppStore} from "@/store/app";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import type {MemberSearchModel} from "@/api/query/searchMember";
 import type {Member} from "@/api/query/model";
 import {searchMembers} from "@/api/query/searchMember";
@@ -145,6 +145,12 @@ const isSearching = ref<boolean>(false);
 
 onMounted(() => {
     searchMemberHandler();
+});
+
+const counter = computed((): number => memberStore.memberCounter);
+
+watch(counter, (): void => {
+    void searchMemberHandler();
 });
 
 function selectedClass(id: number) {

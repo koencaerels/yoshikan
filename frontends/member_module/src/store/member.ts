@@ -25,6 +25,7 @@ export type MemberState = {
     isMemberLoading: boolean;
     memberId: number;
     memberDetail?: Member;
+    memberCounter: number;
 }
 
 export const useMemberStore = defineStore({
@@ -38,7 +39,8 @@ export const useMemberStore = defineStore({
         subscriptionsArchive: [],
         isMemberLoading: false,
         memberId: 0,
-        memberDetail: undefined
+        memberDetail: undefined,
+        memberCounter: 0,
     }),
     actions: {
 
@@ -82,6 +84,9 @@ export const useMemberStore = defineStore({
             if (this.memberId != 0) {
                 this.memberDetail = await getMemberById(this.memberId);
             }
+        },
+        increaseMemberCounter() {
+            this.memberCounter++;
         }
 
     },

@@ -71,6 +71,7 @@ async function saveGrade() {
     isSaving.value = true;
     let result = await changeMemberGrade(command.value);
     await memberStore.reloadMemberDetail();
+    memberStore.increaseMemberCounter();
     toaster.add({
         severity: "success",
         summary: "Graad gewijzigd.",

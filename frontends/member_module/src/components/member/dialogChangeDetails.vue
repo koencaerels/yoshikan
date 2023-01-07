@@ -1,5 +1,5 @@
 <template>
-    <div id="dialogChangeDetails" style="width:600px;">
+    <div id="dialogChangeDetails" style="width:600px;" class="text-sm">
 
         <div class="flex flex-row mt-2">
             <div class="basis-1/2">
@@ -185,6 +185,7 @@ async function saveDetails() {
         isSaving.value = true;
         let result = await changeMemberDetails(command.value);
         await memberStore.reloadMemberDetail();
+        memberStore.increaseMemberCounter();
         toaster.add({
             severity: "success",
             summary: "Profiel gewijzigd.",
