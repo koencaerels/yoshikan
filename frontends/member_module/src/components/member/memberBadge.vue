@@ -10,10 +10,13 @@
                 <!-- status + nummer -->
                 <div class="float-right pr-2 mt-2">
                     <div class="flex rounded-full bg-gray-300 text-xs">
-                        <div class="text-gray-500 px-2">{{ member.status }}</div>
+                        <div class="text-gray-500 px-2">{{ member.status }}&nbsp;&nbsp;&nbsp;</div>
                         <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold">
                             YK-{{ member.id }}
                         </div>
+                    </div>
+                    <div class="mt-2 text-right">
+                        <group-renderer :member="member"/>
                     </div>
                 </div>
                 <div class="text-xl mt-2 font-bold">
@@ -42,6 +45,7 @@
 <script setup lang="ts">
 import type {Member} from "@/api/query/model";
 import moment from "moment";
+import GroupRenderer from "@/components/member/groupRenderer.vue";
 
 const props = defineProps<{
     member: Member,

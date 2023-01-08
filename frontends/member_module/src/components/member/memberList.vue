@@ -3,6 +3,8 @@
         <!-- -- search form ---------------------------------------------------- -->
         <div class="p-2 bg-gray-200 text-sm">
             <form v-on:submit.prevent>
+
+                <!-- keyword -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Naam of lidnr.</div>
                     <div class="basis-2/3">
@@ -11,6 +13,8 @@
                                    v-model="searchModel.keyword"/>
                     </div>
                 </div>
+
+                <!-- locatie -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Locatie</div>
                     <div class="basis-2/3">
@@ -22,6 +26,36 @@
                                   :options="appStore.configuration.locations"/>
                     </div>
                 </div>
+
+                <!-- filter on group -->
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/3 text-right mr-2 mt-1">Group</div>
+                    <div class="basis-2/3">
+                        <Dropdown class="w-full" v-if="appStore.configuration"
+                                  :show-clear="true"
+                                  v-model="searchModel.group"
+                                  placeholder="selecteer een groep"
+                                  :options="appStore.configuration.groups">
+                            <template #value="slotProps">
+                                <div v-if="slotProps.value">
+                                    <div class="text-white rounded-full text-sm px-3 bg-sky-400">
+                                        {{ slotProps.value.name }}
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    {{ slotProps.placeholder }}
+                                </div>
+                            </template>
+                            <template #option="slotProps">
+                                <div class="text-white rounded-full text-sm px-3 bg-sky-400">
+                                    {{ slotProps.option.name }}
+                                </div>
+                            </template>
+                        </Dropdown>
+                    </div>
+                </div>
+
+                <!-- graad -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Graad</div>
                     <div class="basis-2/3">
@@ -50,6 +84,8 @@
                         </Dropdown>
                     </div>
                 </div>
+
+                <!-- geboorte jaar -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Geboorte jaar</div>
                     <div class="basis-2/3">
@@ -58,6 +94,8 @@
                                    v-model="searchModel.yearOfBirth"/>
                     </div>
                 </div>
+
+                <!-- buttons -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-4/12">&nbsp;</div>
                     <div class="basis-1/2 mr-2 ml-3">
@@ -88,7 +126,7 @@
             <div class="w-16 ml-2">Graad</div>
         </div>
 
-        <list-wrapper :estate-height="375">
+        <list-wrapper :estate-height="420">
             <div v-for="member in members"
                  :class="selectedClass(member.id)"
                  class="border-b-[1px] border-gray-300">
@@ -105,8 +143,13 @@
                         {{ member.firstname }} {{ member.lastname }}
                     </div>
                     <div class="w-36 ml-2 text-sm mt-0.5">
-                        ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
-                        - {{ member.gender }}
+                        <div>
+                            <group-renderer :member="member"/>
+                        </div>
+                        <div class="text-xs mt-0.5">
+                            ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
+                            - {{ member.gender }}
+                        </div>
                     </div>
                     <div class="w-16 ml-2 mt-1">
                         <div class="text-white rounded-full text-xs px-2 text-center"
@@ -131,6 +174,7 @@ import ListWrapper from "@/components/wrapper/listWrapper.vue";
 import moment from "moment";
 import EditButton from "@/components/common/editButton.vue";
 import {useMemberStore} from "@/store/member";
+import GroupRenderer from "@/components/member/groupRenderer.vue";
 
 const memberStore = useMemberStore();
 const appStore = useAppStore();
@@ -139,6 +183,7 @@ const searchModel = ref<MemberSearchModel>({
     locationId: undefined,
     grade: undefined,
     yearOfBirth: undefined,
+    group: undefined,
 });
 const members = ref<Member[]>([]);
 const isSearching = ref<boolean>(false);

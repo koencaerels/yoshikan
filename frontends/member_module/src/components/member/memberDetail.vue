@@ -1,14 +1,21 @@
 <template>
     <div id="memberDetail" class="p-4" v-if="memberStore.memberDetail">
+        <div class="flex text-sm mb-4">
 
-        <div class="flex text-sm underline mb-4 text-blue-400">
-            <div class="cursor-pointer" @click="(showDialogDetails = true)">
+            <div v-if="!isDetail"
+                class="bg-gray-200 rounded-full px-2 py-1">
+                <router-link :to="'/lid/'+memberStore.memberId">
+                    <i class="pi pi-eye"></i>
+                </router-link>
+            </div>
+
+            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogDetails = true)">
                 Wijzig profiel
             </div>
-            <div class="ml-4 cursor-pointer" @click="(showDialogGrade = true)">
+            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogGrade = true)">
                 Wijzig graad
             </div>
-            <div class="ml-4 cursor-pointer" @click="(showDialogRemarks = true)">
+            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogRemarks = true)">
                 Wijzig opmerkingen
             </div>
             <!--            <div class="ml-4 cursor-pointer">-->
@@ -122,11 +129,16 @@ import DialogChangeDetails from "@/components/member/dialogChangeDetails.vue";
 import DialogChangeGrade from "@/components/member/dialogChangeGrade.vue";
 import DialogChangeRemarks from "@/components/member/dialogChangeRemarks.vue";
 import DetailWrapper from "@/components/wrapper/detailWrapper.vue";
+import GroupRenderer from "@/components/member/groupRenderer.vue";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
 const showDialogGrade = ref<boolean>(false);
 const showDialogRemarks = ref<boolean>(false);
+
+const props = defineProps<{
+    isDetail: boolean,
+}>();
 
 function hideRemarksDialog() {
     showDialogRemarks.value = false;

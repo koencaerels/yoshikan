@@ -13,7 +13,7 @@
                 </div>
                 <div v-else>
                     <div v-if="memberStore.memberDetail">
-                        <member-detail/>
+                        <member-detail :is-detail="false"/>
                     </div>
                 </div>
             </SplitterPanel>
@@ -27,5 +27,4 @@ import MemberDetail from "@/components/member/memberDetail.vue";
 import {useMemberStore} from "@/store/member";
 
 const memberStore = useMemberStore();
-
 </script>

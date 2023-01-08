@@ -19,7 +19,13 @@ trait get_member
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $searchModel = MemberSearchModel::hydrateFromJson($jsonSearchModel);
-        $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
+        $query = new GetMember(
+            $this->memberRepository,
+            $this->locationRepository,
+            $this->gradeRepository,
+            $this->groupRepository,
+            $this->periodRepository
+        );
         return $query->search($searchModel);
     }
 
@@ -27,14 +33,26 @@ trait get_member
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $suggestModel = MemberSuggestModel::hydrateFromJson($jsonSuggestModel);
-        $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
+        $query = new GetMember(
+            $this->memberRepository,
+            $this->locationRepository,
+            $this->gradeRepository,
+            $this->groupRepository,
+            $this->periodRepository
+        );
         return $query->suggest($suggestModel);
     }
 
     public function getMemberById(int $id): MemberReadModel
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
-        $query = new GetMember($this->memberRepository, $this->locationRepository, $this->gradeRepository);
+        $query = new GetMember(
+            $this->memberRepository,
+            $this->locationRepository,
+            $this->gradeRepository,
+            $this->groupRepository,
+            $this->periodRepository
+        );
         return $query->getById($id);
     }
 }

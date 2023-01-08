@@ -24,7 +24,9 @@ class MemberSearchModel
         protected int    $locationId,
         protected int    $gradeId,
         protected int    $yearOfBirth,
-    ) {
+        protected int    $groupId,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -37,6 +39,7 @@ class MemberSearchModel
         $locationId = 0;
         $gradeId = 0;
         $yearOfBirth = 0;
+        $groupId = 0;
         if (isset($json->locationId)) {
             $locationId = intval($json->locationId);
         }
@@ -46,11 +49,15 @@ class MemberSearchModel
         if (isset($json->yearOfBirth)) {
             $yearOfBirth = intval($json->yearOfBirth);
         }
+        if (isset($json->group)) {
+            $groupId = intval($json->group->id);
+        }
         return new self(
             $keyword,
             $locationId,
             $gradeId,
-            $yearOfBirth
+            $yearOfBirth,
+            $groupId
         );
     }
 
@@ -77,4 +84,10 @@ class MemberSearchModel
     {
         return $this->yearOfBirth;
     }
+
+    public function getGroupId(): int
+    {
+        return $this->groupId;
+    }
+
 }

@@ -14,7 +14,7 @@
             </div>
         </td>
         <td v-if="isView">
-            <div class="px-2 bg-sky-600 rounded-full text-white font-bold w-24 text-center">
+            <div class="text-xs px-2 bg-sky-400 rounded-full text-white font-bold w-24 text-center">
             {{ item.code }}
             </div>
         </td>

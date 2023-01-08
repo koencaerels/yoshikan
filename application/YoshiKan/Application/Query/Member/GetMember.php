@@ -14,16 +14,21 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
+use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
+use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 
 class GetMember
 {
     public function __construct(
         protected MemberRepository   $memberRepository,
         protected LocationRepository $locationRepository,
-        protected GradeRepository    $gradeRepository
-    ) {
+        protected GradeRepository    $gradeRepository,
+        protected GroupRepository    $groupRepository,
+        protected PeriodRepository   $periodRepository
+    )
+    {
     }
 
     public function search(MemberSearchModel $searchModel): MemberReadModelCollection
@@ -36,16 +41,34 @@ class GetMember
         if ($searchModel->getGradeId() != 0) {
             $grade = $this->gradeRepository->getById($searchModel->getGradeId());
         }
+
+        // -- filter on the group -------------------------------------------------------
+        $minYearOfBirth = 0;
+        $maxYearOfBirth = 0;
+        if ($searchModel->getGroupId() != 0) {
+            $group = $this->groupRepository->getById($searchModel->getGroupId());
+            $activePeriod = $this->periodRepository->getActive();
+            $startYear = intval($activePeriod->getStartDate()->format('Y'));
+            $minYearOfBirth = $startYear - $group->getMaxAge();
+            $maxYearOfBirth = $startYear - $group->getMinAge();
+        }
+
+        // -- search -------------------------------------------------------------------
         $members = $this->memberRepository->search(
             $searchModel->getKeyword(),
             $searchModel->getYearOfBirth(),
             $location,
-            $grade
+            $grade,
+            $minYearOfBirth,
+            $maxYearOfBirth
         );
+
+        // -- covert to readmodel collection ------------------------------------------
         $collection = new MemberReadModelCollection([]);
         foreach ($members as $member) {
             $collection->addItem(MemberReadModel::hydrateFromModel($member));
         }
+
         return $collection;
     }
 
