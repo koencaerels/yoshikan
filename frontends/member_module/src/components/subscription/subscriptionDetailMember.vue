@@ -149,6 +149,7 @@ async function createMemberFromSubscriptionHandler() {
     isCreating.value = true;
     await createMemberFromSubscription(memberStore.subscriptionDetail?.id ?? 0);
     await memberStore.reloadSubscriptionDetail();
+    memberStore.increaseCounter();
     toaster.add({
         severity: "success",
         summary: "Nieuw lid aangemaakt op basis van de inschrijving.",
@@ -166,6 +167,7 @@ async function connectSubscriptionToMemberHandler(memberId: number) {
     }
     await connectSubscriptionToMember(command);
     await memberStore.reloadSubscriptionDetail();
+    memberStore.increaseCounter();
     toaster.add({
         severity: "success",
         summary: "Inschrijving is gekoppeld aan bestaand lid.",

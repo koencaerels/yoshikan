@@ -139,10 +139,13 @@ import {
     faTerminal,
     faQuoteRight,
     faCode,
+    faToggleOn,
+    faToggleOff,
+    faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBold, faItalic, faStrikethrough, faParagraph, faHighlighter, faListOl, faListUl, faTextSlash, faRectangleXmark);
-library.add(faMedal, faTerminal, faQuoteRight,faCode);
+library.add(faMedal, faTerminal, faQuoteRight, faCode, faToggleOn, faToggleOff, faPen);
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 

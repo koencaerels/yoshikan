@@ -12,7 +12,7 @@
 <template>
   <div id="listWrapper" :style="'height:' + wrapperHeight">
     <slot>
-      <div class="p-4 text-sm">No results found.</div>
+      <div class="p-4 text-sm">Geen resultaten gevonden.</div>
     </slot>
   </div>
 </template>

@@ -7,7 +7,7 @@
                 <!-- keyword -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Naam of lidnr.</div>
-                    <div class="basis-2/3">
+                    <div class="basis-2/3 text-xs">
                         <InputText class="w-full p-inputtext-sm"
                                    placeholder="keyword"
                                    v-model="searchModel.keyword"/>
@@ -17,7 +17,7 @@
                 <!-- locatie -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Locatie</div>
-                    <div class="basis-2/3">
+                    <div class="basis-2/3 text-xs">
                         <Dropdown class="w-full" v-if="appStore.configuration"
                                   v-model="searchModel.locationId"
                                   :show-clear="true"
@@ -30,7 +30,7 @@
                 <!-- filter on group -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Group</div>
-                    <div class="basis-2/3">
+                    <div class="basis-2/3 text-xs">
                         <Dropdown class="w-full" v-if="appStore.configuration"
                                   :show-clear="true"
                                   v-model="searchModel.group"
@@ -58,7 +58,7 @@
                 <!-- graad -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Graad</div>
-                    <div class="basis-2/3">
+                    <div class="basis-2/3 text-xs">
                         <Dropdown class="w-full" v-if="appStore.configuration"
                                   :show-clear="true"
                                   v-model="searchModel.grade"
@@ -88,7 +88,7 @@
                 <!-- geboorte jaar -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Geboorte jaar</div>
-                    <div class="basis-2/3">
+                    <div class="basis-2/3 text-xs">
                         <InputText class="w-full p-inputtext-sm"
                                    placeholder="geboorte jaar"
                                    v-model="searchModel.yearOfBirth"/>
@@ -97,7 +97,22 @@
 
                 <!-- buttons -->
                 <div class="flex flex-row mt-2">
-                    <div class="basis-4/12">&nbsp;</div>
+                    <div class="basis-4/12">
+                        <div class="flex ml-2 mt-2">
+                            <div class="cursor-pointer">
+                                <font-awesome-icon icon="fa-solid fa-toggle-off"
+                                                   @click="isCompactView = true"
+                                                   v-if="!isCompactView"/>
+                                <font-awesome-icon icon="fa-solid fa-toggle-on"
+                                                   @click="isCompactView = false"
+                                                   v-if="isCompactView"/>
+                            </div>
+                            <div class="ml-2 text-xs mt-0.5 cursor-pointer">
+                                <div @click="isCompactView = true" v-if="!isCompactView">Compacte weergave?</div>
+                                <div @click="isCompactView = false" v-if="isCompactView">Compacte weergave?</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="basis-1/2 mr-2 ml-3">
                         <Button v-if="!isSearching"
                                 @click="searchMemberHandler"
@@ -122,14 +137,50 @@
             <div class="w-8">&nbsp;</div>
             <div class="w-16 ml-2">Lidnr.</div>
             <div class="w-64 ml-2">Naam</div>
-            <div class="w-36 ml-2">Geboortedatum</div>
-            <div class="w-16 ml-2">Graad</div>
+            <div class="w-[6rem] ml-2" v-if="isCompactView">Geboortedatum</div>
+            <div class="w-32 ml-2 text-center" v-if="!isCompactView">Groep / Locatie</div>
+            <div class="w-[6rem] ml-2 text-center" v-if="isCompactView">Groep</div>
+            <div class="w-16 ml-2 text-center">Graad</div>
         </div>
 
-        <list-wrapper :estate-height="420">
-            <div v-for="member in members"
+        <list-wrapper :estate-height="400">
+
+            <div v-for="member in members" v-if="isCompactView"
                  :class="selectedClass(member.id)"
-                 class="border-b-[1px] border-gray-300">
+                 @click="loadMemberDetail(member.id)"
+                 class="border-b-[1px] border-gray-400 flex py-1 cursor-pointer hover:bg-indigo-50">
+
+                <div class="text-xs w-[1rem] ml-2 text-gray-300">
+                    <font-awesome-icon icon="fa-solid fa-pen" />
+                </div>
+                <div class="w-16 ml-2">
+                    <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
+                        YK-{{ member.id }}
+                    </div>
+                </div>
+                <div class="w-64 ml-2">
+                    <div class="font-bold text-sm">{{ member.firstname }} {{ member.lastname }}</div>
+                </div>
+                <div class="w-[6rem] ml-2 text-sm">
+                    <div class="text-xs">
+                        ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
+                        - {{ member.gender }}
+                    </div>
+                </div>
+                <div class="w-[6rem] ml-2 text-sm">
+                    <group-renderer :member="member"/>
+                </div>
+                <div class="w-16 ml-2 pr-2">
+                    <div class="text-white rounded-full text-xs px-2 text-center"
+                         :style="'background-color:#'+member.grade.color">
+                        {{ member.grade.name }}
+                    </div>
+                </div>
+            </div>
+
+            <div v-for="member in members" v-if="!isCompactView"
+                 :class="selectedClass(member.id)"
+                 class="border-b-[1px] border-gray-400">
                 <div class="flex pt-1 pb-1">
                     <div class="w-8 pl-1">
                         <edit-button @click="loadMemberDetail(member.id)"/>
@@ -139,16 +190,19 @@
                             YK-{{ member.id }}
                         </div>
                     </div>
-                    <div class="w-64 ml-2 font-bold">
-                        {{ member.firstname }} {{ member.lastname }}
-                    </div>
-                    <div class="w-36 ml-2 text-sm mt-0.5">
-                        <div>
-                            <group-renderer :member="member"/>
-                        </div>
-                        <div class="text-xs mt-0.5">
+                    <div class="w-64 ml-2">
+                        <div class="font-bold">{{ member.firstname }} {{ member.lastname }}</div>
+                        <div class="text-xs">
                             ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
                             - {{ member.gender }}
+                        </div>
+                    </div>
+                    <div class="w-32 ml-2 text-sm mt-0.5">
+                        <div class="px-2 bg-sky-400 rounded-full text-white text-xs w-32 text-center">
+                            {{ member.location.name }}
+                        </div>
+                        <div class="mt-1">
+                            <group-renderer :member="member"/>
                         </div>
                     </div>
                     <div class="w-16 ml-2 mt-1">
@@ -178,6 +232,7 @@ import GroupRenderer from "@/components/member/groupRenderer.vue";
 
 const memberStore = useMemberStore();
 const appStore = useAppStore();
+const isCompactView = ref<boolean>(true);
 const searchModel = ref<MemberSearchModel>({
     keyword: '',
     locationId: undefined,
