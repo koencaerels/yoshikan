@@ -27,8 +27,7 @@ class GetMember
         protected GradeRepository    $gradeRepository,
         protected GroupRepository    $groupRepository,
         protected PeriodRepository   $periodRepository
-    )
-    {
+    ) {
     }
 
     public function search(MemberSearchModel $searchModel): MemberReadModelCollection

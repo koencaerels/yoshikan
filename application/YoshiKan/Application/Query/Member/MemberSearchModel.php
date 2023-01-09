@@ -25,8 +25,7 @@ class MemberSearchModel
         protected int    $gradeId,
         protected int    $yearOfBirth,
         protected int    $groupId,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -89,5 +88,4 @@ class MemberSearchModel
     {
         return $this->groupId;
     }
-
 }

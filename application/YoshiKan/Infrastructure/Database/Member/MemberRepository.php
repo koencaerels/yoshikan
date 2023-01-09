@@ -146,8 +146,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
             $q->andWhere("YEAR(t.dateOfBirth) = :yearOfBirth")
                 ->setParameter('yearOfBirth', $yearOfBirth);
         }
-        if ($minYearOfBirth !== 0 && $maxYearOfBirth !== 0)
-        {
+        if ($minYearOfBirth !== 0 && $maxYearOfBirth !== 0) {
             $q->andWhere("YEAR(t.dateOfBirth) >= :minYearOfBirth AND YEAR(t.dateOfBirth) <= :maxYearOfBirth")
                 ->setParameter('minYearOfBirth', $minYearOfBirth)
                 ->setParameter('maxYearOfBirth', $maxYearOfBirth);

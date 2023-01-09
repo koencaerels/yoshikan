@@ -51,6 +51,9 @@ class Member
     #[ORM\Column(type: 'text')]
     private string $remarks;
 
+    #[ORM\Column(length: 191)]
+    private string $profileImage;
+
     // ----------------------------------------------------------- associations
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
@@ -68,7 +71,12 @@ class Member
     #[ORM\OneToMany(mappedBy: "member", targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: "EXTRA_LAZY")]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\OrderBy(["id" => "ASC"])]
-    private ?Collection $gradelogs;
+    private ?Collection $gradeLogs;
+
+    #[ORM\OneToMany(mappedBy:"member",targetEntity: "App\YoshiKan\Domain\Model\Member\MemberImage", fetch:"EXTRA_LAZY")]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OrderBy(["id" => "DESC"])]
+    private ?Collection $memberImages;
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -203,8 +211,18 @@ class Member
         return $this->remarks;
     }
 
+    public function getProfileImage(): string
+    {
+        return $this->profileImage;
+    }
+
     public function getGradeLogs(): array
     {
-        return $this->gradelogs->getValues();
+        return $this->gradeLogs->getValues();
+    }
+
+    public function getMemberImages(): array
+    {
+        return $this->memberImages->getValues();
     }
 }

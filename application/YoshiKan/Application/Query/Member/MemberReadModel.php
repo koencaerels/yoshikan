@@ -33,7 +33,8 @@ class MemberReadModel implements \JsonSerializable
         protected LocationReadModel                $location,
         protected ?SubscriptionReadModelCollection $subscriptions = null,
         protected ?string                          $remarks = null,
-        protected ?GradeLogReadModelCollection     $gradeLogs = null
+        protected ?GradeLogReadModelCollection     $gradeLogs = null,
+        protected ?MemberImageReadModelCollection  $images = null
     ) {
     }
 
@@ -62,6 +63,9 @@ class MemberReadModel implements \JsonSerializable
         if (!is_null($this->getGradeLogs())) {
             $json->gradeLogs = $this->getGradeLogs()->getCollection();
         }
+        if (!is_null($this->getImages())) {
+            $json->images = $this->getImages()->getCollection();
+        }
 
         return $json;
     }
@@ -81,7 +85,10 @@ class MemberReadModel implements \JsonSerializable
             foreach ($model->getGradeLogs() as $gradeLog) {
                 $gradeLogs->addItem(GradeLogReadModel::hydrateFromModel($gradeLog));
             }
-
+            $images = new MemberImageReadModelCollection([]);
+            foreach ($model->getMemberImages() as $memberImage) {
+                $images->addItem(MemberImageReadModel::hydrateFromModel($memberImage));
+            }
             $rm = new self(
                 $model->getId(),
                 $model->getUuid()->toRfc4122(),
@@ -94,7 +101,8 @@ class MemberReadModel implements \JsonSerializable
                 LocationReadModel::hydrateFromModel($model->getLocation()),
                 $subscriptions,
                 $model->getRemarks(),
-                $gradeLogs
+                $gradeLogs,
+                $images
             );
         } else {
             $rm = new self(
@@ -174,5 +182,10 @@ class MemberReadModel implements \JsonSerializable
     public function getGradeLogs(): ?GradeLogReadModelCollection
     {
         return $this->gradeLogs;
+    }
+
+    public function getImages(): ?MemberImageReadModelCollection
+    {
+        return $this->images;
     }
 }
