@@ -115,6 +115,8 @@ export interface Member {
     remarks: string;
     subscriptions?: Subscription[];
     gradeLogs: GradeLog[];
+    images: MemberImage[];
+    profileImage: string;
 }
 
 export interface GradeLog {
@@ -124,4 +126,10 @@ export interface GradeLog {
     remark: string;
     fromGrade: Grade;
     toGrade: Grade;
+}
+
+export interface MemberImage {
+    id: number;
+    uuid: string;
+    originalName: string;
 }

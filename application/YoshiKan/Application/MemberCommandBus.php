@@ -39,6 +39,8 @@ use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment_overview_mail;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
+use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
+use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
 use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
@@ -46,6 +48,7 @@ use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
@@ -90,6 +93,10 @@ class MemberCommandBus
     use change_member_grade;
     use change_member_remarks;
 
+    // -- member images ---------------------------------------------------------
+    use upload_member_image;
+    use upload_profile_image;
+
     // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
 
@@ -112,7 +119,8 @@ class MemberCommandBus
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
-        protected GradeLogRepository     $gradeLogRepository
+        protected GradeLogRepository     $gradeLogRepository,
+        protected MemberImageRepository  $memberImageRepository,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

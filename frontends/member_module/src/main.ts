@@ -58,6 +58,7 @@ import './assets/application.css';
 import 'primevue/resources/primevue.min.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
+import 'vue-advanced-cropper/dist/style.css';
 
 // ------------------------------------------------------------------- set default url for axios
 import axios from "axios";

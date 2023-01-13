@@ -31,11 +31,13 @@ class MemberReadModel implements \JsonSerializable
         protected string                           $gender,
         protected GradeReadModel                   $grade,
         protected LocationReadModel                $location,
+        protected string                           $profileImage,
         protected ?SubscriptionReadModelCollection $subscriptions = null,
         protected ?string                          $remarks = null,
         protected ?GradeLogReadModelCollection     $gradeLogs = null,
         protected ?MemberImageReadModelCollection  $images = null
-    ) {
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -54,6 +56,7 @@ class MemberReadModel implements \JsonSerializable
         $json->gender = $this->getGender();
         $json->grade = $this->getGrade();
         $json->location = $this->getLocation();
+        $json->profileImage = $this->getProfileImage();
         if (!is_null($this->getSubscriptions())) {
             $json->subscriptions = $this->getSubscriptions()->getCollection();
         }
@@ -99,6 +102,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->getGender()->value,
                 GradeReadModel::hydrateFromModel($model->getGrade()),
                 LocationReadModel::hydrateFromModel($model->getLocation()),
+                $model->getProfileImage(),
                 $subscriptions,
                 $model->getRemarks(),
                 $gradeLogs,
@@ -115,6 +119,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->getGender()->value,
                 GradeReadModel::hydrateFromModel($model->getGrade()),
                 LocationReadModel::hydrateFromModel($model->getLocation()),
+                $model->getProfileImage(),
             );
         }
         return $rm;
@@ -188,4 +193,10 @@ class MemberReadModel implements \JsonSerializable
     {
         return $this->images;
     }
+
+    public function getProfileImage(): string
+    {
+        return $this->profileImage;
+    }
+
 }

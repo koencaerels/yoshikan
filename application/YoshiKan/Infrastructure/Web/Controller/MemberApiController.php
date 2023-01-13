@@ -21,6 +21,7 @@ use App\YoshiKan\Domain\Model\Member\Group;
 use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
+use App\YoshiKan\Domain\Model\Member\MemberImage;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
@@ -29,6 +30,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\judogi_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_image_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
@@ -56,6 +58,7 @@ class MemberApiController extends AbstractController
     use configuration_routes;
     use subscription_routes;
     use member_routes;
+    use member_image_routes;
 
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
@@ -97,6 +100,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(MemberImage::class),
         );
 
         $this->commandBus = new MemberCommandBus(
@@ -115,6 +119,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(GradeLog::class),
+            $this->entityManager->getRepository(MemberImage::class),
         );
     }
 

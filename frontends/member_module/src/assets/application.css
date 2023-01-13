@@ -94,3 +94,42 @@ label {
     display: block;
     max-width: 750px;
 }
+
+/* -- dropzone fixes */
+
+.dropzone .dz-message {
+    margin: 2em 0 !important;
+    margin-left:10px !important;
+}
+
+.dropzone .dz-preview {
+    min-height:70px !important;
+}
+.dropzone .dz-preview .dz-image {
+    width: 70px !important;
+    height:70px !important;
+}
+
+/* -- grid styles */
+
+.grid {
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -ms-flex-wrap:wrap;
+    flex-wrap:wrap;
+}
+.grid>.col,
+.grid>[class*=col] {
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box
+}
+.grid-nogutter {
+    margin-right:0;
+    margin-left:0;
+    margin-top:0
+}
+.grid-nogutter>.col,
+.grid-nogutter>[class*=col-] {
+    padding:0
+}

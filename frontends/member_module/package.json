@@ -38,6 +38,7 @@
     "primevue": "^3.17.0",
     "simple-syntax-highlighter": "^2.2.3",
     "vue": "^3.2.38",
+    "vue-advanced-cropper": "^2.8.6",
     "vue-router": "^4.1.5",
     "vue2-timeago": "^3.0.2",
     "vue3-ace-editor": "^2.2.2",

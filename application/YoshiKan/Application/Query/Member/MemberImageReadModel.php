@@ -30,7 +30,6 @@ class MemberImageReadModel implements \JsonSerializable
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
         $json->originalName = $this->getOriginalName();
-        $json->path = $this->getPath();
 
         return $json;
     }

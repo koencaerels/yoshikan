@@ -152,6 +152,11 @@ class Member
         $this->remarks = $remarks;
     }
 
+    public function setProfileImage(string $profileImage): void
+    {
+        $this->profileImage = $profileImage;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————

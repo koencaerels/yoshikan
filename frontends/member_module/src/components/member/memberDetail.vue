@@ -3,9 +3,15 @@
         <div class="flex text-sm mb-4">
 
             <div v-if="!isDetail"
-                class="bg-gray-200 rounded-full px-2 py-1">
+                 class="bg-gray-200 rounded-full px-2 py-1">
                 <router-link :to="'/lid/'+memberStore.memberId">
                     <i class="pi pi-eye"></i>
+                </router-link>
+            </div>
+            <div v-else
+                 class="bg-gray-200 rounded-full px-2 py-1">
+                <router-link :to="'/leden'">
+                    <i class="pi pi-times"></i>
                 </router-link>
             </div>
 
@@ -18,9 +24,9 @@
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogRemarks = true)">
                 Wijzig opmerkingen
             </div>
-            <!--            <div class="ml-4 cursor-pointer">-->
-            <!--                Wijzig foto-->
-            <!--            </div>-->
+            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogProfileImage = true)">
+                Wijzig profiel foto
+            </div>
             <!--            <div class="ml-4 cursor-pointer">-->
             <!--                Voeg inschrijving toe-->
             <!--            </div>-->
@@ -118,6 +124,14 @@
         <dialog-change-remarks v-on:saved="hideRemarksDialog"/>
     </Dialog>
 
+    <Dialog v-model:visible="showDialogProfileImage"
+            position="top"
+            v-if="memberStore.memberDetail"
+            :header="'Wijzig profielfoto voor '+memberStore.memberDetail.firstname+' '+memberStore.memberDetail.lastname"
+            :modal="true">
+        <dialog-change-profile-image v-on:saved="hideProfileImageDialog"/>
+    </Dialog>
+
 </template>
 
 <script setup lang="ts">
@@ -130,11 +144,17 @@ import DialogChangeGrade from "@/components/member/dialogChangeGrade.vue";
 import DialogChangeRemarks from "@/components/member/dialogChangeRemarks.vue";
 import DetailWrapper from "@/components/wrapper/detailWrapper.vue";
 import GroupRenderer from "@/components/member/groupRenderer.vue";
+import DialogChangeProfileImage from "@/components/member/dialogChangeProfileImage.vue";
+import {useToast} from "primevue/usetoast";
+import {useAppStore} from "@/store/app";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
 const showDialogGrade = ref<boolean>(false);
 const showDialogRemarks = ref<boolean>(false);
+const showDialogProfileImage = ref<boolean>(false);
+const toaster = useToast();
+const appStore = useAppStore();
 
 const props = defineProps<{
     isDetail: boolean,
@@ -150,6 +170,17 @@ function hideGradeDialog() {
 
 function hideDetailDialog() {
     showDialogDetails.value = false;
+}
+
+function hideProfileImageDialog() {
+    memberStore.reloadMemberDetail();
+    toaster.add({
+        severity: "success",
+        summary: "Profiel foto aangepast.",
+        detail: "",
+        life: appStore.toastLifeTime,
+    });
+    showDialogProfileImage.value = false;
 }
 
 </script>

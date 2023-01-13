@@ -1,12 +1,20 @@
 <template>
     <div id="memberBadge" class="border-[1px] rounded-lg border-blue-900">
         <div class="flex-row flex">
-            <div class="basis-1/3 bg-blue-100 rounded-l-lg">
-                <div class="mx-auto w-16 mt-8">
+            <div class="basis-3/12 rounded-l-lg text-right"
+                 :style="'background-color: #'+member.grade.color">
+                <div v-if="member.profileImage !== ''"
+                     class="text-right rounded-l-lg"
+                     style="width:160px;height:140px;float:right;">
+                    <Image style="width:140px;height:140px;"
+                           :src="apiUrl+'/member/'+member.id+'/profile-image?t=' + timestamp"
+                           :alt="member.firstname+' '+member.lastname" preview/>
+                </div>
+                <div v-else class="mx-auto w-16 mt-8 text-white">
                     <div class="text-center pt-4"><i class="pi pi-user"></i></div>
                 </div>
             </div>
-            <div class="basis-2/3 ml-4 pb-4">
+            <div class="basis-9/12 ml-4 pb-4">
                 <!-- status + nummer -->
                 <div class="float-right pr-2 mt-2">
                     <div class="flex rounded-full bg-gray-300 text-xs">
@@ -46,6 +54,9 @@
 import type {Member} from "@/api/query/model";
 import moment from "moment";
 import GroupRenderer from "@/components/member/groupRenderer.vue";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+const timestamp = new Date().getTime();
 
 const props = defineProps<{
     member: Member,

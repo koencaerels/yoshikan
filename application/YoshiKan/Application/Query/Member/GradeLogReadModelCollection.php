@@ -18,7 +18,6 @@ class GradeLogReadModelCollection
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
-
     public function __construct(protected array $collection = [])
     {
     }

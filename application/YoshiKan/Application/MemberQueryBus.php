@@ -15,12 +15,14 @@ namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Query\Member\get_configuration;
 use App\YoshiKan\Application\Query\Member\get_member;
+use App\YoshiKan\Application\Query\Member\get_member_image;
 use App\YoshiKan\Application\Query\Member\get_subscription;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
@@ -34,6 +36,7 @@ class MemberQueryBus
     use get_configuration;
     use get_subscription;
     use get_member;
+    use get_member_image;
 
     protected BasePermissionService $permission;
 
@@ -55,6 +58,7 @@ class MemberQueryBus
         protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository       $judogiRepository,
+        protected MemberImageRepository  $memberImageRepository,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
