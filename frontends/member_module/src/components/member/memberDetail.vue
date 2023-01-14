@@ -15,21 +15,24 @@
                 </router-link>
             </div>
 
-            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogDetails = true)">
-                Wijzig profiel
+            <div class="ml-4">
+                Wijzig >
+            </div>
+            <div class="ml-2 cursor-pointer underline text-blue-400" @click="(showDialogDetails = true)">
+                Profiel
             </div>
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogGrade = true)">
-                Wijzig graad
+                Graad
             </div>
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogRemarks = true)">
-                Wijzig opmerkingen
+                Opmerkingen
             </div>
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogProfileImage = true)">
-                Wijzig profiel foto
+                Profiel foto
             </div>
-            <!--            <div class="ml-4 cursor-pointer">-->
-            <!--                Voeg inschrijving toe-->
-            <!--            </div>-->
+            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showNewSubscription = true)">
+                Inschrijven
+            </div>
         </div>
 
         <!-- -- member badge ------------------------------------------- -->
@@ -99,6 +102,14 @@
         </detail-wrapper>
     </div>
 
+    <!-- -- dialog new subscription -->
+    <Dialog v-model:visible="showNewSubscription" position="topleft" v-if="appStore.configuration"
+            :header="'Voeg een inschrijving toe voor '+appStore.configuration.activePeriod.name"
+            :modal="true">
+        <subscription-add v-on:subscribed="subscribeHandler"
+                          :member-id="memberStore.memberId"/>
+    </Dialog>
+
     <!-- dialogs -->
     <Dialog v-model:visible="showDialogDetails"
             position="top"
@@ -147,12 +158,14 @@ import GroupRenderer from "@/components/member/groupRenderer.vue";
 import DialogChangeProfileImage from "@/components/member/dialogChangeProfileImage.vue";
 import {useToast} from "primevue/usetoast";
 import {useAppStore} from "@/store/app";
+import SubscriptionAdd from "@/components/subscription/subscriptionAdd.vue";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
 const showDialogGrade = ref<boolean>(false);
 const showDialogRemarks = ref<boolean>(false);
 const showDialogProfileImage = ref<boolean>(false);
+const showNewSubscription = ref<boolean>(false);
 const toaster = useToast();
 const appStore = useAppStore();
 
@@ -181,6 +194,10 @@ function hideProfileImageDialog() {
         life: appStore.toastLifeTime,
     });
     showDialogProfileImage.value = false;
+}
+
+function subscribeHandler() {
+    showNewSubscription.value = false;
 }
 
 </script>

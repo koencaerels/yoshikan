@@ -12,56 +12,58 @@
                         :options="memberStore.memberDetail.images"
                         option-label="originalName"/>
                 </div>
-                <div class="mt-2 text-right">
-                    <Button label="Preview"
-                            icon="pi pi-eye"
-                            @click="crop"
-                            class="p-button-sm"/>
-                </div>
-                <div id="cropperWrapper" class="mt-2">
-                    <cropper
-                        ref="cropper"
-                        class="cropper"
-                        :src="'http://localhost.charlesproxy.com:8080/mm/api/member/member-image/'+selectedImageId+'/stream'"
-                        :stencil-props="{
-                            handlers: {},
-                            scalable: true,
-                            movable:false,
-                            aspectRatio: 1,
-                        }"
-                        :stencil-size="{
-                            width: 300,
-                            height: 300
-                        }"
-                        :resize-image="{
-                            adjustStencil: false
-                        }"
-                        image-restriction="stencil"
-                        :canvas="{
-                            height: 300,
-                            width: 300
-                        }"
-                    />
+                <div v-if="selectedImageId != 0">
+                    <div class="mt-2 text-right">
+                        <Button label="Preview"
+                                icon="pi pi-eye"
+                                @click="crop"
+                                class="p-button-sm"/>
+                    </div>
+                    <div id="cropperWrapper" class="mt-2">
+                        <cropper
+                            ref="cropper"
+                            class="cropper"
+                            :src="apiUrl+'/member/member-image/'+selectedImageId+'/stream'"
+                            :stencil-props="{
+                                handlers: {},
+                                scalable: true,
+                                movable:false,
+                                aspectRatio: 1,
+                            }"
+                            :stencil-size="{
+                                width: 300,
+                                height: 300
+                            }"
+                            :resize-image="{
+                                adjustStencil: false
+                            }"
+                            image-restriction="stencil"
+                            :canvas="{
+                                height: 300,
+                                width: 300
+                            }"
+                        />
+                    </div>
                 </div>
             </div>
             <div class="basis-1/2 ml-4">
-                <div>
-                    <br><br>&nbsp;
-                </div>
-                <div class="border-[1px] border-black mt-6" style="width:300px;height:300px;">
-                    <img :src="image" style="width:300px;height:300px;"/>
-                </div>
-                <div class="mt-1">
-                    <Button v-if="!isSaving"
-                            @click="save"
-                            label="Bewaar"
-                            icon="pi pi-save"
-                            class="p-button-sm p-button-success"/>
-                    <Button v-if="isSaving"
-                            label="Bewaar"
-                            disabled
-                            icon="pi pi-spinner pi-spin"
-                            class="p-button-sm p-button-success"/>
+                <div><br><br>&nbsp;</div>
+                <div v-if="selectedImageId != 0">
+                    <div class="border-[1px] border-black mt-6" style="width:300px;height:300px;">
+                        <img :src="image" style="width:300px;height:300px;"/>
+                    </div>
+                    <div class="mt-1">
+                        <Button v-if="!isSaving"
+                                @click="save"
+                                label="Bewaar"
+                                icon="pi pi-save"
+                                class="p-button-sm p-button-success"/>
+                        <Button v-if="isSaving"
+                                label="Bewaar"
+                                disabled
+                                icon="pi pi-spinner pi-spin"
+                                class="p-button-sm p-button-success"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,6 +94,7 @@ export default {
             image: null,
             selectedImageId: 0,
             isSaving: false,
+            apiUrl: import.meta.env.VITE_API_URL
         };
     },
     methods: {
@@ -112,7 +115,7 @@ export default {
                 this.isSaving = false;
                 this.$emit('saved');
 
-            },'image/png');
+            }, 'image/png');
         }
     },
 };

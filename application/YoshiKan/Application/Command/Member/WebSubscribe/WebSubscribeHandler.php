@@ -16,6 +16,7 @@ namespace App\YoshiKan\Application\Command\Member\WebSubscribe;
 use App\YoshiKan\Application\Query\Member\SettingsReadModel;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\Subscription;
@@ -31,8 +32,10 @@ class WebSubscribeHandler
         protected LocationRepository     $locationRepository,
         protected PeriodRepository       $periodRepository,
         protected SettingsRepository     $settingsRepository,
+        protected MemberRepository       $memberRepository,
         protected EntityManagerInterface $entityManager,
-    ) {
+    )
+    {
     }
 
     public function go(WebSubscribe $command): \stdClass
@@ -74,6 +77,12 @@ class WebSubscribeHandler
                 $location,
                 json_decode(json_encode(SettingsReadModel::hydrateFromModel($settings)), true),
             );
+
+            if ($command->getMemberId() !== 0) {
+                $member = $this->memberRepository->getById($command->getMemberId());
+                $subscription->setMember($member);
+            }
+
             $this->subscriptionRepository->save($subscription);
             $this->entityManager->flush();
 
@@ -82,6 +91,7 @@ class WebSubscribeHandler
             $result = new \stdClass();
             $result->id = $subscriptionId;
             $result->reference = 'YKS-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
+
             return $result;
         } else {
 

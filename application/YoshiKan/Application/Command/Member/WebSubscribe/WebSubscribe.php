@@ -40,8 +40,10 @@ class WebSubscribe
         protected bool               $reductionFamily,
         protected bool               $judogiBelt,
         protected string             $remarks,
-        protected string             $honeyPot
-    ) {
+        protected string             $honeyPot,
+        protected int                $memberId,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -52,6 +54,11 @@ class WebSubscribe
      */
     public static function hydrateFromJson($json): self
     {
+        $memberId = 0;
+        if(isset($json->memberId)) {
+            $memberId = $json->memberId;
+        }
+
         return new self(
             intval($json->periodId),
             trim($json->contactFirstname),
@@ -74,6 +81,7 @@ class WebSubscribe
             boolval($json->judogiBelt),
             trim($json->remarks),
             trim($json->honeyPot),
+            intval($memberId),
         );
     }
 
@@ -184,5 +192,10 @@ class WebSubscribe
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function getMemberId(): int
+    {
+        return $this->memberId;
     }
 }

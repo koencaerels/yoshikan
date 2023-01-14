@@ -71,7 +71,9 @@
         <Dialog v-model:visible="showNewSubscription" position="topleft" v-if="appStore.configuration"
                 :header="'Voeg een inschrijving toe voor '+appStore.configuration.activePeriod.name"
                 :modal="true">
-            <subscription-add v-on:subscribed="subscribeHandler"/>
+            <subscription-add
+                :member-id="0"
+                v-on:subscribed="subscribeHandler"/>
         </Dialog>
 
         <!-- -- list -->

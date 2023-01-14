@@ -1,10 +1,10 @@
 <template>
-    <div id="memberBadge" class="border-[1px] rounded-lg border-blue-900">
+    <div id="memberBadge" class="border-[1px] rounded-xl border-blue-900">
         <div class="flex-row flex">
-            <div class="basis-3/12 rounded-l-lg text-right"
+            <div class="basis-3/12 rounded-l-xl text-right"
                  :style="'background-color: #'+member.grade.color">
                 <div v-if="member.profileImage !== ''"
-                     class="text-right rounded-l-lg"
+                     class="text-right rounded-l-xl"
                      style="width:160px;height:140px;float:right;">
                     <Image style="width:140px;height:140px;"
                            :src="apiUrl+'/member/'+member.id+'/profile-image?t=' + timestamp"

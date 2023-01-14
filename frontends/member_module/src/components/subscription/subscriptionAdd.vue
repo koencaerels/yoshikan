@@ -206,7 +206,6 @@
                 <Textarea v-model="subscription.remarks" :autoResize="true" rows="2" cols="30" class="w-full"/>
             </div>
         </div>
-
         <div class="mt-3">
             <hr>
         </div>
@@ -235,15 +234,35 @@ import {onMounted, ref} from "vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {subscribeAction} from "@/api/command/subscribeAction";
+import {useMemberStore} from "@/store/member";
+import moment from "moment/moment";
+import {useToast} from "primevue/usetoast";
 
+const toaster = useToast();
 const appStore = useAppStore();
+const memberStore = useMemberStore();
 const emit = defineEmits(["subscribed"]);
+const props = defineProps<{
+    memberId: number,
+}>();
 
 onMounted(() => {
     add$.value.$touch();
+    if(props.memberId != 0 && memberStore.memberDetail) {
+        subscription.value.firstname = memberStore.memberDetail.firstname;
+        subscription.value.lastname = memberStore.memberDetail.lastname;
+        subscription.value.gender = memberStore.memberDetail.gender;
+        subscription.value.newMember = false;
+        subscription.value.location = memberStore.memberDetail.location.id;
+        subscription.value.dateOfBirth = new Date(memberStore.memberDetail.dateOfBirth);
+        subscription.value.dateOfBirthDD = moment(memberStore.memberDetail.dateOfBirth).format("DD");
+        subscription.value.dateOfBirthMM = moment(memberStore.memberDetail.dateOfBirth).format("MM");
+        subscription.value.dateOfBirthYYYY = moment(memberStore.memberDetail.dateOfBirth).format("YYYY");
+    }
 });
 
 const subscription = ref({
+    memberId: props.memberId,
     periodId: appStore.configuration?.activePeriod.id ?? 0,
     contactFirstname: '',
     contactLastname: '',
@@ -316,6 +335,12 @@ async function subscribe() {
         isSaving.value = true;
         await subscribeAction(subscription.value);
         isSaving.value = false;
+        toaster.add({
+            severity: "success",
+            summary: "Inschrijving aangemaakt.",
+            detail: "",
+            life: appStore.toastLifeTime,
+        });
         emit('subscribed');
     }
 }
