@@ -19,6 +19,7 @@ use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Infrastructure\Database\Member\MemberRepository;
 use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
 use App\YoshiKan\Infrastructure\Database\Member\SettingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,8 +49,10 @@ class CommandBus
         protected LocationRepository     $locationRepository,
         protected PeriodRepository       $periodRepository,
         protected JudogiRepository       $judogiRepository,
-        protected SettingsRepository     $settingsRepository
-    ) {
+        protected SettingsRepository     $settingsRepository,
+        protected MemberRepository       $memberRepository,
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

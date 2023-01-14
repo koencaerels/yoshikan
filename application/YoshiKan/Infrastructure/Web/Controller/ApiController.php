@@ -91,6 +91,7 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(Settings::class),
+            $this->entityManager->getRepository(Member::class),
         );
     }
 
