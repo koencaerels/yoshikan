@@ -36,6 +36,7 @@ use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
+use App\YoshiKan\Application\Command\Member\RemoveMemberImage\remove_member_image;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment_overview_mail;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
@@ -96,6 +97,7 @@ class MemberCommandBus
     // -- member images ---------------------------------------------------------
     use upload_member_image;
     use upload_profile_image;
+    use remove_member_image;
 
     // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
