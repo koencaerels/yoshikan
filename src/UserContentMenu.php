@@ -44,5 +44,13 @@ class UserContentMenu implements ExtensionBackendMenuInterface
                 'icon' => 'fa-user-circle'
             ]
         ]);
+
+        $menu->addChild('Profiel foto app', [
+            'uri' => $this->urlGenerator->generate('app_member_image_upload'),
+            'extras' => [
+                'icon' => 'fa-camera'
+            ]
+        ]);
+
     }
 }

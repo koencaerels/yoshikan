@@ -18,6 +18,7 @@ Encore
     .addEntry('menu', './assets/menu.js')
     .addEntry('tailwind', './assets/tailwind.js')
     .addEntry('inschrijving', './assets/inschrijving.js')
+    .addEntry('profileImage', './assets/profileImage.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')

@@ -1,0 +1,129 @@
+{# /* #}
+{# * This file is part of the Yoshi-Kan software. #}
+{# * #}
+{# * (c) Koen Caerels #}
+{# * #}
+{# * For the full copyright and license information, please view the LICENSE #}
+{# * file that was distributed with this source code. #}
+{# */ #}
+
+{% extends '@bolt/_base/layout_blank.html.twig' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tailwind', null, 'frontend') }}
+    {{ encore_entry_script_tags('profileImage', null, 'frontend') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('tailwind', null, 'frontend') }}
+    {{ encore_entry_link_tags('profileImage', null, 'frontend') }}
+{% endblock %}
+
+{% block main %}
+
+    <div class="p-2 w-full">
+        <form method="get">
+            <div class="mt-2">
+                <input type="text"
+                       value="{{ keyword }}"
+                       class="border-[1px] border-gray-600 w-full p-2 rounded-lg bg-gray-200"
+                       name="keyword">
+            </div>
+            <div class="mt-2">
+                <select name="location" class="border-[1px] border-gray-600 w-full p-2 rounded-lg bg-gray-200">
+                    <option value="0">kies een locatie</option>
+                    {% for location in locations.collection %}
+                        <option value="{{ location.id }}"
+                            {% if(locationId == location.id) %}
+                                selected
+                            {% endif %}
+                        >{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mt-2">
+                <select name="group" class="border-[1px] border-gray-600 w-full p-2 rounded-lg bg-gray-200">
+                    <option value="0">kies een group</option>
+                    {% for group in groups.collection %}
+                        <option value="{{ group.id }}"
+                            {% if(groupId == group.id) %}
+                                selected
+                            {% endif %}
+                        >{{ group.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mt-2">
+                <div class="flex">
+                    <div class="w-full">
+                        <input class="w-full bg-blue-300 p-3 rounded-lg"
+                               type="submit" name="btnSubmit" value="ZOEK LEDEN">
+                    </div>
+                    <div class="ml-2 mt-2">
+                        <a href="?keyword=&group=0&location=0" class="p-2 bg-gray-300 rounded">
+                            RESET
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if(memberId == 0) %}
+        {% for member in members.collection %}
+            <div class="p-2">
+                <div class="p-2 text-center text-xl border-[1px] border-gray-600 rounded-lg">
+                    <a class="w-full" style="display: block"
+                       href="?keyword={{ keyword }}&group={{ groupId }}&location={{ locationId }}&member={{ member.id }}">
+                        {{ member.firstname }} {{ member.lastname }}
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="p-2 bg-sky-800 text-white">
+            <div class="mt-2">
+                <a href="?keyword={{ keyword }}&group={{ groupId }}&location={{ locationId }}"
+                   class="p-2 bg-black rounded">
+                    BACK
+                </a>
+            </div>
+            <div class="mt-4 p-2 text-center text-xl border-[1px] border-white rounded-lg">
+                {{ member.firstname }} {{ member.lastname }}
+                (YK-{{ member.id }})
+            </div>
+            <div class="p-2 text-center">
+                {% if(message == '') %}
+                    <div class="mt-2">
+                        Neem profiel foto:
+                    </div>
+                {% else %}
+                    <div class="bg-green-300 p-2 rounded-lg w-full text-gray-900">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            </div>
+            <form enctype="multipart/form-data"
+                  method="post"
+                  action="?keyword={{ keyword }}&group={{ groupId }}&location={{ locationId }}&member={{ member.id }}">
+
+                <input type="hidden" name="memberId" value="{{ member.id }}">
+                <div class="mt-2">
+                    <input type="file"
+                           name="profileImage"
+                           class="border-[1px] border-gray-600 w-full p-2 rounded-lg bg-gray-900"
+                           accept="image/*"
+                           capture="camera">
+                </div>
+                <div class="mt-2">
+                    <input class="w-full bg-green-600 p-4 rounded-lg"
+                           type="submit" name="btnSubmit" value="UPLOAD">
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}
