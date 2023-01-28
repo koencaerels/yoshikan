@@ -82,5 +82,4 @@ async function saveGrade() {
     emit('saved');
 }
 
-
 </script>

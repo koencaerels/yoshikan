@@ -1,26 +1,29 @@
 {# The 'recursive' macro, for inserting one menu item. If it has a submenu, it
    invokes itself to insert the items of the submenus. #}
-{% macro display_menu_item(item, loop, withsubmenus) %}
+{% macro display_menu_item(item, loop, withsubmenus, level) %}
     {% from _self import display_menu_item %}
     {% apply spaceless %}
         {% set with_submenu = withsubmenus and item.submenu is not empty %}
         {% if item.uri != '/' %}
-            <li><a href="{{ item.uri }}" class="{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
-                    {% if item.class != '' %}<i class="{{ item.class }}"></i>{% endif %}
-                    {{- item.label -}}
+            <li>
+                <a href="{{ item.uri }}"
+                   class="{% if item.class != '' && level > 1 %}{{ item.class }} {% endif %}{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
+                    {% if item.class != '' && level == 1 %}<i class="{{ item.class }}"></i>{% endif %}
+                   {{- item.label -}}
                 </a>
         {% else %}
             <li>
                 <a href="#">
-                    {% if item.class != '' %}<i class="{{ item.class }}"></i>{% endif %}
+                    {% if item.class != '' && level == 1 %}<i class="{{ item.class }}"></i>{% endif %}
                     {{- item.label -}}
                 </a>
         {% endif %}
 
         {% if with_submenu %}
             <ul class="sub-menu drop-shadow-lg">
+                {% set level = level + 1 %}
                 {% for submenu in item.submenu %}
-                    {{ display_menu_item(submenu, loop, true) }}
+                    {{ display_menu_item(submenu, loop, true,level) }}
                 {% endfor %}
             </ul>
         {% endif %}
@@ -35,7 +38,7 @@
 
 {% for item in menu %}
     {% if item.label is defined %}
-        {{ display_menu_item(item, loop, withsubmenus) }}
+        {{ display_menu_item(item, loop, withsubmenus,1) }}
     {% endif %}
 {% endfor %}
 

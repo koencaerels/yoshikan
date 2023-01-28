@@ -1,13 +1,13 @@
 {# The 'recursive' macro, for inserting one menu item. If it has a submenu, it
    invokes itself to insert the items of the submenus. #}
-{% macro display_menu_item(item, loop, withsubmenus) %}
+{% macro display_menu_item(item, loop, withsubmenus,level) %}
     {% from _self import display_menu_item %}
     {% apply spaceless %}
         {% set with_submenu = withsubmenus and item.submenu is not empty %}
         {% if item.uri != '/' %}
             <div>
                 <a href="{{ item.uri }}"
-                   class="{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
+                   class="{% if item.class != ''%}{{ item.class }} {% endif %}{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
                     {{- item.label -}}
                 </a>
             </div>
@@ -16,8 +16,9 @@
         {% endif %}
         {% if with_submenu %}
             <ul>
+                {% set level = level + 1 %}
                 {% for submenu in item.submenu %}
-                    <li>{{ display_menu_item(submenu, loop, true) }}</li>
+                    <li>{{ display_menu_item(submenu, loop, true, level) }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -29,6 +30,6 @@
 
 {% for item in menu %}
     {% if item.label is defined %}
-        {{ display_menu_item(item, loop, withsubmenus) }}
+        {{ display_menu_item(item, loop, withsubmenus,1) }}
     {% endif %}
 {% endfor %}

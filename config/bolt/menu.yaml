@@ -9,37 +9,49 @@ top:
         submenu:
             -   label: Onze Missie
                 link: pagina/125
+                class: mission
             -   label: Onze Visie
                 link: pagina/126
+                class: visions
             -   label: Locaties
+                class: locations
                 submenu:
                     -   label: Hofstade
                         link: locatie/122
+                        class: hofstade
                     -   label: Haacht
                         link: locatie/123
+                        class: haacht
                     -   label: Heist op den Berg
                         link: locatie/124
+                        class: heistopdenberg
     -   label: Praktische info
         class: mdi mdi-information
         submenu:
             -   label: Lessenschema
                 link: pagina/130
+                class: courses
             -   label: Opleidingsplan jeugd
                 link: pagina/131
+                class: education
             -   label: Tarieven
                 link: pagina/132
+                class: costs
             -   label: Reglement
                 link: pagina/133
+                class: rules
             -   label: Inschrijven
                 link: inschrijven
+                class: subscription
             -   label: GDPR - Privacy Verklaring
                 link: pagina/134
+                class: gdpr
 
     -   label: Over ons
         class: mdi mdi-account-multiple
         link: trainers
     -   label: Nieuws
-        class: mdi mdi-bullhorn 
+        class: mdi mdi-bullhorn
         link: nieuws
     -   label: Links
         class: mdi mdi-link
@@ -53,42 +65,58 @@ top:
 footer_c1:
     -   label: Onze Missie
         link: pagina/125
+        class: footer_mission
     -   label: Onze Visie
         link: pagina/126
+        class: footer_vision
     -   label: Locaties
         submenu:
             -   label: Hofstade
                 link: locatie/122
+                class: footer_hofstade
             -   label: Haacht
                 link: locatie/123
+                class: footer_haacht
             -   label: Heist op den Berg
                 link: locatie/124
+                class: footer_heistopdenberg
 
 footer_c2:
     -   label: Over ons
         link: trainers
+        class: footer_about_us
     -   label: Praktische informatie
         submenu:
             -   label: Lessenschema
                 link: pagina/130
+                class: footer_courses
             -   label: Opleidingsplan jeugd
                 link: pagina/131
+                class: footer_education
             -   label: Tarieven
                 link: pagina/132
+                class: footer_costs
             -   label: Reglement
                 link: pagina/133
+                class: footer_rules
             -   label: GDPR - Privacy Verklaring
                 link: pagina/134
+                class: footer_gdpr
 
 footer_c3:
     -   label: Inschrijven
         link: inschrijven
+        class: footer_subscription
     -   label: Nieuws
         link: nieuws
+        class: footer_news
     -   label: Links
         link: pagina/128
+        class: footer_links
     -   label: Sponsors
         link: pagina/129
+        class: footer_sponsors
     -   label: Contact
         link: pagina/127
+        class: footer_contact
 
