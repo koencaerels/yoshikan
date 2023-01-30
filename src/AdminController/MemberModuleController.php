@@ -40,7 +40,6 @@ class MemberModuleController
     extends TwigAwareController
     implements BackendZoneInterface
 {
-
     protected string $uploadFolder;
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -52,8 +51,7 @@ class MemberModuleController
         protected Security               $security,
         protected KernelInterface        $appKernel,
         protected MailerInterface        $mailer,
-    )
-    {
+    ) {
         $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
     }
 
@@ -123,14 +121,22 @@ class MemberModuleController
         $keyword = '';
         $groupId = 0;
         $locationId = 0;
-        if (!is_null($request->get('keyword'))) $keyword = $request->get('keyword');
-        if (!is_null($request->get('group'))) $groupId = intval($request->get('group'));
-        if (!is_null($request->get('location'))) $locationId = intval($request->get('location'));
+        if (!is_null($request->get('keyword'))) {
+            $keyword = $request->get('keyword');
+        }
+        if (!is_null($request->get('group'))) {
+            $groupId = intval($request->get('group'));
+        }
+        if (!is_null($request->get('location'))) {
+            $locationId = intval($request->get('location'));
+        }
 
         $memberId = 0;
         $member = null;
         $message = '';
-        if (!is_null($request->get('member'))) $memberId = $request->get('member');
+        if (!is_null($request->get('member'))) {
+            $memberId = $request->get('member');
+        }
 
         if (!is_null($request->get('memberId'))) {
             $memberId = intval($request->get('memberId'));
@@ -174,7 +180,5 @@ class MemberModuleController
             'member' => $member,
             'message' => $message
         ]);
-
     }
-
 }

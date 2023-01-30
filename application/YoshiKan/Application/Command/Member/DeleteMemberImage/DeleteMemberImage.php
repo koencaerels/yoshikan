@@ -4,7 +4,6 @@ namespace App\YoshiKan\Application\Command\Member\DeleteMemberImage;
 
 class DeleteMemberImage
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -12,8 +11,7 @@ class DeleteMemberImage
     public function __construct(
         protected int    $id,
         protected string $uploadFolder,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -29,5 +27,4 @@ class DeleteMemberImage
     {
         return $this->uploadFolder;
     }
-
 }

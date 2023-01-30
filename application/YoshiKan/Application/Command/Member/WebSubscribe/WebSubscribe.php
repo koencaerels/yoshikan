@@ -42,8 +42,7 @@ class WebSubscribe
         protected string             $remarks,
         protected string             $honeyPot,
         protected int                $memberId,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -55,7 +54,7 @@ class WebSubscribe
     public static function hydrateFromJson($json): self
     {
         $memberId = 0;
-        if(isset($json->memberId)) {
+        if (isset($json->memberId)) {
             $memberId = $json->memberId;
         }
 

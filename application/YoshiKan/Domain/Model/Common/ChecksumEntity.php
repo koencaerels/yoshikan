@@ -47,7 +47,7 @@ trait ChecksumEntity
                 || 'members' === $property->getName()
                 || 'member' === $property->getName()
                 || 'judogi' === $property->getName()
-                || 'gradelogs' === $property->getName()
+                || 'gradeLogs' === $property->getName()
                 || 'profileImage' === $property->getName()
                 || 'memberImages' === $property->getName()
             )) {

@@ -6,11 +6,9 @@ use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 
 class DeleteMemberImageHandler
 {
-
     public function __construct(
         protected MemberImageRepository $memberImageRepository
-    )
-    {
+    ) {
     }
 
     public function go(DeleteMemberImage $command): bool
@@ -23,5 +21,4 @@ class DeleteMemberImageHandler
         $this->memberImageRepository->delete($memberImage);
         return true;
     }
-
 }

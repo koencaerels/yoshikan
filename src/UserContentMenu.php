@@ -51,6 +51,5 @@ class UserContentMenu implements ExtensionBackendMenuInterface
                 'icon' => 'fa-camera'
             ]
         ]);
-
     }
 }

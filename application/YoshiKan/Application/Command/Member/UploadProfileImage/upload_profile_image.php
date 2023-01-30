@@ -6,7 +6,6 @@ use App\YoshiKan\Application\Command\Member\UploadMemberImage\UploadMemberImageH
 
 trait upload_profile_image
 {
-
     public function uploadProfileImage(UploadProfileImage $command): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
@@ -17,5 +16,4 @@ trait upload_profile_image
 
         return $result;
     }
-
 }

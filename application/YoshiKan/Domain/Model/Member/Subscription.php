@@ -156,6 +156,7 @@ class Subscription
         $this->period = $period;
         $this->location = $location;
         $this->settings = $settings;
+        $this->member = null;
     }
 
     // —————————————————————————————————————————————————————————————————————————

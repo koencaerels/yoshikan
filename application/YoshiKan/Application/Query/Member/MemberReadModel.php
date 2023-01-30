@@ -36,8 +36,7 @@ class MemberReadModel implements \JsonSerializable
         protected ?string                          $remarks = null,
         protected ?GradeLogReadModelCollection     $gradeLogs = null,
         protected ?MemberImageReadModelCollection  $images = null
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -198,5 +197,4 @@ class MemberReadModel implements \JsonSerializable
     {
         return $this->profileImage;
     }
-
 }

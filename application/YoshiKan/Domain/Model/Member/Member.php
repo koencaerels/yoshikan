@@ -100,6 +100,7 @@ class Member
         $this->grade = $grade;
         $this->location = $location;
         $this->remarks = '';
+        $this->profileImage = '';
     }
 
     // —————————————————————————————————————————————————————————————————————————

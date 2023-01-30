@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UploadProfileImageHandler
 {
-
     public function __construct(protected MemberRepository $memberRepository)
     {
     }
@@ -46,7 +45,7 @@ class UploadProfileImageHandler
             return false;
         }
 
-        $member->setProfileImage($uploadFolder.$uploadFile);
+        $member->setProfileImage($uploadFolder . $uploadFile);
         $this->memberRepository->save($member);
 
         return true;

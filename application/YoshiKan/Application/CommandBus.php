@@ -51,8 +51,7 @@ class CommandBus
         protected JudogiRepository       $judogiRepository,
         protected SettingsRepository     $settingsRepository,
         protected MemberRepository       $memberRepository,
-    )
-    {
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

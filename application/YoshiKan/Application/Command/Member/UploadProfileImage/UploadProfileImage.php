@@ -14,8 +14,7 @@ class UploadProfileImage
         protected int          $id,
         protected UploadedFile $imageBlob,
         protected string       $uploadsFolder,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -36,5 +35,4 @@ class UploadProfileImage
     {
         return $this->uploadsFolder;
     }
-
 }
