@@ -1,0 +1,31 @@
+# Technology Stack
+
+## Bolt CMS
+Bolt CMS is an open source, adaptable platform for building and running
+modern websites. Built on PHP, Symfony and more.
+Visit https://boltcms.io for more info.
+
+## Symfony
+Symfony is a PHP web application framework and a set of reusable PHP components/libraries. 
+It provides structure to the development process and helps to build robust, 
+scalable, and maintainable web applications. It follows the Model-View-Controller 
+(MVC) architectural pattern and offers features such as routing, templating, security, 
+and database integration. It is open-source and widely used in the PHP community.
+
+## Vue 3 (member module)
+Vue 3 is a progressive JavaScript framework for building user interfaces. 
+It provides a reactive and composable architecture, making it easy 
+to create complex UI components and manage state in a performant way. 
+Vue 3 emphasizes speed and size optimizations, improved developer experience 
+and TypeScript support. It is widely used for building single-page 
+applications (SPAs) and offers a wide range of tools and plugins for 
+developing and deploying web applications.
+
+## VuePress (docs)
+VuePress is a static site generator based on Vue.js. It provides 
+a minimalistic setup for writing and deploying documentation websites 
+and blogs with Vue.js components. VuePress makes it easy to write and 
+publish content with markdown and also provides features such as automatic 
+table of contents, search, and responsive layout. It is optimized for speed 
+and simplicity, making it a popular choice for developers who want to quickly 
+create and deploy a static website with Vue.js.

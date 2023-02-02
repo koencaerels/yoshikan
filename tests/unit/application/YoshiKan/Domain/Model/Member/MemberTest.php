@@ -85,5 +85,4 @@ class MemberTest extends TestCase
         $this->model->setProfileImage('profileimage.jpg');
         Assert::assertEquals('profileimage.jpg', $this->model->getProfileImage());
     }
-
 }

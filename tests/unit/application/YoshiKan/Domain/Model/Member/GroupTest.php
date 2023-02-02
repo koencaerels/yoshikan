@@ -50,5 +50,4 @@ final class GroupTest extends TestCase
         Assert::assertEquals(1, $this->model->getMinAge());
         Assert::assertEquals(98, $this->model->getMaxAge());
     }
-
 }

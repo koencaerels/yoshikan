@@ -1,0 +1,15 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Developer Documentation Yoshi Kan Software",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "author": "Koen Caerels",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.60"
+  }
+}

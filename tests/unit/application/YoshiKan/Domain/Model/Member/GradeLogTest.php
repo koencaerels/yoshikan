@@ -42,5 +42,4 @@ class GradeLogTest extends TestCase
         Assert::assertInstanceOf(Grade::class, $this->model->getFromGrade());
         Assert::assertInstanceOf(Grade::class, $this->model->getToGrade());
     }
-
 }

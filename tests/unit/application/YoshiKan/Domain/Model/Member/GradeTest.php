@@ -47,5 +47,4 @@ final class GradeTest extends TestCase
         Assert::assertEquals('changedGradeName', $this->model->getName());
         Assert::assertEquals('changedGradeColor', $this->model->getColor());
     }
-
 }

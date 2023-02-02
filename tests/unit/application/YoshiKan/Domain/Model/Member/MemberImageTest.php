@@ -37,5 +37,4 @@ class MemberImageTest extends TestCase
         Assert::assertEquals('firstname', $this->model->getMember()->getFirstname());
         Assert::assertEquals('lastname', $this->model->getMember()->getLastname());
     }
-
 }

@@ -54,7 +54,6 @@ docker-compose.override.yaml
 ###< Docker ###
 ###> symfony/framework-bundle ###
 .env
-.env.test
 .php-cs-fixer.cache
 .dockerignore
 

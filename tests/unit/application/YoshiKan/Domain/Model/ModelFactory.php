@@ -13,7 +13,6 @@ use Symfony\Component\Uid\Uuid;
 
 class ModelFactory
 {
-
     public static function makeMember(): Member
     {
         return Member::make(
@@ -84,5 +83,4 @@ class ModelFactory
             50.50,
         );
     }
-
 }

@@ -2,6 +2,10 @@ version: '3.1'
 
 services:
   
+  # --------------------------------------------------------------------------------------------------------------------
+  # MySQL database server
+  # --------------------------------------------------------------------------------------------------------------------
+  
   mysql:
     image: mysql:5.7
     environment:
@@ -17,6 +21,10 @@ services:
     ports:
       - "3306:3306"
   
+  # --------------------------------------------------------------------------------------------------------------------
+  # Nginx webserver
+  # --------------------------------------------------------------------------------------------------------------------
+  
   httpd:
     image: nginx:alpine
     working_dir: /opt/app
@@ -27,6 +35,10 @@ services:
       - "8080:8080"
     depends_on:
       - php
+    
+  # --------------------------------------------------------------------------------------------------------------------
+  # PHP 8.1 container
+  # --------------------------------------------------------------------------------------------------------------------
   
   php:
     image: wodby/php:8.1
@@ -42,11 +54,57 @@ services:
       - PHP_FPM_GROUP=wodby
     volumes:
       - .:/opt/app
-      - ./docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ./docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini    
   
+  # --------------------------------------------------------------------------------------------------------------------
   # Mailhog - https://github.com/mailhog/MailHog
+  # --------------------------------------------------------------------------------------------------------------------
+  
   mailhog:
     image: mailhog/mailhog
     ports:
       - "8025:8025"
       - "1025:1025"
+
+  # --------------------------------------------------------------------------------------------------------------------
+  # Documentation  
+  # --------------------------------------------------------------------------------------------------------------------
+  
+  docs:
+    image: nginx:alpine
+    volumes:
+      - ./docs/docs/.vuepress/dist:/usr/share/nginx/html      
+    ports:
+      - "8081:80"
+
+  # --------------------------------------------------------------------------------------------------------------------
+  # Composer and Node installers & frontend builders 
+  # --------------------------------------------------------------------------------------------------------------------
+
+  php-vendor-builder:
+    image: wodby/php:8.1
+    working_dir: /opt/app
+    volumes:
+      - .:/opt/app
+    command: bash -c "composer install"
+
+  symfony-encore-builder:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -c "yarn install && yarn encore production"
+    
+#  member-module-builder:
+#    image: node:latest
+#    working_dir: /app
+#    volumes:
+#      - .:/app
+#    command: bash -c "cd frontends/member_module/ && npm install && npm run build"
+    
+  docs-builder:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - ./docs:/app
+    command: bash -c "npm install && npm run docs:build"

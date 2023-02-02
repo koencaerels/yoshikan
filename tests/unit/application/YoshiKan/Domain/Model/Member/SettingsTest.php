@@ -64,5 +64,4 @@ class SettingsTest extends TestCase
         Assert::assertEquals(6.7, $this->model->getNewMemberSubscriptionFee());
         Assert::assertEquals(7, $this->model->getFamilyDiscount());
     }
-
 }

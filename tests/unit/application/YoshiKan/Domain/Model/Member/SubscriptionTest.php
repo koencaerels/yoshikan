@@ -153,5 +153,4 @@ class SubscriptionTest extends TestCase
         $this->model->flagPaymentOverviewMailSend();
         Assert::assertEquals(true,$this->model->isPaymentOverviewSend());
     }
-
 }
