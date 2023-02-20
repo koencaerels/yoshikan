@@ -6,9 +6,9 @@
         {% set with_submenu = withsubmenus and item.submenu is not empty %}
         {% if item.uri != '/' %}
             <li>
-                <a href="{{ item.uri }}"
+                <a href="{{ item.uri }}" {% if item.class != '' %}data-cy="header_{{ item.class }}"{% endif %}
                    class="{% if item.class != '' && level > 1 %}{{ item.class }} {% endif %}{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
-                    {% if item.class != '' && level == 1 %}<i class="{{ item.class }}"></i>{% endif %}
+                   {% if item.class != '' && level == 1 %}<i class="{{ item.class }}"></i>{% endif %}
                    {{- item.label -}}
                 </a>
         {% else %}

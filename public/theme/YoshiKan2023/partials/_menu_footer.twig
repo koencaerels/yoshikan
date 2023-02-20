@@ -7,6 +7,7 @@
         {% if item.uri != '/' %}
             <div>
                 <a href="{{ item.uri }}"
+                   {% if item.class != ''%}data-cy="{{ item.class }}" {% endif %}
                    class="{% if item.class != ''%}{{ item.class }} {% endif %}{{ loop.first ? ' first' -}}{{ loop.last ? ' last' -}}{{ item|current ? ' active' }}">
                     {{- item.label -}}
                 </a>

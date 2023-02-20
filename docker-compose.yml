@@ -81,19 +81,19 @@ services:
   # Composer and Node installers & frontend builders 
   # --------------------------------------------------------------------------------------------------------------------
 
-  php-vendor-builder:
-    image: wodby/php:8.1
-    working_dir: /opt/app
-    volumes:
-      - .:/opt/app
-    command: bash -c "composer install"
+#  php-vendor-builder:
+#    image: wodby/php:8.1
+#    working_dir: /opt/app
+#    volumes:
+#      - .:/opt/app
+#    command: bash -c "composer install"
 
-  symfony-encore-builder:
-    image: node:latest
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: bash -c "yarn install && yarn encore production"
+#  symfony-encore-builder:
+#    image: node:latest
+#    working_dir: /app
+#    volumes:
+#      - .:/app
+#    command: bash -c "yarn install && yarn encore production"
     
 #  member-module-builder:
 #    image: node:latest
@@ -102,9 +102,9 @@ services:
 #      - .:/app
 #    command: bash -c "cd frontends/member_module/ && npm install && npm run build"
     
-  docs-builder:
-    image: node:latest
-    working_dir: /app
-    volumes:
-      - ./docs:/app
-    command: bash -c "npm install && npm run docs:build"
+#  docs-builder:
+#    image: node:latest
+#    working_dir: /app
+#    volumes:
+#      - ./docs:/app
+#    command: bash -c "npm install && npm run docs:build"
