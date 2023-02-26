@@ -1903,16 +1903,16 @@
         },
         {
             "name": "damienharper/auditor",
-            "version": "2.4.4",
+            "version": "2.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DamienHarper/auditor.git",
-                "reference": "d890e6dcccefe099baf1acaa1c3485cc51366c61"
+                "reference": "fd73134a09ee102eb3ec69c1a8d1ffcc44295715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DamienHarper/auditor/zipball/d890e6dcccefe099baf1acaa1c3485cc51366c61",
-                "reference": "d890e6dcccefe099baf1acaa1c3485cc51366c61",
+                "url": "https://api.github.com/repos/DamienHarper/auditor/zipball/fd73134a09ee102eb3ec69c1a8d1ffcc44295715",
+                "reference": "fd73134a09ee102eb3ec69c1a8d1ffcc44295715",
                 "shasum": ""
             },
             "require": {
@@ -1968,22 +1968,22 @@
             ],
             "support": {
                 "issues": "https://github.com/DamienHarper/auditor/issues",
-                "source": "https://github.com/DamienHarper/auditor/tree/2.4.4"
+                "source": "https://github.com/DamienHarper/auditor/tree/2.4.5"
             },
-            "time": "2023-01-24T07:42:46+00:00"
+            "time": "2023-02-22T22:54:32+00:00"
         },
         {
             "name": "damienharper/auditor-bundle",
-            "version": "5.2.1",
+            "version": "5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DamienHarper/auditor-bundle.git",
-                "reference": "4b5c07915750aed151e3c034bf4a76abf580adcb"
+                "reference": "3da0a92573a4e61a7ec2d9796a17f5c7e3bda63e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DamienHarper/auditor-bundle/zipball/4b5c07915750aed151e3c034bf4a76abf580adcb",
-                "reference": "4b5c07915750aed151e3c034bf4a76abf580adcb",
+                "url": "https://api.github.com/repos/DamienHarper/auditor-bundle/zipball/3da0a92573a4e61a7ec2d9796a17f5c7e3bda63e",
+                "reference": "3da0a92573a4e61a7ec2d9796a17f5c7e3bda63e",
                 "shasum": ""
             },
             "require": {
@@ -2051,9 +2051,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DamienHarper/auditor-bundle/issues",
-                "source": "https://github.com/DamienHarper/auditor-bundle/tree/5.2.1"
+                "source": "https://github.com/DamienHarper/auditor-bundle/tree/5.2.2"
             },
-            "time": "2022-12-09T13:59:21+00:00"
+            "time": "2023-02-23T00:02:08+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -14739,16 +14739,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.18",
+            "version": "1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f2d5cf71be91172a57c649770b73c20ebcffb0bf"
+                "reference": "a2ffec7db373d8da4973d1d62add872db5cd22dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f2d5cf71be91172a57c649770b73c20ebcffb0bf",
-                "reference": "f2d5cf71be91172a57c649770b73c20ebcffb0bf",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a2ffec7db373d8da4973d1d62add872db5cd22dd",
+                "reference": "a2ffec7db373d8da4973d1d62add872db5cd22dd",
                 "shasum": ""
             },
             "require": {
@@ -14778,7 +14778,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.18"
+                "source": "https://github.com/phpstan/phpstan/tree/1.10.2"
             },
             "funding": [
                 {
@@ -14794,25 +14794,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-17T15:01:27+00:00"
+            "time": "2023-02-23T14:36:46+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.32",
+            "version": "1.3.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "4534559a8c08ab3648c6fa09289478780e190ae7"
+                "reference": "fcb67c2a747300ff8e6ae278191f6ff79fc90370"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/4534559a8c08ab3648c6fa09289478780e190ae7",
-                "reference": "4534559a8c08ab3648c6fa09289478780e190ae7",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/fcb67c2a747300ff8e6ae278191f6ff79fc90370",
+                "reference": "fcb67c2a747300ff8e6ae278191f6ff79fc90370",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.9.11"
+                "phpstan/phpstan": "^1.10"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -14862,9 +14862,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.32"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.33"
             },
-            "time": "2023-01-12T13:39:08+00:00"
+            "time": "2023-02-21T08:52:52+00:00"
         },
         {
             "name": "phpstan/phpstan-symfony",

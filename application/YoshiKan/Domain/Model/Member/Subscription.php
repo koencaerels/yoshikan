@@ -157,6 +157,7 @@ class Subscription
         $this->location = $location;
         $this->settings = $settings;
         $this->member = null;
+        $this->judogi = null;
     }
 
     // —————————————————————————————————————————————————————————————————————————
