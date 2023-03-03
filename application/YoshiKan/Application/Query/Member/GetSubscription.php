@@ -20,7 +20,7 @@ class GetSubscription
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected PeriodRepository       $periodRepository
+        protected PeriodRepository $periodRepository
     ) {
     }
 
@@ -33,6 +33,7 @@ class GetSubscription
             $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
             $collection->addItem($subscriptionRM);
         }
+
         return $collection;
     }
 
@@ -45,6 +46,7 @@ class GetSubscription
             $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
             $collection->addItem($subscriptionRM);
         }
+
         return $collection;
     }
 
@@ -56,6 +58,7 @@ class GetSubscription
             $subscriptionRM = SubscriptionReadModel::hydrateFromModel($subscription);
             $collection->addItem($subscriptionRM);
         }
+
         return $collection;
     }
 

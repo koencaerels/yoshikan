@@ -24,12 +24,12 @@ use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 class GetConfiguration
 {
     public function __construct(
-        protected GradeRepository    $gradeRepository,
+        protected GradeRepository $gradeRepository,
         protected LocationRepository $locationRepository,
-        protected GroupRepository    $groupRepository,
-        protected PeriodRepository   $periodRepository,
+        protected GroupRepository $groupRepository,
+        protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
-        protected JudogiRepository   $judogiRepository,
+        protected JudogiRepository $judogiRepository,
     ) {
     }
 

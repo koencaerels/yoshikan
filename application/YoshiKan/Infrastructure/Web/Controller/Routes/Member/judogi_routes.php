@@ -24,6 +24,7 @@ trait judogi_routes
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderJudogi($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -32,6 +33,7 @@ trait judogi_routes
     {
         $jsonCommand = json_decode($request->request->get('judogi'));
         $response = $this->commandBus->addJudogi($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -40,6 +42,7 @@ trait judogi_routes
     {
         $jsonCommand = json_decode($request->request->get('judogi'));
         $response = $this->commandBus->changeJudogi($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

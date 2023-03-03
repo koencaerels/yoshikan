@@ -20,8 +20,8 @@ class AddPeriod
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string             $code,
-        protected string             $name,
+        protected string $code,
+        protected string $name,
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
     ) {

@@ -4,13 +4,19 @@
 
 {% block body %}
     <p>Dag {{ subscription.contactFirstname }},</p>
-
     <p>
-        We hebben de inschrijving van
+        We hebben de
+        {% if(subscription.isNewMember) %}{% else %}(her){% endif %}inschrijving van
         <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
-        (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        (° {{ subscription.dateOfBirth | date('d/m/Y') }}
+        {% if(subscription.isNewMember) %}- {{ subscription.gender.value }}{% endif %})
         {% if(subscription.isNewMember) %} als nieuw lid {% endif %}
         goed ontvangen en nagekeken.
+        {% if(subscription.isNewMember) %}
+            Welkom!
+        {% else %}
+            Welkom terug!
+        {% endif %}
     </p>
     <p>
         <strong>{{ subscription.period.name }}</strong>

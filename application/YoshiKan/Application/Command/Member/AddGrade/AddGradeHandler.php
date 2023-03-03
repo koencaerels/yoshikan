@@ -15,7 +15,6 @@ namespace App\YoshiKan\Application\Command\Member\AddGrade;
 
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 
 class AddGradeHandler
 {
@@ -39,7 +38,7 @@ class AddGradeHandler
             $command->getName(),
             $command->getColor(),
         );
-        $grade->setSequence($this->gradeRepo->getMaxSequence()+1);
+        $grade->setSequence($this->gradeRepo->getMaxSequence() + 1);
         $this->gradeRepo->save($grade);
 
         return true;

@@ -19,6 +19,7 @@ class DeleteMemberImageHandler
             unlink($file);
         }
         $this->memberImageRepository->delete($memberImage);
+
         return true;
     }
 }

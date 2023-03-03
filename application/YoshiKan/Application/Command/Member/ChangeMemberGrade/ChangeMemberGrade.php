@@ -20,8 +20,8 @@ class ChangeMemberGrade
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
-        protected int    $gradeId,
+        protected int $id,
+        protected int $gradeId,
         protected string $remark,
     ) {
     }

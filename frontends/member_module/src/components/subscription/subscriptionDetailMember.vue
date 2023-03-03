@@ -15,13 +15,13 @@
                                         @click="connectSubscriptionToMemberHandler(member.id)"
                                         icon="pi pi-link"
                                         label="Koppel"
-                                        class="p-button-sm p-button-success"/>
+                                        class="p-button-sm p-button-warning"/>
                                     <Button
                                         v-else
                                         disabled
                                         icon="pi pi-spinner pi-spin"
                                         label="Koppel"
-                                        class="p-button-sm p-button-success"/>
+                                        class="p-button-sm p-button-warning"/>
                                 </div>
                                 <div class="w-16 mt-1.5 ml-2">
                                     <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
@@ -53,7 +53,7 @@
                         <div>
                             <div v-if="suggestedMembers.length > 0" class="flex">
                                 of&nbsp;&nbsp;
-                                <div class="bg-green-600 text-xs text-white px-2 py-1 rounded cursor-pointer"
+                                <div class="bg-yellow-200 text-xs text-gray-500 px-2 py-1 rounded cursor-pointer"
                                      @click="confirmCreateMember($event)">
                                     Maak nieuw lid aan op basis van de inschrijving
                                 </div>
@@ -64,13 +64,13 @@
                                     @click="confirmCreateMember($event)"
                                     label="Maak nieuw lid aan op basis van de inschrijving"
                                     icon="pi pi-user-plus"
-                                    class="p-button-success p-button-sm"/>
+                                    class="p-button-warning p-button-sm"/>
                                 <Button
                                     v-else
                                     disabled
                                     label="Maak nieuw lid aan op basis van de inschrijving"
                                     icon="pi pi-spinner pi-spin"
-                                    class="p-button-success p-button-sm"/>
+                                    class="p-button-warning p-button-sm"/>
                             </div>
                         </div>
                         <ConfirmPopup/>

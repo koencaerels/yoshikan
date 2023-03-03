@@ -24,6 +24,7 @@ trait group_routes
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderGroup($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -32,6 +33,7 @@ trait group_routes
     {
         $jsonCommand = json_decode($request->request->get('group'));
         $response = $this->commandBus->addGroup($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -40,6 +42,7 @@ trait group_routes
     {
         $jsonCommand = json_decode($request->request->get('group'));
         $response = $this->commandBus->changeGroup($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

@@ -48,10 +48,10 @@ class ApiController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
     ) {
         $this->apiAccess = [];
         $isolationMode = false;
@@ -118,6 +118,7 @@ class ApiController extends AbstractController
     public function index(): JsonResponse
     {
         $response = 'Api endpoint for subscriptions';
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -125,6 +126,7 @@ class ApiController extends AbstractController
     public function getWebConfiguration(): JsonResponse
     {
         $response = $this->queryBus->getWebConfiguration();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 

@@ -23,8 +23,8 @@ class WebConfirmationMailHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer
+        protected Environment $twig,
+        protected MailerInterface $mailer
     ) {
     }
 
@@ -38,7 +38,7 @@ class WebConfirmationMailHandler
             [
                 'subject' => $subject,
                 'subscription' => $subscription,
-                'url'=> $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST']
+                'url' => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
             ]
         );
 

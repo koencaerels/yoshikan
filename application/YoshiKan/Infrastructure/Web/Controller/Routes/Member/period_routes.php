@@ -24,6 +24,7 @@ trait period_routes
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderPeriod($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -32,6 +33,7 @@ trait period_routes
     {
         $jsonCommand = json_decode($request->request->get('period'));
         $response = $this->commandBus->addPeriod($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -40,6 +42,7 @@ trait period_routes
     {
         $jsonCommand = json_decode($request->request->get('period'));
         $response = $this->commandBus->changePeriod($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

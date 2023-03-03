@@ -121,33 +121,33 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     }
 
     public function search(
-        string    $keyword = '',
-        int       $yearOfBirth = 0,
+        string $keyword = '',
+        int $yearOfBirth = 0,
         ?Location $location = null,
-        ?Grade    $grade = null,
-        int       $minYearOfBirth = 0,
-        int       $maxYearOfBirth = 0,
+        ?Grade $grade = null,
+        int $minYearOfBirth = 0,
+        int $maxYearOfBirth = 0,
     ): array {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        if (!is_null($keyword) && mb_strlen(trim($keyword)) != 0) {
-            $q->andWhere("LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id")
+        if (!is_null($keyword) && 0 != mb_strlen(trim($keyword))) {
+            $q->andWhere('LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id')
                 ->setParameter('keyword', '%' . mb_strtolower($keyword) . '%')
                 ->setParameter('id', intval($keyword));
         }
         if (!is_null($location)) {
-            $q->andWhere("t.location = :locationId")
+            $q->andWhere('t.location = :locationId')
                 ->setParameter('locationId', $location->getId());
         }
         if (!is_null($grade)) {
-            $q->andWhere("t.grade = :gradeId")
+            $q->andWhere('t.grade = :gradeId')
                 ->setParameter('gradeId', $grade->getId());
         }
-        if ($yearOfBirth !== 0) {
-            $q->andWhere("YEAR(t.dateOfBirth) = :yearOfBirth")
+        if (0 !== $yearOfBirth) {
+            $q->andWhere('YEAR(t.dateOfBirth) = :yearOfBirth')
                 ->setParameter('yearOfBirth', $yearOfBirth);
         }
-        if ($minYearOfBirth !== 0 && $maxYearOfBirth !== 0) {
-            $q->andWhere("YEAR(t.dateOfBirth) >= :minYearOfBirth AND YEAR(t.dateOfBirth) <= :maxYearOfBirth")
+        if (0 !== $minYearOfBirth && 0 !== $maxYearOfBirth) {
+            $q->andWhere('YEAR(t.dateOfBirth) >= :minYearOfBirth AND YEAR(t.dateOfBirth) <= :maxYearOfBirth')
                 ->setParameter('minYearOfBirth', $minYearOfBirth)
                 ->setParameter('maxYearOfBirth', $maxYearOfBirth);
         }

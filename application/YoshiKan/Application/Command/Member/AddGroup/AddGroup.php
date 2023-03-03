@@ -22,8 +22,8 @@ class AddGroup
     private function __construct(
         protected string $code,
         protected string $name,
-        protected int    $minAge,
-        protected int    $maxAge,
+        protected int $minAge,
+        protected int $maxAge,
     ) {
     }
 

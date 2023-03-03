@@ -20,12 +20,12 @@ class ChangePeriod
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int                $id,
-        protected string             $code,
-        protected string             $name,
+        protected int $id,
+        protected string $code,
+        protected string $name,
         protected \DateTimeImmutable $startDate,
         protected \DateTimeImmutable $endDate,
-        protected bool               $isActive,
+        protected bool $isActive,
     ) {
     }
 

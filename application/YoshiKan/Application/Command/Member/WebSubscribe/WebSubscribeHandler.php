@@ -29,28 +29,28 @@ class WebSubscribeHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected LocationRepository     $locationRepository,
-        protected PeriodRepository       $periodRepository,
-        protected SettingsRepository     $settingsRepository,
-        protected MemberRepository       $memberRepository,
+        protected LocationRepository $locationRepository,
+        protected PeriodRepository $periodRepository,
+        protected SettingsRepository $settingsRepository,
+        protected MemberRepository $memberRepository,
         protected EntityManagerInterface $entityManager,
     ) {
     }
 
     public function go(WebSubscribe $command): \stdClass
     {
-        if ($command->getHoneyPot() === '') {
+        if ('' === $command->getHoneyPot()) {
             $location = $this->locationRepository->getById($command->getLocationId());
             $period = $this->periodRepository->getById($command->getPeriodId());
             $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
-            if ($command->getNumberOfTraining() === 3) {
+            if (3 === $command->getNumberOfTraining()) {
                 $finalNumberOfTraining = 2;
                 $extraFeeTraining = true;
             } else {
                 $finalNumberOfTraining = $command->getNumberOfTraining();
                 $extraFeeTraining = false;
             }
-            if ($command->getType() == 'full') {
+            if ('full' == $command->getType()) {
                 $type = SubscriptionType::FULL_YEAR;
             } else {
                 $type = SubscriptionType::HALF_YEAR;
@@ -77,7 +77,18 @@ class WebSubscribeHandler
                 json_decode(json_encode(SettingsReadModel::hydrateFromModel($settings)), true),
             );
 
-            if ($command->getMemberId() !== 0) {
+            if ($command->isNewMember()) {
+                $subscription->setNewMemberFields(
+                    $command->getNationalRegisterNumber(),
+                    $command->getAddressStreet(),
+                    $command->getAddressNumber(),
+                    $command->getAddressBox(),
+                    $command->getAddressZip(),
+                    $command->getAddressCity()
+                );
+            }
+
+            if (0 !== $command->getMemberId()) {
                 $member = $this->memberRepository->getById($command->getMemberId());
                 $subscription->setMember($member);
             }
@@ -93,11 +104,11 @@ class WebSubscribeHandler
 
             return $result;
         } else {
-
             // -- the honey-pot field was not empty
             $result = new \stdClass();
             $result->id = 0;
             $result->reference = 'YKS-0';
+
             return $result;
         }
     }

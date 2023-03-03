@@ -23,7 +23,7 @@ class AddJudogi
         protected string $code,
         protected string $name,
         protected string $size,
-        protected float  $price,
+        protected float $price,
     ) {
     }
 

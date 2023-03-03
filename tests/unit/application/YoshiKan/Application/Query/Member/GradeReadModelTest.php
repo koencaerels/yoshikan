@@ -29,5 +29,4 @@ class GradeReadModelTest extends TestCase
         Assert::assertEquals('grade', $result->name);
         Assert::assertEquals('white', $result->color);
     }
-
 }

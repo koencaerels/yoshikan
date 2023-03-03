@@ -2,8 +2,6 @@
 
 namespace App\YoshiKan\Application\Command\Member\UploadProfileImage;
 
-use App\YoshiKan\Application\Command\Member\UploadMemberImage\UploadMemberImageHandler;
-
 trait upload_profile_image
 {
     public function uploadProfileImage(UploadProfileImage $command): bool

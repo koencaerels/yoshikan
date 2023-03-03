@@ -26,6 +26,7 @@ trait get_member
             $this->groupRepository,
             $this->periodRepository
         );
+
         return $query->search($searchModel);
     }
 
@@ -40,6 +41,7 @@ trait get_member
             $this->groupRepository,
             $this->periodRepository
         );
+
         return $query->suggest($suggestModel);
     }
 
@@ -53,6 +55,7 @@ trait get_member
             $this->groupRepository,
             $this->periodRepository
         );
+
         return $query->getById($id);
     }
 }

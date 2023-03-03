@@ -133,3 +133,11 @@ label {
 .grid-nogutter>[class*=col-] {
     padding:0
 }
+
+.p-tabview .p-tabview-panels {
+    padding:0 !important;
+}
+
+.p-tabview-nav-link:focus {
+    box-shadow: 0 0 0 0 !important;
+}

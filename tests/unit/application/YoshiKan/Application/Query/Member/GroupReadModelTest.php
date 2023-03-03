@@ -30,5 +30,4 @@ class GroupReadModelTest extends TestCase
         Assert::assertEquals(10, $result->minAge);
         Assert::assertEquals(20, $result->maxAge);
     }
-
 }

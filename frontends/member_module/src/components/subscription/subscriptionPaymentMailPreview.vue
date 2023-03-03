@@ -1,16 +1,21 @@
 <template>
     <div id="subscriptionPaymentMailPreview" style="width: 450px;">
         <div v-if="memberStore.subscriptionDetail" id="messageWrapper" class="text-sm">
-            <p>naar: {{ memberStore.subscriptionDetail.contactEmail }}</p>
+            <p><i>naar: {{ memberStore.subscriptionDetail.contactEmail }}</i></p>
             <p>Dag {{ memberStore.subscriptionDetail.contactFirstname }},</p>
             <p>
-                We hebben de inschrijving van
+                We hebben de
+                <span v-if="!memberStore.subscriptionDetail.isNewMember">(her)</span>inschrijving van
                 <strong>{{ memberStore.subscriptionDetail.firstname }}
                     {{ memberStore.subscriptionDetail.lastname }}</strong>
                 (° {{ moment(memberStore.subscriptionDetail.dateOfBirth).format("DD/MM/YYYY") }}
-                - {{ memberStore.subscriptionDetail.gender }} )
+                <span v-if="memberStore.subscriptionDetail.isNewMember">
+                    - {{ memberStore.subscriptionDetail.gender }}
+                </span> )
                 <span v-if="memberStore.subscriptionDetail.isNewMember">als nieuw lid</span>
                 goed ontvangen en nagekeken.
+                <span v-if="memberStore.subscriptionDetail.isNewMember">Welkom!</span>
+                <span v-else>Welkom terug!</span>
             </p>
             <p>
                 <strong>{{memberStore.subscriptionDetail.period.name}}</strong>
@@ -61,7 +66,6 @@
                 <br>Team Yoshi-Kan.
             </p>
         </div>
-
         <hr>
         <div class="flex flex-row mt-2">
             <div class="basis-1/4">&nbsp;</div>

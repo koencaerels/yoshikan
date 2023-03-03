@@ -20,11 +20,11 @@ class ChangeGroup
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $code,
         protected string $name,
-        protected int    $minAge,
-        protected int    $maxAge,
+        protected int $minAge,
+        protected int $maxAge,
     ) {
     }
 

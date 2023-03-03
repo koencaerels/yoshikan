@@ -63,15 +63,15 @@ class Settings
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
-        float  $yearlyFee2Training,
-        float  $yearlyFee1Training,
-        float  $halfYearlyFee2Training,
-        float  $halfYearlyFee1Training,
-        float  $extraTrainingFee,
-        float  $newMemberSubscriptionFee,
-        int    $familyDiscount,
+        float $yearlyFee2Training,
+        float $yearlyFee1Training,
+        float $halfYearlyFee2Training,
+        float $halfYearlyFee1Training,
+        float $extraTrainingFee,
+        float $newMemberSubscriptionFee,
+        int $familyDiscount,
     ) {
         $this->uuid = $uuid;
         $this->code = $code;
@@ -89,16 +89,15 @@ class Settings
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
-        float  $yearlyFee2Training,
-        float  $yearlyFee1Training,
-        float  $halfYearlyFee2Training,
-        float  $halfYearlyFee1Training,
-        float  $extraTrainingFee,
-        float  $newMemberSubscriptionFee,
-        int    $familyDiscount,
-
+        float $yearlyFee2Training,
+        float $yearlyFee1Training,
+        float $halfYearlyFee2Training,
+        float $halfYearlyFee1Training,
+        float $extraTrainingFee,
+        float $newMemberSubscriptionFee,
+        int $familyDiscount,
     ): self {
         return new self(
             $uuid,
@@ -114,13 +113,13 @@ class Settings
     }
 
     public function change(
-        float  $yearlyFee2Training,
-        float  $yearlyFee1Training,
-        float  $halfYearlyFee2Training,
-        float  $halfYearlyFee1Training,
-        float  $extraTrainingFee,
-        float  $newMemberSubscriptionFee,
-        int    $familyDiscount,
+        float $yearlyFee2Training,
+        float $yearlyFee1Training,
+        float $halfYearlyFee2Training,
+        float $halfYearlyFee1Training,
+        float $extraTrainingFee,
+        float $newMemberSubscriptionFee,
+        int $familyDiscount,
     ): void {
         $this->yearlyFee2Training = $yearlyFee2Training;
         $this->yearlyFee1Training = $yearlyFee1Training;

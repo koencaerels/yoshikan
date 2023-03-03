@@ -22,10 +22,11 @@ class CreateMemberFromSubscriptionHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected MemberRepository       $memberRepository,
-        protected GradeRepository        $gradeRepository,
+        protected MemberRepository $memberRepository,
+        protected GradeRepository $gradeRepository,
     ) {
     }
+
     public function go(CreateMemberFromSubscription $command): bool
     {
         $subscription = $this->subscriptionRepository->getById($command->getId());
@@ -36,6 +37,35 @@ class CreateMemberFromSubscriptionHandler
         );
         if (is_null($member)) {
             $firstGrade = $this->gradeRepository->getFirst();
+
+            // -- default values for new member fields
+            $nationalRegisterNumber = '00.00.00-000.00';
+            $addressStreet = '-';
+            $addressNumber = '-';
+            $addressBox = '';
+            $addressZip = '-';
+            $addressCity = '-';
+
+            // -- take the values of the subscription if they are not null
+            if (!is_null($subscription->getNationalRegisterNumber())) {
+                $nationalRegisterNumber = $subscription->getNationalRegisterNumber();
+            }
+            if (!is_null($subscription->getAddressStreet())) {
+                $addressStreet = $subscription->getAddressStreet();
+            }
+            if (!is_null($subscription->getAddressNumber())) {
+                $addressNumber = $subscription->getAddressNumber();
+            }
+            if (!is_null($subscription->getAddressBox())) {
+                $addressBox = $subscription->getAddressBox();
+            }
+            if (!is_null($subscription->getAddressZip())) {
+                $addressZip = $subscription->getAddressZip();
+            }
+            if (!is_null($subscription->getAddressCity())) {
+                $addressCity = $subscription->getAddressCity();
+            }
+
             $member = Member::make(
                 $this->memberRepository->nextIdentity(),
                 $subscription->getFirstname(),
@@ -43,15 +73,23 @@ class CreateMemberFromSubscriptionHandler
                 $subscription->getDateOfBirth(),
                 $subscription->getGender(),
                 $firstGrade,
-                $subscription->getLocation()
+                $subscription->getLocation(),
+                $nationalRegisterNumber,
+                $addressStreet,
+                $addressNumber,
+                $addressBox,
+                $addressZip,
+                $addressCity
             );
             $this->memberRepository->save($member);
             $subscription->setMember($member);
             $this->subscriptionRepository->save($subscription);
+
             return true;
         } else {
             $subscription->setMember($member);
             $this->subscriptionRepository->save($subscription);
+
             return false;
         }
     }

@@ -23,6 +23,7 @@ trait change_member_remarks
         $commandHandler = new ChangeMemberRemarksHandler($this->memberRepository);
         $result = $commandHandler->go($command);
         $this->entityManager->flush();
+
         return $result;
     }
 }

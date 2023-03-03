@@ -25,5 +25,4 @@ class MemberSearchModelTest extends TestCase
         Assert::assertEquals(3, $searchModel->getYearOfBirth());
         Assert::assertEquals(4, $searchModel->getGroupId());
     }
-
 }

@@ -24,6 +24,7 @@ trait add_judogi
         $handler->go($command);
 
         $this->entityManager->flush();
+
         return true;
     }
 }

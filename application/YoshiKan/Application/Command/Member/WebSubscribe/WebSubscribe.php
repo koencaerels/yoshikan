@@ -20,28 +20,34 @@ class WebSubscribe
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int                $periodId,
-        protected string             $contactFirstname,
-        protected string             $contactLastname,
-        protected string             $contactEmail,
-        protected string             $contactPhone,
-        protected string             $firstname,
-        protected string             $lastname,
-        protected int                $dateOfBirthDD,
-        protected int                $dateOfBirthMM,
-        protected int                $dateOfBirthYYYY,
+        protected int $periodId,
+        protected string $contactFirstname,
+        protected string $contactLastname,
+        protected string $contactEmail,
+        protected string $contactPhone,
+        protected string $firstname,
+        protected string $lastname,
+        protected int $dateOfBirthDD,
+        protected int $dateOfBirthMM,
+        protected int $dateOfBirthYYYY,
         protected \DateTimeImmutable $dateOfBirth,
-        protected string             $gender,
-        protected bool               $newMember,
-        protected string             $type,
-        protected int                $locationId,
-        protected int                $numberOfTraining,
-        protected bool               $extraTraining,
-        protected bool               $reductionFamily,
-        protected bool               $judogiBelt,
-        protected string             $remarks,
-        protected string             $honeyPot,
-        protected int                $memberId,
+        protected string $gender,
+        protected bool $newMember,
+        protected string $type,
+        protected int $locationId,
+        protected int $numberOfTraining,
+        protected bool $extraTraining,
+        protected bool $reductionFamily,
+        protected bool $judogiBelt,
+        protected string $remarks,
+        protected string $honeyPot,
+        protected string $nationalRegisterNumber,
+        protected string $addressStreet,
+        protected string $addressNumber,
+        protected string $addressBox,
+        protected string $addressZip,
+        protected string $addressCity,
+        protected int $memberId,
     ) {
     }
 
@@ -80,6 +86,12 @@ class WebSubscribe
             boolval($json->judogiBelt),
             trim($json->remarks),
             trim($json->honeyPot),
+            trim($json->nationalRegisterNumber),
+            trim($json->addressStreet),
+            trim($json->addressNumber),
+            trim($json->addressBox),
+            trim($json->addressZip),
+            trim($json->addressCity),
             intval($memberId),
         );
     }
@@ -196,5 +208,35 @@ class WebSubscribe
     public function getMemberId(): int
     {
         return $this->memberId;
+    }
+
+    public function getNationalRegisterNumber(): string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): string
+    {
+        return $this->addressCity;
     }
 }

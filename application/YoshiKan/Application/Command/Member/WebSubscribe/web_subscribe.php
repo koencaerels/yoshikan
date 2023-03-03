@@ -28,6 +28,7 @@ trait web_subscribe
         );
         $result = $commandHandler->go($command);
         $this->entityManager->flush();
+
         return $result;
     }
 }

@@ -21,8 +21,8 @@ class ChangeSubscriptionHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected LocationRepository     $locationRepository,
-        protected JudogiRepository       $judogiRepository,
+        protected LocationRepository $locationRepository,
+        protected JudogiRepository $judogiRepository,
     ) {
     }
 
@@ -50,7 +50,7 @@ class ChangeSubscriptionHandler
             $location,
         );
 
-        if ($command->getJudogiId() != 0) {
+        if (0 != $command->getJudogiId()) {
             $judogi = $this->judogiRepository->getById($command->getJudogiId());
             $subscription->setJudogi($judogi, $command->getJudogiPrice());
         } else {

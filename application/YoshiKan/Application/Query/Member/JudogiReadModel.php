@@ -22,12 +22,12 @@ class JudogiReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $uuid,
         protected string $code,
         protected string $name,
         protected string $size,
-        protected float  $price,
+        protected float $price,
     ) {
     }
 

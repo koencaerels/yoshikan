@@ -39,18 +39,18 @@ class CommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security               $security,
+        protected Security $security,
         protected EntityManagerInterface $entityManager,
-        protected bool                   $isolationMode,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
-        protected string                 $uploadFolder,
+        protected bool $isolationMode,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
+        protected string $uploadFolder,
         protected SubscriptionRepository $subscriptionRepository,
-        protected LocationRepository     $locationRepository,
-        protected PeriodRepository       $periodRepository,
-        protected JudogiRepository       $judogiRepository,
-        protected SettingsRepository     $settingsRepository,
-        protected MemberRepository       $memberRepository,
+        protected LocationRepository $locationRepository,
+        protected PeriodRepository $periodRepository,
+        protected JudogiRepository $judogiRepository,
+        protected SettingsRepository $settingsRepository,
+        protected MemberRepository $memberRepository,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

@@ -20,6 +20,12 @@ export interface ChangeMemberDetailsCommand {
     dateOfBirth: Date;
     gender: string;
     locationId: number;
+    nationalRegisterNumber:string;
+    addressStreet:string;
+    addressNumber:string;
+    addressBox:string;
+    addressZip:string;
+    addressCity:string;
 }
 
 export async function changeMemberDetails(command: ChangeMemberDetailsCommand) {

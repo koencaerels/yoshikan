@@ -20,7 +20,7 @@ class ConnectSubscriptionToMemberHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected MemberRepository       $memberRepository,
+        protected MemberRepository $memberRepository,
     ) {
     }
 
@@ -30,6 +30,7 @@ class ConnectSubscriptionToMemberHandler
         $member = $this->memberRepository->getById($command->getMemberId());
         $subscription->setMember($member);
         $this->subscriptionRepository->save($subscription);
+
         return true;
     }
 }

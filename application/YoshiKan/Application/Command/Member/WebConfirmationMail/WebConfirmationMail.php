@@ -20,7 +20,7 @@ class WebConfirmationMail
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int    $subscriptionId,
+        protected int $subscriptionId,
         protected string $fromName,
         protected string $fromEmail,
     ) {

@@ -5,15 +5,27 @@
 {% block body %}
     <p>Dag {{ subscription.contactFirstname }},</p>
     <p>
-        Bedankt voor je inschrijving van
+        Bedankt voor je {% if(subscription.isNewMember) %}{% else %}(her){% endif %}inschrijving van
         <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
-        (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        (° {{ subscription.dateOfBirth | date('d/m/Y') }}
+        {% if(subscription.isNewMember) %}- {{ subscription.gender.value }}{% endif %})
         {% if(subscription.isNewMember) %}
             als nieuw lid.
         {% else %}
             .
         {% endif %}
     </p>
+    {# extra paragraph for a new member ----------------------------------------------------------------------------- #}
+    {% if(subscription.isNewMember) %}
+        <p>
+            <strong>Contact</strong>
+            <br>{{ subscription.contactFirstname }} {{ subscription.contactLastname }}
+            <br>{{ subscription.addressStreet }} {{ subscription.addressNumber }}
+            {% if(subscription.addressBox) != '' %} bus {{ subscription.adressBox }}{% endif %}
+            <br>{{ subscription.addressZip }} {{ subscription.addressCity }}
+        </p>
+    {% endif %}
+    {# summary ------------------------------------------------------------------------------------------------------ #}
     <p>
         <strong>Referentie: YKS-{{ subscription.id }}</strong>
         <br><br><strong>{{ subscription.period.name }}</strong>
@@ -37,9 +49,10 @@
             <br>- 10% Korting als 2e en 3e kind van éénzelfde familie.
         {% endif %}
     </p>
+    <p>&nbsp;</p>
     <p>
         We kijken alles nog eens na. Van zodra alles in orde is,
-        krijg je van ons een definitieve bevestiging en de betalingsinstructies.
+        krijg je van ons een definitieve bevestiging en de betalingsinstructies via email.
     </p>
     <p>
         Tot binnenkort.

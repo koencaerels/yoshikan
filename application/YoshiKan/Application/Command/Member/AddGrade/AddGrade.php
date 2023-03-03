@@ -49,6 +49,7 @@ class AddGrade
     {
         return $this->name;
     }
+
     public function getColor(): string
     {
         return $this->color;

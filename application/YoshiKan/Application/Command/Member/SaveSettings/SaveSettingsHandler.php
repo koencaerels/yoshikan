@@ -57,6 +57,7 @@ class SaveSettingsHandler
             );
         }
         $this->repo->save($settings);
+
         return true;
     }
 }

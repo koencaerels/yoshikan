@@ -2,23 +2,39 @@
     <div v-if="step === 0">
         Loading settings...
     </div>
-    <div id="appInschrijving" v-if="step === 1">
-        <hr>
-        <div class="flex flex-row mt-4 mb-4">
-            <div class="basis-1/4 mr-4 text-right">
-                <span><strong>Periode&nbsp;&nbsp;</strong></span>
-                <i class="mdi mdi-calendar text-2xl"></i>
+    <div id="appInschrijving" v-if="step === 1" class="border-2 border-slate-400 rounded-xl p-2">
+
+        <div class="bg-gray-200 pt-0.5 pb-3 rounded-t-lg">
+            <div class="flex flex-row mt-4 mb-4">
+                <div class="basis-1/4 mr-4 text-right">
+                    <span class="text-xl"><strong>Periode&nbsp;&nbsp;</strong></span>
+                    <i class="mdi mdi-calendar text-2xl"></i>
+                </div>
+                <div class="basis-3/4 text-xl">
+                    <strong>{{ settings.activePeriod.name }}</strong>
+                </div>
             </div>
-            <div class="basis-3/4">
-                <strong>{{ settings.activePeriod.name }}</strong>
+            <div class="url-field-wrapper">
+                <o-input id="ti_url"
+                         v-model="subscription.honeyPot"
+                         type="text"/>
+            </div>
+            <!-- nieuw lid ------------------------------------------ -->
+            <div class="flex flex-row">
+                <div class="basis-1/4 text-right mr-4 text-lg">Nieuw lid?</div>
+                <div class="basis-3/4">
+                    <o-radio name="newMember" :native-value="true" size-class="large"
+                             v-model="subscription.newMember" variant="info">
+                        <span class="text-lg">Ja</span>
+                    </o-radio>
+                    <o-radio name="newMember" :native-value="false" size-class="large"
+                             v-model="subscription.newMember" variant="info">
+                        <span class="text-lg">Nee</span>
+                    </o-radio>
+                </div>
             </div>
         </div>
-        <div class="url-field-wrapper">
-            <o-input id="ti_url"
-                     v-model="subscription.honeyPot"
-                     type="text"/>
-        </div>
-        <hr>
+
         <!-- -- contact ----------------------------------------- -->
         <div class="md:flex md:flex-row mt-2 mb-4">
             <div class="basis-1/4 mr-4 text-right">
@@ -59,15 +75,54 @@
                         </o-field>
                     </div>
                 </div>
+
+                <!-- -- adres -------------------------------------- -->
+                <div v-if="subscription.newMember"><!--  -->
+                    <div class="md:flex md:flex-row mt-2">
+                        <div class="basis-3/5">
+                            <o-field class="w-full" :variant="addressStreetVariant" label="Straat *"
+                                     label-for="ti_street">
+                                <o-input id="ti_street" v-model="subscription.addressStreet" type="text"/>
+                            </o-field>
+                        </div>
+                        <div class="basis-1/5 md:ml-2">
+                            <o-field class="w-full" :variant="addressNumberVariant" label="Nummer *"
+                                     label-for="ti_street_number">
+                                <o-input id="ti_street_number" v-model="subscription.addressNumber" type="text"/>
+                            </o-field>
+                        </div>
+                        <div class="basis-1/5 md:ml-2">
+                            <o-field class="w-full" label="Bus" label-for="ti_street_box">
+                                <o-input id="ti_street_box" v-model="subscription.addressBox" type="text"/>
+                            </o-field>
+                        </div>
+                    </div>
+                    <div class="md:flex md:flex-row mt-2">
+                        <div class="basis-1/4">
+                            <o-field class="w-full" :variant="addressZipVariant" label="Postcode *"
+                                     label-for="ti_postal_code">
+                                <o-input id="ti_postal_code" v-model="subscription.addressZip" type="text"/>
+                            </o-field>
+                        </div>
+                        <div class="basis-3/4 md:ml-2">
+                            <o-field class="w-full" :variant="addressCityVariant" label="Gemeente *"
+                                     label-for="ti_city">
+                                <o-input id="ti_city" v-model="subscription.addressCity" type="text"/>
+                            </o-field>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <hr>
         <div class="md:flex md:flex-row mt-2 mb-4">
             <div class="basis-1/4 mr-4 text-right">
                 <span><strong>Judoka&nbsp;&nbsp;</strong></span>
-               <i class="mdi mdi-account-circle text-2xl"></i>
+                <i class="mdi mdi-account-circle text-2xl"></i>
             </div>
             <div class="basis-3/4">
+
                 <!-- -- judoka ----------------------------------------- -->
                 <div class="md:flex md:flex-row">
                     <div class="basis-1/2">
@@ -83,10 +138,30 @@
                         </o-field>
                     </div>
                 </div>
+
+                <!-- -- rijksregisternummer ----------------------- -->
+                <div class="flex flex-row mt-4" v-if="subscription.newMember"> <!--   -->
+                    <div class="basis-1/4 text-right mr-4 text-sm mt-2">
+                        Rijksregisternummer*
+                    </div>
+                    <div class="basis-3/4">
+                        <o-field class="w-full" :variant="nationalRegisterNumberVariant">
+                            <o-input id="ti_national_number"
+                                     v-on:input="onChangeNationalNumber"
+                                     v-maska
+                                     v-model="subscription.nationalRegisterNumber"
+                                     maxlength="15"
+                                     data-maska="#0.#0.#0-#00.#0"
+                                     data-maska-tokens="0:[0-9]:req"
+                                     type="text"/>
+                        </o-field>
+                    </div>
+                </div>
+
                 <!-- -- geboorte datum ---------------------------------- -->
                 <div class="md:flex md:flex-row mt-2">
-                    <div class="basis-1/4 text-right mr-4">
-                        Geboortedatum *
+                    <div class="basis-1/4 text-right mr-4 text-sm">
+                        Geboortedatum*
                     </div>
                     <div class="basis-2/12">
                         <o-field class="w-full" :variant="dateOfBirthDDVariant" label="dd" label-for="ti_day">
@@ -102,13 +177,19 @@
                     <div class="basis-1/12 text-center">/</div>
                     <div class="basis-1/4 md:ml-2">
                         <o-field class="w-full" :variant="dateOfBirthYYYVariant" label="yyyy" label-for="ti_year">
-                            <o-input id="ti_year" v-model="subscription.dateOfBirthYYYY" maxlength="4" type="text"/>
+                            <o-input id="ti_year"
+                                     v-maska:[options]
+                                     data-maska="####"
+                                     v-model="subscription.dateOfBirthYYYY"
+                                     maxlength="4"
+                                     type="text"/>
                         </o-field>
                     </div>
                 </div>
+
                 <!-- gender --------------------------------------- -->
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right mr-4">Geslacht</div>
+                <div class="flex flex-row mt-4" v-if="subscription.newMember"> <!-- -->
+                    <div class="basis-1/4 text-right mr-4 text-sm">Geslacht*</div>
                     <div class="basis-3/4">
                         <o-radio name="gender" native-value="M" v-model="subscription.gender" variant="info">
                             M
@@ -121,6 +202,7 @@
                         </o-radio>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -128,20 +210,6 @@
         <div class="flex flex-row mt-4 mb-4">
             <div class="basis-1/4 mr-4 text-right">&nbsp;</div>
             <div class="basis-3/4">
-                <!-- nieuw lid --------------------------------------- -->
-                <div class="flex flex-row">
-                    <div class="basis-1/4 text-right mr-4">Nieuw lid</div>
-                    <div class="basis-3/4">
-                        <o-radio name="newMember" :native-value="true"
-                                 v-model="subscription.newMember" variant="info">
-                            Ja
-                        </o-radio>
-                        <o-radio name="newMember" :native-value="false"
-                                 v-model="subscription.newMember" variant="info">
-                            Nee
-                        </o-radio>
-                    </div>
-                </div>
                 <!-- locatie --------------------------------------- -->
                 <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4">Locatie</div>
@@ -246,21 +314,28 @@
         </div>
         <hr>
         <!-- subscribe button --------------------------------- -->
-        <div class="flex flex-row mt-4 mb-4">
-            <div class="basis-1/4 mr-4 text-right">&nbsp;</div>
-            <div class="basis-2/4">
-                <div v-if="v$.$invalid">
-                    <o-button variant="info" class="w-full" disabled>Inschrijven</o-button>
-                </div>
-                <div v-else>
-                    <o-button variant="info" class="w-full" @click="subscribe">Inschrijven</o-button>
-                </div>
-                <div class="mt-2 text-xs">
-                    (*) verplichte velden
+        <div class="bg-gray-200 pt-0.5 pb-3 rounded-b-lg">
+            <div class="flex flex-row mt-4 mb-4">
+                <div class="basis-1/4 mr-4 text-right">&nbsp;</div>
+                <div class="basis-2/4">
+                    <div v-if="v$.$invalid">
+                        <o-button variant="info" class="w-full" disabled size="large">
+                            Inschrijven
+                        </o-button>
+                    </div>
+                    <div v-else>
+                        <o-button variant="info" class="w-full" size="large"
+                                  @click="subscribe">
+                            Inschrijven
+                        </o-button>
+                    </div>
+                    <div class="mt-2 text-xs">
+                        (*) verplichte velden
+                    </div>
                 </div>
             </div>
         </div>
-        <!--        <div class="text-xs"><code>{{ subscription }}</code></div>-->
+        <!-- <div class="text-xs"><code>{{ subscription }}</code></div>-->
     </div>
 
     <div v-if="step === 2">
@@ -269,20 +344,21 @@
         </div>
     </div>
     <div v-if="step === 3">
-        <div style="height: 250px">
-            <hr>
-            <br>
-            <p>
-                We hebben je inschrijving goed ontvangen.
-                <br>We hebben ook een email als bevestiging verzonden naar <strong>{{
-                    subscription.contactEmail
-                }}</strong>.
-                <br>Dit is je referentie "{{ subscriptionResult.reference }}".
-            </p>
-            <p>
+        <br>
+        <div class="border-2 border-slate-400 rounded-xl p-2">
+            <div class="bg-gray-200 p-4 rounded-lg" style="height:250px">
+                <p>
+                    We hebben je inschrijving goed ontvangen.
+                    <br>We hebben ook een email als bevestiging verzonden naar <strong>{{
+                        subscription.contactEmail
+                    }}</strong>.
+                    <br>Dit is je referentie "{{ subscriptionResult.reference }}".
+                </p>
+                <p>
                 <span class="underline text-blue-700 cursor-pointer"
                       @click="resetSubscription">Nog een inschrijving?</span>
-            </p>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -291,7 +367,8 @@
 <script setup>
 import {computed, onMounted, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
-import {minValue, required, email, numeric, maxValue} from "@vuelidate/validators";
+import {minValue, required, email, numeric, maxValue, requiredIf} from "@vuelidate/validators";
+import {vMaska} from "maska"
 import axios from "axios";
 
 const step = ref(0);
@@ -309,8 +386,6 @@ const subscription = ref({
     dateOfBirthMM: '',
     dateOfBirthYYYY: '',
     dateOfBirth: new Date(),
-    gender: 'M',
-    newMember: true,
     location: 1,
     type: 'full',
     numberOfTraining: 1,
@@ -318,14 +393,54 @@ const subscription = ref({
     reductionFamily: false,
     judogiBelt: false,
     remarks: '',
-    honeyPot: ''
+    honeyPot: '',
+    // extra fields for a subscription (only for new members)
+    newMember: true,
+    gender: 'X',
+    nationalRegisterNumber: '',
+    addressStreet: '',
+    addressNumber: '',
+    addressBox: '',
+    addressZip: '',
+    addressCity: ''
 });
 const subscriptionResult = ref({});
+const options = {
+    postProcess: val => {
+        const max = "" + new Date().getFullYear()
+        return val > max ? max : val
+    }
+}
 
 onMounted(() => {
     v$.value.$touch();
     loadSettings();
 });
+
+function onChangeNationalNumber() {
+    if (subscription.value.nationalRegisterNumber.length === 2) {
+        let _year = subscription.value.nationalRegisterNumber;
+        if (_year > 50) {
+            subscription.value.dateOfBirthYYYY = '19' + _year;
+        } else {
+            subscription.value.dateOfBirthYYYY = '20' + _year;
+        }
+    } else if (subscription.value.nationalRegisterNumber.length === 5) {
+        let _month = subscription.value.nationalRegisterNumber.split('.')[1];
+        subscription.value.dateOfBirthMM = _month;
+    } else if (subscription.value.nationalRegisterNumber.length === 8) {
+        let _day = subscription.value.nationalRegisterNumber.split('.')[2];
+        subscription.value.dateOfBirthDD = _day;
+    } else if (subscription.value.nationalRegisterNumber.length === 12) {
+        let _dayNumber = subscription.value.nationalRegisterNumber.split('-')[1];
+        let _dayNumberMod = parseInt(_dayNumber) % 2;
+        if (_dayNumberMod === 0) {
+            subscription.value.gender = 'V';
+        } else {
+            subscription.value.gender = 'M';
+        }
+    }
+}
 
 function loadSettings() {
     axios.get('/inschrijving/api/configuration').then(response => (loadSettingsHandler(response.data)));
@@ -372,6 +487,14 @@ function resetSubscription() {
     subscription.value.reductionFamily = false;
     subscription.value.judogiBelt = false;
     subscription.value.remarks = '';
+    // reset the extra fields
+    subscription.value.nationalRegisterNumber = '';
+    subscription.value.addressStreet = '';
+    subscription.value.addressNumber = '';
+    subscription.value.addressBox = '';
+    subscription.value.addressZip = '';
+    subscription.value.addressCity = '';
+
     step.value = 1;
 }
 
@@ -400,6 +523,15 @@ const dateValidator = function (value) {
     return true;
 };
 
+const nationalRegisterNumberValidator = function (value) {
+    if (!subscription.value.newMember) return true;
+    return (subscription.value.nationalRegisterNumber.length === 15);
+}
+
+function isNewMember() {
+    return subscription.value.newMember;
+}
+
 const rules = {
     contactFirstname: {required},
     contactLastname: {required},
@@ -410,6 +542,11 @@ const rules = {
     dateOfBirthMM: {required, numeric, maxValueValue: maxValue(12), minValueValue: minValue(1), dateValidator},
     dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2200), dateValidator},
     location: {minValueValue: minValue(1)},
+    nationalRegisterNumber: {requiredNewMember: requiredIf(isNewMember), nationalRegisterNumberValidator},
+    addressStreet: {requiredNewMember: requiredIf(isNewMember)},
+    addressNumber: {requiredNewMember: requiredIf(isNewMember)},
+    addressZip: {requiredNewMember: requiredIf(isNewMember)},
+    addressCity: {requiredNewMember: requiredIf(isNewMember)},
 };
 
 const v$ = useVuelidate(rules, subscription);
@@ -422,6 +559,11 @@ const lastnameVariant = computed(() => v$.value.lastname.$invalid === false ? 's
 const dateOfBirthDDVariant = computed(() => v$.value.dateOfBirthDD.$invalid === false ? 'success' : 'danger');
 const dateOfBirthMMVariant = computed(() => v$.value.dateOfBirthMM.$invalid === false ? 'success' : 'danger');
 const dateOfBirthYYYVariant = computed(() => v$.value.dateOfBirthYYYY.$invalid === false ? 'success' : 'danger');
+const nationalRegisterNumberVariant = computed(() => v$.value.nationalRegisterNumber.$invalid === false ? 'success' : 'danger');
+const addressStreetVariant = computed(() => v$.value.addressStreet.$invalid === false ? 'success' : 'danger');
+const addressNumberVariant = computed(() => v$.value.addressNumber.$invalid === false ? 'success' : 'danger');
+const addressZipVariant = computed(() => v$.value.addressZip.$invalid === false ? 'success' : 'danger');
+const addressCityVariant = computed(() => v$.value.addressCity.$invalid === false ? 'success' : 'danger');
 
 </script>
 

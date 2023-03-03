@@ -20,11 +20,11 @@ class ChangeJudogi
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $code,
         protected string $name,
         protected string $size,
-        protected float  $price,
+        protected float $price,
     ) {
     }
 

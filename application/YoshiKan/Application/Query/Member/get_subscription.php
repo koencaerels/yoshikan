@@ -20,7 +20,8 @@ trait get_subscription
     public function exportSubscriptions(array $listIds): Spreadsheet
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
-        $exporter = new ExportSubscriptions($this->subscriptionRepository,$this->periodRepository);
+        $exporter = new ExportSubscriptions($this->subscriptionRepository, $this->periodRepository);
+
         return $exporter->exportSubscriptions($listIds);
     }
 
@@ -28,6 +29,7 @@ trait get_subscription
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $query = new GetSubscription($this->subscriptionRepository, $this->periodRepository);
+
         return $query->getSubscriptionTodos()->getCollection();
     }
 
@@ -35,6 +37,7 @@ trait get_subscription
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $query = new GetSubscription($this->subscriptionRepository, $this->periodRepository);
+
         return $query->getSubscriptionsByActivePeriod()->getCollection();
     }
 
@@ -42,6 +45,7 @@ trait get_subscription
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $query = new GetSubscription($this->subscriptionRepository, $this->periodRepository);
+
         return $query->getAllSubscriptions()->getCollection();
     }
 
@@ -49,6 +53,7 @@ trait get_subscription
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
         $query = new GetSubscription($this->subscriptionRepository, $this->periodRepository);
+
         return $query->getById($id);
     }
 }

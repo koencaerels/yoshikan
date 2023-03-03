@@ -28,6 +28,7 @@ trait member_routes
     {
         $searchModel = json_decode($request->request->get('search-model'));
         $response = $this->queryBus->searchMembers($searchModel);
+
         return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
     }
 
@@ -36,6 +37,7 @@ trait member_routes
     {
         $suggestModel = json_decode($request->request->get('suggest-model'));
         $response = $this->queryBus->suggestMember($suggestModel);
+
         return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
     }
 
@@ -44,6 +46,7 @@ trait member_routes
     {
         $response = $this->queryBus->getMemberById($id);
         usleep(500000);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -52,6 +55,7 @@ trait member_routes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeMemberDetails($command);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -60,6 +64,7 @@ trait member_routes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeMemberGrade($command);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -68,6 +73,7 @@ trait member_routes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeMemberRemarks($command);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -84,6 +90,7 @@ trait member_routes
             );
             $response = $this->commandBus->uploadMemberImage($command);
         }
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -100,6 +107,7 @@ trait member_routes
             );
             $response = $this->commandBus->uploadProfileImage($command);
         }
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -108,6 +116,7 @@ trait member_routes
     {
         $member = $this->queryBus->getMemberById($id);
         $file = $this->uploadFolder . $member->getProfileImage();
+
         return $this->file(
             $file,
             $member->getFirstname() . '-' . $member->getFirstname() . '.png',

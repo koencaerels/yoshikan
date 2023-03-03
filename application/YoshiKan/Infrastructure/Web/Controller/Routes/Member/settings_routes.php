@@ -24,6 +24,7 @@ trait settings_routes
     {
         $jsonCommand = json_decode($request->request->get('settings'));
         $response = $this->commandBus->saveSettings($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

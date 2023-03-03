@@ -32,6 +32,7 @@ class SubscriptionReadModelCollection implements \JsonSerializable
     {
         $json = new \stdClass();
         $json->collection = $this->getCollection();
+
         return $json;
     }
 

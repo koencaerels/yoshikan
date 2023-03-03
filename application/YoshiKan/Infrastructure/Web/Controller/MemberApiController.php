@@ -71,10 +71,10 @@ class MemberApiController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
     ) {
         $this->apiAccess = [];
         $isolationMode = false;
@@ -130,7 +130,7 @@ class MemberApiController extends AbstractController
         $twigLoaders = $twigLoaders instanceof ChainLoader ?
             $twigLoaders->getLoaders() :
             [$twigLoaders];
-        $path =  $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
+        $path = $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
         foreach ($twigLoaders as $twigLoader) {
             if ($twigLoader instanceof FilesystemLoader) {
                 $twigLoader->prependPath($path, '__main__');
@@ -142,6 +142,7 @@ class MemberApiController extends AbstractController
     public function index(): Response
     {
         $response = 'Yoshi-Kan: Member Module API';
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

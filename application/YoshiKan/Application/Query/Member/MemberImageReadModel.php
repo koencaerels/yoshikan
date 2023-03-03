@@ -13,7 +13,7 @@ class MemberImageReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $uuid,
         protected string $originalName,
         protected string $path,

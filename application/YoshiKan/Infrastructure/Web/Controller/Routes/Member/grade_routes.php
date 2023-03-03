@@ -24,6 +24,7 @@ trait grade_routes
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderGrade($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -32,6 +33,7 @@ trait grade_routes
     {
         $jsonCommand = json_decode($request->request->get('grade'));
         $response = $this->commandBus->addGrade($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -40,6 +42,7 @@ trait grade_routes
     {
         $jsonCommand = json_decode($request->request->get('grade'));
         $response = $this->commandBus->changeGrade($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

@@ -37,7 +37,6 @@ use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
-use App\YoshiKan\Application\Command\Member\RemoveMemberImage\remove_member_image;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment_overview_mail;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
@@ -108,22 +107,22 @@ class MemberCommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security               $security,
+        protected Security $security,
         protected EntityManagerInterface $entityManager,
-        protected bool                   $isolationMode,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
-        protected string                 $uploadFolder,
-        protected GradeRepository        $gradeRepository,
-        protected GroupRepository        $groupRepository,
-        protected LocationRepository     $locationRepository,
-        protected MemberRepository       $memberRepository,
-        protected PeriodRepository       $periodRepository,
-        protected SettingsRepository     $settingsRepository,
+        protected bool $isolationMode,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
+        protected string $uploadFolder,
+        protected GradeRepository $gradeRepository,
+        protected GroupRepository $groupRepository,
+        protected LocationRepository $locationRepository,
+        protected MemberRepository $memberRepository,
+        protected PeriodRepository $periodRepository,
+        protected SettingsRepository $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-        protected JudogiRepository       $judogiRepository,
-        protected GradeLogRepository     $gradeLogRepository,
-        protected MemberImageRepository  $memberImageRepository,
+        protected JudogiRepository $judogiRepository,
+        protected GradeLogRepository $gradeLogRepository,
+        protected MemberImageRepository $memberImageRepository,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

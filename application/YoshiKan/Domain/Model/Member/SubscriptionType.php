@@ -13,8 +13,6 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 enum SubscriptionType: string
 {
-
     case FULL_YEAR = 'volledig jaar';
     case HALF_YEAR = 'half jaar';
-
 }

@@ -9,7 +9,7 @@ class DeleteMemberImage
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $uploadFolder,
     ) {
     }

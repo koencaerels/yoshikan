@@ -23,6 +23,7 @@ trait configuration_routes
     public function getConfiguration(Request $request)
     {
         $response = $this->queryBus->getConfiguration();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -30,6 +31,7 @@ trait configuration_routes
     public function setupConfiguration(Request $request)
     {
         $response = $this->commandBus->setupConfiguration();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

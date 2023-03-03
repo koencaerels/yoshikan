@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class MemberSuggestModelTest extends TestCase
 {
-
     public function testReadModel(): void
     {
         $model = new \stdClass();
@@ -20,5 +19,4 @@ class MemberSuggestModelTest extends TestCase
         Assert::assertEquals("lastname", $suggestModel->getLastname());
         Assert::assertEquals(new \DateTimeImmutable('2023-02-16 08:00:00'), $suggestModel->getDateOfBirth());
     }
-
 }

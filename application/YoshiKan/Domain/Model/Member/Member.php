@@ -48,6 +48,24 @@ class Member
     #[ORM\Column(length: 36)]
     private string $gender;
 
+    #[ORM\Column(length: 16)]
+    private string $nationalRegisterNumber;
+
+    #[ORM\Column(length: 191)]
+    private string $addressStreet;
+
+    #[ORM\Column(length: 10)]
+    private string $addressNumber;
+
+    #[ORM\Column(length: 10)]
+    private string $addressBox;
+
+    #[ORM\Column(length: 10)]
+    private string $addressZip;
+
+    #[ORM\Column(length: 191)]
+    private string $addressCity;
+
     #[ORM\Column(type: 'text')]
     private string $remarks;
 
@@ -68,14 +86,14 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
-    #[ORM\OneToMany(mappedBy: "member", targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: "EXTRA_LAZY")]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\OrderBy(["id" => "ASC"])]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private ?Collection $gradeLogs;
 
-    #[ORM\OneToMany(mappedBy:"member",targetEntity: "App\YoshiKan\Domain\Model\Member\MemberImage", fetch:"EXTRA_LAZY")]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\MemberImage", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\OrderBy(["id" => "DESC"])]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private ?Collection $memberImages;
 
     // —————————————————————————————————————————————————————————————————————————
@@ -83,13 +101,19 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
+        Gender $gender,
+        Grade $grade,
+        Location $location,
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
     ) {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
@@ -101,6 +125,12 @@ class Member
         $this->location = $location;
         $this->remarks = '';
         $this->profileImage = '';
+        $this->nationalRegisterNumber = $nationalRegisterNumber;
+        $this->addressStreet = $addressStreet;
+        $this->addressNumber = $addressNumber;
+        $this->addressBox = $addressBox;
+        $this->addressZip = $addressZip;
+        $this->addressCity = $addressCity;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -108,13 +138,19 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
+        Gender $gender,
+        Grade $grade,
+        Location $location,
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
     ): self {
         return new self(
             $uuid,
@@ -124,16 +160,28 @@ class Member
             $gender,
             $grade,
             $location,
+            $nationalRegisterNumber,
+            $addressStreet,
+            $addressNumber,
+            $addressBox,
+            $addressZip,
+            $addressCity
         );
     }
 
     public function changeDetails(
-        string             $firstname,
-        string             $lastname,
-        Gender             $gender,
+        string $firstname,
+        string $lastname,
+        Gender $gender,
         \DateTimeImmutable $dateOfBirth,
-        MemberStatus       $status,
-        Location           $location
+        MemberStatus $status,
+        Location $location,
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
     ): void {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -141,6 +189,12 @@ class Member
         $this->dateOfBirth = $dateOfBirth;
         $this->status = $status->value;
         $this->location = $location;
+        $this->nationalRegisterNumber = $nationalRegisterNumber;
+        $this->addressStreet = $addressStreet;
+        $this->addressNumber = $addressNumber;
+        $this->addressBox = $addressBox;
+        $this->addressZip = $addressZip;
+        $this->addressCity = $addressCity;
     }
 
     public function changeGrade(Grade $grade): void
@@ -210,6 +264,36 @@ class Member
     public function getSubscriptions(): array
     {
         return $this->subscriptions->getValues();
+    }
+
+    public function getNationalRegisterNumber(): string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): string
+    {
+        return $this->addressCity;
     }
 
     public function getRemarks(): string

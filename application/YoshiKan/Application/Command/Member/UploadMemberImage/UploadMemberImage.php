@@ -11,9 +11,9 @@ class UploadMemberImage
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int          $id,
+        protected int $id,
         protected UploadedFile $file,
-        protected string       $uploadsFolder,
+        protected string $uploadsFolder,
     ) {
     }
 
@@ -30,6 +30,7 @@ class UploadMemberImage
     {
         return $this->file;
     }
+
     public function getUploadsFolder(): string
     {
         return $this->uploadsFolder;

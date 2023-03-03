@@ -28,7 +28,7 @@ trait subscription_routes
     public function exportSubscriptions(Request $request): void
     {
         $listIds = $request->query->get('ids');
-        $arListIds = explode(',',$listIds);
+        $arListIds = explode(',', $listIds);
         $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
         $now = new \DateTimeImmutable();
         $fileName = $now->format('Ymd') . '_yoshi-kan_inschrijvingen.xlsx';
@@ -38,7 +38,7 @@ trait subscription_routes
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
         $writer->save('php://output');
-        exit();
+        exit;
     }
 
     #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]
@@ -46,6 +46,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('subscription'));
         $response = $this->commandBus->WebSubscriptionAction($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -53,6 +54,7 @@ trait subscription_routes
     public function getTodoSubscriptions(): JsonResponse
     {
         $response = $this->queryBus->getTodoSubscription();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -60,6 +62,7 @@ trait subscription_routes
     public function getSubscriptionsByActivePeriod(): JsonResponse
     {
         $response = $this->queryBus->getSubscriptionsByActivePeriod();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -67,6 +70,7 @@ trait subscription_routes
     public function getAllSubscriptions(): JsonResponse
     {
         $response = $this->queryBus->getAllSubscriptions();
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -75,6 +79,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('list-ids'));
         $response = $this->commandBus->markSubscriptionAsFinished($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -83,6 +88,7 @@ trait subscription_routes
     {
         $response = $this->queryBus->getSubscriptionById($id);
         usleep(500000);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -91,6 +97,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('subscription'));
         $response = $this->commandBus->changeSubscription($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -99,6 +106,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('change-status'));
         $response = $this->commandBus->changeSubscriptionStatus($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -106,6 +114,7 @@ trait subscription_routes
     public function sendPaymentOverviewMail(int $id, Request $request): JsonResponse
     {
         $response = $this->commandBus->sendPaymentOverviewMail($id);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -114,6 +123,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('connect-member'));
         $response = $this->commandBus->connectSubscriptionToMember($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -121,6 +131,7 @@ trait subscription_routes
     public function createMemberFromSubscription(int $id, Request $request): JsonResponse
     {
         $response = $this->commandBus->createMemberFromSubscription($id);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

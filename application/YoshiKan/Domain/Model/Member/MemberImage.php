@@ -31,7 +31,7 @@ class MemberImage
     #[ORM\Column(length: 191)]
     private string $path;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: "EXTRA_LAZY", inversedBy: "memberImages")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY', inversedBy: 'memberImages')]
     #[ORM\JoinColumn(nullable: false)]
     private Member $member;
 
@@ -40,7 +40,7 @@ class MemberImage
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $originalName,
         string $path,
         Member $member,
@@ -56,7 +56,7 @@ class MemberImage
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $originalName,
         string $path,
         Member $member,

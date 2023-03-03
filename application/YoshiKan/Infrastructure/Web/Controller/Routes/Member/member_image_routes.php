@@ -15,6 +15,7 @@ trait member_image_routes
     {
         $image = $this->queryBus->getMemberImageById($id);
         $file = $this->uploadFolder . $image->getPath();
+
         return $this->file($file, $image->getOriginalName(), ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
@@ -32,6 +33,7 @@ trait member_image_routes
         } else {
             $response = false;
         }
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

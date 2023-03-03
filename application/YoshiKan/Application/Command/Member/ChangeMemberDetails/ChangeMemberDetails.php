@@ -27,6 +27,12 @@ class ChangeMemberDetails
         protected \DateTimeImmutable $dateOfBirth,
         protected string             $gender,
         protected int                $locationId,
+        protected string             $nationalRegisterNumber,
+        protected string             $addressStreet,
+        protected string             $addressNumber,
+        protected string             $addressBox,
+        protected string             $addressZip,
+        protected string             $addressCity
     ) {
     }
 
@@ -44,6 +50,12 @@ class ChangeMemberDetails
             new \DateTimeImmutable($json->dateOfBirth),
             $json->gender,
             intval($json->locationId),
+            $json->nationalRegisterNumber,
+            $json->addressStreet,
+            $json->addressNumber,
+            $json->addressBox,
+            $json->addressZip,
+            $json->addressCity
         );
     }
 
@@ -84,5 +96,35 @@ class ChangeMemberDetails
     public function getLocationId(): int
     {
         return $this->locationId;
+    }
+
+    public function getNationalRegisterNumber(): string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): string
+    {
+        return $this->addressCity;
     }
 }

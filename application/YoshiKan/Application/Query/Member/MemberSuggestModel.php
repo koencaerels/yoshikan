@@ -9,8 +9,8 @@ class MemberSuggestModel
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string             $firstname,
-        protected string             $lastname,
+        protected string $firstname,
+        protected string $lastname,
         protected \DateTimeImmutable $dateOfBirth,
     ) {
     }

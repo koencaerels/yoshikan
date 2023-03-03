@@ -27,6 +27,7 @@ trait change_member_grade
         );
         $result = $commandHandler->go($command);
         $this->entityManager->flush();
+
         return $result;
     }
 }

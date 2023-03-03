@@ -22,32 +22,38 @@ class SubscriptionReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int                $id,
-        protected string             $uuid,
-        protected string             $status,
-        protected string             $contactFirstname,
-        protected string             $contactLastname,
-        protected string             $contactEmail,
-        protected string             $contactPhone,
-        protected string             $firstname,
-        protected string             $lastname,
+        protected int $id,
+        protected string $uuid,
+        protected string $status,
+        protected string $contactFirstname,
+        protected string $contactLastname,
+        protected string $contactEmail,
+        protected string $contactPhone,
+        protected string $firstname,
+        protected string $lastname,
         protected \DateTimeImmutable $dateOfBirth,
-        protected string             $gender,
-        protected string             $type,
-        protected int                $numberOfTraining,
-        protected bool               $isExtraTraining,
-        protected bool               $isNewMember,
-        protected bool               $isReductionFamily,
-        protected bool               $isJudogiBelt,
-        protected float              $judogiPrice,
-        protected string             $remarks,
-        protected float              $total,
-        protected bool               $isPaymentOverviewSend,
-        protected PeriodReadModel    $period,
-        protected LocationReadModel  $location,
-        protected array              $settings,
-        protected ?MemberReadModel   $member,
-        protected ?JudogiReadModel   $judogi,
+        protected string $gender,
+        protected string $type,
+        protected int $numberOfTraining,
+        protected bool $isExtraTraining,
+        protected bool $isNewMember,
+        protected bool $isReductionFamily,
+        protected bool $isJudogiBelt,
+        protected float $judogiPrice,
+        protected string $remarks,
+        protected float $total,
+        protected bool $isPaymentOverviewSend,
+        protected PeriodReadModel $period,
+        protected LocationReadModel $location,
+        protected array $settings,
+        protected ?MemberReadModel $member,
+        protected ?JudogiReadModel $judogi,
+        protected ?string $nationalRegisterNumber,
+        protected ?string $addressStreet,
+        protected ?string $addressNumber,
+        protected ?string $addressBox,
+        protected ?string $addressZip,
+        protected ?string $addressCity,
     ) {
     }
 
@@ -67,6 +73,7 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->contactPhone = $this->getContactPhone();
         $json->firstname = $this->getFirstname();
         $json->lastname = $this->getLastname();
+        $json->nationalRegisterNumber = $this->getNationalRegisterNumber();
         $json->dateOfBirth = $this->getDateOfBirth()->format(\DateTimeInterface::ATOM);
         $json->gender = $this->getGender();
         $json->type = $this->getType();
@@ -84,6 +91,11 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->location = $this->getLocation();
         $json->member = $this->getMember();
         $json->judogi = $this->getJudogi();
+        $json->addressStreet = $this->getAddressStreet();
+        $json->addressNumber = $this->getAddressNumber();
+        $json->addressBox = $this->getAddressBox();
+        $json->addressZip = $this->getAddressZip();
+        $json->addressCity = $this->getAddressCity();
 
         return $json;
     }
@@ -130,6 +142,12 @@ class SubscriptionReadModel implements \JsonSerializable
             $model->getSettings(),
             $memberReadModel,
             $judogiReadModel,
+            $model->getNationalRegisterNumber(),
+            $model->getAddressStreet(),
+            $model->getAddressNumber(),
+            $model->getAddressBox(),
+            $model->getAddressZip(),
+            $model->getAddressCity()
         );
     }
 
@@ -265,5 +283,35 @@ class SubscriptionReadModel implements \JsonSerializable
     public function isPaymentOverviewSend(): bool
     {
         return $this->isPaymentOverviewSend;
+    }
+
+    public function getNationalRegisterNumber(): ?string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): ?string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): ?string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): ?string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): ?string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): ?string
+    {
+        return $this->addressCity;
     }
 }

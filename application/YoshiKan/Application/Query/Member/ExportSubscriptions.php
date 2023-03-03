@@ -21,7 +21,7 @@ class ExportSubscriptions
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected PeriodRepository       $periodRepository
+        protected PeriodRepository $periodRepository
     ) {
     }
 
@@ -47,7 +47,7 @@ class ExportSubscriptions
         $sheet->setCellValue([9, $rowCounter], 'Email');
 
         // -- data -----------------------------------------------------------------
-        $rowCounter++;
+        ++$rowCounter;
         foreach ($subscriptions as $subscription) {
             $sheet->setCellValue([1, $rowCounter], 'YKS-' . $subscription->getId());
             $sheet->setCellValue([2, $rowCounter], $subscription->getFirstname());
@@ -63,7 +63,7 @@ class ExportSubscriptions
             }
             $sheet->setCellValue([8, $rowCounter], $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname());
             $sheet->setCellValue([9, $rowCounter], $subscription->getContactEmail());
-            $rowCounter++;
+            ++$rowCounter;
         }
 
         // -- first row bold ------------------------------------------------------
@@ -72,8 +72,8 @@ class ExportSubscriptions
         $sheet->setSelectedCell('A1');
 
         // -- autosize the columns ------------------------------------------------
-        for ($i = 'A'; $i != $sheet->getHighestColumn(); $i++) {
-            $sheet->getColumnDimension($i)->setAutoSize(TRUE);
+        for ($i = 'A'; $i != $sheet->getHighestColumn(); ++$i) {
+            $sheet->getColumnDimension($i)->setAutoSize(true);
         }
 
         return $spreadsheet;

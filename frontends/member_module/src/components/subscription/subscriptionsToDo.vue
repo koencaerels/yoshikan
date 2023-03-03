@@ -89,8 +89,12 @@
                     <div class="text-sm w-16">
                         YKS-{{subscription.id}}
                     </div>
+                    <div class="mr-2">
+                        <div v-if="subscription.isNewMember"><i class="pi pi-user-plus"></i></div>
+                        <div v-else><i class="pi pi-refresh"></i></div>
+                    </div>
                     <div class="text-xs">
-                        <div class="bg-green-400 rounded-full px-2 text-xs text-center w-[10rem] font-bold mt-0.5">
+                        <div class="bg-green-400 rounded-full px-2 text-xs text-center w-[10rem] font-bold mt-1">
                             {{subscription.status}}
                         </div>
                     </div>
@@ -99,8 +103,7 @@
                     </div>
                     <div class="text-xs w-32">
                         (° {{ moment(subscription.dateOfBirth).format("DD/MM/YYYY") }}
-                        - {{ subscription.gender }}
-                        )
+                        <span v-if="subscription.isNewMember"> - {{ subscription.gender }}</span>)
                     </div>
                     <div class="text-xs w-[4.5rem] pr-1">
                         <div v-if="subscription.member">
@@ -127,8 +130,7 @@
                             <div class="mt-2 text-xl">
                                 <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
                                 (° {{ moment(subscription.dateOfBirth).format("DD/MM/YYYY") }}
-                                - {{ subscription.gender }}
-                                )
+                                <span v-if="subscription.isNewMember"> - {{ subscription.gender }}</span>)
                             </div>
                             <div>
                                 <span v-if="subscription.isNewMember" class="mr-4">Nieuw lid</span>

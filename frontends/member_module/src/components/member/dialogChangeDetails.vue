@@ -1,104 +1,144 @@
 <template>
-    <div id="dialogChangeDetails" style="width:600px;" class="text-sm">
-
-        <div class="flex flex-row mt-2">
-            <div class="basis-1/2">
-                <div class="mb-1"><label>Voornaam *</label></div>
-                <span class="p-input-icon-right w-full">
+    <div id="dialogChangeDetails" style="width:750px;" class="text-sm">
+        <!--  status -->
+        <div class="bg-slate-200 rounded-t-lg p-2">
+            <div class="flex">
+                <div class="mt-1.5 ml-2">
+                    Actief?
+                </div>
+                <div class="ml-4 mt-0.5">
+                    <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
+                </div>
+            </div>
+        </div>
+        <!-- personal details -->
+        <div class="bg-slate-300 rounded-b-lg px-4 py-2">
+            <div class="flex flex-row">
+                <div class="basis-1/2">
+                    <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
+                    <span class="p-input-icon-right w-full">
                     <InputText class="w-full p-inputtext-sm" v-model="command.firstname"/>
                     <i v-if="!change$.firstname.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="change$.firstname.$invalid" class="pi pi-times text-red-600"/>
                 </span>
-            </div>
-            <div class="basis-1/2 ml-4">
-                <div class="mb-1"><label>Naam *</label></div>
-                <span class="p-input-icon-right w-full">
+                </div>
+                <div class="basis-1/2 ml-4">
+                    <div class="mb-1"><label class="text-xs">Naam *</label></div>
+                    <span class="p-input-icon-right w-full">
                     <InputText class="w-full p-inputtext-sm" v-model="command.lastname"/>
                     <i v-if="!change$.lastname.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="change$.lastname.$invalid" class="pi pi-times text-red-600"/>
                 </span>
+                </div>
             </div>
-        </div>
-
-        <div class="flex flex-row mt-2">
-            <div class="basis-1/4 text-right">
-                Geboortedatum *
+            <!-- -- rijksregisternummer -------------------------------------------------------------------------------- -->
+            <div class="flex flex-row mt-2">
+                <div class="basis-1/5 text-right text-xs">
+                    Rijksregisternummer*
+                </div>
+                <div class="basis-2/5 ml-5">
+                    <span class="p-input-icon-right w-full">
+                        <InputText class="w-full p-inputtext-sm"
+                                   maxlength="15"
+                                   v-maska
+                                   data-maska="#0.#0.#0-#00.#0"
+                                   data-maska-tokens="0:[0-9]:req"
+                                   v-model="command.nationalRegisterNumber"/>
+                        <i v-if="!change$.nationalRegisterNumber.$invalid" class="pi pi-check text-green-600"/>
+                        <i v-if="change$.nationalRegisterNumber.$invalid" class="pi pi-times text-red-600"/>
+                    </span>
+                </div>
+                <div class="basis-2/5 ml-2 mt-2">
+                <span>
+                    <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
+                    <label for="M" class="text-xs"> M </label>
+                </span>
+                    <span class="ml-2">
+                    <RadioButton name="gender" value="V" v-model="command.gender" input-id="V"/>
+                    <label for="V" class="text-xs"> V </label>
+                </span>
+                    <span class="ml-2">
+                    <RadioButton name="gender" value="X" v-model="command.gender" input-id="X"/>
+                    <label for="X" class="text-xs"> X </label>
+                </span>
+                </div>
             </div>
-            <div class="basis-1/4 ml-4">
-                <div class="mb-1"><label>DD</label></div>
-                <span class="p-input-icon-right w-full">
+            <div class="flex flex-row mt-2 mb-2">
+                <div class="basis-1/5 text-right text-xs">
+                    Geboortedatum*
+                </div>
+                <div class="basis-1/4 ml-4">
+                <span class="p-input-icon-right w-3/4">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthDD"/>
                     <i v-if="!change$.dateOfBirthDD.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="change$.dateOfBirthDD.$invalid" class="pi pi-times text-red-600"/>
                 </span>
-            </div>
-            <div class="basis-1/4 ml-4">
-                <div class="mb-1"><label> / MM</label></div>
-                <span class="p-input-icon-right w-full">
+                    /
+                </div>
+                <div class="basis-1/4 ml-4">
+                <span class="p-input-icon-right w-3/4">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthMM"/>
                     <i v-if="!change$.dateOfBirthMM.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="change$.dateOfBirthMM.$invalid" class="pi pi-times text-red-600"/>
                 </span>
-            </div>
-            <div class="basis-1/4 ml-4">
-                <div class="mb-1"><label> / YYYY</label></div>
+                    /
+                </div>
+                <div class="basis-1/4 ml-4">
                 <span class="p-input-icon-right w-full">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthYYYY"/>
                     <i v-if="!change$.dateOfBirthYYYY.$invalid" class="pi pi-check text-green-600"/>
                     <i v-if="change$.dateOfBirthYYYY.$invalid" class="pi pi-times text-red-600"/>
                 </span>
+                </div>
             </div>
         </div>
-
         <div class="flex flex-row mt-4">
-            <div class="basis-1/4 text-right">
-                Geslacht *
+            <div class="basis-2/5">
+                <div class="flex flex-row mt-8">
+                    <div class="basis-1/4 text-right">
+                        Locatie*
+                    </div>
+                    <div class="basis-3/4 ml-4">
+                        <div v-if="appStore.configuration">
+                            <div v-for="location in appStore.configuration.locations" class="mr-4 mt-1">
+                                <RadioButton name="location" :value="location.id"
+                                             v-model="command.locationId"
+                                             :input-id="location.name"/>
+                                <label :for="location.name" class="ml-2"> {{ location.name }} </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="basis-1/2 ml-4">
-                <span>
-                    <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
-                    <label for="M"> M </label>
-                </span>
-                <span class="ml-2">
-                    <RadioButton name="gender" value="V" v-model="command.gender" input-id="V"/>
-                    <label for="V"> V </label>
-                </span>
-                <span class="ml-2">
-                    <RadioButton name="gender" value="X" v-model="command.gender" input-id="X"/>
-                    <label for="X"> X </label>
-                </span>
-            </div>
-        </div>
-        <hr class="mt-4">
-        <div class="flex flex-row mt-4">
-            <div class="basis-1/4 text-right">
-                Locatie *
-            </div>
-            <div class="basis-1/2 ml-4">
-                <div v-if="appStore.configuration">
-                    <div v-for="location in appStore.configuration.locations" class="mr-4 mt-1">
-                        <RadioButton name="location" :value="location.id"
-                                     v-model="command.locationId"
-                                     :input-id="location.name"/>
-                        <label :for="location.name" class="ml-2"> {{ location.name }} </label>
+            <div class="basis-3/5">
+                <div class="flex flex-row mt-1">
+                    <div class="basis-3/5">
+                        <div class="mb-1"><label class="text-xs">Straat *</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressStreet"/>
+                    </div>
+                    <div class="basis-1/5 ml-2">
+                        <div class="mb-1"><label class="text-xs">Nummer *</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressNumber"/>
+                    </div>
+                    <div class="basis-1/5 ml-2">
+                        <div class="mb-1"><label class="text-xs">Bus</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressBox"/>
+                    </div>
+                </div>
+                <div class="flex flex-row mt-1">
+                    <div class="basis-1/4">
+                        <div class="mb-1"><label class="text-xs">Postcode *</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressZip"/>
+                    </div>
+                    <div class="basis-3/4 ml-2">
+                        <div class="mb-1"><label class="text-xs">Gemeente *</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressCity"/>
                     </div>
                 </div>
             </div>
         </div>
-        <hr class="mt-4">
         <div class="flex flex-row mt-4">
-            <div class="basis-1/4 text-right">
-                Actief?
-            </div>
-            <div class="basis-1/2 ml-4">
-                <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
-            </div>
-        </div>
-
-        <hr class="mt-4">
-        <div class="flex flex-row mt-4">
-            <div class="basis-1/2">&nbsp;</div>
-            <div class="basis-1/2">
+            <div class="w-full">
                 <Button v-if="!isSaving"
                         label="Bewaar profiel"
                         @click="saveDetails"
@@ -110,8 +150,6 @@
                         class="p-button-success p-button-sm w-full"/>
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -125,6 +163,7 @@ import type {ChangeMemberDetailsCommand} from "@/api/command/changeMemberDetails
 import {maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {changeMemberDetails} from "@/api/command/changeMemberDetails";
+import {vMaska} from "maska";
 
 const appStore = useAppStore();
 const memberStore = useMemberStore();
@@ -142,7 +181,13 @@ const command = ref<ChangeMemberDetailsCommand>({
     dateOfBirthMM: moment(memberStore.memberDetail?.dateOfBirth ?? new Date()).format("MM"),
     dateOfBirthYYYY: moment(memberStore.memberDetail?.dateOfBirth ?? new Date()).format("YYYY"),
     gender: memberStore.memberDetail?.gender ?? 'M',
-    locationId: memberStore.memberDetail?.location.id ?? 0
+    locationId: memberStore.memberDetail?.location.id ?? 0,
+    nationalRegisterNumber: memberStore.memberDetail?.nationalRegisterNumber ?? '',
+    addressStreet: memberStore.memberDetail?.addressStreet ?? '',
+    addressNumber: memberStore.memberDetail?.addressNumber ?? '',
+    addressBox: memberStore.memberDetail?.addressBox ?? '',
+    addressZip: memberStore.memberDetail?.addressZip ?? '',
+    addressCity: memberStore.memberDetail?.addressCity ?? ''
 });
 
 const dateValidator = function (value: string) {
@@ -168,6 +213,10 @@ const dateValidator = function (value: string) {
     return true;
 };
 
+const nationalRegisterNumberValidator = function (value: string) {
+    return (command.value.nationalRegisterNumber.length === 15);
+}
+
 const rules = {
     firstname: {required},
     lastname: {required},
@@ -175,6 +224,7 @@ const rules = {
     dateOfBirthMM: {required, numeric, maxValueValue: maxValue(12), minValueValue: minValue(1), dateValidator},
     dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2200), dateValidator},
     locationId: {minValueValue: minValue(1)},
+    nationalRegisterNumber: {nationalRegisterNumberValidator}
 };
 
 const change$ = useVuelidate(rules, command);

@@ -33,6 +33,12 @@ export interface ChangeSubscriptionCommand {
     remarks: string;
     judogiId?:number;
     total: string;
+    nationalRegisterNumber:string;
+    addressStreet:string;
+    addressNumber:string;
+    addressBox:string;
+    addressZip:string;
+    addressCity:string;
 }
 
 export async function changeSubscription(command: ChangeSubscriptionCommand) {

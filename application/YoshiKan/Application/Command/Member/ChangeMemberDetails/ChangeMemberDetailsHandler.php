@@ -21,7 +21,7 @@ use App\YoshiKan\Domain\Model\Member\MemberStatus;
 class ChangeMemberDetailsHandler
 {
     public function __construct(
-        protected MemberRepository   $memberRepository,
+        protected MemberRepository $memberRepository,
         protected LocationRepository $locationRepository
     ) {
     }
@@ -38,7 +38,13 @@ class ChangeMemberDetailsHandler
             $gender,
             $command->getDateOfBirth(),
             $status,
-            $location
+            $location,
+            $command->getNationalRegisterNumber(),
+            $command->getAddressStreet(),
+            $command->getAddressNumber(),
+            $command->getAddressBox(),
+            $command->getAddressZip(),
+            $command->getAddressCity()
         );
         $this->memberRepository->save($member);
 

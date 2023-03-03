@@ -41,15 +41,15 @@ class GradeLog
 
     // ------------------------------------------------------------- associations
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: "EXTRA_LAZY", inversedBy: "gradeLogs")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY', inversedBy: 'gradeLogs')]
     #[ORM\JoinColumn(nullable: false)]
     private Member $member;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private Grade $fromGrade;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Grade", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private Grade $toGrade;
 
@@ -58,12 +58,12 @@ class GradeLog
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
+        Uuid $uuid,
         \DateTimeImmutable $date,
-        string             $remark,
-        Member             $member,
-        Grade              $fromGrade,
-        Grade              $toGrade,
+        string $remark,
+        Member $member,
+        Grade $fromGrade,
+        Grade $toGrade,
     ) {
         $this->uuid = $uuid;
         $this->date = $date;
@@ -78,12 +78,12 @@ class GradeLog
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
+        Uuid $uuid,
         \DateTimeImmutable $date,
-        string             $remark,
-        Member             $member,
-        Grade              $fromGrade,
-        Grade              $toGrade,
+        string $remark,
+        Member $member,
+        Grade $fromGrade,
+        Grade $toGrade,
     ): self {
         return new self(
             $uuid,

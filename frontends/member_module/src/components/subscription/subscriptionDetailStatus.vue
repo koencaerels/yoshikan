@@ -25,24 +25,46 @@
                         <Dropdown class="w-full" v-model="newStatus" :options="status"/>
                     </div>
                     <div>
-                        <Button v-if="!isSaving"
-                                icon="pi pi-save"
-                                class="p-button-success"
-                                @click="changeStatus"/>
-                        <Button v-else
-                                disabled
-                                class="p-button-success"
-                                icon="pi pi-spinner spin"/>
+                        <div v-if="memberStore.subscriptionDetail.status === 'betaald'">
+                            <Button v-if="!isSaving"
+                                    icon="pi pi-save"
+                                    class="p-button-success"
+                                    @click="changeStatus"/>
+                            <Button v-else
+                                    disabled
+                                    class="p-button-success"
+                                    icon="pi pi-spinner spin"/>
+
+                        </div>
+                        <div v-else>
+                            <Button v-if="!isSaving"
+                                    icon="pi pi-save"
+                                    class="p-button-warning"
+                                    @click="changeStatus"/>
+                            <Button v-else
+                                    disabled
+                                    class="p-button-warning"
+                                    icon="pi pi-spinner spin"/>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-2 pb-2">
                     <div v-if="memberStore.subscriptionDetail">
                         <div v-if="memberStore.subscriptionDetail.status === 'wachtend op betaling'">
-                            <Button class="p-button-sm w-full"
-                                    icon="pi pi-envelope"
-                                    @click="showMailPreviewDialog"
-                                    :label="buttonLabel"
-                            />
+                            <div v-if="memberStore.subscriptionDetail.isPaymentOverviewSend">
+                                <Button class="p-button-sm w-full p-button-outlined"
+                                        icon="pi pi-envelope"
+                                        @click="showMailPreviewDialog"
+                                        :label="buttonLabel"
+                                />
+                            </div>
+                            <div v-else>
+                                <Button class="p-button-sm w-full p-button-warning"
+                                        icon="pi pi-envelope"
+                                        @click="showMailPreviewDialog"
+                                        :label="buttonLabel"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,7 +74,7 @@
 
     <!-- preview of the mail that is going te be send -->
     <Dialog v-model:visible="showMailPreview" v-if="memberStore.subscriptionDetail"
-            :header="'Email met betalings overzicht voor YKS-'+memberStore.subscriptionDetail.id"
+            :header="'Email met betalings-overzicht voor YKS-'+memberStore.subscriptionDetail.id"
             :modal="true">
         <subscription-payment-mail-preview v-on:send="hideMailPreviewDialog"/>
     </Dialog>

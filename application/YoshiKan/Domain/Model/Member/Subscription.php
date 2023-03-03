@@ -67,32 +67,52 @@ class Subscription
     #[ORM\Column]
     private int $numberOfTraining = 1;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isExtraTraining = false;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isNewMember = false;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isReductionFamily = false;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isJudogiBelt = false;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private float $judogiPrice = 0;
 
     #[ORM\Column(type: 'text')]
     private string $remarks;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private float $total = 0;
 
     #[ORM\Column(type: 'json')]
     private array $settings;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isPaymentOverviewSend = false;
+
+    // -- extra fields for new members ------------------------------------------
+
+    #[ORM\Column(length: 16, nullable: true)]
+    private ?string $nationalRegisterNumber = null;
+
+    #[ORM\Column(length: 191, nullable: true)]
+    private ?string $addressStreet = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $addressNumber = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $addressBox = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $addressZip = null;
+
+    #[ORM\Column(length: 191, nullable: true)]
+    private ?string $addressCity = null;
 
     // ------------------------------------------------------------ associations
 
@@ -108,7 +128,7 @@ class Subscription
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Judogi", fetch: "EXTRA_LAZY", inversedBy: "subscriptions")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Judogi", fetch: 'EXTRA_LAZY', inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Judogi $judogi;
 
@@ -117,25 +137,25 @@ class Subscription
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        Period             $period,
-        Location           $location,
-        array              $settings,
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Period $period,
+        Location $location,
+        array $settings,
     ) {
         $this->uuid = $uuid;
         $this->contactFirstname = $contactFirstname;
@@ -165,25 +185,25 @@ class Subscription
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        Period             $period,
-        Location           $location,
-        array              $settings
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Period $period,
+        Location $location,
+        array $settings
     ): self {
         return new self(
             $uuid,
@@ -209,23 +229,23 @@ class Subscription
     }
 
     public function change(
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        float              $total,
-        Location           $location,
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        float $total,
+        Location $location,
     ): void {
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -244,6 +264,22 @@ class Subscription
         $this->remarks = $remarks;
         $this->total = $total;
         $this->location = $location;
+    }
+
+    public function setNewMemberFields(
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
+    ) {
+        $this->nationalRegisterNumber = $nationalRegisterNumber;
+        $this->addressStreet = $addressStreet;
+        $this->addressNumber = $addressNumber;
+        $this->addressBox = $addressBox;
+        $this->addressZip = $addressZip;
+        $this->addressCity = $addressCity;
     }
 
     public function changeStatus(SubscriptionStatus $status): void
@@ -392,6 +428,36 @@ class Subscription
         return $this->isPaymentOverviewSend;
     }
 
+    public function getNationalRegisterNumber(): ?string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): ?string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): ?string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): ?string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): ?string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): ?string
+    {
+        return $this->addressCity;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Other model getters
     // —————————————————————————————————————————————————————————————————————————
@@ -424,13 +490,13 @@ class Subscription
     {
         $fee = 0;
         if ($this->type === SubscriptionType::FULL_YEAR->value) {
-            if ($this->numberOfTraining === 1) {
+            if (1 === $this->numberOfTraining) {
                 $fee = floatval($this->settings['yearlyFee1Training']);
             } else {
                 $fee = floatval($this->settings['yearlyFee2Training']);
             }
         } else {
-            if ($this->numberOfTraining === 1) {
+            if (1 === $this->numberOfTraining) {
                 $fee = floatval($this->settings['halfYearlyFee1Training']);
             } else {
                 $fee = floatval($this->settings['halfYearlyFee2Training']);
@@ -440,6 +506,7 @@ class Subscription
             $reduction = floatval($this->settings['familyDiscount']) * $fee / 100;
             $fee = ceil($fee - $reduction);
         }
+
         return $fee;
     }
 }

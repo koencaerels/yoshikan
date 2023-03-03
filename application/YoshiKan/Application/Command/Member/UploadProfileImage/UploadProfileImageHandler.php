@@ -17,16 +17,18 @@ class UploadProfileImageHandler
         $extension = mb_strtolower($image->guessExtension());
 
         // -- check the extension and filesize ---------------------------------
-        if (!($extension === 'png'
-            || $extension === 'jpeg'
-            || $extension === 'jpg'
-            || $extension === 'gif')) {
+        if (!('png' === $extension
+            || 'jpeg' === $extension
+            || 'jpg' === $extension
+            || 'gif' === $extension)) {
             throw new \Exception('Could not save the uploaded file');
+
             return false;
         }
         $filesize = filesize($image->getRealPath());
         if ($filesize > 3000000) {
             throw new \Exception('Could not save the uploaded file');
+
             return false;
         }
 
@@ -42,6 +44,7 @@ class UploadProfileImageHandler
             $image->move($command->getUploadsFolder() . $uploadFolder, $uploadFile);
         } catch (FileException $e) {
             throw new \Exception('Could not copy the uploaded file');
+
             return false;
         }
 

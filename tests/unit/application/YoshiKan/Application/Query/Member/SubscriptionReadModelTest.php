@@ -70,5 +70,4 @@ class SubscriptionReadModelTest extends TestCase
         Assert::assertEquals(2, $result->period->id);
         Assert::assertEquals(3, $result->location->id);
     }
-
 }

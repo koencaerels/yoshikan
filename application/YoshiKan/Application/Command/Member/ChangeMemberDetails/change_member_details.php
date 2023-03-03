@@ -23,6 +23,7 @@ trait change_member_details
         $commandHandler = new ChangeMemberDetailsHandler($this->memberRepository, $this->locationRepository);
         $result = $commandHandler->go($command);
         $this->entityManager->flush();
+
         return $result;
     }
 }

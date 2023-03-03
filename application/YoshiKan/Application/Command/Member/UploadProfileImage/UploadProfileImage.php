@@ -11,9 +11,9 @@ class UploadProfileImage
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int          $id,
+        protected int $id,
         protected UploadedFile $imageBlob,
-        protected string       $uploadsFolder,
+        protected string $uploadsFolder,
     ) {
     }
 

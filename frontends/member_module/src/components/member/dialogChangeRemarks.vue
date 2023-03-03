@@ -3,9 +3,8 @@
         <div>
             <simple-editor v-model="command.remarks"/>
         </div>
-        <div class="flex flex-row mt-4">
-            <div class="basis-1/2">&nbsp;</div>
-            <div class="basis-1/2">
+        <div>
+            <div class="w-full mt-2">
                 <Button v-if="!isSaving"
                         label="Bewaar opmerkingen"
                         @click="saveRemarks"

@@ -21,13 +21,13 @@ class SaveSettings
 
     private function __construct(
         protected string $code,
-        protected float  $yearlyFee2Training,
-        protected float  $yearlyFee1Training,
-        protected float  $halfYearlyFee2Training,
-        protected float  $halfYearlyFee1Training,
-        protected float  $extraTrainingFee,
-        protected float  $newMemberSubscriptionFee,
-        protected int    $familyDiscount,
+        protected float $yearlyFee2Training,
+        protected float $yearlyFee1Training,
+        protected float $halfYearlyFee2Training,
+        protected float $halfYearlyFee1Training,
+        protected float $extraTrainingFee,
+        protected float $newMemberSubscriptionFee,
+        protected int $familyDiscount,
     ) {
     }
 

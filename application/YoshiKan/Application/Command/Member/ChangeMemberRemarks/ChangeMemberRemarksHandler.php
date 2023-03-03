@@ -26,6 +26,7 @@ class ChangeMemberRemarksHandler
         $member = $this->memberRepository->getById($command->getId());
         $member->changeRemarks($command->getRemarks());
         $this->memberRepository->save($member);
+
         return true;
     }
 }

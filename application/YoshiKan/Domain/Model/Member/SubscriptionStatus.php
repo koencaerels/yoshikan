@@ -13,11 +13,9 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 enum SubscriptionStatus: string
 {
-
     case NEW = 'nieuw';
     case AWAITING_PAYMENT = 'wachtend op betaling';
     case PAYED = 'betaald';
     case COMPLETE = 'afgewerkt';
     case REJECTED = 'afgewezen';
-
 }

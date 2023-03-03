@@ -40,6 +40,7 @@ class ChangeJudogiHandler
             $command->getPrice(),
         );
         $this->judogiRepo->save($model);
+
         return true;
     }
 }

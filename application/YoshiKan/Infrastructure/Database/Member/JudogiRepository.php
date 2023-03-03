@@ -19,9 +19,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class JudogiRepository
-    extends ServiceEntityRepository
-    implements \App\YoshiKan\Domain\Model\Member\JudogiRepository
+final class JudogiRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\JudogiRepository
 {
     public const NO_ENTITY_FOUND = 'no_judogi_found';
 
@@ -52,6 +50,7 @@ final class JudogiRepository
         if ($model->getId()) {
             $id = $model->getId();
         }
+
         return $id;
     }
 
@@ -59,6 +58,7 @@ final class JudogiRepository
     {
         $em = $this->getEntityManager();
         $em->remove($model);
+
         return true;
     }
 
@@ -68,6 +68,7 @@ final class JudogiRepository
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
         }
+
         return $model;
     }
 
@@ -81,6 +82,7 @@ final class JudogiRepository
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
         }
+
         return $model;
     }
 

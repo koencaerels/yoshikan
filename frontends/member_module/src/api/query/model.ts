@@ -100,6 +100,12 @@ export interface Subscription {
     isPaymentOverviewSend: boolean;
     member?: Member;
     selected: boolean;
+    nationalRegisterNumber:string;
+    addressStreet:string;
+    addressNumber:string;
+    addressBox:string;
+    addressZip:string;
+    addressCity:string;
 }
 
 export interface Member {
@@ -117,6 +123,12 @@ export interface Member {
     gradeLogs: GradeLog[];
     images: MemberImage[];
     profileImage: string;
+    nationalRegisterNumber:string;
+    addressStreet:string;
+    addressNumber:string;
+    addressBox:string;
+    addressZip:string;
+    addressCity:string;
 }
 
 export interface GradeLog {

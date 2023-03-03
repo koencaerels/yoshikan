@@ -47,9 +47,9 @@ class Judogi
     #[ORM\Column]
     private float $price = 0;
 
-    #[ORM\OneToMany(mappedBy: "judogi", targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: "EXTRA_LAZY")]
+    #[ORM\OneToMany(mappedBy: 'judogi', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\OrderBy(["id" => "ASC"])]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private ?Collection $subscriptions;
 
     // —————————————————————————————————————————————————————————————————————————
@@ -57,11 +57,11 @@ class Judogi
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
         string $size,
-        float  $price,
+        float $price,
     ) {
         $this->uuid = $uuid;
         $this->code = $code;
@@ -75,11 +75,11 @@ class Judogi
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
+        Uuid $uuid,
         string $code,
         string $name,
         string $size,
-        float  $price,
+        float $price,
     ): self {
         return new self(
             $uuid,
@@ -94,7 +94,7 @@ class Judogi
         string $code,
         string $name,
         string $size,
-        float  $price,
+        float $price,
     ): void {
         $this->code = $code;
         $this->name = $name;

@@ -24,6 +24,7 @@ trait location_routes
     {
         $jsonCommand = json_decode($request->request->get('sequence'));
         $response = $this->commandBus->orderLocation($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -32,6 +33,7 @@ trait location_routes
     {
         $jsonCommand = json_decode($request->request->get('location'));
         $response = $this->commandBus->addLocation($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
@@ -40,6 +42,7 @@ trait location_routes
     {
         $jsonCommand = json_decode($request->request->get('location'));
         $response = $this->commandBus->changeLocation($jsonCommand);
+
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 }

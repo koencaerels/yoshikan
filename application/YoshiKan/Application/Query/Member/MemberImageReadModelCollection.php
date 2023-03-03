@@ -23,6 +23,7 @@ class MemberImageReadModelCollection implements \JsonSerializable
     {
         $json = new \stdClass();
         $json->collection = $this->getCollection();
+
         return $json;
     }
 

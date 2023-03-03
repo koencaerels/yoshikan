@@ -39,7 +39,7 @@ class AddGroupHandler
             $command->getMinAge(),
             $command->getMaxAge(),
         );
-        $group->setSequence($this->repo->getMaxSequence()+1);
+        $group->setSequence($this->repo->getMaxSequence() + 1);
         $this->repo->save($group);
 
         return true;

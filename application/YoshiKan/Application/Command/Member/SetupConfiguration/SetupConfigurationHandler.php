@@ -25,7 +25,7 @@ class SetupConfigurationHandler
     // ———————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected PeriodRepository   $periodRepository,
+        protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
     ) {
     }

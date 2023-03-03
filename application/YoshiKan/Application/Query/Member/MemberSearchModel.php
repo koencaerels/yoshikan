@@ -21,10 +21,10 @@ class MemberSearchModel
 
     private function __construct(
         protected string $keyword,
-        protected int    $locationId,
-        protected int    $gradeId,
-        protected int    $yearOfBirth,
-        protected int    $groupId,
+        protected int $locationId,
+        protected int $gradeId,
+        protected int $yearOfBirth,
+        protected int $groupId,
     ) {
     }
 
@@ -51,6 +51,7 @@ class MemberSearchModel
         if (isset($json->group)) {
             $groupId = intval($json->group->id);
         }
+
         return new self(
             $keyword,
             $locationId,

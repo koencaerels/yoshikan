@@ -22,29 +22,29 @@ use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 class GetMember
 {
     public function __construct(
-        protected MemberRepository   $memberRepository,
+        protected MemberRepository $memberRepository,
         protected LocationRepository $locationRepository,
-        protected GradeRepository    $gradeRepository,
-        protected GroupRepository    $groupRepository,
-        protected PeriodRepository   $periodRepository
+        protected GradeRepository $gradeRepository,
+        protected GroupRepository $groupRepository,
+        protected PeriodRepository $periodRepository
     ) {
     }
 
     public function search(MemberSearchModel $searchModel): MemberReadModelCollection
     {
         $location = null;
-        if ($searchModel->getLocationId() != 0) {
+        if (0 != $searchModel->getLocationId()) {
             $location = $this->locationRepository->getById($searchModel->getLocationId());
         }
         $grade = null;
-        if ($searchModel->getGradeId() != 0) {
+        if (0 != $searchModel->getGradeId()) {
             $grade = $this->gradeRepository->getById($searchModel->getGradeId());
         }
 
         // -- filter on the group -------------------------------------------------------
         $minYearOfBirth = 0;
         $maxYearOfBirth = 0;
-        if ($searchModel->getGroupId() != 0) {
+        if (0 != $searchModel->getGroupId()) {
             $group = $this->groupRepository->getById($searchModel->getGroupId());
             $activePeriod = $this->periodRepository->getActive();
             $startYear = intval($activePeriod->getStartDate()->format('Y'));
@@ -82,12 +82,14 @@ class GetMember
         foreach ($members as $member) {
             $collection->addItem(MemberReadModel::hydrateFromModel($member));
         }
+
         return $collection;
     }
 
     public function getById(int $id): MemberReadModel
     {
         $member = $this->memberRepository->getById($id);
+
         return MemberReadModel::hydrateFromModel($member, true);
     }
 }

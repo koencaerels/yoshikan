@@ -9,6 +9,7 @@ trait get_member_image
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
         $query = new GetMemberImage($this->memberImageRepository);
+
         return $query->getById($id);
     }
 }

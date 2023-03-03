@@ -35,7 +35,7 @@ class AddPeriodHandler
             $command->getStartDate(),
             $command->getEndDate(),
         );
-        $period->setSequence($this->repo->getMaxSequence()+1);
+        $period->setSequence($this->repo->getMaxSequence() + 1);
         $this->repo->save($period);
 
         return true;

@@ -37,7 +37,7 @@ class AddLocationHandler
             $command->getCode(),
             $command->getName(),
         );
-        $location->setSequence($this->repo->getMaxSequence()+1);
+        $location->setSequence($this->repo->getMaxSequence() + 1);
         $this->repo->save($location);
 
         return true;

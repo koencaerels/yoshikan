@@ -11,9 +11,8 @@
 
 namespace App\YoshiKan\Domain\Model\Member;
 
-enum MemberStatus: string {
-
+enum MemberStatus: string
+{
     case ACTIVE = 'actief';
     case NON_ACTIVE = 'niet actief';
-
 }

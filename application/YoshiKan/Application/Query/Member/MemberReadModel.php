@@ -22,20 +22,26 @@ class MemberReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int                              $id,
-        protected string                           $uuid,
-        protected string                           $status,
-        protected string                           $firstname,
-        protected string                           $lastname,
-        protected \DateTimeImmutable               $dateOfBirth,
-        protected string                           $gender,
-        protected GradeReadModel                   $grade,
-        protected LocationReadModel                $location,
-        protected string                           $profileImage,
+        protected int $id,
+        protected string $uuid,
+        protected string $status,
+        protected string $firstname,
+        protected string $lastname,
+        protected \DateTimeImmutable $dateOfBirth,
+        protected string $gender,
+        protected GradeReadModel $grade,
+        protected LocationReadModel $location,
+        protected string $profileImage,
+        protected string $nationalRegisterNumber,
+        protected string $addressStreet,
+        protected string $addressNumber,
+        protected string $addressBox,
+        protected string $addressZip,
+        protected string $addressCity,
         protected ?SubscriptionReadModelCollection $subscriptions = null,
-        protected ?string                          $remarks = null,
-        protected ?GradeLogReadModelCollection     $gradeLogs = null,
-        protected ?MemberImageReadModelCollection  $images = null
+        protected ?string $remarks = null,
+        protected ?GradeLogReadModelCollection $gradeLogs = null,
+        protected ?MemberImageReadModelCollection $images = null,
     ) {
     }
 
@@ -51,11 +57,18 @@ class MemberReadModel implements \JsonSerializable
         $json->status = $this->getStatus();
         $json->firstname = $this->getFirstname();
         $json->lastname = $this->getLastname();
+        $json->nationalRegisterNumber = $this->getNationalRegisterNumber();
         $json->dateOfBirth = $this->getDateOfBirth()->format(\DateTimeInterface::ATOM);
         $json->gender = $this->getGender();
         $json->grade = $this->getGrade();
         $json->location = $this->getLocation();
         $json->profileImage = $this->getProfileImage();
+        $json->addressStreet = $this->getAddressStreet();
+        $json->addressNumber = $this->getAddressNumber();
+        $json->addressBox = $this->getAddressBox();
+        $json->addressZip = $this->getAddressZip();
+        $json->addressCity = $this->getAddressCity();
+
         if (!is_null($this->getSubscriptions())) {
             $json->subscriptions = $this->getSubscriptions()->getCollection();
         }
@@ -102,6 +115,12 @@ class MemberReadModel implements \JsonSerializable
                 GradeReadModel::hydrateFromModel($model->getGrade()),
                 LocationReadModel::hydrateFromModel($model->getLocation()),
                 $model->getProfileImage(),
+                $model->getNationalRegisterNumber(),
+                $model->getAddressStreet(),
+                $model->getAddressNumber(),
+                $model->getAddressBox(),
+                $model->getAddressZip(),
+                $model->getAddressCity(),
                 $subscriptions,
                 $model->getRemarks(),
                 $gradeLogs,
@@ -119,8 +138,15 @@ class MemberReadModel implements \JsonSerializable
                 GradeReadModel::hydrateFromModel($model->getGrade()),
                 LocationReadModel::hydrateFromModel($model->getLocation()),
                 $model->getProfileImage(),
+                $model->getNationalRegisterNumber(),
+                $model->getAddressStreet(),
+                $model->getAddressNumber(),
+                $model->getAddressBox(),
+                $model->getAddressZip(),
+                $model->getAddressCity(),
             );
         }
+
         return $rm;
     }
 
@@ -196,5 +222,35 @@ class MemberReadModel implements \JsonSerializable
     public function getProfileImage(): string
     {
         return $this->profileImage;
+    }
+
+    public function getNationalRegisterNumber(): string
+    {
+        return $this->nationalRegisterNumber;
+    }
+
+    public function getAddressStreet(): string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): string
+    {
+        return $this->addressCity;
     }
 }
