@@ -95,7 +95,7 @@ class MemberModuleController
             $this->entityManager->getRepository(Judogi::class)
         );
 
-        $this->commandBus = new MemberCommandBus(
+        $commandBus = new MemberCommandBus(
             $this->security,
             $this->entityManager,
             false,
@@ -163,7 +163,7 @@ class MemberModuleController
                     $file,
                     $this->uploadFolder
                 );
-                $response = $this->commandBus->uploadMemberImage($command);
+                $response = $commandBus->uploadMemberImage($command);
                 $message = 'Profiel foto opgeladen!';
             }
         }

@@ -27,6 +27,7 @@ use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
@@ -59,6 +60,7 @@ class MemberQueryBus
         protected SubscriptionRepository $subscriptionRepository,
         protected JudogiRepository $judogiRepository,
         protected MemberImageRepository $memberImageRepository,
+        protected FederationRepository $federationRepository
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

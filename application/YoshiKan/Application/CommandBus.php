@@ -19,6 +19,7 @@ use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use App\YoshiKan\Infrastructure\Database\Member\MemberRepository;
 use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
 use App\YoshiKan\Infrastructure\Database\Member\SettingsRepository;
@@ -51,6 +52,7 @@ class CommandBus
         protected JudogiRepository $judogiRepository,
         protected SettingsRepository $settingsRepository,
         protected MemberRepository $memberRepository,
+        protected FederationRepository $federationRepository
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

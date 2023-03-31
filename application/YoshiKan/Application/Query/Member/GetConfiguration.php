@@ -20,6 +20,7 @@ use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
+use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 
 class GetConfiguration
 {
@@ -30,6 +31,7 @@ class GetConfiguration
         protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
         protected JudogiRepository $judogiRepository,
+        protected FederationRepository $federationRepository,
     ) {
     }
 
@@ -42,6 +44,7 @@ class GetConfiguration
         $activePeriod = $this->periodRepository->getActive();
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
         $judogi = $this->judogiRepository->getAll();
+        $federations = $this->federationRepository->getAll();
 
         $gradeCollection = new GradeReadModelCollection();
         foreach ($grades as $grade) {
@@ -67,12 +70,18 @@ class GetConfiguration
             $judogiCollection->addItem(JudogiReadModel::hydrateFromModel($judogiItem));
         }
 
+        $federationCollection = new FederationReadModelCollection();
+        foreach ($federations as $federation) {
+            $federationCollection->addItem(FederationReadModel::hydrateFromModel($federation));
+        }
+
         return new ConfigurationReadModel(
             $gradeCollection,
             $locationCollection,
             $groupCollection,
             $periodCollection,
             $judogiCollection,
+            $federationCollection,
             $activePeriodReadModel,
             $settingsReadModel
         );

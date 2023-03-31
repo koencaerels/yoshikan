@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Command\Member\AddFederation\add_federation;
 use App\YoshiKan\Application\Command\Member\AddGrade\add_grade;
 use App\YoshiKan\Application\Command\Member\AddGroup\add_group;
 use App\YoshiKan\Application\Command\Member\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Member\AddLocation\add_location;
 use App\YoshiKan\Application\Command\Member\AddPeriod\add_period;
+use App\YoshiKan\Application\Command\Member\ChangeFederation\change_federation;
 use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
 use App\YoshiKan\Application\Command\Member\ChangeJudogi\change_judogi;
@@ -32,6 +34,7 @@ use App\YoshiKan\Application\Command\Member\ConnectSubscriptionToMember\connect_
 use App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription\create_member_from_subscription;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionsAsFinished\mark_subscriptions_as_finished;
+use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
@@ -54,6 +57,7 @@ use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -79,6 +83,9 @@ class MemberCommandBus
     use add_judogi;
     use change_judogi;
     use order_judogi;
+    use add_federation;
+    use change_federation;
+    use order_federation;
 
     // -- subscription --------------------------------------------------------
     use web_subscribe;
@@ -123,6 +130,7 @@ class MemberCommandBus
         protected JudogiRepository $judogiRepository,
         protected GradeLogRepository $gradeLogRepository,
         protected MemberImageRepository $memberImageRepository,
+        protected FederationRepository $federationRepository
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

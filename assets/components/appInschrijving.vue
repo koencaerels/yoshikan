@@ -23,13 +23,14 @@
             <div class="flex flex-row">
                 <div class="basis-1/4 text-right mr-4 text-lg">Nieuw lid?</div>
                 <div class="basis-3/4">
-                    <o-radio name="newMember" :native-value="true" size-class="large"
+                    <o-radio id="radio_new_member_yes" name="newMember" :native-value="true" size-class="large"
                              v-model="subscription.newMember" variant="info">
                         <span class="text-lg">Ja</span>
                     </o-radio>
-                    <o-radio name="newMember" :native-value="false" size-class="large"
+                    <o-radio id="radio_new_member_no" name="newMember" :native-value="false" size-class="large"
                              v-model="subscription.newMember" variant="info">
                         <span class="text-lg">Nee</span>
+                        <span class="text-sm"> ( = herinschrijving)</span>
                     </o-radio>
                 </div>
             </div>
@@ -146,7 +147,7 @@
                     </div>
                     <div class="basis-3/4">
                         <o-field class="w-full" :variant="nationalRegisterNumberVariant">
-                            <o-input id="ti_national_number"
+                            <o-input id="ti_national_register_number"
                                      v-on:input="onChangeNationalNumber"
                                      v-maska
                                      v-model="subscription.nationalRegisterNumber"
@@ -191,13 +192,13 @@
                 <div class="flex flex-row mt-4" v-if="subscription.newMember"> <!-- -->
                     <div class="basis-1/4 text-right mr-4 text-sm">Geslacht*</div>
                     <div class="basis-3/4">
-                        <o-radio name="gender" native-value="M" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_m" name="gender" native-value="M" v-model="subscription.gender" variant="info">
                             M
                         </o-radio>
-                        <o-radio name="gender" native-value="V" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_v" name="gender" native-value="V" v-model="subscription.gender" variant="info">
                             V
                         </o-radio>
-                        <o-radio name="gender" native-value="X" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_x" name="gender" native-value="X" v-model="subscription.gender" variant="info">
                             X
                         </o-radio>
                     </div>
@@ -215,7 +216,8 @@
                     <div class="basis-1/4 text-right mr-4">Locatie</div>
                     <div class="basis-3/4">
                         <span v-for="location in settings.locations">
-                            <o-radio name="location"
+                            <o-radio :id="'radio_location_'+location.name"
+                                    name="location"
                                      :native-value="location.id"
                                      v-model="subscription.location"
                                      variant="info">
@@ -228,11 +230,11 @@
                 <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4">Type</div>
                     <div class="basis-3/4">
-                        <o-radio name="type" native-value="full"
+                        <o-radio id="radio_type_full_year" name="type" native-value="full"
                                  v-model="subscription.type" variant="info">
                             Volledig jaar
                         </o-radio>
-                        <o-radio name="type" native-value="half"
+                        <o-radio id="radio_type_half_year" name="type" native-value="half"
                                  v-model="subscription.type" variant="info">
                             Half jaar
                         </o-radio>
@@ -243,19 +245,19 @@
                     <div class="basis-1/4 text-right mr-4">Aantal</div>
                     <div class="basis-3/4">
                         <div>
-                            <o-radio name="numberOfTraining" :native-value="1"
+                            <o-radio id="radio_training_1" name="numberOfTraining" :native-value="1"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 1 training per week
                             </o-radio>
                         </div>
                         <div class="mt-2">
-                            <o-radio name="numberOfTraining" :native-value="2"
+                            <o-radio id="radio_training_2" name="numberOfTraining" :native-value="2"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 2 trainingen per week
                             </o-radio>
                         </div>
                         <div class="mt-2">
-                            <o-radio name="numberOfTraining" :native-value="3"
+                            <o-radio id="radio_training_3" name="numberOfTraining" :native-value="3"
                                      v-model="subscription.numberOfTraining" variant="info">
                                 3 tot 5 trainingen per week
                             </o-radio>
@@ -272,7 +274,7 @@
                     <div class="basis-1/4 text-right mr-4">Judopak</div>
                     <div class="basis-3/4">
                         <o-field>
-                            <o-switch v-model="subscription.judogiBelt" variant="info" size="small">
+                            <o-switch id="radio_judogi_belt" v-model="subscription.judogiBelt" variant="info" size="small">
                                 Judopak + gordel
                             </o-switch>
                         </o-field>
@@ -284,7 +286,7 @@
                     <div class="basis-1/4 text-right mr-4">Korting</div>
                     <div class="basis-3/4">
                         <o-field>
-                            <o-switch v-model="subscription.reductionFamily" variant="info" size="small">
+                            <o-switch id="radio_reduction" v-model="subscription.reductionFamily" variant="info" size="small">
                                 2e en/of 3e kind van éénzelfde familie
                             </o-switch>
                         </o-field>
@@ -293,22 +295,12 @@
 
             </div>
         </div>
-        <!-- calculation --------------------------------------- -->
-        <!--        <hr>-->
-        <!--        <div class="flex flex-row mt-4 mb-4">-->
-        <!--            <div class="basis-1/4 mr-4 text-right text-xl"><strong>Totaal :</strong></div>-->
-        <!--            <div class="basis-3/4 text-xl">-->
-        <!--                (260 € - 10%) + 10 € + 50 € = <strong>294 €</strong>-->
-        <!--                (+ judopak en gordel)-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!-- remarks ------------------------------------------- -->
         <hr>
         <div class="flex flex-row mt-4 mb-4">
             <div class="basis-1/4 mr-4 text-right">Opmerkingen</div>
             <div class="basis-3/4">
                 <o-field>
-                    <o-input v-model="subscription.remarks" maxlength="200" type="textarea"></o-input>
+                    <o-input id="ta_remarks" v-model="subscription.remarks" maxlength="200" type="textarea"></o-input>
                 </o-field>
             </div>
         </div>
@@ -319,23 +311,28 @@
                 <div class="basis-1/4 mr-4 text-right">&nbsp;</div>
                 <div class="basis-2/4">
                     <div v-if="v$.$invalid">
-                        <o-button variant="info" class="w-full" disabled size="large">
+                        <o-button id="btn_submit_invalid"
+                                  variant="info"
+                                  class="w-full"
+                                  disabled size="large">
                             Inschrijven
                         </o-button>
                     </div>
                     <div v-else>
-                        <o-button variant="info" class="w-full" size="large"
+                        <o-button id="btn_submit_valid"
+                                  variant="info"
+                                  class="w-full"
+                                  size="large"
                                   @click="subscribe">
                             Inschrijven
                         </o-button>
                     </div>
-                    <div class="mt-2 text-xs">
+                    <div class="mt-2">
                         (*) verplichte velden
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <div class="text-xs"><code>{{ subscription }}</code></div>-->
     </div>
 
     <div v-if="step === 2">
@@ -352,7 +349,8 @@
                     <br>We hebben ook een email als bevestiging verzonden naar <strong>{{
                         subscription.contactEmail
                     }}</strong>.
-                    <br>Dit is je referentie "{{ subscriptionResult.reference }}".
+                    <br>Dit is je referentie
+                    "<span data-cy="result-reference">{{ subscriptionResult.reference }}</span>".
                 </p>
                 <p>
                 <span class="underline text-blue-700 cursor-pointer"

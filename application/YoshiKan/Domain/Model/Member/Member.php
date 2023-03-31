@@ -52,6 +52,9 @@ class Member
     private string $nationalRegisterNumber;
 
     #[ORM\Column(length: 191)]
+    private string $email;
+
+    #[ORM\Column(length: 191)]
     private string $addressStreet;
 
     #[ORM\Column(length: 10)]
@@ -72,6 +75,26 @@ class Member
     #[ORM\Column(length: 191)]
     private string $profileImage;
 
+    // member subscription & license details
+
+    #[ORM\Column]
+    private \DateTimeImmutable $memberSubscriptionStart;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $memberSubscriptionEnd;
+
+    #[ORM\Column(options: ["default" => 0])]
+    private bool $memberSubscriptionIsPayed;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $licenseStart;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $licenseEnd;
+
+    #[ORM\Column(options: ["default" => 0])]
+    private bool $licenseIsPayed;
+
     // ----------------------------------------------------------- associations
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
@@ -86,6 +109,9 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Federation", fetch: "EXTRA_LAZY", inversedBy: "members")]
+    #[ORM\JoinColumn(nullable: false)]
+    private Federation $federation;
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\OrderBy(['id' => 'ASC'])]
@@ -101,20 +127,23 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid $uuid,
-        string $firstname,
-        string $lastname,
+        Uuid               $uuid,
+        string             $firstname,
+        string             $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender $gender,
-        Grade $grade,
-        Location $location,
-        string $nationalRegisterNumber,
-        string $addressStreet,
-        string $addressNumber,
-        string $addressBox,
-        string $addressZip,
-        string $addressCity
-    ) {
+        Gender             $gender,
+        Grade              $grade,
+        Location           $location,
+        Federation         $federation,
+        string             $email,
+        string             $nationalRegisterNumber,
+        string             $addressStreet,
+        string             $addressNumber,
+        string             $addressBox,
+        string             $addressZip,
+        string             $addressCity
+    )
+    {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -123,6 +152,8 @@ class Member
         $this->status = 'actief';
         $this->grade = $grade;
         $this->location = $location;
+        $this->federation = $federation;
+        $this->email = $email;
         $this->remarks = '';
         $this->profileImage = '';
         $this->nationalRegisterNumber = $nationalRegisterNumber;
@@ -138,20 +169,23 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid $uuid,
-        string $firstname,
-        string $lastname,
+        Uuid               $uuid,
+        string             $firstname,
+        string             $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender $gender,
-        Grade $grade,
-        Location $location,
-        string $nationalRegisterNumber,
-        string $addressStreet,
-        string $addressNumber,
-        string $addressBox,
-        string $addressZip,
-        string $addressCity
-    ): self {
+        Gender             $gender,
+        Grade              $grade,
+        Location           $location,
+        Federation         $federation,
+        string             $email,
+        string             $nationalRegisterNumber,
+        string             $addressStreet,
+        string             $addressNumber,
+        string             $addressBox,
+        string             $addressZip,
+        string             $addressCity
+    ): self
+    {
         return new self(
             $uuid,
             $firstname,
@@ -160,6 +194,8 @@ class Member
             $gender,
             $grade,
             $location,
+            $federation,
+            $email,
             $nationalRegisterNumber,
             $addressStreet,
             $addressNumber,
@@ -170,19 +206,21 @@ class Member
     }
 
     public function changeDetails(
-        string $firstname,
-        string $lastname,
-        Gender $gender,
+        string             $firstname,
+        string             $lastname,
+        Gender             $gender,
         \DateTimeImmutable $dateOfBirth,
-        MemberStatus $status,
-        Location $location,
-        string $nationalRegisterNumber,
-        string $addressStreet,
-        string $addressNumber,
-        string $addressBox,
-        string $addressZip,
-        string $addressCity
-    ): void {
+        MemberStatus       $status,
+        Location           $location,
+        string             $nationalRegisterNumber,
+        string             $email,
+        string             $addressStreet,
+        string             $addressNumber,
+        string             $addressBox,
+        string             $addressZip,
+        string             $addressCity
+    ): void
+    {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->gender = $gender->value;
@@ -190,6 +228,7 @@ class Member
         $this->status = $status->value;
         $this->location = $location;
         $this->nationalRegisterNumber = $nationalRegisterNumber;
+        $this->email = $email;
         $this->addressStreet = $addressStreet;
         $this->addressNumber = $addressNumber;
         $this->addressBox = $addressBox;
@@ -301,6 +340,41 @@ class Member
         return $this->remarks;
     }
 
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getMemberSubscriptionStart(): \DateTimeImmutable
+    {
+        return $this->memberSubscriptionStart;
+    }
+
+    public function getMemberSubscriptionEnd(): \DateTimeImmutable
+    {
+        return $this->memberSubscriptionEnd;
+    }
+
+    public function memberSubscriptionIsPayed(): bool
+    {
+        return $this->memberSubscriptionIsPayed;
+    }
+
+    public function getLicenseStart(): \DateTimeImmutable
+    {
+        return $this->licenseStart;
+    }
+
+    public function getLicenseEnd(): \DateTimeImmutable
+    {
+        return $this->licenseEnd;
+    }
+
+    public function licenseIsPayed(): bool
+    {
+        return $this->licenseIsPayed;
+    }
+
     public function getProfileImage(): string
     {
         return $this->profileImage;
@@ -315,4 +389,10 @@ class Member
     {
         return $this->memberImages->getValues();
     }
+
+    public function getFederation(): Federation
+    {
+        return $this->federation;
+    }
+
 }
