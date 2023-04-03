@@ -15,6 +15,7 @@ namespace App\YoshiKan\Infrastructure\Web\Controller;
 
 use App\YoshiKan\Application\CommandBus;
 use App\YoshiKan\Application\QueryBus;
+use App\YoshiKan\Domain\Model\Member\Federation;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\Group;
 use App\YoshiKan\Domain\Model\Member\Judogi;
@@ -76,7 +77,8 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
-            $this->entityManager->getRepository(Judogi::class)
+            $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(Federation::class)
         );
 
         $this->commandBus = new CommandBus(
@@ -92,6 +94,7 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Member::class),
+            $this->entityManager->getRepository(Federation::class)
         );
     }
 

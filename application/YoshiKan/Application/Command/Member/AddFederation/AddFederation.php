@@ -32,9 +32,9 @@ class AddFederation
     public static function hydrateFromJson($json): self
     {
         return new self(
-            $json->code,
-            $json->name,
-            $json->yearlySubscriptionFee,
+            trim($json->code),
+            trim($json->name),
+            intval($json->yearlySubscriptionFee),
         );
     }
 

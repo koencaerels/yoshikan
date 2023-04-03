@@ -15,6 +15,7 @@ namespace App\YoshiKan\Infrastructure\Web\Controller;
 
 use App\YoshiKan\Application\MemberCommandBus;
 use App\YoshiKan\Application\MemberQueryBus;
+use App\YoshiKan\Domain\Model\Member\Federation;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\GradeLog;
 use App\YoshiKan\Domain\Model\Member\Group;
@@ -26,6 +27,7 @@ use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\federation_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\judogi_routes;
@@ -59,6 +61,7 @@ class MemberApiController extends AbstractController
     use subscription_routes;
     use member_routes;
     use member_image_routes;
+    use federation_routes;
 
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
@@ -101,6 +104,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(MemberImage::class),
+            $this->entityManager->getRepository(Federation::class)
         );
 
         $this->commandBus = new MemberCommandBus(
@@ -120,6 +124,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(GradeLog::class),
             $this->entityManager->getRepository(MemberImage::class),
+            $this->entityManager->getRepository(Federation::class)
         );
     }
 

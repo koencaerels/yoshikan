@@ -67,6 +67,11 @@ const router = createRouter({
                     component: () => import('../views/configuration/PeriodView.vue')
                 },
                 {
+                    path: 'federaties',
+                    name: 'federations',
+                    component: () => import('../views/configuration/FederationsView.vue')
+                },
+                {
                     path: 'judogi',
                     name: 'judogi',
                     component: () => import('../views/configuration/JudogiView.vue')

@@ -15,6 +15,11 @@ const items = computed(() => {
             to: '/configuratie/periodes'
         },
         {
+            label: 'Federaties',
+            icon: 'pi pi-building',
+            to: '/configuratie/federaties'
+        },
+        {
             label: 'Judogi',
             icon: 'pi pi-shopping-cart',
             to: '/configuratie/judogi'

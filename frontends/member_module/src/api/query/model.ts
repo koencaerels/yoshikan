@@ -12,6 +12,7 @@ export interface Configuration {
     groups: Group[];
     periods: Period[];
     judogi: Judogi[];
+    federations: Federation[];
     activePeriod: Period;
     settings: Settings;
 }
@@ -72,6 +73,15 @@ export interface Judogi {
     price: string;
 }
 
+export interface Federation {
+    id: number;
+    uuid: string;
+    sequence: number;
+    code: string;
+    name: string;
+    yearlySubscriptionFee: number;
+}
+
 export interface Subscription {
     id: number;
     uuid: string;
@@ -100,12 +110,12 @@ export interface Subscription {
     isPaymentOverviewSend: boolean;
     member?: Member;
     selected: boolean;
-    nationalRegisterNumber:string;
-    addressStreet:string;
-    addressNumber:string;
-    addressBox:string;
-    addressZip:string;
-    addressCity:string;
+    nationalRegisterNumber: string;
+    addressStreet: string;
+    addressNumber: string;
+    addressBox: string;
+    addressZip: string;
+    addressCity: string;
 }
 
 export interface Member {
@@ -123,12 +133,23 @@ export interface Member {
     gradeLogs: GradeLog[];
     images: MemberImage[];
     profileImage: string;
-    nationalRegisterNumber:string;
-    addressStreet:string;
-    addressNumber:string;
-    addressBox:string;
-    addressZip:string;
-    addressCity:string;
+    nationalRegisterNumber: string;
+    addressStreet: string;
+    addressNumber: string;
+    addressBox: string;
+    addressZip: string;
+    addressCity: string;
+    email: string;
+
+    //-- subscription and license details
+
+    memberSubscriptionStart: Date;
+    memberSubscriptionEnd: Date;
+    memberSubscriptionIsPayed: boolean;
+    licenseStart: Date;
+    licenseEnd: Date;
+    licenseIsPayed: boolean;
+    federation: Federation;
 }
 
 export interface GradeLog {

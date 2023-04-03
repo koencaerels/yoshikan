@@ -34,9 +34,9 @@ class ChangeFederation
     {
         return new self(
             $json->id,
-            $json->code,
-            $json->name,
-            $json->yearlySubscriptionFee,
+            trim($json->code),
+            trim($json->name),
+            intval($json->yearlySubscriptionFee),
         );
     }
 
