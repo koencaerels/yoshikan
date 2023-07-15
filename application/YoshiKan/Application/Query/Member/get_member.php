@@ -15,6 +15,20 @@ namespace App\YoshiKan\Application\Query\Member;
 
 trait get_member
 {
+    public function listActiveMembers(): MemberReadModelCollection
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+        $query = new GetMember(
+            $this->memberRepository,
+            $this->locationRepository,
+            $this->gradeRepository,
+            $this->groupRepository,
+            $this->periodRepository
+        );
+
+        return $query->listActiveMembers();
+    }
+
     public function searchMembers(\stdClass $jsonSearchModel): MemberReadModelCollection
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);

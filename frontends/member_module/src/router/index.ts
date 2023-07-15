@@ -43,6 +43,11 @@ const router = createRouter({
         },
         // member routes --------------------------------------------------------
         {
+            path: '/leden-overzicht',
+            name: 'membersOverview',
+            component: () => import('../views/MemberOverview.vue')
+        },
+        {
             path: '/leden',
             name: 'members',
             component: () => import('../views/MemberView.vue')

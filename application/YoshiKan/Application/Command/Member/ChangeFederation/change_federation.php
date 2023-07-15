@@ -13,7 +13,6 @@ namespace App\YoshiKan\Application\Command\Member\ChangeFederation;
 
 trait change_federation
 {
-
     public function changeFederation(\stdClass $jsonCommand): bool
     {
         $command = ChangeFederation::hydrateFromJson($jsonCommand);
@@ -26,6 +25,4 @@ trait change_federation
 
         return true;
     }
-
-
 }

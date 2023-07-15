@@ -1,18 +1,20 @@
 <template>
     <div id="memberDetail" class="p-4" v-if="memberStore.memberDetail">
         <div class="flex text-sm mb-4">
-            <div v-if="!isDetail"
+
+            <div v-if="(type == 'partial')"
                  class="bg-gray-200 rounded-full px-2 py-1">
                 <router-link :to="'/lid/'+memberStore.memberId">
                     <i class="pi pi-eye"></i>
                 </router-link>
             </div>
-            <div v-else
+            <div v-if="(type == 'detail')"
                  class="bg-gray-200 rounded-full px-2 py-1">
                 <router-link :to="'/leden'">
                     <i class="pi pi-times"></i>
                 </router-link>
             </div>
+
             <div class="ml-4">
                 Wijzig >
             </div>
@@ -28,17 +30,24 @@
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogProfileImage = true)">
                 Profiel foto
             </div>
-            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showNewSubscription = true)">
-                Inschrijven
-            </div>
+
         </div>
 
-        <!-- -- member badge ------------------------------------------- -->
+        <!-- -- member badge --------------------------------------------------------------------------------------- -->
         <member-badge :member="memberStore.memberDetail"/>
+
         <TabView>
+
+            <!-- -- profile ---------------------------------------------------------------------------------------- -->
+            <TabPanel header="Profiel">
+                <detail-wrapper :estate-height="estateHeight" class="p-2">
+                    <profile-detail/>
+                </detail-wrapper>
+            </TabPanel>
+
+            <!-- -- grade logs ------------------------------------------------------------------------------------- -->
             <TabPanel header="Graden">
-                <!-- -- grade logs --------------------------------------------- -->
-                <detail-wrapper :estate-height="370" class="p-2">
+                <detail-wrapper :estate-height="estateHeight" class="p-2">
                     <div v-for="gradeLog in memberStore.memberDetail.gradeLogs"
                          class="border-b-[1px] border-gray-300 pt-2 pb-2">
                         <div class="flex">
@@ -68,124 +77,41 @@
                     </div>
                 </detail-wrapper>
             </TabPanel>
-            <TabPanel header="Profiel">
-                <detail-wrapper :estate-height="370" class="p-2">
-                    <div class="p-2">
-                        <div class="flex flex-row">
-                            <div class="basis-1/2">
-                                <div><strong>Judoka</strong></div>
-                                <hr>
-                                <div class="mt-2">
-                                    {{memberStore.memberDetail.firstname}}
-                                    {{memberStore.memberDetail.lastname}}
-                                </div>
-                                <div class="text-xs mt-1">
-                                    &mdash; {{ memberStore.memberDetail.nationalRegisterNumber }}
-                                </div>
-                                <div class="mt-2">
-                                    ° {{ moment(memberStore.memberDetail.dateOfBirth).format("DD/MM/YYYY") }}
-                                    - {{ memberStore.memberDetail.gender }}
-                                </div>
 
-                                <div class="mt-8 pr-8">
-                                    <div :style="'background-color: #'+memberStore.memberDetail.grade.color"
-                                         class="rounded-full text-white px-2 font-bold text-center w-32 text-sm">
-                                        {{ memberStore.memberDetail.grade.name }}
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <div class="px-2 bg-sky-400 rounded-full text-white text-xs w-32 text-center">
-                                        {{ memberStore.memberDetail.location.name }}
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <group-renderer :member="memberStore.memberDetail"/>
-                                </div>
-                            </div>
-                            <div class="basis-1/2">
-                                <div v-if="memberStore.memberDetail.subscriptions && memberStore.memberDetail.subscriptions.length != 0">
-                                    <div><strong>Contact</strong></div>
-                                    <hr>
-                                    <div class="mt-2">
-                                        {{ memberStore.memberDetail.subscriptions[0].contactFirstname }}
-                                        {{ memberStore.memberDetail.subscriptions[0].contactLastname }}
-                                    </div>
-                                    <div>
-                                        &mdash; {{ memberStore.memberDetail.subscriptions[0].contactEmail}}
-                                    </div>
-                                    <div v-if="memberStore.memberDetail.subscriptions[0].contactPhone != ''">
-                                        &mdash; {{ memberStore.memberDetail.subscriptions[0].contactPhone}}
-                                    </div>
-                                    <div class="mt-4">
-                                        <div>
-                                            {{memberStore.memberDetail.addressStreet}}
-                                            {{memberStore.memberDetail.addressNumber}}
-                                            <span v-if="memberStore.memberDetail.addressBox != ''">
-                                                bus {{memberStore.memberDetail.addressBox}}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            {{memberStore.memberDetail.addressZip}}
-                                            {{memberStore.memberDetail.addressCity}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <edit-button @click="(showDialogDetails = true)"/>
-                    </div>
-                </detail-wrapper>
-            </TabPanel>
+            <!-- -- opmerkingen ------------------------------------------------------------------------------------ -->
             <TabPanel header="Opmerkingen">
-                <!-- -- opmerkingen -------------------------------------------- -->
-                <detail-wrapper :estate-height="370">
+                <detail-wrapper :estate-height="estateHeight">
                     <div class="content-wrapper p-4 text-sm">
-                        <div v-html="memberStore.memberDetail.remarks">
-                        </div>
+                        <div v-html="memberStore.memberDetail.remarks"/>
                     </div>
                     <div>
                         <edit-button @click="(showDialogRemarks = true)"/>
                     </div>
                 </detail-wrapper>
             </TabPanel>
+
+            <!-- -- subscriptions ---------------------------------------------------------------------------------- -->
             <TabPanel header="Inschrijvingen">
-                <!-- -- subscriptions ------------------------------------------ -->
-                <detail-wrapper :estate-height="370" class="p-2">
-                    <div v-for="subscription in memberStore.memberDetail.subscriptions"
-                         class="border-b-[1px] border-gray-300 pt-2 pb-2">
-                        <div class="flex">
-                            <div class="w-16">
-                                <div
-                                    class="text-center rounded-full bg-green-800 text-white px-2 font-bold text-xs mt-1.5">
-                                    YKS-{{ subscription.id }}
-                                </div>
-                            </div>
-                            <div class="w-48 ml-2 font-bold">{{ subscription.period.name }}</div>
-                            <div class="w-32 ml-2">{{ subscription.type }}</div>
-                            <div>
-                                {{ subscription.numberOfTraining }} x training per week
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <add-button @click="(showNewSubscription = true)"/>
-                    </div>
+                <detail-wrapper :estate-height="estateHeight" class="p-2">
+                    todo
                 </detail-wrapper>
             </TabPanel>
+
+            <!-- -- berichten -------------------------------------------------------------------------------------- -->
+            <TabPanel header="Berichten">
+                <detail-wrapper :estate-height="estateHeight" class="p-2">
+                    berichten todo
+                </detail-wrapper>
+            </TabPanel>
+
+
         </TabView>
     </div>
 
-    <!-- -- dialog new subscription -->
-    <Dialog v-model:visible="showNewSubscription" position="topleft" v-if="appStore.configuration"
-            :header="'Voeg een inschrijving toe voor '+appStore.configuration.activePeriod.name"
-            :modal="true">
-        <subscription-add v-on:subscribed="subscribeHandler"
-                          :member-id="memberStore.memberId"/>
-    </Dialog>
+    <!-- ----------------------------------------------------------------------------------------------------------- -->
+    <!-- dialogs                                                                                                     -->
+    <!-- ----------------------------------------------------------------------------------------------------------- -->
 
-    <!-- dialogs -->
     <Dialog v-model:visible="showDialogDetails"
             position="top"
             v-if="memberStore.memberDetail"
@@ -236,6 +162,7 @@ import {useAppStore} from "@/store/app";
 import SubscriptionAdd from "@/components/subscription/subscriptionAdd.vue";
 import EditButton from "@/components/common/editButton.vue";
 import AddButton from "@/components/common/addButton.vue";
+import ProfileDetail from "@/components/member/profile/profileDetail.vue";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
@@ -246,9 +173,9 @@ const showNewSubscription = ref<boolean>(false);
 const toaster = useToast();
 const appStore = useAppStore();
 
-
 const props = defineProps<{
-    isDetail: boolean,
+    type: 'dialog' | 'detail' | 'partial',
+    estateHeight: number,
 }>();
 
 function hideRemarksDialog() {

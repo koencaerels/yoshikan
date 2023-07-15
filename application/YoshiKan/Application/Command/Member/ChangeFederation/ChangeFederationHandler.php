@@ -15,15 +15,13 @@ use App\YoshiKan\Domain\Model\Member\FederationRepository;
 
 class ChangeFederationHandler
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
         protected FederationRepository $federationRepo
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -39,7 +37,7 @@ class ChangeFederationHandler
             $command->getYearlySubscriptionFee()
         );
         $this->federationRepo->save($model);
+
         return true;
     }
-
 }

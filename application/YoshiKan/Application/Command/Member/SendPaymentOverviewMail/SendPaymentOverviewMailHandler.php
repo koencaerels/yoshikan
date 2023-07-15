@@ -32,21 +32,21 @@ class SendPaymentOverviewMailHandler
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
 
-        $subject = 'Yoshi-Kan: overzicht inschrijving ' . $subscription->getFirstname() . ' ' . $subscription->getLastname();
+        $subject = 'Yoshi-Kan: overzicht inschrijving '.$subscription->getFirstname().' '.$subscription->getLastname();
 
         $mailTemplate = $this->twig->render(
             'mail/payment_overview_mail.html.twig',
             [
                 'subject' => $subject,
                 'subscription' => $subscription,
-                'url' => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
+                'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
             ]
         );
 
         $message = (new Email())
             ->subject($subject)
             ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname()))
+            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
             ->html($mailTemplate);
 
         $this->mailer->send($message);

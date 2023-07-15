@@ -31,12 +31,12 @@ trait subscription_routes
         $arListIds = explode(',', $listIds);
         $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
         $now = new \DateTimeImmutable();
-        $fileName = $now->format('Ymd') . '_yoshi-kan_inschrijvingen.xlsx';
+        $fileName = $now->format('Ymd').'_yoshi-kan_inschrijvingen.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
         $writer->save('php://output');
         exit;
     }

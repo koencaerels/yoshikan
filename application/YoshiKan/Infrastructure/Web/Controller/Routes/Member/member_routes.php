@@ -23,6 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 trait member_routes
 {
+    #[Route('/mm/api/member/active', methods: ['GET'])]
+    public function listActiveMembers(Request $request): JsonResponse
+    {
+        $response = $this->queryBus->listActiveMembers();
+
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
     #[Route('/mm/api/member/search', methods: ['GET', 'POST', 'PUT'])]
     public function searchMembers(Request $request): JsonResponse
     {
@@ -115,11 +123,11 @@ trait member_routes
     public function getMemberProfileImage(int $id): Response
     {
         $member = $this->queryBus->getMemberById($id);
-        $file = $this->uploadFolder . $member->getProfileImage();
+        $file = $this->uploadFolder.$member->getProfileImage();
 
         return $this->file(
             $file,
-            $member->getFirstname() . '-' . $member->getFirstname() . '.png',
+            $member->getFirstname().'-'.$member->getFirstname().'.png',
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }

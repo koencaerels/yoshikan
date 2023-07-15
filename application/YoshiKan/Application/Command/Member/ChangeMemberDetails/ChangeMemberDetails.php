@@ -20,19 +20,20 @@ class ChangeMemberDetails
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int                $id,
-        protected string             $status,
-        protected string             $firstname,
-        protected string             $lastname,
+        protected int $id,
+        protected string $status,
+        protected string $firstname,
+        protected string $lastname,
         protected \DateTimeImmutable $dateOfBirth,
-        protected string             $gender,
-        protected int                $locationId,
-        protected string             $nationalRegisterNumber,
-        protected string             $addressStreet,
-        protected string             $addressNumber,
-        protected string             $addressBox,
-        protected string             $addressZip,
-        protected string             $addressCity
+        protected string $gender,
+        protected int $locationId,
+        protected string $nationalRegisterNumber,
+        protected string $addressStreet,
+        protected string $addressNumber,
+        protected string $addressBox,
+        protected string $addressZip,
+        protected string $addressCity,
+        protected string $email,
     ) {
     }
 
@@ -55,7 +56,8 @@ class ChangeMemberDetails
             $json->addressNumber,
             $json->addressBox,
             $json->addressZip,
-            $json->addressCity
+            $json->addressCity,
+            $json->email,
         );
     }
 
@@ -127,4 +129,10 @@ class ChangeMemberDetails
     {
         return $this->addressCity;
     }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
 }

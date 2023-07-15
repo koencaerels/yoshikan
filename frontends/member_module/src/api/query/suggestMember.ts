@@ -9,7 +9,6 @@
 
 import axios from "axios";
 import type {Member} from "@/api/query/model";
-
 export interface MemberSuggestModel {
     firstname: string,
     lastname: string;

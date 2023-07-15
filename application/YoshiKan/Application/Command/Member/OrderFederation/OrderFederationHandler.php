@@ -30,5 +30,4 @@ class OrderFederationHandler
 
         return true;
     }
-
 }

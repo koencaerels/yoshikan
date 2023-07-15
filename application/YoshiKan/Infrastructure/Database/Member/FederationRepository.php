@@ -10,12 +10,9 @@ use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class FederationRepository
-    extends ServiceEntityRepository
-    implements \App\YoshiKan\Domain\Model\Member\FederationRepository
+final class FederationRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\FederationRepository
 {
-
-    const NO_ENTITY_FOUND = 'no_federation_found';
+    public const NO_ENTITY_FOUND = 'no_federation_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -41,7 +38,10 @@ final class FederationRepository
         $em = $this->getEntityManager();
         $em->persist($model);
         $id = 0;
-        if ($model->getId()) $id = $model->getId();
+        if ($model->getId()) {
+            $id = $model->getId();
+        }
+
         return $id;
     }
 
@@ -49,13 +49,17 @@ final class FederationRepository
     {
         $em = $this->getEntityManager();
         $em->remove($model);
+
         return true;
     }
 
     public function getById(int $id): Federation
     {
         $model = $this->find($id);
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
+
         return $model;
     }
 
@@ -66,7 +70,10 @@ final class FederationRepository
             ->setParameter('uuid', $uuid, 'uuid')
             ->getQuery()
             ->getOneOrNullResult();
-        if (is_null($model)) throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        if (is_null($model)) {
+            throw new EntityNotFoundException(self::NO_ENTITY_FOUND);
+        }
+
         return $model;
     }
 
@@ -78,7 +85,7 @@ final class FederationRepository
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
         $q->addOrderBy('t.id', 'DESC');
+
         return $q->getQuery()->getResult();
     }
-
 }

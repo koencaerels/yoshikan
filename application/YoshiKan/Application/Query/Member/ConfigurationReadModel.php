@@ -16,16 +16,15 @@ namespace App\YoshiKan\Application\Query\Member;
 class ConfigurationReadModel implements \JsonSerializable
 {
     public function __construct(
-        protected GradeReadModelCollection      $grades,
-        protected LocationReadModelCollection   $locations,
-        protected GroupReadModelCollection      $groups,
-        protected PeriodReadModelCollection     $periods,
-        protected JudogiReadModelCollection     $judogi,
+        protected GradeReadModelCollection $grades,
+        protected LocationReadModelCollection $locations,
+        protected GroupReadModelCollection $groups,
+        protected PeriodReadModelCollection $periods,
+        protected JudogiReadModelCollection $judogi,
         protected FederationReadModelCollection $federations,
-        protected PeriodReadModel               $activePeriod,
-        protected SettingsReadModel             $settings
-    )
-    {
+        protected PeriodReadModel $activePeriod,
+        protected SettingsReadModel $settings
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -90,5 +89,4 @@ class ConfigurationReadModel implements \JsonSerializable
     {
         return $this->federations;
     }
-
 }

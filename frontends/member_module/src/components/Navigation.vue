@@ -10,12 +10,17 @@ import {computed} from "vue";
 const items = computed(() => {
     let navigation = [
         {
+            label: 'Actieve leden',
+            icon: 'pi pi-users',
+            to: '/leden-overzicht'
+        },
+        {
             label: 'Inschrijvingen',
             icon: 'pi pi-user-plus',
             to: '/inschrijvingen/todo'
         },
         {
-            label: 'Leden',
+            label: 'Archief Leden',
             icon: 'pi pi-users',
             to: '/leden'
         },

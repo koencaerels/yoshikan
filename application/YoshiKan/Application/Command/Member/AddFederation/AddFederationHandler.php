@@ -22,9 +22,7 @@ class AddFederationHandler
 
     public function __construct(
         protected FederationRepository $federationRepo
-    )
-    {
-
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -44,5 +42,4 @@ class AddFederationHandler
 
         return true;
     }
-
 }

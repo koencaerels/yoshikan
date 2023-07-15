@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="text-xl mt-2 font-bold">
-                    {{ member.firstname }} {{ member.lastname }}
+                    <span class="uppercase">{{ member.lastname }}</span> {{ member.firstname }}
                 </div>
                 <div>
                     ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}

@@ -16,6 +16,7 @@
         "bolt/redactor": "^2.0",
         "bolt/themes": "^3.5",
         "damienharper/auditor-bundle": "^5.2",
+        "fakerphp/faker": "^1.23",
         "jeschek/dragsort": "^1.0",
         "nelmio/security-bundle": "^2.12",
         "phpoffice/phpspreadsheet": "^1.26",

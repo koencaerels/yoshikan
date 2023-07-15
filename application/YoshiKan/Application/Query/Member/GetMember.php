@@ -86,6 +86,17 @@ class GetMember
         return $collection;
     }
 
+    public function listActiveMembers(): MemberReadModelCollection
+    {
+        $members = $this->memberRepository->listActiveMembers();
+        $collection = new MemberReadModelCollection([]);
+        foreach ($members as $member) {
+            $collection->addItem(MemberReadModel::hydrateFromModel($member));
+        }
+
+        return $collection;
+    }
+
     public function getById(int $id): MemberReadModel
     {
         $member = $this->memberRepository->getById($id);

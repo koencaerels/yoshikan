@@ -11,7 +11,7 @@
                 </div>
                 <div v-else>
                     <div v-if="memberStore.memberDetail">
-                        <member-detail :is-detail="true"/>
+                        <member-detail :estate-height="370" type="detail"/>
                     </div>
                 </div>
             </SplitterPanel>

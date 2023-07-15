@@ -13,17 +13,16 @@ namespace App\YoshiKan\Application\Command\Member\ChangeFederation;
 
 class ChangeFederation
 {
-// —————————————————————————————————————————————————————————————————————————
+    // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $code,
         protected string $name,
-        protected int    $yearlySubscriptionFee,
-    )
-    {
+        protected int $yearlySubscriptionFee,
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————

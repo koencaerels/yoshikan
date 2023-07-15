@@ -26,8 +26,8 @@ export interface ChangeMemberDetailsCommand {
     addressBox:string;
     addressZip:string;
     addressCity:string;
+    email:string;
 }
-
 export async function changeMemberDetails(command: ChangeMemberDetailsCommand) {
     const formData = new FormData();
     formData.append('command', JSON.stringify(command));

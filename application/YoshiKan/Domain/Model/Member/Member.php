@@ -34,7 +34,7 @@ class Member
     use TimestampableEntity;
 
     #[ORM\Column(length: 36)]
-    private string $status = 'actief';
+    private string $status;
 
     #[ORM\Column(length: 191)]
     private string $firstname;
@@ -75,7 +75,9 @@ class Member
     #[ORM\Column(length: 191)]
     private string $profileImage;
 
+    // ------------------------------------------------------
     // member subscription & license details
+    // ------------------------------------------------------
 
     #[ORM\Column]
     private \DateTimeImmutable $memberSubscriptionStart;
@@ -83,8 +85,11 @@ class Member
     #[ORM\Column]
     private \DateTimeImmutable $memberSubscriptionEnd;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $memberSubscriptionIsPayed;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $memberSubscriptionIsHalfYear;
 
     #[ORM\Column]
     private \DateTimeImmutable $licenseStart;
@@ -92,7 +97,7 @@ class Member
     #[ORM\Column]
     private \DateTimeImmutable $licenseEnd;
 
-    #[ORM\Column(options: ["default" => 0])]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $licenseIsPayed;
 
     // ----------------------------------------------------------- associations
@@ -109,7 +114,7 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private Location $location;
 
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Federation", fetch: "EXTRA_LAZY", inversedBy: "members")]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Federation", fetch: 'EXTRA_LAZY', inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private Federation $federation;
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: 'EXTRA_LAZY')]
@@ -127,29 +132,28 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
-        Federation         $federation,
-        string             $email,
-        string             $nationalRegisterNumber,
-        string             $addressStreet,
-        string             $addressNumber,
-        string             $addressBox,
-        string             $addressZip,
-        string             $addressCity
-    )
-    {
+        Gender $gender,
+        Grade $grade,
+        Location $location,
+        Federation $federation,
+        string $email,
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
+    ) {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->dateOfBirth = $dateOfBirth;
         $this->gender = $gender->value;
-        $this->status = 'actief';
+        $this->status = MemberStatus::ACTIVE->value;
         $this->grade = $grade;
         $this->location = $location;
         $this->federation = $federation;
@@ -162,6 +166,15 @@ class Member
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+
+        // -- default settings when user is created
+        $this->memberSubscriptionStart = new \DateTimeImmutable();
+        $this->memberSubscriptionEnd = new \DateTimeImmutable();
+        $this->memberSubscriptionIsHalfYear = false;
+        $this->memberSubscriptionIsPayed = false;
+        $this->licenseStart = new \DateTimeImmutable();
+        $this->licenseEnd = new \DateTimeImmutable();
+        $this->licenseIsPayed = false;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -169,23 +182,22 @@ class Member
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        Grade              $grade,
-        Location           $location,
-        Federation         $federation,
-        string             $email,
-        string             $nationalRegisterNumber,
-        string             $addressStreet,
-        string             $addressNumber,
-        string             $addressBox,
-        string             $addressZip,
-        string             $addressCity
-    ): self
-    {
+        Gender $gender,
+        Grade $grade,
+        Location $location,
+        Federation $federation,
+        string $email,
+        string $nationalRegisterNumber,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
+    ): self {
         return new self(
             $uuid,
             $firstname,
@@ -206,21 +218,20 @@ class Member
     }
 
     public function changeDetails(
-        string             $firstname,
-        string             $lastname,
-        Gender             $gender,
+        string $firstname,
+        string $lastname,
+        Gender $gender,
         \DateTimeImmutable $dateOfBirth,
-        MemberStatus       $status,
-        Location           $location,
-        string             $nationalRegisterNumber,
-        string             $email,
-        string             $addressStreet,
-        string             $addressNumber,
-        string             $addressBox,
-        string             $addressZip,
-        string             $addressCity
-    ): void
-    {
+        MemberStatus $status,
+        Location $location,
+        string $nationalRegisterNumber,
+        string $email,
+        string $addressStreet,
+        string $addressNumber,
+        string $addressBox,
+        string $addressZip,
+        string $addressCity
+    ): void {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->gender = $gender->value;
@@ -234,6 +245,36 @@ class Member
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+    }
+
+    public function setSubscriptionDates(
+        \DateTimeImmutable $start,
+        \DateTimeImmutable $end,
+        bool $isHalfYearSubscription
+    ): void {
+        $this->memberSubscriptionStart = $start;
+        $this->memberSubscriptionEnd = $end;
+        $this->memberSubscriptionIsPayed = false;
+        $this->memberSubscriptionIsHalfYear = $isHalfYearSubscription;
+    }
+
+    public function markSubscriptionAsPayed(): void
+    {
+        $this->memberSubscriptionIsPayed = true;
+    }
+
+    public function setLicenseDates(
+        \DateTimeImmutable $start,
+        \DateTimeImmutable $end,
+    ): void {
+        $this->licenseStart = $start;
+        $this->licenseEnd = $end;
+        $this->licenseIsPayed = false;
+    }
+
+    public function markLicenseAsPayed(): void
+    {
+        $this->licenseIsPayed = true;
     }
 
     public function changeGrade(Grade $grade): void
@@ -360,6 +401,11 @@ class Member
         return $this->memberSubscriptionIsPayed;
     }
 
+    public function memberSubscriptionIsHalfYear(): bool
+    {
+        return $this->memberSubscriptionIsHalfYear;
+    }
+
     public function getLicenseStart(): \DateTimeImmutable
     {
         return $this->licenseStart;
@@ -394,5 +440,4 @@ class Member
     {
         return $this->federation;
     }
-
 }

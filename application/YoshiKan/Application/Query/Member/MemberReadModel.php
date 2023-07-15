@@ -22,37 +22,37 @@ class MemberReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int                              $id,
-        protected string                           $uuid,
-        protected string                           $status,
-        protected string                           $firstname,
-        protected string                           $lastname,
-        protected \DateTimeImmutable               $dateOfBirth,
-        protected string                           $gender,
-        protected GradeReadModel                   $grade,
-        protected LocationReadModel                $location,
-        protected string                           $profileImage,
-        protected string                           $nationalRegisterNumber,
-        protected string                           $email,
-        protected string                           $addressStreet,
-        protected string                           $addressNumber,
-        protected string                           $addressBox,
-        protected string                           $addressZip,
-        protected string                           $addressCity,
-        protected FederationReadModel              $federation,
-        protected \DateTimeImmutable               $memberSubscriptionStart,
-        protected \DateTimeImmutable               $memberSubscriptionEnd,
-        protected bool                             $memberSubscriptionIsPayed,
-        protected \DateTimeImmutable               $licenseStart,
-        protected \DateTimeImmutable               $licenseEnd,
-        protected bool                             $licenseIsPayed,
+        protected int $id,
+        protected string $uuid,
+        protected string $status,
+        protected string $firstname,
+        protected string $lastname,
+        protected \DateTimeImmutable $dateOfBirth,
+        protected string $gender,
+        protected GradeReadModel $grade,
+        protected LocationReadModel $location,
+        protected string $profileImage,
+        protected string $nationalRegisterNumber,
+        protected string $email,
+        protected string $addressStreet,
+        protected string $addressNumber,
+        protected string $addressBox,
+        protected string $addressZip,
+        protected string $addressCity,
+        protected FederationReadModel $federation,
+        protected \DateTimeImmutable $memberSubscriptionStart,
+        protected \DateTimeImmutable $memberSubscriptionEnd,
+        protected bool $memberSubscriptionIsPayed,
+        protected bool $memberSubscriptionIsHalfYear,
+        protected \DateTimeImmutable $licenseStart,
+        protected \DateTimeImmutable $licenseEnd,
+        protected bool $licenseIsPayed,
 
         protected ?SubscriptionReadModelCollection $subscriptions = null,
-        protected ?string                          $remarks = null,
-        protected ?GradeLogReadModelCollection     $gradeLogs = null,
-        protected ?MemberImageReadModelCollection  $images = null,
-    )
-    {
+        protected ?string $remarks = null,
+        protected ?GradeLogReadModelCollection $gradeLogs = null,
+        protected ?MemberImageReadModelCollection $images = null,
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -80,11 +80,12 @@ class MemberReadModel implements \JsonSerializable
         $json->addressZip = $this->getAddressZip();
         $json->addressCity = $this->getAddressCity();
         $json->federation = $this->getFederation();
-        $json->memberSubscriptionStart = $this->getMemberSubscriptionStart();
-        $json->memberSubscriptionEnd = $this->getMemberSubscriptionEnd();
+        $json->memberSubscriptionStart = $this->getMemberSubscriptionStart()->format(\DateTimeInterface::ATOM);
+        $json->memberSubscriptionEnd = $this->getMemberSubscriptionEnd()->format(\DateTimeInterface::ATOM);
         $json->memberSubscriptionIsPayed = $this->isMemberSubscriptionPayed();
-        $json->licenseStart = $this->getLicenseStart();
-        $json->licenseEnd = $this->getLicenseEnd();
+        $json->memberSubscriptionIsHalfYear = $this->isMemberSubscriptionIsHalfYear();
+        $json->licenseStart = $this->getLicenseStart()->format(\DateTimeInterface::ATOM);
+        $json->licenseEnd = $this->getLicenseEnd()->format(\DateTimeInterface::ATOM);
         $json->licenseIsPayed = $this->isLicensePayed();
 
         if (!is_null($this->getSubscriptions())) {
@@ -144,6 +145,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->getMemberSubscriptionStart(),
                 $model->getMemberSubscriptionEnd(),
                 $model->memberSubscriptionIsPayed(),
+                $model->memberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
                 $model->licenseIsPayed(),
@@ -175,6 +177,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->getMemberSubscriptionStart(),
                 $model->getMemberSubscriptionEnd(),
                 $model->memberSubscriptionIsPayed(),
+                $model->memberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
                 $model->licenseIsPayed(),
@@ -328,4 +331,8 @@ class MemberReadModel implements \JsonSerializable
         return $this->licenseIsPayed;
     }
 
+    public function isMemberSubscriptionIsHalfYear(): bool
+    {
+        return $this->memberSubscriptionIsHalfYear;
+    }
 }

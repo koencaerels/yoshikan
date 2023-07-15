@@ -14,7 +14,6 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\FederationRepository::class)]
 class Federation
 {
-
     use IdEntity;
     use SequenceEntity;
     use ChecksumEntity;
@@ -34,9 +33,9 @@ class Federation
      * One-To-Many_Bidirectional
      * One Federation has many Members.
      */
-    #[ORM\OneToMany(mappedBy: "federation", targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: "EXTRA_LAZY")]
+    #[ORM\OneToMany(mappedBy: 'federation', targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
-    #[ORM\OrderBy(["id" => "ASC"])]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private ?Collection $members;
 
     // —————————————————————————————————————————————————————————————————————————
@@ -44,13 +43,12 @@ class Federation
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid   $uuid,
-        int    $sequence,
+        Uuid $uuid,
+        int $sequence,
         string $code,
         string $name,
-        int    $yearlySubscriptionFee,
-    )
-    {
+        int $yearlySubscriptionFee,
+    ) {
         // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
         $this->sequence = $sequence;
@@ -64,14 +62,12 @@ class Federation
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid   $uuid,
-        int    $sequence,
+        Uuid $uuid,
+        int $sequence,
         string $code,
         string $name,
-        int    $yearlySubscriptionFee,
-
-    ): self
-    {
+        int $yearlySubscriptionFee,
+    ): self {
         return new self(
             $uuid,
             $sequence,
@@ -84,9 +80,8 @@ class Federation
     public function change(
         string $code,
         string $name,
-        int    $yearlySubscriptionFee,
-    ): void
-    {
+        int $yearlySubscriptionFee,
+    ): void {
         $this->code = $code;
         $this->name = $name;
         $this->yearlySubscriptionFee = $yearlySubscriptionFee;
@@ -123,5 +118,4 @@ class Federation
     {
         return $this->member;
     }
-
 }

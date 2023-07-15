@@ -143,13 +143,16 @@ export interface Member {
 
     //-- subscription and license details
 
+    federation: Federation;
     memberSubscriptionStart: Date;
     memberSubscriptionEnd: Date;
     memberSubscriptionIsPayed: boolean;
+    memberSubscriptionIsHalfYear: boolean;
+
     licenseStart: Date;
     licenseEnd: Date;
     licenseIsPayed: boolean;
-    federation: Federation;
+
 }
 
 export interface GradeLog {

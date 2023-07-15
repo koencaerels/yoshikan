@@ -47,6 +47,11 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import Image from 'primevue/image';
 import Calendar from 'primevue/calendar';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
+import TriStateCheckbox from 'primevue/tristatecheckbox';
 
 // ----------------------------------------------------------------------------------- services
 import ToastService from "primevue/toastservice";
@@ -99,6 +104,11 @@ app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("Image", Image);
 app.component("Calendar", Calendar);
+app.component("DataTable", DataTable);
+app.component("Column", Column);
+app.component("ColumnGroup", ColumnGroup);
+app.component("Row", Row);
+app.component("TriStateCheckbox", TriStateCheckbox);
 
 app.directive('tooltip', Tooltip);
 

@@ -4,7 +4,6 @@ namespace App\YoshiKan\Application\Query\Member;
 
 class FederationReadModelCollection implements \JsonSerializable
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -21,6 +20,7 @@ class FederationReadModelCollection implements \JsonSerializable
     {
         $json = new \stdClass();
         $json->collection = $this->getCollection();
+
         return $json;
     }
 
@@ -40,5 +40,4 @@ class FederationReadModelCollection implements \JsonSerializable
     {
         return $this->collection;
     }
-
 }

@@ -16,6 +16,7 @@ namespace App\YoshiKan\Infrastructure\Database\Member;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
+use App\YoshiKan\Domain\Model\Member\MemberStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -109,8 +110,8 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
     {
         $q = $this->createQueryBuilder('t')
             ->where('LOWER(t.firstname) LIKE :firstname AND LOWER(t.lastname) LIKE :lastname')
-            ->setParameter('firstname', '%' . trim(mb_strtolower($firstname)) . '%')
-            ->setParameter('lastname', '%' . trim(mb_strtolower($lastname)) . '%')
+            ->setParameter('firstname', '%'.trim(mb_strtolower($firstname)).'%')
+            ->setParameter('lastname', '%'.trim(mb_strtolower($lastname)).'%')
             ->orWhere('YEAR(t.dateOfBirth) = :year AND MONTH(t.dateOfBirth) = :month AND DAY(t.dateOfBirth) = :day')
             ->setParameter('year', $dateOfBirth->format('Y'))
             ->setParameter('month', $dateOfBirth->format('m'))
@@ -131,7 +132,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
         if (!is_null($keyword) && 0 != mb_strlen(trim($keyword))) {
             $q->andWhere('LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id')
-                ->setParameter('keyword', '%' . mb_strtolower($keyword) . '%')
+                ->setParameter('keyword', '%'.mb_strtolower($keyword).'%')
                 ->setParameter('id', intval($keyword));
         }
         if (!is_null($location)) {
@@ -152,6 +153,16 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
                 ->setParameter('maxYearOfBirth', $maxYearOfBirth);
         }
         $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function listActiveMembers(): array
+    {
+        $q = $this->createQueryBuilder('t')
+            ->where('t.status = :status')
+            ->setParameter('status', MemberStatus::ACTIVE->value)
+            ->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();
     }

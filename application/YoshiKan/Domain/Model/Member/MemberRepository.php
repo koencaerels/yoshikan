@@ -39,4 +39,6 @@ interface MemberRepository
         int $minYearOfBirth = 0,
         int $maxYearOfBirth = 0,
     ): array;
+
+    public function listActiveMembers(): array;
 }

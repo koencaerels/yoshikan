@@ -40,6 +40,7 @@ class ChangeMemberDetailsHandler
             $status,
             $location,
             $command->getNationalRegisterNumber(),
+            $command->getEmail(),
             $command->getAddressStreet(),
             $command->getAddressNumber(),
             $command->getAddressBox(),

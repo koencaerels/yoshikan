@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 interface FederationRepository
 {
-
     public function nextIdentity(): Uuid;
 
     public function save(Federation $model): ?int;
@@ -20,5 +19,4 @@ interface FederationRepository
     public function getByUuid(Uuid $uuid): Federation;
 
     public function getAll(): array;
-
 }

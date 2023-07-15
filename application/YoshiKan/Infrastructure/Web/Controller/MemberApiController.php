@@ -51,6 +51,10 @@ use Twig\Loader\FilesystemLoader;
 
 class MemberApiController extends AbstractController
 {
+    // ——————————————————————————————————————————————————————————————————————————
+    // Routes
+    // ——————————————————————————————————————————————————————————————————————————
+
     use grade_routes;
     use group_routes;
     use period_routes;
@@ -62,6 +66,10 @@ class MemberApiController extends AbstractController
     use member_routes;
     use member_image_routes;
     use federation_routes;
+
+    // ——————————————————————————————————————————————————————————————————————————
+    // Attributes
+    // ——————————————————————————————————————————————————————————————————————————
 
     protected MemberCommandBus $commandBus;
     protected MemberQueryBus $queryBus;
@@ -86,7 +94,7 @@ class MemberApiController extends AbstractController
             $isolationMode = true;
         }
 
-        $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
+        $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
         $this->setTwigLoader($this->appKernel);
 
         $this->queryBus = new MemberQueryBus(
@@ -135,7 +143,7 @@ class MemberApiController extends AbstractController
         $twigLoaders = $twigLoaders instanceof ChainLoader ?
             $twigLoaders->getLoaders() :
             [$twigLoaders];
-        $path = $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
+        $path = $appKernel->getProjectDir().'/application/YoshiKan/Infrastructure/Templates/';
         foreach ($twigLoaders as $twigLoader) {
             if ($twigLoader instanceof FilesystemLoader) {
                 $twigLoader->prependPath($path, '__main__');
