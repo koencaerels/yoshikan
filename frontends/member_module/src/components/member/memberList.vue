@@ -151,7 +151,7 @@
                  class="border-b-[1px] border-gray-400 flex py-1 cursor-pointer hover:bg-indigo-50">
 
                 <div class="text-xs w-[1rem] ml-2 text-gray-300">
-                    <font-awesome-icon icon="fa-solid fa-pen" />
+                    <font-awesome-icon icon="fa-solid fa-pen"/>
                 </div>
                 <div class="w-16 ml-2">
                     <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
@@ -159,7 +159,10 @@
                     </div>
                 </div>
                 <div class="w-64 ml-2">
-                    <div class="font-bold text-sm">{{ member.firstname }} {{ member.lastname }}</div>
+                    <div class="font-bold text-sm">
+                        <span class="uppercase">{{ member.lastname }}</span>
+                        {{ member.firstname }}
+                    </div>
                 </div>
                 <div class="w-[6rem] ml-2 text-sm">
                     <div class="text-xs">
@@ -191,7 +194,10 @@
                         </div>
                     </div>
                     <div class="w-64 ml-2">
-                        <div class="font-bold">{{ member.firstname }} {{ member.lastname }}</div>
+                        <div class="font-bold">
+                            <span class="uppercase">{{ member.lastname }}</span>
+                            {{ member.firstname }}
+                        </div>
                         <div class="text-xs">
                             ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
                             - {{ member.gender }}

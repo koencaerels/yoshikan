@@ -152,7 +152,6 @@ export interface Member {
     licenseStart: Date;
     licenseEnd: Date;
     licenseIsPayed: boolean;
-
 }
 
 export interface GradeLog {
