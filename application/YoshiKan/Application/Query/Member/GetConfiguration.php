@@ -15,7 +15,6 @@ namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
-use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
@@ -30,7 +29,6 @@ class GetConfiguration
         protected GroupRepository $groupRepository,
         protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
-        protected JudogiRepository $judogiRepository,
         protected FederationRepository $federationRepository,
     ) {
     }
@@ -43,7 +41,6 @@ class GetConfiguration
         $periods = $this->periodRepository->getAll();
         $activePeriod = $this->periodRepository->getActive();
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
-        $judogi = $this->judogiRepository->getAll();
         $federations = $this->federationRepository->getAll();
 
         $gradeCollection = new GradeReadModelCollection();
@@ -65,11 +62,6 @@ class GetConfiguration
         $activePeriodReadModel = PeriodReadModel::hydrateFromModel($activePeriod);
         $settingsReadModel = SettingsReadModel::hydrateFromModel($settings);
 
-        $judogiCollection = new JudogiReadModelCollection();
-        foreach ($judogi as $judogiItem) {
-            $judogiCollection->addItem(JudogiReadModel::hydrateFromModel($judogiItem));
-        }
-
         $federationCollection = new FederationReadModelCollection();
         foreach ($federations as $federation) {
             $federationCollection->addItem(FederationReadModel::hydrateFromModel($federation));
@@ -80,7 +72,6 @@ class GetConfiguration
             $locationCollection,
             $groupCollection,
             $periodCollection,
-            $judogiCollection,
             $federationCollection,
             $activePeriodReadModel,
             $settingsReadModel

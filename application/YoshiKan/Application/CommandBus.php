@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
-use App\YoshiKan\Application\Command\Member\WebConfirmationMail\web_confirmation_mail;
-use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
-use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use App\YoshiKan\Infrastructure\Database\Member\MemberRepository;
 use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
 use App\YoshiKan\Infrastructure\Database\Member\SettingsRepository;
+use Command\WebConfirmationMail\web_confirmation_mail;
+use Command\WebSubscribe\web_subscribe;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;

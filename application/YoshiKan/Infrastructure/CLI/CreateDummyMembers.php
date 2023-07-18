@@ -19,13 +19,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateDummyMembers extends Command
 {
-
     private readonly EntityManagerInterface $entityManager;
     private readonly MemberRepository $memberRepository;
     private readonly GradeRepository $gradeRepository;
     private readonly FederationRepository $federationRepository;
     private readonly LocationRepository $locationRepository;
-
 
     // ——————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -40,7 +38,6 @@ class CreateDummyMembers extends Command
         $this->gradeRepository = $entityManager->getRepository(Grade::class);
         $this->federationRepository = $entityManager->getRepository(Federation::class);
         $this->locationRepository = $entityManager->getRepository(Location::class);
-
     }
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -57,9 +54,9 @@ class CreateDummyMembers extends Command
         // Sporta = ID 2 | Judo Vlaanderen = ID 1
         // location ID 1 to 4
 
-        for ($i = 0; $i <= $numberOfMembers; $i++) {
+        for ($i = 0; $i <= $numberOfMembers; ++$i) {
             $genderBit = rand(0, 1);
-            if ($genderBit === 0) {
+            if (0 === $genderBit) {
                 $member = Member::make(
                     $this->memberRepository->nextIdentity(),
                     $faker->firstNameMale(),
@@ -98,14 +95,14 @@ class CreateDummyMembers extends Command
             }
 
             $startPeriodDate = $faker->dateTimeThisDecade('now');
-            $startPeriod = $startPeriodDate->format('Y-m') . '-01';
-            $endPeriod = (intval($startPeriodDate->format('Y')) + 1) . '-' . $startPeriodDate->format('m') . '-01';
+            $startPeriod = $startPeriodDate->format('Y-m').'-01';
+            $endPeriod = (intval($startPeriodDate->format('Y')) + 1).'-'.$startPeriodDate->format('m').'-01';
             $member->setSubscriptionDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod), false);
             $member->setLicenseDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod));
 
             // -- randomly mark as payed
             $payedBit = rand(0, 1);
-            if ($payedBit === 0) {
+            if (0 === $payedBit) {
                 $member->markSubscriptionAsPayed();
                 $member->markLicenseAsPayed();
             }
@@ -117,7 +114,7 @@ class CreateDummyMembers extends Command
         }
 
         $output->writeln('Dummy members generated.');
+
         return 0;
     }
-
 }

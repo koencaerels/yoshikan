@@ -13,6 +13,8 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 enum SubscriptionType: string
 {
-    case FULL_YEAR = 'volledig jaar';
-    case HALF_YEAR = 'half jaar';
+    case NEW_SUBSCRIPTION = 'nieuwe_inschrijving';
+    case RENEWAL_FULL = 'volledige_hernieuwing';
+    case RENEWAL_MEMBERSHIP = 'hernieuwing_lidmaatschap';
+    case RENEWAL_LICENSE = 'hernieuwing_vergunning';
 }

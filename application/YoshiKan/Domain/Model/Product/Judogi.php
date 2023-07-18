@@ -11,47 +11,43 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Domain\Model\Member;
+namespace App\YoshiKan\Domain\Model\Product;
 
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\FederationRepository::class)]
-class Federation
+/**
+ * @Audit\Auditable()
+ */
+#[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Product\JudogiRepository::class)]
+class Judogi
 {
     use IdEntity;
+    use BlameableEntity;
+    use TimestampableEntity;
     use SequenceEntity;
     use ChecksumEntity;
 
-    // -------------------------------------------------------------- attributes
-    #[ORM\Column(length: 191)]
-    private ?string $code = null;
+    #[ORM\Column(length: 10)]
+    private string $code;
 
     #[ORM\Column(length: 191)]
-    private ?string $name = null;
+    private string $name;
+
+    #[ORM\Column(length: 191)]
+    private string $size;
 
     #[ORM\Column]
-    private ?int $yearlySubscriptionFee = null;
+    private float $price = 0;
 
-    // ---------------------------------------------------------------- associations
-    /**
-     * One-To-Many_Bidirectional
-     * One Federation has many Members.
-     */
-    #[ORM\OneToMany(mappedBy: 'federation', targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ORM\OrderBy(['id' => 'ASC'])]
-    private ?Collection $members;
-
-    /**
-     * One-To-Many_Bidirectional
-     * One Federation has many Subscriptions.
-     */
-    #[ORM\OneToMany(mappedBy: 'federation', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
+    #[ORM\OneToMany(mappedBy: 'judogi', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\OrderBy(['id' => 'ASC'])]
     private ?Collection $subscriptions;
@@ -62,17 +58,16 @@ class Federation
 
     private function __construct(
         Uuid $uuid,
-        int $sequence,
         string $code,
         string $name,
-        int $yearlySubscriptionFee,
+        string $size,
+        float $price,
     ) {
-        // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
-        $this->sequence = $sequence;
         $this->code = $code;
         $this->name = $name;
-        $this->yearlySubscriptionFee = $yearlySubscriptionFee;
+        $this->size = $size;
+        $this->price = $price;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -81,55 +76,58 @@ class Federation
 
     public static function make(
         Uuid $uuid,
-        int $sequence,
         string $code,
         string $name,
-        int $yearlySubscriptionFee,
+        string $size,
+        float $price,
     ): self {
         return new self(
             $uuid,
-            $sequence,
             $code,
             $name,
-            $yearlySubscriptionFee,
+            $size,
+            $price,
         );
     }
 
     public function change(
         string $code,
         string $name,
-        int $yearlySubscriptionFee,
+        string $size,
+        float $price,
     ): void {
         $this->code = $code;
         $this->name = $name;
-        $this->yearlySubscriptionFee = $yearlySubscriptionFee;
+        $this->size = $size;
+        $this->price = $price;
     }
-
-    // —————————————————————————————————————————————————————————————————————————
-    // Other Setters
-    // —————————————————————————————————————————————————————————————————————————
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getYearlySubscriptionFee(): ?int
+    public function getSize(): string
     {
-        return $this->yearlySubscriptionFee;
+        return $this->size;
     }
 
-    // —————————————————————————————————————————————————————————————————————————
-    // Other model getters
-    // —————————————————————————————————————————————————————————————————————————
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
 
+    public function getSubscriptions(): array
+    {
+        return $this->subscriptions->getValues();
+    }
 }

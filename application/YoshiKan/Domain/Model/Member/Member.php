@@ -117,6 +117,7 @@ class Member
     #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Federation", fetch: 'EXTRA_LAZY', inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private Federation $federation;
+
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\GradeLog", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\OrderBy(['id' => 'ASC'])]

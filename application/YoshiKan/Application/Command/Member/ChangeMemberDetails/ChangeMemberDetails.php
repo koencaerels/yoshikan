@@ -134,5 +134,4 @@ class ChangeMemberDetails
     {
         return $this->email;
     }
-
 }

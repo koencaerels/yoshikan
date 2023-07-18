@@ -20,7 +20,6 @@ class ConfigurationReadModel implements \JsonSerializable
         protected LocationReadModelCollection $locations,
         protected GroupReadModelCollection $groups,
         protected PeriodReadModelCollection $periods,
-        protected JudogiReadModelCollection $judogi,
         protected FederationReadModelCollection $federations,
         protected PeriodReadModel $activePeriod,
         protected SettingsReadModel $settings
@@ -38,7 +37,6 @@ class ConfigurationReadModel implements \JsonSerializable
         $json->locations = $this->getLocations()->getCollection();
         $json->groups = $this->getGroups()->getCollection();
         $json->periods = $this->getPeriods()->getCollection();
-        $json->judogi = $this->getJudogi()->getCollection();
         $json->federations = $this->getFederations()->getCollection();
         $json->activePeriod = $this->getActivePeriod();
         $json->settings = $this->getSettings();
@@ -78,11 +76,6 @@ class ConfigurationReadModel implements \JsonSerializable
     public function getPeriods(): PeriodReadModelCollection
     {
         return $this->periods;
-    }
-
-    public function getJudogi(): JudogiReadModelCollection
-    {
-        return $this->judogi;
     }
 
     public function getFederations(): FederationReadModelCollection

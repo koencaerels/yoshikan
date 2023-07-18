@@ -23,7 +23,6 @@ trait get_configuration
             $this->groupRepository,
             $this->periodRepository,
             $this->settingsRepository,
-            $this->judogiRepository,
             $this->federationRepository,
         );
 
@@ -40,7 +39,6 @@ trait get_configuration
             $this->groupRepository,
             $this->periodRepository,
             $this->settingsRepository,
-            $this->judogiRepository,
             $this->federationRepository,
         );
 

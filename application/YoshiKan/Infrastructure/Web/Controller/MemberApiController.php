@@ -19,7 +19,6 @@ use App\YoshiKan\Domain\Model\Member\Federation;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\GradeLog;
 use App\YoshiKan\Domain\Model\Member\Group;
-use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\MemberImage;
@@ -110,7 +109,6 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
-            $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(MemberImage::class),
             $this->entityManager->getRepository(Federation::class)
         );
@@ -129,7 +127,6 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
-            $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(GradeLog::class),
             $this->entityManager->getRepository(MemberImage::class),
             $this->entityManager->getRepository(Federation::class)

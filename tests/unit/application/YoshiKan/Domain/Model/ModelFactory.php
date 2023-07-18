@@ -4,11 +4,11 @@ namespace App\Tests\unit\application\YoshiKan\Domain\Model;
 
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\Grade;
-use App\YoshiKan\Domain\Model\Member\Judogi;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
+use App\YoshiKan\Domain\Model\Product\Judogi;
 use Symfony\Component\Uid\Uuid;
 
 class ModelFactory

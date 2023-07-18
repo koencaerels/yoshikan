@@ -15,18 +15,18 @@ namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Query\Member\get_configuration;
 use App\YoshiKan\Application\Query\Member\get_member;
-use App\YoshiKan\Application\Query\Member\get_subscription;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
-use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Query\get_subscription;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 

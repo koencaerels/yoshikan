@@ -2,8 +2,8 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\JudogiReadModel;
-use App\YoshiKan\Domain\Model\Member\Judogi;
+use App\YoshiKan\Application\Query\Product\JudogiReadModel;
+use App\YoshiKan\Domain\Model\Product\Judogi;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;

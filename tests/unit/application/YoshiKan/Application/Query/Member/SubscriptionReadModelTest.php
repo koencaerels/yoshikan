@@ -3,12 +3,12 @@
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
 use App\Tests\unit\application\YoshiKan\Domain\Model\ModelFactory;
-use App\YoshiKan\Application\Query\Member\SubscriptionReadModel;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionType;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Query\SubscriptionReadModel;
 use Symfony\Component\Uid\Uuid;
 
 class SubscriptionReadModelTest extends TestCase

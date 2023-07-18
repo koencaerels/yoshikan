@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Domain\Model\Member;
 
-use App\YoshiKan\Domain\Model\Member\Judogi;
+use App\YoshiKan\Domain\Model\Product\Judogi;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;

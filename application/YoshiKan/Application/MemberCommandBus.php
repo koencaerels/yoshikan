@@ -16,41 +16,30 @@ namespace App\YoshiKan\Application;
 use App\YoshiKan\Application\Command\Member\AddFederation\add_federation;
 use App\YoshiKan\Application\Command\Member\AddGrade\add_grade;
 use App\YoshiKan\Application\Command\Member\AddGroup\add_group;
-use App\YoshiKan\Application\Command\Member\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Member\AddLocation\add_location;
 use App\YoshiKan\Application\Command\Member\AddPeriod\add_period;
 use App\YoshiKan\Application\Command\Member\ChangeFederation\change_federation;
 use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
-use App\YoshiKan\Application\Command\Member\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\change_member_details;
 use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grade;
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
-use App\YoshiKan\Application\Command\Member\ChangeSubscription\change_subscription;
-use App\YoshiKan\Application\Command\Member\ChangeSubscriptionStatus\change_subscription_status;
-use App\YoshiKan\Application\Command\Member\ConnectSubscriptionToMember\connect_subscription_to_member;
-use App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription\create_member_from_subscription;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
-use App\YoshiKan\Application\Command\Member\MarkSubscriptionsAsFinished\mark_subscriptions_as_finished;
 use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
-use App\YoshiKan\Application\Command\Member\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
-use App\YoshiKan\Application\Command\Member\SendPaymentOverviewMail\send_payment_overview_mail;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
 use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
-use App\YoshiKan\Application\Command\Member\WebSubscribe\web_subscribe;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
-use App\YoshiKan\Domain\Model\Member\JudogiRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
@@ -80,21 +69,9 @@ class MemberCommandBus
     use order_location;
     use save_settings;
     use setup_configuration;
-    use add_judogi;
-    use change_judogi;
-    use order_judogi;
     use add_federation;
     use change_federation;
     use order_federation;
-
-    // -- subscription --------------------------------------------------------
-    use web_subscribe;
-    use change_subscription;
-    use change_subscription_status;
-    use send_payment_overview_mail;
-    use connect_subscription_to_member;
-    use create_member_from_subscription;
-    use mark_subscriptions_as_finished;
 
     // -- members --------------------------------------------------------------
     use change_member_details;
@@ -127,7 +104,6 @@ class MemberCommandBus
         protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-        protected JudogiRepository $judogiRepository,
         protected GradeLogRepository $gradeLogRepository,
         protected MemberImageRepository $memberImageRepository,
         protected FederationRepository $federationRepository
