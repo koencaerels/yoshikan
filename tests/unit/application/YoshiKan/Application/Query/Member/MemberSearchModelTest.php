@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\MemberSearchModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberSearchModel;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 

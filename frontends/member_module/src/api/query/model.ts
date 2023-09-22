@@ -83,9 +83,11 @@ export interface Federation {
 }
 
 export interface Subscription {
+    // -- attributes
     id: number;
     uuid: string;
     status: string;
+    type: string;
     contactFirstname: string;
     contactLastname: string;
     contactEmail: string;
@@ -94,31 +96,47 @@ export interface Subscription {
     lastname: string;
     dateOfBirth: Date;
     gender: string;
-    type: string;
     numberOfTraining: number;
     isExtraTraining: boolean;
     isNewMember: boolean;
     isReductionFamily: boolean;
     isJudogiBelt: boolean;
-    judogiPrice: string;
     remarks: string;
-    total: string;
-    period: Period;
-    location: Location;
-    judogi?: Judogi;
-    settings: Settings;
+    total: number;
+    settings: string;
     isPaymentOverviewSend: boolean;
-    member?: Member;
-    selected: boolean;
     nationalRegisterNumber: string;
     addressStreet: string;
     addressNumber: string;
     addressBox: string;
     addressZip: string;
     addressCity: string;
+    memberSubscriptionStart: Date;
+    memberSubscriptionEnd: Date;
+    memberSubscriptionTotal: number;
+    memberSubscriptionIsPartSubscription: boolean;
+    licenseStart: Date;
+    licenseEnd: Date;
+    licenseTotal: number;
+    licenseIsPartSubscription: boolean;
+    // -- associations
+    member: Member;
+    location: Location;
+    federation: Federation;
+    subscriptionItems: SubscriptionItem[];
+}
+
+export interface SubscriptionItem {
+    id: number;
+    uuid: string;
+    sequence: number;
+    type: string;
+    name: string;
+    price: number;
 }
 
 export interface Member {
+    // -- attributes
     id: number;
     uuid: string;
     status: string;
@@ -126,32 +144,34 @@ export interface Member {
     lastname: string;
     dateOfBirth: Date;
     gender: string;
-    grade: Grade;
-    location: Location;
-    remarks: string;
-    subscriptions?: Subscription[];
-    gradeLogs: GradeLog[];
-    images: MemberImage[];
-    profileImage: string;
     nationalRegisterNumber: string;
+    email: string;
     addressStreet: string;
     addressNumber: string;
     addressBox: string;
     addressZip: string;
     addressCity: string;
-    email: string;
-
-    //-- subscription and license details
-
-    federation: Federation;
+    remarks: string;
+    profileImage: string;
     memberSubscriptionStart: Date;
     memberSubscriptionEnd: Date;
     memberSubscriptionIsPayed: boolean;
     memberSubscriptionIsHalfYear: boolean;
-
     licenseStart: Date;
     licenseEnd: Date;
     licenseIsPayed: boolean;
+    contactFirstname: string;
+    contactLastname: string;
+    contactEmail: string;
+    contactPhone: string;
+    numberOfTraining: number;
+    // -- associations
+    grade: Grade;
+    location: Location;
+    federation: Federation;
+    subscriptions?: Subscription[];
+    gradelogs: GradeLog[];
+    memberImages: MemberImage[];
 }
 
 export interface GradeLog {

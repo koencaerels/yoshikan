@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-class LocationReadModelCollection implements \JsonSerializable
+class GroupReadModelCollection implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -35,7 +35,7 @@ class LocationReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(LocationReadModel $readModel)
+    public function addItem(GroupReadModel $readModel)
     {
         $this->collection[] = $readModel;
     }
@@ -45,7 +45,7 @@ class LocationReadModelCollection implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     /**
-     * @return LocationReadModel[]
+     * @return GroupReadModel[]
      */
     public function getCollection(): array
     {

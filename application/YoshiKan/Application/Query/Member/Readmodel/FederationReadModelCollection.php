@@ -1,19 +1,8 @@
 <?php
 
-/*
- * This file is part of the Yoshi-Kan software.
- *
- * (c) Koen Caerels
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-declare(strict_types=1);
-
-namespace App\YoshiKan\Application\Query\Member;
-
-class MemberReadModelCollection implements \JsonSerializable
+class FederationReadModelCollection implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -35,7 +24,7 @@ class MemberReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(MemberReadModel $readModel)
+    public function addItem(FederationReadModel $readModel)
     {
         $this->collection[] = $readModel;
     }
@@ -43,8 +32,9 @@ class MemberReadModelCollection implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
+
     /**
-     * @return MemberReadModel[]
+     * @return FederationReadModel[]
      */
     public function getCollection(): array
     {

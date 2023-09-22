@@ -34,8 +34,8 @@ interface MemberRepository
     public function search(
         string $keyword = '',
         int $yearOfBirth = 0,
-        ?Location $location = null,
-        ?Grade $grade = null,
+        Location $location = null,
+        Grade $grade = null,
         int $minYearOfBirth = 0,
         int $maxYearOfBirth = 0,
     ): array;

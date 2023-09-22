@@ -26,14 +26,12 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Query\get_subscription;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 class QueryBus
 {
     use get_configuration;
-    use get_subscription;
     use get_member;
 
     protected BasePermissionService $permission;

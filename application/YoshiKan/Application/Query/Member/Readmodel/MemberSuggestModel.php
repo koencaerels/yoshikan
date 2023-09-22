@@ -1,63 +1,32 @@
 <?php
 
-/*
- * This file is part of the Yoshi-Kan software.
- *
- * (c) Koen Caerels
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-declare(strict_types=1);
-
-namespace App\YoshiKan\Application\Query\Member;
-
-class MemberSearchModel
+class MemberSuggestModel
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string $keyword,
-        protected int $locationId,
-        protected int $gradeId,
-        protected int $yearOfBirth,
-        protected int $groupId,
+        protected string $firstname,
+        protected string $lastname,
+        protected \DateTimeImmutable $dateOfBirth,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Hydrate from json
     // —————————————————————————————————————————————————————————————————————————
-
+    /**
+     * @throws \Exception
+     */
     public static function hydrateFromJson(\stdClass $json): self
     {
-        $keyword = $json->keyword;
-        $locationId = 0;
-        $gradeId = 0;
-        $yearOfBirth = 0;
-        $groupId = 0;
-        if (isset($json->locationId)) {
-            $locationId = intval($json->locationId);
-        }
-        if (isset($json->grade)) {
-            $gradeId = intval($json->grade->id);
-        }
-        if (isset($json->yearOfBirth)) {
-            $yearOfBirth = intval($json->yearOfBirth);
-        }
-        if (isset($json->group)) {
-            $groupId = intval($json->group->id);
-        }
-
         return new self(
-            $keyword,
-            $locationId,
-            $gradeId,
-            $yearOfBirth,
-            $groupId
+            $json->firstname,
+            $json->lastname,
+            new \DateTimeImmutable($json->dateOfBirth),
         );
     }
 
@@ -65,28 +34,18 @@ class MemberSearchModel
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getKeyword(): string
+    public function getFirstname(): string
     {
-        return $this->keyword;
+        return $this->firstname;
     }
 
-    public function getLocationId(): int
+    public function getLastname(): string
     {
-        return $this->locationId;
+        return $this->lastname;
     }
 
-    public function getGradeId(): int
+    public function getDateOfBirth(): \DateTimeImmutable
     {
-        return $this->gradeId;
-    }
-
-    public function getYearOfBirth(): int
-    {
-        return $this->yearOfBirth;
-    }
-
-    public function getGroupId(): int
-    {
-        return $this->groupId;
+        return $this->dateOfBirth;
     }
 }

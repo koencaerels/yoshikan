@@ -1,10 +1,21 @@
 <?php
 
-namespace App\YoshiKan\Application\Query\Member;
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-use App\YoshiKan\Domain\Model\Member\Federation;
+declare(strict_types=1);
 
-class FederationReadModel implements \JsonSerializable
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
+
+use App\YoshiKan\Domain\Model\Member\Grade;
+
+class GradeReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -13,9 +24,10 @@ class FederationReadModel implements \JsonSerializable
     public function __construct(
         protected int $id,
         protected string $uuid,
+        protected int $sequence,
         protected string $code,
         protected string $name,
-        protected int $yearlySubscriptionFee,
+        protected string $color,
     ) {
     }
 
@@ -28,9 +40,10 @@ class FederationReadModel implements \JsonSerializable
         $json = new \stdClass();
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
+        $json->sequence = $this->getSequence();
         $json->code = $this->getCode();
         $json->name = $this->getName();
-        $json->yearlySubscriptionFee = $this->getYearlySubscriptionFee();
+        $json->color = $this->getColor();
 
         return $json;
     }
@@ -39,14 +52,15 @@ class FederationReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(Federation $model): self
+    public static function hydrateFromModel(Grade $model): self
     {
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
+            $model->getSequence(),
             $model->getCode(),
             $model->getName(),
-            $model->getYearlySubscriptionFee(),
+            $model->getColor(),
         );
     }
 
@@ -64,6 +78,11 @@ class FederationReadModel implements \JsonSerializable
         return $this->uuid;
     }
 
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
     public function getCode(): string
     {
         return $this->code;
@@ -74,8 +93,8 @@ class FederationReadModel implements \JsonSerializable
         return $this->name;
     }
 
-    public function getYearlySubscriptionFee(): int
+    public function getColor(): string
     {
-        return $this->yearlySubscriptionFee;
+        return $this->color;
     }
 }

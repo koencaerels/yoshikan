@@ -15,7 +15,6 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
-use App\YoshiKan\Domain\Model\Product\Judogi;
 use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
@@ -88,7 +87,7 @@ class Subscription
     #[ORM\Column(type: 'json')]
     private array $settings;
 
-    // -- extra fields for new members ------------------------------------------
+    // -- subscription configuration  ------------------------------------------
 
     #[ORM\Column]
     private \DateTimeImmutable $memberSubscriptionStart;
@@ -101,6 +100,9 @@ class Subscription
 
     #[ORM\Column(options: ['default' => 0])]
     private bool $memberSubscriptionIsPartSubscription;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $memberSubscriptionIsHalfYear;
 
     #[ORM\Column]
     private \DateTimeImmutable $licenseStart;
@@ -135,7 +137,6 @@ class Subscription
     private ?string $addressCity = null;
 
     // ------------------------------------------------------------ associations
-
     #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY', inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Member $member;
@@ -148,32 +149,35 @@ class Subscription
     #[ORM\JoinColumn(nullable: false)]
     private Federation $federation;
 
+    #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: "App\YoshiKan\Domain\Model\Member\SubscriptionItem", fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OrderBy(['sequence' => 'ASC'])]
+    private Collection $subscriptionitems;
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        Uuid               $uuid,
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        Period             $period,
-        Location           $location,
-        array              $settings,
-    )
-    {
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Location $location,
+        array $settings,
+    ) {
         $this->uuid = $uuid;
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -190,11 +194,10 @@ class Subscription
         $this->isReductionFamily = $isReductionFamily;
         $this->isJudogiBelt = $isJudogiBelt;
         $this->remarks = $remarks;
-        $this->period = $period;
         $this->location = $location;
         $this->settings = $settings;
+        $this->memberSubscriptionIsHalfYear = false;
         $this->member = null;
-        $this->judogi = null;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -202,27 +205,25 @@ class Subscription
     // —————————————————————————————————————————————————————————————————————————
 
     public static function make(
-        Uuid               $uuid,
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        Uuid $uuid,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        Period             $period,
-        Location           $location,
-        array              $settings
-    ): self
-    {
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Location $location,
+        array $settings
+    ): self {
         return new self(
             $uuid,
             $contactFirstname,
@@ -240,32 +241,30 @@ class Subscription
             $isReductionFamily,
             $isJudogiBelt,
             $remarks,
-            $period,
             $location,
             $settings
         );
     }
 
     public function change(
-        string             $contactFirstname,
-        string             $contactLastname,
-        string             $contactEmail,
-        string             $contactPhone,
-        string             $firstname,
-        string             $lastname,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
         \DateTimeImmutable $dateOfBirth,
-        Gender             $gender,
-        SubscriptionType   $type,
-        int                $numberOfTraining,
-        bool               $isExtraTraining,
-        bool               $isNewMember,
-        bool               $isReductionFamily,
-        bool               $isJudogiBelt,
-        string             $remarks,
-        float              $total,
-        Location           $location,
-    ): void
-    {
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        float $total,
+        Location $location,
+    ): void {
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
         $this->contactEmail = $contactEmail;
@@ -292,8 +291,7 @@ class Subscription
         string $addressBox,
         string $addressZip,
         string $addressCity
-    )
-    {
+    ) {
         $this->nationalRegisterNumber = $nationalRegisterNumber;
         $this->addressStreet = $addressStreet;
         $this->addressNumber = $addressNumber;
@@ -310,18 +308,6 @@ class Subscription
     public function setMember(Member $member): void
     {
         $this->member = $member;
-    }
-
-    public function setJudogi(Judogi $judogi, float $price): void
-    {
-        $this->judogi = $judogi;
-        $this->judogiPrice = $price;
-    }
-
-    public function resetJudogi(): void
-    {
-        $this->judogi = null;
-        $this->judogiPrice = 0;
     }
 
     public function flagPaymentOverviewMailSend(): void
@@ -488,7 +474,7 @@ class Subscription
         return $this->memberSubscriptionTotal;
     }
 
-    public function mmberSubscriptionIsPartSubscription(): bool
+    public function memberSubscriptionIsPartSubscription(): bool
     {
         return $this->memberSubscriptionIsPartSubscription;
     }
@@ -530,6 +516,16 @@ class Subscription
     public function getFederation(): Federation
     {
         return $this->federation;
+    }
+
+    public function isMemberSubscriptionIsHalfYear(): bool
+    {
+        return $this->memberSubscriptionIsHalfYear;
+    }
+
+    public function getSubscriptionItems(): array
+    {
+        return $this->subscriptionitems->getValues();
     }
 
     // —————————————————————————————————————————————————————————————————————————

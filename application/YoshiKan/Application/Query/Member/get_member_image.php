@@ -2,6 +2,8 @@
 
 namespace App\YoshiKan\Application\Query\Member;
 
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberImageReadModel;
+
 trait get_member_image
 {
     public function getMemberImageById(int $id): MemberImageReadModel

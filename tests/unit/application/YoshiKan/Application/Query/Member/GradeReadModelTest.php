@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\GradeReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\GradeReadModel;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

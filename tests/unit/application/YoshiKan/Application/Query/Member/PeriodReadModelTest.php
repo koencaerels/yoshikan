@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\PeriodReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\PeriodReadModel;
 use App\YoshiKan\Domain\Model\Member\Period;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

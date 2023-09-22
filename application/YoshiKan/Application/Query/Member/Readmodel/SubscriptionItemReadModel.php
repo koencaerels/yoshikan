@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-use App\YoshiKan\Domain\Model\Member\MemberImage;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 
-class MemberImageReadModel implements \JsonSerializable
+class SubscriptionItemReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -15,8 +15,10 @@ class MemberImageReadModel implements \JsonSerializable
     public function __construct(
         protected int $id,
         protected string $uuid,
-        protected string $originalName,
-        protected string $path,
+        protected int $sequence,
+        protected string $type,
+        protected string $name,
+        protected float $price,
     ) {
     }
 
@@ -29,7 +31,10 @@ class MemberImageReadModel implements \JsonSerializable
         $json = new \stdClass();
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
-        $json->originalName = $this->getOriginalName();
+        $json->sequence = $this->getSequence();
+        $json->type = $this->getType();
+        $json->name = $this->getName();
+        $json->price = $this->getPrice();
 
         return $json;
     }
@@ -38,13 +43,15 @@ class MemberImageReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(MemberImage $model): self
+    public static function hydrateFromModel(SubscriptionItem $model): self
     {
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
-            $model->getOriginalName(),
-            $model->getPath(),
+            $model->getSequence(),
+            $model->getType()->value,
+            $model->getName(),
+            $model->getPrice(),
         );
     }
 
@@ -62,13 +69,23 @@ class MemberImageReadModel implements \JsonSerializable
         return $this->uuid;
     }
 
-    public function getOriginalName(): string
+    public function getSequence(): int
     {
-        return $this->originalName;
+        return $this->sequence;
     }
 
-    public function getPath(): string
+    public function getType(): string
     {
-        return $this->path;
+        return $this->type;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
     }
 }

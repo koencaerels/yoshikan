@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
 class MemberImageReadModelCollection implements \JsonSerializable
 {

@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\MemberSuggestModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberSuggestModel;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 

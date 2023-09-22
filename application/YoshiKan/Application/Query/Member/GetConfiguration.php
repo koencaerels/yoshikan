@@ -13,6 +13,19 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Member;
 
+use App\YoshiKan\Application\Query\Member\Readmodel\ConfigurationReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\FederationReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\FederationReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\GradeReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\GradeReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\GroupReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\GroupReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\LocationReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\LocationReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\PeriodReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\PeriodReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\SettingsReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\WebConfigurationReadModel;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;

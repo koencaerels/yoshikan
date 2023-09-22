@@ -1,32 +1,63 @@
 <?php
 
-namespace App\YoshiKan\Application\Query\Member;
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-class MemberSuggestModel
+declare(strict_types=1);
+
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
+
+class MemberSearchModel
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string $firstname,
-        protected string $lastname,
-        protected \DateTimeImmutable $dateOfBirth,
+        protected string $keyword,
+        protected int $locationId,
+        protected int $gradeId,
+        protected int $yearOfBirth,
+        protected int $groupId,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Hydrate from json
     // —————————————————————————————————————————————————————————————————————————
-    /**
-     * @throws \Exception
-     */
+
     public static function hydrateFromJson(\stdClass $json): self
     {
+        $keyword = $json->keyword;
+        $locationId = 0;
+        $gradeId = 0;
+        $yearOfBirth = 0;
+        $groupId = 0;
+        if (isset($json->locationId)) {
+            $locationId = intval($json->locationId);
+        }
+        if (isset($json->grade)) {
+            $gradeId = intval($json->grade->id);
+        }
+        if (isset($json->yearOfBirth)) {
+            $yearOfBirth = intval($json->yearOfBirth);
+        }
+        if (isset($json->group)) {
+            $groupId = intval($json->group->id);
+        }
+
         return new self(
-            $json->firstname,
-            $json->lastname,
-            new \DateTimeImmutable($json->dateOfBirth),
+            $keyword,
+            $locationId,
+            $gradeId,
+            $yearOfBirth,
+            $groupId
         );
     }
 
@@ -34,18 +65,28 @@ class MemberSuggestModel
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getFirstname(): string
+    public function getKeyword(): string
     {
-        return $this->firstname;
+        return $this->keyword;
     }
 
-    public function getLastname(): string
+    public function getLocationId(): int
     {
-        return $this->lastname;
+        return $this->locationId;
     }
 
-    public function getDateOfBirth(): \DateTimeImmutable
+    public function getGradeId(): int
     {
-        return $this->dateOfBirth;
+        return $this->gradeId;
+    }
+
+    public function getYearOfBirth(): int
+    {
+        return $this->yearOfBirth;
+    }
+
+    public function getGroupId(): int
+    {
+        return $this->groupId;
     }
 }

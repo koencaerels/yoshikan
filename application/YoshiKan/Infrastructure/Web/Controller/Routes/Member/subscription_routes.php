@@ -53,7 +53,9 @@ trait subscription_routes
     #[Route('/mm/api/subscription/todo', name: 'get_todo_subscriptions', methods: ['GET'])]
     public function getTodoSubscriptions(): JsonResponse
     {
-        $response = $this->queryBus->getTodoSubscription();
+        // $response = $this->queryBus->getTodoSubscription();
+        // todo replace this with correct list
+        $response = [];
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

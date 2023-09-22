@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Member;
 
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberReadModelCollection;
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberSearchModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberSuggestModel;
+
 trait get_member
 {
     public function listActiveMembers(): MemberReadModelCollection

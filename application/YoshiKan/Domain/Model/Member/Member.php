@@ -36,6 +36,26 @@ class Member
     #[ORM\Column(length: 36)]
     private string $status;
 
+    // ------------------------------------------------------
+    // contact details
+    // ------------------------------------------------------
+
+    #[ORM\Column(length: 191)]
+    private string $contactFirstname;
+
+    #[ORM\Column(length: 191)]
+    private string $contactLastname;
+
+    #[ORM\Column(length: 191)]
+    private string $contactEmail;
+
+    #[ORM\Column(length: 191)]
+    private string $contactPhone;
+
+    // ------------------------------------------------------
+    // member details
+    // ------------------------------------------------------
+
     #[ORM\Column(length: 191)]
     private string $firstname;
 
@@ -100,6 +120,9 @@ class Member
     #[ORM\Column(options: ['default' => 0])]
     private bool $licenseIsPayed;
 
+    #[ORM\Column]
+    private int $numberOfTraining;
+
     // ----------------------------------------------------------- associations
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY')]
@@ -147,7 +170,8 @@ class Member
         string $addressNumber,
         string $addressBox,
         string $addressZip,
-        string $addressCity
+        string $addressCity,
+        int $numberOfTraining,
     ) {
         $this->uuid = $uuid;
         $this->firstname = $firstname;
@@ -167,6 +191,7 @@ class Member
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+        $this->numberOfTraining = $numberOfTraining;
 
         // -- default settings when user is created
         $this->memberSubscriptionStart = new \DateTimeImmutable();
@@ -176,6 +201,11 @@ class Member
         $this->licenseStart = new \DateTimeImmutable();
         $this->licenseEnd = new \DateTimeImmutable();
         $this->licenseIsPayed = false;
+
+        $this->contactFirstname = $firstname;
+        $this->contactLastname = $lastname;
+        $this->contactEmail = $email;
+        $this->contactPhone = '';
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -197,7 +227,8 @@ class Member
         string $addressNumber,
         string $addressBox,
         string $addressZip,
-        string $addressCity
+        string $addressCity,
+        int $numberOfTraining,
     ): self {
         return new self(
             $uuid,
@@ -214,7 +245,8 @@ class Member
             $addressNumber,
             $addressBox,
             $addressZip,
-            $addressCity
+            $addressCity,
+            $numberOfTraining
         );
     }
 
@@ -397,12 +429,12 @@ class Member
         return $this->memberSubscriptionEnd;
     }
 
-    public function memberSubscriptionIsPayed(): bool
+    public function isMemberSubscriptionIsPayed(): bool
     {
         return $this->memberSubscriptionIsPayed;
     }
 
-    public function memberSubscriptionIsHalfYear(): bool
+    public function isMemberSubscriptionIsHalfYear(): bool
     {
         return $this->memberSubscriptionIsHalfYear;
     }
@@ -440,5 +472,30 @@ class Member
     public function getFederation(): Federation
     {
         return $this->federation;
+    }
+
+    public function getNumberOfTraining(): int
+    {
+        return $this->numberOfTraining;
+    }
+
+    public function getContactFirstname(): string
+    {
+        return $this->contactFirstname;
+    }
+
+    public function getContactLastname(): string
+    {
+        return $this->contactLastname;
+    }
+
+    public function getContactEmail(): string
+    {
+        return $this->contactEmail;
+    }
+
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
     }
 }

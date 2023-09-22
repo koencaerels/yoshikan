@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-use App\YoshiKan\Domain\Model\Member\Settings;
+use App\YoshiKan\Domain\Model\Member\Period;
 
-class SettingsReadModel implements \JsonSerializable
+class PeriodReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -24,14 +24,12 @@ class SettingsReadModel implements \JsonSerializable
     public function __construct(
         protected int $id,
         protected string $uuid,
+        protected int $sequence,
         protected string $code,
-        protected float $yearlyFee2Training,
-        protected float $yearlyFee1Training,
-        protected float $halfYearlyFee2Training,
-        protected float $halfYearlyFee1Training,
-        protected float $extraTrainingFee,
-        protected float $newMemberSubscriptionFee,
-        protected int $familyDiscount,
+        protected string $name,
+        protected \DateTimeImmutable $startDate,
+        protected \DateTimeImmutable $endDate,
+        protected bool $isActive,
     ) {
     }
 
@@ -44,14 +42,12 @@ class SettingsReadModel implements \JsonSerializable
         $json = new \stdClass();
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
+        $json->sequence = $this->getSequence();
         $json->code = $this->getCode();
-        $json->yearlyFee2Training = $this->getYearlyFee2Training();
-        $json->yearlyFee1Training = $this->getYearlyFee1Training();
-        $json->halfYearlyFee2Training = $this->getHalfYearlyFee2Training();
-        $json->halfYearlyFee1Training = $this->getHalfYearlyFee1Training();
-        $json->extraTrainingFee = $this->getExtraTrainingFee();
-        $json->newMemberSubscriptionFee = $this->getNewMemberSubscriptionFee();
-        $json->familyDiscount = $this->getFamilyDiscount();
+        $json->name = $this->getName();
+        $json->startDate = $this->getStartDate()->format(\DateTimeInterface::ATOM);
+        $json->endDate = $this->getEndDate()->format(\DateTimeInterface::ATOM);
+        $json->isActive = $this->isActive();
 
         return $json;
     }
@@ -60,19 +56,17 @@ class SettingsReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(Settings $model): self
+    public static function hydrateFromModel(Period $model): self
     {
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
+            $model->getSequence(),
             $model->getCode(),
-            $model->getYearlyFee2Training(),
-            $model->getYearlyFee1Training(),
-            $model->getHalfYearlyFee2Training(),
-            $model->getHalfYearlyFee1Training(),
-            $model->getExtraTrainingFee(),
-            $model->getNewMemberSubscriptionFee(),
-            $model->getFamilyDiscount(),
+            $model->getName(),
+            $model->getStartDate(),
+            $model->getEndDate(),
+            $model->isActive(),
         );
     }
 
@@ -90,43 +84,33 @@ class SettingsReadModel implements \JsonSerializable
         return $this->uuid;
     }
 
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
     public function getCode(): string
     {
         return $this->code;
     }
 
-    public function getYearlyFee2Training(): float
+    public function getName(): string
     {
-        return $this->yearlyFee2Training;
+        return $this->name;
     }
 
-    public function getYearlyFee1Training(): float
+    public function getStartDate(): \DateTimeImmutable
     {
-        return $this->yearlyFee1Training;
+        return $this->startDate;
     }
 
-    public function getHalfYearlyFee2Training(): float
+    public function getEndDate(): \DateTimeImmutable
     {
-        return $this->halfYearlyFee2Training;
+        return $this->endDate;
     }
 
-    public function getHalfYearlyFee1Training(): float
+    public function isActive(): bool
     {
-        return $this->halfYearlyFee1Training;
-    }
-
-    public function getExtraTrainingFee(): float
-    {
-        return $this->extraTrainingFee;
-    }
-
-    public function getNewMemberSubscriptionFee(): float
-    {
-        return $this->newMemberSubscriptionFee;
-    }
-
-    public function getFamilyDiscount(): int
-    {
-        return $this->familyDiscount;
+        return $this->isActive;
     }
 }

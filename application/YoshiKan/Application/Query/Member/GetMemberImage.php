@@ -2,6 +2,7 @@
 
 namespace App\YoshiKan\Application\Query\Member;
 
+use App\YoshiKan\Application\Query\Member\Readmodel\MemberImageReadModel;
 use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 
 class GetMemberImage

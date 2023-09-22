@@ -72,7 +72,8 @@ class CreateDummyMembers extends Command
                     $faker->buildingNumber(),
                     '',
                     $faker->postcode(),
-                    $faker->city
+                    $faker->city,
+                    rand(1, 3)
                 );
             } else {
                 $member = Member::make(
@@ -90,7 +91,8 @@ class CreateDummyMembers extends Command
                     $faker->buildingNumber(),
                     '',
                     $faker->postcode(),
-                    $faker->city
+                    $faker->city,
+                    rand(1, 3)
                 );
             }
 

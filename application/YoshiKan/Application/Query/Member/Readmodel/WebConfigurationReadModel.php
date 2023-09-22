@@ -1,15 +1,25 @@
 <?php
 
-namespace App\YoshiKan\Application\Query\Member;
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-class FederationReadModelCollection implements \JsonSerializable
+declare(strict_types=1);
+
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
+
+class WebConfigurationReadModel implements \JsonSerializable
 {
-    // —————————————————————————————————————————————————————————————————————————
-    // Constructor
-    // —————————————————————————————————————————————————————————————————————————
-
-    public function __construct(protected array $collection = [])
-    {
+    public function __construct(
+        protected LocationReadModelCollection $locations,
+        protected PeriodReadModel $activePeriod,
+        protected SettingsReadModel $settings
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -19,25 +29,29 @@ class FederationReadModelCollection implements \JsonSerializable
     public function jsonSerialize(): \stdClass
     {
         $json = new \stdClass();
-        $json->collection = $this->getCollection();
+        $json->locations = $this->getLocations()->getCollection();
+        $json->activePeriod = $this->getActivePeriod();
+        $json->settings = $this->getSettings();
 
         return $json;
-    }
-
-    public function addItem(FederationReadModel $readModel)
-    {
-        $this->collection[] = $readModel;
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    /**
-     * @return FederationReadModel[]
-     */
-    public function getCollection(): array
+    public function getLocations(): LocationReadModelCollection
     {
-        return $this->collection;
+        return $this->locations;
+    }
+
+    public function getActivePeriod(): PeriodReadModel
+    {
+        return $this->activePeriod;
+    }
+
+    public function getSettings(): SettingsReadModel
+    {
+        return $this->settings;
     }
 }

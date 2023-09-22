@@ -11,14 +11,13 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-class GroupReadModelCollection implements \JsonSerializable
+class GradeLogReadModelCollection
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
-
     public function __construct(protected array $collection = [])
     {
     }
@@ -35,7 +34,7 @@ class GroupReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(GroupReadModel $readModel)
+    public function addItem(GradeLogReadModel $readModel)
     {
         $this->collection[] = $readModel;
     }
@@ -43,9 +42,8 @@ class GroupReadModelCollection implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
-
     /**
-     * @return GroupReadModel[]
+     * @return GradeLogReadModel[]
      */
     public function getCollection(): array
     {

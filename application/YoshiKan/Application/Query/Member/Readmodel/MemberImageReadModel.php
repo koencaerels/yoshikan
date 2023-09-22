@@ -1,26 +1,23 @@
 <?php
 
-/*
- * This file is part of the Yoshi-Kan software.
- *
- * (c) Koen Caerels
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-class GradeReadModelCollection implements \JsonSerializable
+use App\YoshiKan\Domain\Model\Member\MemberImage;
+
+class MemberImageReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(protected array $collection = [])
-    {
+    public function __construct(
+        protected int $id,
+        protected string $uuid,
+        protected string $originalName,
+        protected string $path,
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -30,25 +27,48 @@ class GradeReadModelCollection implements \JsonSerializable
     public function jsonSerialize(): \stdClass
     {
         $json = new \stdClass();
-        $json->collection = $this->getCollection();
+        $json->id = $this->getId();
+        $json->uuid = $this->getUuid();
+        $json->originalName = $this->getOriginalName();
 
         return $json;
     }
 
-    public function addItem(GradeReadModel $readModel)
+    // —————————————————————————————————————————————————————————————————————————
+    // Hydrate from model
+    // —————————————————————————————————————————————————————————————————————————
+
+    public static function hydrateFromModel(MemberImage $model): self
     {
-        $this->collection[] = $readModel;
+        return new self(
+            $model->getId(),
+            $model->getUuid()->toRfc4122(),
+            $model->getOriginalName(),
+            $model->getPath(),
+        );
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    /**
-     * @return GradeReadModel[]
-     */
-    public function getCollection(): array
+    public function getId(): int
     {
-        return $this->collection;
+        return $this->id;
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    public function getOriginalName(): string
+    {
+        return $this->originalName;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 }

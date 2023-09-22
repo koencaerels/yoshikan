@@ -52,6 +52,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
+import InputNumber from 'primevue/inputnumber';
 
 // ----------------------------------------------------------------------------------- services
 import ToastService from "primevue/toastservice";
@@ -109,6 +110,7 @@ app.component("Column", Column);
 app.component("ColumnGroup", ColumnGroup);
 app.component("Row", Row);
 app.component("TriStateCheckbox", TriStateCheckbox);
+app.component("InputNumber", InputNumber);
 
 app.directive('tooltip', Tooltip);
 

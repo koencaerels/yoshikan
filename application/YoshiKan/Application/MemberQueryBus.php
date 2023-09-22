@@ -35,7 +35,6 @@ class MemberQueryBus
     use get_configuration;
     use get_member;
     use get_member_image;
-
     protected BasePermissionService $permission;
 
     // ——————————————————————————————————————————————————————————————————————————

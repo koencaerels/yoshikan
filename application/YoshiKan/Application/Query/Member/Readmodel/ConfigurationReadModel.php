@@ -11,12 +11,16 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-class WebConfigurationReadModel implements \JsonSerializable
+class ConfigurationReadModel implements \JsonSerializable
 {
     public function __construct(
+        protected GradeReadModelCollection $grades,
         protected LocationReadModelCollection $locations,
+        protected GroupReadModelCollection $groups,
+        protected PeriodReadModelCollection $periods,
+        protected FederationReadModelCollection $federations,
         protected PeriodReadModel $activePeriod,
         protected SettingsReadModel $settings
     ) {
@@ -29,7 +33,11 @@ class WebConfigurationReadModel implements \JsonSerializable
     public function jsonSerialize(): \stdClass
     {
         $json = new \stdClass();
+        $json->grades = $this->getGrades()->getCollection();
         $json->locations = $this->getLocations()->getCollection();
+        $json->groups = $this->getGroups()->getCollection();
+        $json->periods = $this->getPeriods()->getCollection();
+        $json->federations = $this->getFederations()->getCollection();
         $json->activePeriod = $this->getActivePeriod();
         $json->settings = $this->getSettings();
 
@@ -40,9 +48,19 @@ class WebConfigurationReadModel implements \JsonSerializable
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
+    public function getGrades(): GradeReadModelCollection
+    {
+        return $this->grades;
+    }
+
     public function getLocations(): LocationReadModelCollection
     {
         return $this->locations;
+    }
+
+    public function getGroups(): GroupReadModelCollection
+    {
+        return $this->groups;
     }
 
     public function getActivePeriod(): PeriodReadModel
@@ -53,5 +71,15 @@ class WebConfigurationReadModel implements \JsonSerializable
     public function getSettings(): SettingsReadModel
     {
         return $this->settings;
+    }
+
+    public function getPeriods(): PeriodReadModelCollection
+    {
+        return $this->periods;
+    }
+
+    public function getFederations(): FederationReadModelCollection
+    {
+        return $this->federations;
     }
 }

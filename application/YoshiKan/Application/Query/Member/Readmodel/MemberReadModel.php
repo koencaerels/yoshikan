@@ -11,11 +11,9 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
 use App\YoshiKan\Domain\Model\Member\Member;
-use Query\SubscriptionReadModel;
-use Query\SubscriptionReadModelCollection;
 
 class MemberReadModel implements \JsonSerializable
 {
@@ -49,6 +47,11 @@ class MemberReadModel implements \JsonSerializable
         protected \DateTimeImmutable $licenseStart,
         protected \DateTimeImmutable $licenseEnd,
         protected bool $licenseIsPayed,
+        protected string $contactFirstname,
+        protected string $contactLastname,
+        protected string $contactEmail,
+        protected string $contactPhone,
+        protected int $numberOfTraining,
 
         protected ?array $subscriptions = null,
         protected ?string $remarks = null,
@@ -89,10 +92,16 @@ class MemberReadModel implements \JsonSerializable
         $json->licenseStart = $this->getLicenseStart()->format(\DateTimeInterface::ATOM);
         $json->licenseEnd = $this->getLicenseEnd()->format(\DateTimeInterface::ATOM);
         $json->licenseIsPayed = $this->isLicensePayed();
+        $json->contactFirstname = $this->getContactFirstname();
+        $json->contactLastname = $this->getContactLastname();
+        $json->contactEmail = $this->getContactEmail();
+        $json->contactPhone = $this->getContactPhone();
+        $json->numberOfTraining = $this->getNumberOfTraining();
 
-//        if (!is_null($this->getSubscriptions())) {
-//            $json->subscriptions = $this->getSubscriptions()->getCollection();
-//        }
+        //        if (!is_null($this->getSubscriptions())) {
+        //            $json->subscriptions = $this->getSubscriptions()->getCollection();
+        //        }
+
         if (!is_null($this->getRemarks())) {
             $json->remarks = $this->getRemarks();
         }
@@ -113,10 +122,12 @@ class MemberReadModel implements \JsonSerializable
     public static function hydrateFromModel(Member $model, bool $full = false): self
     {
         if ($full) {
-//            $subscriptions = new SubscriptionReadModelCollection([]);
-//            foreach ($model->getSubscriptions() as $subscription) {
-//                $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
-//            }
+
+            //            $subscriptions = new SubscriptionReadModelCollection([]);
+            //            foreach ($model->getSubscriptions() as $subscription) {
+            //                $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
+            //            }
+
             $gradeLogs = new GradeLogReadModelCollection([]);
             foreach ($model->getGradeLogs() as $gradeLog) {
                 $gradeLogs->addItem(GradeLogReadModel::hydrateFromModel($gradeLog));
@@ -146,11 +157,16 @@ class MemberReadModel implements \JsonSerializable
                 FederationReadModel::hydrateFromModel($model->getFederation()),
                 $model->getMemberSubscriptionStart(),
                 $model->getMemberSubscriptionEnd(),
-                $model->memberSubscriptionIsPayed(),
-                $model->memberSubscriptionIsHalfYear(),
+                $model->isMemberSubscriptionIsPayed(),
+                $model->isMemberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
                 $model->licenseIsPayed(),
+                $model->getContactFirstname(),
+                $model->getContactLastname(),
+                $model->getContactEmail(),
+                $model->getContactPhone(),
+                $model->getNumberOfTraining(),
                 [],
                 $model->getRemarks(),
                 $gradeLogs,
@@ -178,11 +194,16 @@ class MemberReadModel implements \JsonSerializable
                 FederationReadModel::hydrateFromModel($model->getFederation()),
                 $model->getMemberSubscriptionStart(),
                 $model->getMemberSubscriptionEnd(),
-                $model->memberSubscriptionIsPayed(),
-                $model->memberSubscriptionIsHalfYear(),
+                $model->isMemberSubscriptionIsPayed(),
+                $model->isMemberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
                 $model->licenseIsPayed(),
+                $model->getContactFirstname(),
+                $model->getContactLastname(),
+                $model->getContactEmail(),
+                $model->getContactPhone(),
+                $model->getNumberOfTraining(),
             );
         }
 
@@ -336,5 +357,30 @@ class MemberReadModel implements \JsonSerializable
     public function isMemberSubscriptionIsHalfYear(): bool
     {
         return $this->memberSubscriptionIsHalfYear;
+    }
+
+    public function getContactFirstname(): string
+    {
+        return $this->contactFirstname;
+    }
+
+    public function getContactLastname(): string
+    {
+        return $this->contactLastname;
+    }
+
+    public function getContactEmail(): string
+    {
+        return $this->contactEmail;
+    }
+
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
+    }
+
+    public function getNumberOfTraining(): int
+    {
+        return $this->numberOfTraining;
     }
 }

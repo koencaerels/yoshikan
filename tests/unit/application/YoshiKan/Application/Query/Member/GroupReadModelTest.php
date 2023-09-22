@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\GroupReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\GroupReadModel;
 use App\YoshiKan\Domain\Model\Member\Group;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

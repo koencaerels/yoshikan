@@ -3,7 +3,7 @@
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
 use App\Tests\unit\application\YoshiKan\Domain\Model\ModelFactory;
-use App\YoshiKan\Application\Query\Member\GradeLogReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\GradeLogReadModel;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\GradeLog;
 use PHPUnit\Framework\Assert;

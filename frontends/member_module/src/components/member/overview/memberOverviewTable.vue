@@ -296,7 +296,7 @@
     <Dialog v-model:visible="showExtensionForm"
             v-if="memberStore.memberDetail"
             position="top"
-            :header="'Verleng lidmaatschap voor '+memberStore.memberDetail.lastname.toUpperCase()+' '+memberStore.memberDetail.firstname"
+            :header="'Verleng lidmaatschap voor...' "
             :modal="true">
         <extension-form :member="memberStore.memberDetail"/>
     </Dialog>

@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\application\YoshiKan\Application\Query\Member;
 
-use App\YoshiKan\Application\Query\Member\LocationReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\LocationReadModel;
 use App\YoshiKan\Domain\Model\Member\Location;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

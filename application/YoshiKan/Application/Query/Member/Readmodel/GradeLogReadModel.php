@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-use App\YoshiKan\Domain\Model\Member\Group;
+use App\YoshiKan\Domain\Model\Member\GradeLog;
 
-class GroupReadModel implements \JsonSerializable
+class GradeLogReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -24,11 +24,10 @@ class GroupReadModel implements \JsonSerializable
     public function __construct(
         protected int $id,
         protected string $uuid,
-        protected int $sequence,
-        protected string $code,
-        protected string $name,
-        protected int $minAge,
-        protected int $maxAge,
+        protected \DateTimeImmutable $date,
+        protected string $remark,
+        protected GradeReadModel $fromGrade,
+        protected GradeReadModel $toGrade,
     ) {
     }
 
@@ -41,11 +40,10 @@ class GroupReadModel implements \JsonSerializable
         $json = new \stdClass();
         $json->id = $this->getId();
         $json->uuid = $this->getUuid();
-        $json->sequence = $this->getSequence();
-        $json->code = $this->getCode();
-        $json->name = $this->getName();
-        $json->minAge = $this->getMinAge();
-        $json->maxAge = $this->getMaxAge();
+        $json->date = $this->getDate()->format(\DateTimeInterface::ATOM);
+        $json->remark = $this->getRemark();
+        $json->fromGrade = $this->getFromGrade();
+        $json->toGrade = $this->getToGrade();
 
         return $json;
     }
@@ -54,16 +52,15 @@ class GroupReadModel implements \JsonSerializable
     // Hydrate from model
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromModel(Group $model): self
+    public static function hydrateFromModel(GradeLog $model): self
     {
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
-            $model->getSequence(),
-            $model->getCode(),
-            $model->getName(),
-            $model->getMinAge(),
-            $model->getMaxAge(),
+            $model->getDate(),
+            $model->getRemark(),
+            GradeReadModel::hydrateFromModel($model->getFromGrade()),
+            GradeReadModel::hydrateFromModel($model->getToGrade()),
         );
     }
 
@@ -81,28 +78,23 @@ class GroupReadModel implements \JsonSerializable
         return $this->uuid;
     }
 
-    public function getSequence(): int
+    public function getDate(): \DateTimeImmutable
     {
-        return $this->sequence;
+        return $this->date;
     }
 
-    public function getCode(): string
+    public function getRemark(): string
     {
-        return $this->code;
+        return $this->remark;
     }
 
-    public function getName(): string
+    public function getFromGrade(): GradeReadModel
     {
-        return $this->name;
+        return $this->fromGrade;
     }
 
-    public function getMinAge(): int
+    public function getToGrade(): GradeReadModel
     {
-        return $this->minAge;
-    }
-
-    public function getMaxAge(): int
-    {
-        return $this->maxAge;
+        return $this->toGrade;
     }
 }

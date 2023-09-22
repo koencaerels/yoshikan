@@ -31,7 +31,6 @@ class MessageApiController extends AbstractController
     // Routes
     // ——————————————————————————————————————————————————————————————————————————
 
-
     // ——————————————————————————————————————————————————————————————————————————
     // Attributes
     // ——————————————————————————————————————————————————————————————————————————
@@ -45,12 +44,11 @@ class MessageApiController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
-    )
-    {
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
+    ) {
         $this->apiAccess = [];
         $isolationMode = false;
         if ('dev' == $this->appKernel->getEnvironment()) {
@@ -58,9 +56,8 @@ class MessageApiController extends AbstractController
             $isolationMode = true;
         }
 
-        $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
+        $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
         $this->setTwigLoader($this->appKernel);
-
     }
 
     private function setTwigLoader(KernelInterface $appKernel): void
@@ -70,7 +67,7 @@ class MessageApiController extends AbstractController
         $twigLoaders = $twigLoaders instanceof ChainLoader ?
             $twigLoaders->getLoaders() :
             [$twigLoaders];
-        $path = $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
+        $path = $appKernel->getProjectDir().'/application/YoshiKan/Infrastructure/Templates/';
         foreach ($twigLoaders as $twigLoader) {
             if ($twigLoader instanceof FilesystemLoader) {
                 $twigLoader->prependPath($path, '__main__');

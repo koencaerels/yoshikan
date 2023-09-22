@@ -3,7 +3,7 @@
 namespace App\Tests\unit\application\YoshiKan\Domain\Model\Member;
 
 use App\Tests\unit\application\YoshiKan\Domain\Model\ModelFactory;
-use App\YoshiKan\Application\Query\Member\SettingsReadModel;
+use App\YoshiKan\Application\Query\Member\Readmodel\SettingsReadModel;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;

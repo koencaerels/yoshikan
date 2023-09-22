@@ -11,16 +11,23 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member;
+namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-class PeriodReadModelCollection implements \JsonSerializable
+use App\YoshiKan\Domain\Model\Member\Location;
+
+class LocationReadModel implements \JsonSerializable
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(protected array $collection = [])
-    {
+    public function __construct(
+        protected int $id,
+        protected string $uuid,
+        protected int $sequence,
+        protected string $code,
+        protected string $name,
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -30,25 +37,56 @@ class PeriodReadModelCollection implements \JsonSerializable
     public function jsonSerialize(): \stdClass
     {
         $json = new \stdClass();
-        $json->collection = $this->getCollection();
+        $json->id = $this->getId();
+        $json->uuid = $this->getUuid();
+        $json->sequence = $this->getSequence();
+        $json->code = $this->getCode();
+        $json->name = $this->getName();
 
         return $json;
     }
 
-    public function addItem(PeriodReadModel $readModel)
+    // —————————————————————————————————————————————————————————————————————————
+    // Hydrate from model
+    // —————————————————————————————————————————————————————————————————————————
+
+    public static function hydrateFromModel(Location $model): self
     {
-        $this->collection[] = $readModel;
+        return new self(
+            $model->getId(),
+            $model->getUuid()->toRfc4122(),
+            $model->getSequence(),
+            $model->getCode(),
+            $model->getName(),
+        );
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    /**
-     * @return PeriodReadModel[]
-     */
-    public function getCollection(): array
+    public function getId(): int
     {
-        return $this->collection;
+        return $this->id;
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
