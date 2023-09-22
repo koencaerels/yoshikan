@@ -36,6 +36,9 @@ use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
 use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
+use App\YoshiKan\Application\Command\Product\AddJudogi\add_judogi;
+use App\YoshiKan\Application\Command\Product\ChangeJudogi\change_judogi;
+use App\YoshiKan\Application\Command\Product\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
@@ -46,6 +49,8 @@ use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -73,6 +78,11 @@ class MemberCommandBus
     use change_federation;
     use order_federation;
 
+    // -- product --------------------------------------------------------------
+    use add_judogi;
+    use change_judogi;
+    use order_judogi;
+
     // -- members --------------------------------------------------------------
     use change_member_details;
     use change_member_grade;
@@ -91,23 +101,25 @@ class MemberCommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security $security,
+        protected Security               $security,
         protected EntityManagerInterface $entityManager,
-        protected bool $isolationMode,
-        protected Environment $twig,
-        protected MailerInterface $mailer,
-        protected string $uploadFolder,
-        protected GradeRepository $gradeRepository,
-        protected GroupRepository $groupRepository,
-        protected LocationRepository $locationRepository,
-        protected MemberRepository $memberRepository,
-        protected PeriodRepository $periodRepository,
-        protected SettingsRepository $settingsRepository,
+        protected bool                   $isolationMode,
+        protected Environment            $twig,
+        protected MailerInterface        $mailer,
+        protected string                 $uploadFolder,
+        protected GradeRepository        $gradeRepository,
+        protected GroupRepository        $groupRepository,
+        protected LocationRepository     $locationRepository,
+        protected MemberRepository       $memberRepository,
+        protected PeriodRepository       $periodRepository,
+        protected SettingsRepository     $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-        protected GradeLogRepository $gradeLogRepository,
-        protected MemberImageRepository $memberImageRepository,
-        protected FederationRepository $federationRepository
-    ) {
+        protected GradeLogRepository     $gradeLogRepository,
+        protected MemberImageRepository  $memberImageRepository,
+        protected FederationRepository   $federationRepository,
+        protected JudogiRepository       $judogiRepository,
+    )
+    {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

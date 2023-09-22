@@ -26,12 +26,15 @@ use App\YoshiKan\Application\Query\Member\Readmodel\PeriodReadModel;
 use App\YoshiKan\Application\Query\Member\Readmodel\PeriodReadModelCollection;
 use App\YoshiKan\Application\Query\Member\Readmodel\SettingsReadModel;
 use App\YoshiKan\Application\Query\Member\Readmodel\WebConfigurationReadModel;
+use App\YoshiKan\Application\Query\Product\JudogiReadModel;
+use App\YoshiKan\Application\Query\Product\JudogiReadModelCollection;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
+use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 
 class GetConfiguration
@@ -43,6 +46,7 @@ class GetConfiguration
         protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
         protected FederationRepository $federationRepository,
+        protected JudogiRepository $judogiRepository
     ) {
     }
 
@@ -55,6 +59,7 @@ class GetConfiguration
         $activePeriod = $this->periodRepository->getActive();
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
         $federations = $this->federationRepository->getAll();
+        $judugis = $this->judogiRepository->getAll();
 
         $gradeCollection = new GradeReadModelCollection();
         foreach ($grades as $grade) {
@@ -79,6 +84,10 @@ class GetConfiguration
         foreach ($federations as $federation) {
             $federationCollection->addItem(FederationReadModel::hydrateFromModel($federation));
         }
+        $judogiCollection = new JudogiReadModelCollection();
+        foreach ($judugis as $judogi) {
+            $judogiCollection->addItem(JudogiReadModel::hydrateFromModel($judogi));
+        }
 
         return new ConfigurationReadModel(
             $gradeCollection,
@@ -86,6 +95,7 @@ class GetConfiguration
             $groupCollection,
             $periodCollection,
             $federationCollection,
+            $judogiCollection,
             $activePeriodReadModel,
             $settingsReadModel
         );

@@ -25,6 +25,7 @@ use App\YoshiKan\Domain\Model\Member\MemberImage;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Product\Judogi;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\federation_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
@@ -110,7 +111,8 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(MemberImage::class),
-            $this->entityManager->getRepository(Federation::class)
+            $this->entityManager->getRepository(Federation::class),
+            $this->entityManager->getRepository(Judogi::class),
         );
 
         $this->commandBus = new MemberCommandBus(
@@ -129,7 +131,8 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(GradeLog::class),
             $this->entityManager->getRepository(MemberImage::class),
-            $this->entityManager->getRepository(Federation::class)
+            $this->entityManager->getRepository(Federation::class),
+            $this->entityManager->getRepository(Judogi::class),
         );
     }
 
