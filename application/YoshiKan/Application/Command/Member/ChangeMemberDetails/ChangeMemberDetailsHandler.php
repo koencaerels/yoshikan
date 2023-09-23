@@ -45,7 +45,11 @@ class ChangeMemberDetailsHandler
             $command->getAddressNumber(),
             $command->getAddressBox(),
             $command->getAddressZip(),
-            $command->getAddressCity()
+            $command->getAddressCity(),
+            $command->getContactFirstname(),
+            $command->getContactLastname(),
+            $command->getContactEmail(),
+            $command->getContactPhone()
         );
         $this->memberRepository->save($member);
 

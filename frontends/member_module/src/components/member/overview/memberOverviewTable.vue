@@ -284,7 +284,7 @@
         <div style="width: 1350px;">
             <Splitter>
                 <SplitterPanel :size="50">
-                    <member-detail :type="'dialog'" estate-height="600"/>
+                    <member-detail :type="'dialog'" estate-height="500"/>
                 </SplitterPanel>
                 <SplitterPanel :size="50">
                     <member-images/>
@@ -296,9 +296,9 @@
     <Dialog v-model:visible="showExtensionForm"
             v-if="memberStore.memberDetail"
             position="top"
-            :header="'Verleng lidmaatschap voor...' "
+            :header="'Verleng lidmaatschap / vergunning voor...' "
             :modal="true">
-        <extension-form :member="memberStore.memberDetail"/>
+        <extension-form :member="memberStore.memberDetail" v-on:submitted="hideExtensionFormFn"/>
     </Dialog>
 
 </template>
@@ -394,6 +394,11 @@ const showExtensionForm = ref<boolean>(false);
 async function showExtensionFormFn(id: number) {
     await memberStore.loadMemberDetail(id);
     showExtensionForm.value = true;
+}
+
+function hideExtensionFormFn(): void {
+    loadActiveMembers();
+    showExtensionForm.value = false;
 }
 
 </script>

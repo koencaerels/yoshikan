@@ -122,7 +122,6 @@ class MemberReadModel implements \JsonSerializable
     public static function hydrateFromModel(Member $model, bool $full = false): self
     {
         if ($full) {
-
             //            $subscriptions = new SubscriptionReadModelCollection([]);
             //            foreach ($model->getSubscriptions() as $subscription) {
             //                $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));

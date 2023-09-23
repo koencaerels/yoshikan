@@ -1,21 +1,10 @@
 <template>
-    <div id="dialogChangeDetails" style="width:750px;" class="text-sm">
-        <!--  status -->
-        <div class="bg-slate-200 rounded-t-lg p-2">
-            <div class="flex">
-                <div class="mt-1.5 ml-2">
-                    Actief?
-                </div>
-                <div class="ml-4 mt-0.5">
-                    <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
-                </div>
-            </div>
-        </div>
+    <div id="dialogChangeDetails" style="width:900px;" class="text-sm">
         <!-- personal details -->
-        <div class="bg-slate-300 rounded-b-lg px-4 py-2">
+        <div class="bg-slate-600 rounded-lg px-4 py-2 text-white">
             <div class="flex flex-row">
                 <div class="basis-1/2">
-                    <div class="mb-1"><label class="text-xs">Naam *</label></div>
+                    <div class="mb-1 font-bold">Naam *</div>
                     <span class="p-input-icon-right w-full">
                         <InputText class="w-full p-inputtext-sm" v-model="command.lastname"/>
                         <i v-if="!change$.lastname.$invalid" class="pi pi-check text-green-600"/>
@@ -23,7 +12,7 @@
                     </span>
                 </div>
                 <div class="basis-1/2 ml-4">
-                    <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
+                    <div class="mb-1 font-bold">Voornaam *</div>
                     <span class="p-input-icon-right w-full">
                         <InputText class="w-full p-inputtext-sm" v-model="command.firstname"/>
                         <i v-if="!change$.firstname.$invalid" class="pi pi-check text-green-600"/>
@@ -33,8 +22,19 @@
             </div>
             <!-- -- rijksregisternummer ---------------------------------------------------------------------------- -->
             <div class="flex flex-row mt-6">
-                <div class="basis-1/5 text-right text-xs">
-                    Rijksregisternummer*
+                <div class="basis-1/5">
+                    <!--  status -->
+                    <div class="flex">
+                        <div class="mt-1.5 ml-2">
+                            Actief?
+                        </div>
+                        <div class="ml-4 mt-0.5">
+                            <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="basis-1/5 text-right text-xs font-bold">
+                    Rijksregisternummer *
                 </div>
                 <div class="basis-2/5 ml-5">
                     <span class="p-input-icon-right w-full">
@@ -48,7 +48,7 @@
                         <i v-if="change$.nationalRegisterNumber.$invalid" class="pi pi-times text-red-600"/>
                     </span>
                 </div>
-                <div class="basis-2/5 ml-2 mt-2">
+                <div class="basis-1/5 ml-2 mt-2">
                 <span>
                     <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
                     <label for="M" class="text-xs"> M </label>
@@ -64,10 +64,11 @@
                 </div>
             </div>
             <div class="flex flex-row mt-2 mb-2">
-                <div class="basis-1/5 text-right text-xs">
-                    Geboortedatum*
+                <div class="basis-1/5">&nbsp;</div>
+                <div class="basis-1/5 text-right text-xs mr-4 font-bold">
+                    Geboortedatum *
                 </div>
-                <div class="basis-1/4 ml-4">
+                <div class="basis-1/5 ml-5">
                 <span class="p-input-icon-right w-3/4">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthDD"/>
                     <i v-if="!change$.dateOfBirthDD.$invalid" class="pi pi-check text-green-600"/>
@@ -75,7 +76,7 @@
                 </span>
                     /
                 </div>
-                <div class="basis-1/4 ml-4">
+                <div class="basis-1/5 ml-4">
                 <span class="p-input-icon-right w-3/4">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthMM"/>
                     <i v-if="!change$.dateOfBirthMM.$invalid" class="pi pi-check text-green-600"/>
@@ -83,7 +84,7 @@
                 </span>
                     /
                 </div>
-                <div class="basis-1/4 ml-4">
+                <div class="basis-1/5 ml-4">
                 <span class="p-input-icon-right w-full">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthYYYY"/>
                     <i v-if="!change$.dateOfBirthYYYY.$invalid" class="pi pi-check text-green-600"/>
@@ -93,7 +94,7 @@
             </div>
         </div>
         <div class="flex flex-row mt-4">
-            <div class="basis-2/5">
+            <div class="basis-2/6">
                 <div class="flex flex-row mt-8">
                     <div class="basis-1/4 text-right">
                         Locatie*
@@ -110,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="basis-3/5">
+            <div class="basis-4/6">
                 <div class="mt-2">
                     <div class="w-full">
                         <div class="mb-1"><label class="text-xs">Email *</label></div>
@@ -161,6 +162,42 @@
                         </span>
                     </div>
                 </div>
+
+                <!-- contact details ------------------------------------------------------------------------------  -->
+                <hr class="mt-2">
+                <div class="flex flex-row mt-1">
+                    <div class="basis-1/2">
+                        <div class="mb-1"><label class="text-xs">Naam *</label></div>
+                        <span class="p-input-icon-right w-full">
+                            <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
+                            <i v-if="!change$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.contactLastname.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
+                    </div>
+                    <div class="basis-1/2 ml-2">
+                        <div class="mb-1"><label class="text-xs">Contact Voornaam *</label></div>
+                        <span class="p-input-icon-right w-full">
+                            <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
+                            <i v-if="!change$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.contactFirstname.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex flex-row mt-1">
+                    <div class="basis-1/2">
+                        <div class="mb-1"><label class="text-xs">Contact email *</label></div>
+                        <span class="p-input-icon-right w-full">
+                            <InputText class="w-full p-inputtext-sm" v-model="command.contactEmail"/>
+                            <i v-if="!change$.contactEmail.$invalid" class="pi pi-check text-green-600"/>
+                            <i v-if="change$.contactEmail.$invalid" class="pi pi-times text-red-600"/>
+                        </span>
+                    </div>
+                    <div class="basis-1/2 ml-2">
+                        <div class="mb-1"><label class="text-xs">Telefoon</label></div>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.contactPhone"/>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="flex flex-row mt-4">
@@ -214,7 +251,11 @@ const command = ref<ChangeMemberDetailsCommand>({
     addressBox: memberStore.memberDetail?.addressBox ?? '',
     addressZip: memberStore.memberDetail?.addressZip ?? '',
     addressCity: memberStore.memberDetail?.addressCity ?? '',
-    email: memberStore.memberDetail?.email ?? ''
+    email: memberStore.memberDetail?.email ?? '',
+    contactFirstname: memberStore.memberDetail?.contactFirstname ?? '',
+    contactLastname: memberStore.memberDetail?.contactLastname ?? '',
+    contactEmail: memberStore.memberDetail?.contactEmail ?? '',
+    contactPhone: memberStore.memberDetail?.contactPhone ?? '',
 });
 
 const dateValidator = function (value: string) {
@@ -257,6 +298,9 @@ const rules = {
     addressNumber: {required},
     addressZip: {required},
     addressCity: {required},
+    contactFirstname: {required},
+    contactLastname: {required},
+    contactEmail: {required},
 };
 
 const change$ = useVuelidate(rules, command);

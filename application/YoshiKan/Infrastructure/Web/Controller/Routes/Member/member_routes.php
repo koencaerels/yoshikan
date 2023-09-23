@@ -131,4 +131,16 @@ trait member_routes
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }
+
+    #[Route('/mm/api/member/{id}/extend-subscription', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function extendMemberSubscription(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->memberExtendSubscription($command);
+
+        // send mail...
+        // $result = $this->commandBus->WebConfirmationMail($response->id);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 }

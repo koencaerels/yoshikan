@@ -357,5 +357,4 @@ class SubscriptionReadModel implements \JsonSerializable
     {
         return $this->memberSubscriptionIsHalfYear;
     }
-
 }

@@ -91,5 +91,4 @@ class ConfigurationReadModel implements \JsonSerializable
     {
         return $this->judogi;
     }
-
 }

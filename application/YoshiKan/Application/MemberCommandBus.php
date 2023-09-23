@@ -27,6 +27,7 @@ use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grad
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
+use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\member_extend_subscription;
 use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
@@ -49,7 +50,6 @@ use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
-use App\YoshiKan\Domain\Model\Product\Judogi;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,20 +78,23 @@ class MemberCommandBus
     use change_federation;
     use order_federation;
 
-    // -- product --------------------------------------------------------------
-    use add_judogi;
-    use change_judogi;
-    use order_judogi;
-
     // -- members --------------------------------------------------------------
     use change_member_details;
     use change_member_grade;
     use change_member_remarks;
 
+    // -- subscription ----------------------------------------------------------
+    use member_extend_subscription;
+
     // -- member images ---------------------------------------------------------
     use upload_member_image;
     use upload_profile_image;
     use delete_member_image;
+
+    // -- product --------------------------------------------------------------
+    use add_judogi;
+    use change_judogi;
+    use order_judogi;
 
     // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
@@ -101,25 +104,24 @@ class MemberCommandBus
     // ——————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected Security               $security,
+        protected Security $security,
         protected EntityManagerInterface $entityManager,
-        protected bool                   $isolationMode,
-        protected Environment            $twig,
-        protected MailerInterface        $mailer,
-        protected string                 $uploadFolder,
-        protected GradeRepository        $gradeRepository,
-        protected GroupRepository        $groupRepository,
-        protected LocationRepository     $locationRepository,
-        protected MemberRepository       $memberRepository,
-        protected PeriodRepository       $periodRepository,
-        protected SettingsRepository     $settingsRepository,
+        protected bool $isolationMode,
+        protected Environment $twig,
+        protected MailerInterface $mailer,
+        protected string $uploadFolder,
+        protected GradeRepository $gradeRepository,
+        protected GroupRepository $groupRepository,
+        protected LocationRepository $locationRepository,
+        protected MemberRepository $memberRepository,
+        protected PeriodRepository $periodRepository,
+        protected SettingsRepository $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
-        protected GradeLogRepository     $gradeLogRepository,
-        protected MemberImageRepository  $memberImageRepository,
-        protected FederationRepository   $federationRepository,
-        protected JudogiRepository       $judogiRepository,
-    )
-    {
+        protected GradeLogRepository $gradeLogRepository,
+        protected MemberImageRepository $memberImageRepository,
+        protected FederationRepository $federationRepository,
+        protected JudogiRepository $judogiRepository,
+    ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),
             $entityManager,

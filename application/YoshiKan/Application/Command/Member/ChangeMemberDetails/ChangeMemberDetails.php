@@ -34,6 +34,10 @@ class ChangeMemberDetails
         protected string $addressZip,
         protected string $addressCity,
         protected string $email,
+        protected string $contactFirstname,
+        protected string $contactLastname,
+        protected string $contactEmail,
+        protected string $contactPhone,
     ) {
     }
 
@@ -58,6 +62,10 @@ class ChangeMemberDetails
             $json->addressZip,
             $json->addressCity,
             $json->email,
+            $json->contactFirstname,
+            $json->contactLastname,
+            $json->contactEmail,
+            $json->contactPhone
         );
     }
 
@@ -133,5 +141,25 @@ class ChangeMemberDetails
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getContactFirstname(): string
+    {
+        return $this->contactFirstname;
+    }
+
+    public function getContactLastname(): string
+    {
+        return $this->contactLastname;
+    }
+
+    public function getContactEmail(): string
+    {
+        return $this->contactEmail;
+    }
+
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
     }
 }

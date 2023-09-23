@@ -1,3 +1,14 @@
+<!--
+/*
+* This file is part of the Yoshi-Kan software.
+*
+* (c) Koen Caerels
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+-->
+
 <template>
     <div style="width:1000px;">
 
@@ -5,28 +16,32 @@
         <!-- STEP 1                                                                                                  -->
         <!-- ------------------------------------------------------------------------------------------------------- -->
 
-        <div>
+        <div v-if="(currentStep===1)">
             <!-- lid ---------------------------------------------------------------------------------- -->
-            <div class="flex flex-row bg-gray-200 p-2">
-                <div class="basis-1/6 text-right mr-4 text-xs text-gray-600">&nbsp;</div>
-                <div class="basis-3/6">
-                    <div class="flex">
+            <div class="flex flex-row bg-slate-600 p-2 text-white">
+                <div class="basis-1/6 ">&nbsp;</div>
+                <div class="basis-5/6">
+                    <div class="flex gap-4">
                         <div
-                            class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[4rem] h-[1rem] mr-2 mt-1">
+                            class="text-center rounded-full bg-blue-100 text-black px-2 font-bold text-xs w-[4rem] h-[1rem] mr-2 mt-1">
                             YK-{{ command.memberId }}
                         </div>
-                        <div class="text-base uppercase font-bold mr-2">
-                            {{ command.lastname }}
-                        </div>
-                        <div class="text-base font-bold mr-4">
+                        <div class="text-base font-bold">
+                            <span class="uppercase">{{ command.lastname }}</span>
                             {{ command.firstname }}
                         </div>
-                        <div class="text-xs mt-1 mr-4">
+                        <div class="text-xs mt-1">
                             ° {{ moment(command.dateOfBirth).format("DD/MM/YYYY") }}
                             - {{ command.gender }}
                         </div>
                         <div>
-                            {{ props.member.location.name }}
+                            &mdash; {{ props.member.location.name }}
+                        </div>
+                        <div>
+                            &mdash; {{ props.member.federation.name }}
+                        </div>
+                        <div>
+                            &mdash; {{ props.member.numberOfTraining }} training(en)
                         </div>
                     </div>
                 </div>
@@ -84,16 +99,19 @@
                 <div class="basis-5/6">
                  <span>
                     <RadioButton name="numberOfTraining" :value="1" v-model="command.numberOfTraining"
+                                 :disabled="!(command.memberSubscriptionIsPartSubscription)"
                                  input-id="1times"/>
                         <label for="1times"> 1 keer per week </label>
                 </span>
                     <span class="ml-2">
                     <RadioButton name="numberOfTraining" :value="2" v-model="command.numberOfTraining"
+                                 :disabled="!(command.memberSubscriptionIsPartSubscription)"
                                  input-id="2times"/>
                     <label for="2times"> 2 keer per week </label>
                 </span>
                     <span class="ml-2">
                     <RadioButton name="numberOfTraining" :value="3" v-model="command.numberOfTraining"
+                                 :disabled="!(command.memberSubscriptionIsPartSubscription)"
                                  input-id="3times"/>
                     <label for="3times"> 3 tot 5 keer per week </label>
                 </span>
@@ -138,6 +156,7 @@
                             <div v-if="appStore.configuration">
                             <span v-for="federation in appStore.configuration.federations" class="mr-4">
                                 <RadioButton name="location" :value="federation.id"
+                                             :disabled="!(command.licenseIsPartSubscription)"
                                              v-model="command.federationId"
                                              :input-id="federation.name"/>
                                 <label :for="federation.name" class="ml-2"> {{ federation.name }} </label>
@@ -154,31 +173,36 @@
                     Periodes
                 </div>
                 <div class="basis-5/6">
-                    <div class="flex flex-row">
-                        <div class="mr-2 mt-1.5">
-                            <InputSwitch v-model="command.memberSubscriptionIsPartSubscription"/>
-                        </div>
-                        <div class="basis-1/4">
+                    <div class="flex flex-row gap-2">
+                        <div class="basis-1/6">
                             <div class="text-center p-2 flex" :class="memberStatusColor(props.member)">
                                 van &nbsp;&nbsp; {{ moment(props.member.memberSubscriptionStart).format("MM / YYYY") }}
                             </div>
                         </div>
-                        <div class="basis-1/4 mr-3">
+                        <div class="basis-1/6">
                             <div class="text-center font-bold p-2" :class="memberStatusColor(props.member)">
                                 tot &nbsp;&nbsp; {{ moment(props.member.memberSubscriptionEnd).format("MM / YYYY") }}
                             </div>
                         </div>
-                        <div class="mr-2 mt-1.5">
-                            <InputSwitch v-model="command.licenseIsPartSubscription"/>
+                        <div class="basis-1/6">
+                            <div v-if="showMemberSubscriptionExtendButton(props.member)" class="bg-gray-500">
+                                <InputSwitch v-model="command.memberSubscriptionIsPartSubscription"
+                                             class="mt-1.5 ml-2"/>
+                            </div>
                         </div>
-                        <div class="basis-1/4 ml-2">
+                        <div class="basis-1/6">
                             <div class="text-center p-2 flex" :class="licenseStatusColor(props.member)">
                                 van &nbsp;&nbsp; {{ moment(props.member.licenseStart).format("MM / YYYY") }}
                             </div>
                         </div>
-                        <div class="basis-1/4">
+                        <div class="basis-1/6">
                             <div class="text-center font-bold p-2" :class="licenseStatusColor(props.member)">
                                 tot &nbsp;&nbsp; {{ moment(props.member.licenseEnd).format("MM / YYYY") }}
+                            </div>
+                        </div>
+                        <div class="basis-1/6">
+                            <div v-if="showLicenseExtendButton(props.member)" class="bg-gray-500">
+                                <InputSwitch v-model="command.licenseIsPartSubscription" class="mt-1.5 ml-2"/>
                             </div>
                         </div>
                     </div>
@@ -241,6 +265,18 @@
                                                disabled></InputText>
                                 </div>
                             </div>
+                            <div v-else class="flex gap-2 italic">
+                                <div class="ml-3">van</div>
+                                <div>{{ command.memberSubscriptionStartMM }}</div>
+                                <div>/</div>
+                                <div>{{ command.memberSubscriptionStartYY }}</div>
+                                <div class="font-bold ml-6">tot</div>
+                                <div class="font-bold">{{ memberSubscriptionEndMM }}</div>
+                                <div class="font-bold">/</div>
+                                <div class="font-bold">{{ memberSubscriptionEndYY }}</div>
+                                <div><i v-if="command.memberSubscriptionIsPayed"
+                                        class="pi pi-check-circle text-green-500 ml-6"></i></div>
+                            </div>
                         </div>
                         <div class="basis-1/2">
                             <div class="flex gap-2" v-if="command.licenseIsPartSubscription">
@@ -282,6 +318,18 @@
                                     <InputText v-model="licenseEndYY" class="p-inputtext-sm w-24" disabled></InputText>
                                 </div>
                             </div>
+                            <div v-else class="flex gap-2 italic">
+                                <div class="ml-3">van</div>
+                                <div>{{ command.licenseStartMM }}</div>
+                                <div>/</div>
+                                <div>{{ command.licenseStartYY }}</div>
+                                <div class="font-bold ml-6">tot</div>
+                                <div class="font-bold">{{ licenseEndMM }}</div>
+                                <div class="font-bold">/</div>
+                                <div class="font-bold">{{ licenseEndYY }}</div>
+                                <div><i v-if="command.licenseIsPayed"
+                                        class="pi pi-check-circle text-green-500 ml-6"></i></div>
+                            </div>
                         </div>
                     </div>
 
@@ -289,7 +337,7 @@
             </div>
 
             <!-- berekening ---------------------------------------------------------------------------------------- -->
-            <div class="flex flex-row mt-3 bg-gray-200 p-2">
+            <div class="flex flex-row mt-3 bg-gray-300 p-2">
                 <div class="basis-1/6 text-right mr-4 text-xs text-gray-600">
                     Totaal
                 </div>
@@ -317,20 +365,42 @@
                 <div class="basis-1/6 mr-4">&nbsp;</div>
                 <div class="basis-5/6">
                     <Button
-                        :disabled="extend$.$invalid"
-                        icon="pi pi-chevron"
+                        @click="currentStep=2"
+                        :disabled="!(formIsValid)"
+                        icon="pi pi-chevron-circle-right"
                         label="Volgende" class="p-button-success w-full"/>
                 </div>
             </div>
-
         </div>
 
         <!-- ------------------------------------------------------------------------------------------------------- -->
-        <!-- STEP 2 : overview                                                                                       -->
+        <!-- STEP 2 : Overview                                                                                       -->
         <!-- ------------------------------------------------------------------------------------------------------- -->
 
-
-
+        <div v-if="(currentStep===2)">
+            <!-- back button -->
+            <div>
+                <Button
+                    @click="currentStep=1"
+                    icon="pi pi-chevron-circle-left"
+                    label="Wijzig verlenging details" class="p-button-sm p-button-secondary"/>
+            </div>
+            <!-- extension overview -->
+            <extension-form-overview :member="props.member" :command="command"></extension-form-overview>
+            <!-- submit button -->
+            <div class="mt-2">
+                <Button v-if="isSaving"
+                        disabled
+                        icon="pi pi-spin pi-spinner"
+                        label="Verlengen & bericht verzenden"
+                        class="p-button-success w-full"/>
+                <Button v-else
+                        @click="sendMemberExtension"
+                        icon="pi pi-send"
+                        label="Verlengen & bericht verzenden"
+                        class="p-button-success w-full"/>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -342,16 +412,18 @@ import {email, maxValue, minValue, numeric, required} from "@vuelidate/validator
 import useVuelidate from "@vuelidate/core";
 import moment from "moment";
 import {useAppStore} from "@/store/app";
-import {memberStatusColor} from "@/functions/memberStatus";
-import {licenseStatusColor} from "@/functions/licenseStatus";
+import {memberStatusColor, showMemberSubscriptionExtendButton} from "@/functions/memberStatus";
+import {licenseStatusColor, showLicenseExtendButton} from "@/functions/licenseStatus";
 import type {MemberExtendSubscriptionCommand} from "@/api/command/subscription/memberExtendSubscription";
+import ExtensionFormOverview from "@/components/member/subscription/extensionFormOverview.vue";
+import {changeMemberDetails} from "@/api/command/changeMemberDetails";
+import {useMemberStore} from "@/store/member";
+import {useToast} from "primevue/usetoast";
+import {memberExtendSubscription} from "@/api/command/subscription/memberExtendSubscription";
 
-const props = defineProps<{
-    member: Member,
-}>();
-
+const emit = defineEmits(["submitted"]);
+const props = defineProps<{ member: Member, }>();
 const appStore = useAppStore();
-
 const currentStep = ref<number>(1);
 const selectButtonOptions = ref([
     {name: 'Half-jaarlijks', value: true},
@@ -381,6 +453,7 @@ const command = ref<MemberExtendSubscriptionCommand>({
     memberSubscriptionStart: props.member.memberSubscriptionEnd,
     memberSubscriptionEnd: props.member.memberSubscriptionEnd,
     memberSubscriptionTotal: 0,
+    memberSubscriptionIsPayed: true,
 
     licenseIsPartSubscription: false,
     licenseStartMM: moment(props.member.licenseEnd).format("MM"),
@@ -388,6 +461,7 @@ const command = ref<MemberExtendSubscriptionCommand>({
     licenseStart: props.member.licenseEnd,
     licenseEnd: props.member.licenseEnd,
     licenseTotal: 0,
+    licenseIsPayed: true,
 
     numberOfTraining: props.member.numberOfTraining,
     isReductionFamily: false,
@@ -398,8 +472,26 @@ const command = ref<MemberExtendSubscriptionCommand>({
     remarks: "",
 
     isJudogiBelt: false,
-    judogi: undefined,
 });
+
+const isSaving = ref<boolean>(false);
+const memberStore = useMemberStore();
+const toaster = useToast();
+
+async function sendMemberExtension() {
+    isSaving.value = true;
+    let result = await memberExtendSubscription(command.value);
+    await memberStore.reloadMemberDetail();
+    memberStore.increaseMemberCounter();
+    toaster.add({
+        severity: "success",
+        summary: "Lidmaatschap en/of vergunning verlengd, email bericht is verstuurd.",
+        detail: "",
+        life: appStore.toastLifeTime,
+    });
+    isSaving.value = false;
+    emit('submitted');
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // -- validation
@@ -497,6 +589,7 @@ const memberSubscriptionEnd = computed((): Date => {
         let _startDateMoment = moment(_startDate);
         if (!command.value.memberSubscriptionIsHalfYear) {
             let _endDateMoment = _startDateMoment.add(1, 'years');
+            command.value.memberSubscriptionEnd = _endDateMoment.toDate();
             return _endDateMoment.toDate();
         } else {
             let _addAmount = 5;
@@ -506,6 +599,7 @@ const memberSubscriptionEnd = computed((): Date => {
                 _addAmount = 7;
             }
             let _endDateMoment = _startDateMoment.add(_addAmount, 'months');
+            command.value.memberSubscriptionEnd = _endDateMoment.toDate();
             return _endDateMoment.toDate();
         }
     } else {
@@ -534,6 +628,7 @@ const licenseEnd = computed((): Date => {
         );
         let _startDateMoment = moment(_startDate);
         let _endDateMoment = _startDateMoment.add(1, 'years');
+        command.value.licenseEnd = _endDateMoment.toDate();
         return _endDateMoment.toDate();
     } else {
         return props.member.licenseEnd;
@@ -550,47 +645,77 @@ const licenseEndYY = computed((): string => {
 
 const totalAmount = computed((): number => {
     let _totalMemberSubscription = 0;
-    if (command.value.memberSubscriptionIsPartSubscription && appStore.configuration?.settings) {
-        command.value.type = 'hernieuwing_lidmaatschap';
-        if (command.value.numberOfTraining === 1) {
-            if(command.value.memberSubscriptionIsHalfYear) {
-                _totalMemberSubscription = appStore.configuration.settings.halfYearlyFee1Training;
+    let _totalLicense = 0;
+
+    if (appStore.configuration?.settings && appStore.configuration?.federations) {
+
+        if (command.value.memberSubscriptionIsPartSubscription) {
+            command.value.type = 'hernieuwing_lidmaatschap';
+            command.value.memberSubscriptionStartMM = moment(props.member.memberSubscriptionEnd).format("MM");
+            command.value.memberSubscriptionStartYY = moment(props.member.memberSubscriptionEnd).format("YYYY");
+            command.value.memberSubscriptionStart = props.member.memberSubscriptionEnd;
+            command.value.memberSubscriptionIsPayed = false;
+            if (command.value.numberOfTraining === 1) {
+                if (command.value.memberSubscriptionIsHalfYear) {
+                    _totalMemberSubscription = parseFloat(appStore.configuration.settings.halfYearlyFee1Training);
+                } else {
+                    _totalMemberSubscription = parseFloat(appStore.configuration.settings.yearlyFee1Training);
+                }
+            } else if (command.value.numberOfTraining === 2) {
+                if (command.value.memberSubscriptionIsHalfYear) {
+                    _totalMemberSubscription = parseFloat(appStore.configuration.settings.halfYearlyFee2Training);
+                } else {
+                    _totalMemberSubscription = parseFloat(appStore.configuration.settings.yearlyFee2Training);
+                }
             } else {
-                _totalMemberSubscription = appStore.configuration.settings.yearlyFee1Training;
+                command.value.memberSubscriptionIsHalfYear = false;
+                _totalMemberSubscription = parseFloat(appStore.configuration.settings.yearlyFee2Training);
+                _totalMemberSubscription += parseFloat(appStore.configuration.settings.extraTrainingFee);
             }
-        } else if (command.value.numberOfTraining === 2) {
-            if(command.value.memberSubscriptionIsHalfYear) {
-                _totalMemberSubscription = appStore.configuration.settings.halfYearlyFee2Training;
-            } else {
-                _totalMemberSubscription = appStore.configuration.settings.yearlyFee2Training;
+            if (command.value.isReductionFamily) {
+                let _reduction = _totalMemberSubscription * (parseFloat(appStore.configuration.settings.familyDiscount) / 100);
+                _totalMemberSubscription -= _reduction;
             }
         } else {
-            command.value.memberSubscriptionIsHalfYear = false;
-            _totalMemberSubscription = appStore.configuration.settings.yearlyFee2Training;
-            _totalMemberSubscription += appStore.configuration.settings.extraTrainingFee;
+            command.value.memberSubscriptionStartMM = moment(props.member.memberSubscriptionStart).format("MM");
+            command.value.memberSubscriptionStartYY = moment(props.member.memberSubscriptionStart).format("YYYY");
+            command.value.memberSubscriptionStart = props.member.memberSubscriptionStart;
         }
-        if(command.value.isReductionFamily) {
-            let _reduction = _totalMemberSubscription * (appStore.configuration.settings.familyDiscount /100);
-            _totalMemberSubscription -= _reduction;
-        }
-    }
-    let _totalLicense = 0;
-    if (command.value.licenseIsPartSubscription && appStore.configuration?.federations) {
-        command.value.type = 'hernieuwing_vergunning';
-        for (const federation of appStore.configuration.federations) {
-            if (federation.id === command.value.federationId) {
-                _totalLicense = federation.yearlySubscriptionFee;
-            }
-        }
-    }
 
-    if (command.value.licenseIsPartSubscription && command.value.memberSubscriptionIsPartSubscription) {
-        command.value.type = 'volledige_hernieuwing';
+        if (command.value.licenseIsPartSubscription) {
+            command.value.type = 'hernieuwing_vergunning';
+            command.value.licenseStartMM = moment(props.member.licenseEnd).format("MM");
+            command.value.licenseStartYY = moment(props.member.licenseEnd).format("YYYY");
+            command.value.licenseStart = props.member.licenseEnd;
+            command.value.licenseIsPayed = false;
+            for (const federation of appStore.configuration.federations) {
+                if (federation.id === command.value.federationId) {
+                    _totalLicense = federation.yearlySubscriptionFee;
+                    break;
+                }
+            }
+        } else {
+            command.value.licenseStartMM = moment(props.member.licenseStart).format("MM");
+            command.value.licenseStartYY = moment(props.member.licenseStart).format("YYYY");
+            command.value.licenseStart = props.member.licenseStart;
+            command.value.licenseIsPayed = !showLicenseExtendButton(props.member);
+        }
+
+        if (command.value.licenseIsPartSubscription && command.value.memberSubscriptionIsPartSubscription) {
+            command.value.type = 'volledige_hernieuwing';
+        }
     }
 
     command.value.memberSubscriptionTotal = _totalMemberSubscription;
     command.value.licenseTotal = _totalLicense;
+    command.value.total = _totalMemberSubscription + _totalLicense;
     return _totalMemberSubscription + _totalLicense;
+});
+
+const formIsValid = computed((): boolean => {
+    if (extend$.$invalid) return false;
+    if (command.value.total === 0) return false;
+    return true;
 });
 
 </script>

@@ -104,6 +104,9 @@ class Subscription
     #[ORM\Column(options: ['default' => 0])]
     private bool $memberSubscriptionIsHalfYear;
 
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $memberSubscriptionIsPayed;
+
     #[ORM\Column]
     private \DateTimeImmutable $licenseStart;
 
@@ -115,6 +118,9 @@ class Subscription
 
     #[ORM\Column(options: ['default' => 0])]
     private bool $licenseIsPartSubscription;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $licenseIsPayed;
 
     // -- extra fields for new members ------------------------------------------
 
@@ -177,8 +183,22 @@ class Subscription
         string $remarks,
         Location $location,
         array $settings,
+        Federation $federation,
+        \DateTimeImmutable $memberSubscriptionStart,
+        \DateTimeImmutable $memberSubscriptionEnd,
+        float $memberSubscriptionTotal,
+        bool $memberSubscriptionIsPartSubscription,
+        bool $memberSubscriptionIsHalfYear,
+        bool $memberSubscriptionIsPayed,
+        \DateTimeImmutable $licenseStart,
+        \DateTimeImmutable $licenseEnd,
+        float $licenseTotal,
+        bool $licenseIsPartSubscription,
+        bool $licenseIsPayed,
     ) {
         $this->uuid = $uuid;
+        $this->status = SubscriptionStatus::NEW->value;
+
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
         $this->contactEmail = $contactEmail;
@@ -196,7 +216,20 @@ class Subscription
         $this->remarks = $remarks;
         $this->location = $location;
         $this->settings = $settings;
-        $this->memberSubscriptionIsHalfYear = false;
+
+        $this->federation = $federation;
+        $this->memberSubscriptionStart = $memberSubscriptionStart;
+        $this->memberSubscriptionEnd = $memberSubscriptionEnd;
+        $this->memberSubscriptionTotal = $memberSubscriptionTotal;
+        $this->memberSubscriptionIsPartSubscription = $memberSubscriptionIsPartSubscription;
+        $this->memberSubscriptionIsHalfYear = $memberSubscriptionIsHalfYear;
+        $this->memberSubscriptionIsPayed = $memberSubscriptionIsPayed;
+        $this->licenseStart = $licenseStart;
+        $this->licenseEnd = $licenseEnd;
+        $this->licenseTotal = $licenseTotal;
+        $this->licenseIsPartSubscription = $licenseIsPartSubscription;
+        $this->licenseIsPayed = $licenseIsPayed;
+
         $this->member = null;
     }
 
@@ -222,7 +255,19 @@ class Subscription
         bool $isJudogiBelt,
         string $remarks,
         Location $location,
-        array $settings
+        array $settings,
+        Federation $federation,
+        \DateTimeImmutable $memberSubscriptionStart,
+        \DateTimeImmutable $memberSubscriptionEnd,
+        float $memberSubscriptionTotal,
+        bool $memberSubscriptionIsPartSubscription,
+        bool $memberSubscriptionIsHalfYear,
+        bool $memberSubscriptionIsPayed,
+        \DateTimeImmutable $licenseStart,
+        \DateTimeImmutable $licenseEnd,
+        float $licenseTotal,
+        bool $licenseIsPartSubscription,
+        bool $licenseIsPayed,
     ): self {
         return new self(
             $uuid,
@@ -242,7 +287,19 @@ class Subscription
             $isJudogiBelt,
             $remarks,
             $location,
-            $settings
+            $settings,
+            $federation,
+            $memberSubscriptionStart,
+            $memberSubscriptionEnd,
+            $memberSubscriptionTotal,
+            $memberSubscriptionIsPartSubscription,
+            $memberSubscriptionIsHalfYear,
+            $memberSubscriptionIsPayed,
+            $licenseStart,
+            $licenseEnd,
+            $licenseTotal,
+            $licenseIsPartSubscription,
+            $licenseIsPayed
         );
     }
 
@@ -528,6 +585,26 @@ class Subscription
         return $this->subscriptionitems->getValues();
     }
 
+    public function isMemberSubscriptionIsPartSubscription(): bool
+    {
+        return $this->memberSubscriptionIsPartSubscription;
+    }
+
+    public function isMemberSubscriptionIsPayed(): bool
+    {
+        return $this->memberSubscriptionIsPayed;
+    }
+
+    public function isLicenseIsPartSubscription(): bool
+    {
+        return $this->licenseIsPartSubscription;
+    }
+
+    public function isLicenseIsPayed(): bool
+    {
+        return $this->licenseIsPayed;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Subscription fee calculation function
     // —————————————————————————————————————————————————————————————————————————
@@ -535,17 +612,17 @@ class Subscription
     public function getSubscriptionFee(): float
     {
         $fee = 0;
-        if ($this->type === SubscriptionType::FULL_YEAR->value) {
-            if (1 === $this->numberOfTraining) {
-                $fee = floatval($this->settings['yearlyFee1Training']);
-            } else {
-                $fee = floatval($this->settings['yearlyFee2Training']);
-            }
-        } else {
+        if ($this->memberSubscriptionIsHalfYear) {
             if (1 === $this->numberOfTraining) {
                 $fee = floatval($this->settings['halfYearlyFee1Training']);
             } else {
                 $fee = floatval($this->settings['halfYearlyFee2Training']);
+            }
+        } else {
+            if (1 === $this->numberOfTraining) {
+                $fee = floatval($this->settings['yearlyFee1Training']);
+            } else {
+                $fee = floatval($this->settings['yearlyFee2Training']);
             }
         }
         if ($this->isReductionFamily) {

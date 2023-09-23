@@ -29,11 +29,13 @@ class MemberExtendSubscription
         protected float $memberSubscriptionTotal,
         protected bool $memberSubscriptionIsPartSubscription,
         protected bool $memberSubscriptionIsHalfYear,
+        protected bool $memberSubscriptionIsPayed,
 
         protected \DateTimeImmutable $licenseStart,
         protected \DateTimeImmutable $licenseEnd,
         protected float $licenseTotal,
         protected bool $licenseIsPartSubscription,
+        protected bool $licenseIsPayed,
 
         protected int $numberOfTraining,
         protected bool $isExtraTraining,
@@ -43,9 +45,47 @@ class MemberExtendSubscription
 
         protected string $remarks,
         protected float $total,
-
-        protected array $items,
     ) {
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Hydrate from a json command
+    // —————————————————————————————————————————————————————————————————————————
+
+    public static function hydrateFromJson($json): self
+    {
+        return new self(
+            intval($json->memberId),
+            intval($json->federationId),
+            intval($json->locationId),
+            trim($json->contactFirstname),
+            trim($json->contactLastname),
+            trim($json->contactEmail),
+            trim($json->contactPhone),
+            trim($json->firstname),
+            trim($json->lastname),
+            new \DateTimeImmutable($json->dateOfBirth),
+            trim($json->gender),
+            trim($json->type),
+            new \DateTimeImmutable($json->memberSubscriptionStart),
+            new \DateTimeImmutable($json->memberSubscriptionEnd),
+            floatval($json->memberSubscriptionTotal),
+            boolval($json->memberSubscriptionIsPartSubscription),
+            boolval($json->memberSubscriptionIsHalfYear),
+            boolval($json->memberSubscriptionIsPayed),
+            new \DateTimeImmutable($json->licenseStart),
+            new \DateTimeImmutable($json->licenseEnd),
+            floatval($json->licenseTotal),
+            boolval($json->licenseIsPartSubscription),
+            boolval($json->licenseIsPayed),
+            intval($json->numberOfTraining),
+            boolval($json->isExtraTraining),
+            boolval($json->isNewMember),
+            boolval($json->isReductionFamily),
+            boolval($json->isJudogiBelt),
+            trim($json->remarks),
+            floatval($json->total),
+        );
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -187,9 +227,18 @@ class MemberExtendSubscription
         return $this->remarks;
     }
 
-    public function getItems(): array
+    public function isMemberSubscriptionIsPayed(): bool
     {
-        return $this->items;
+        return $this->memberSubscriptionIsPayed;
     }
 
+    public function isLicenseIsPayed(): bool
+    {
+        return $this->licenseIsPayed;
+    }
+
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
 }

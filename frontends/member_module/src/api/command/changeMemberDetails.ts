@@ -14,20 +14,25 @@ export interface ChangeMemberDetailsCommand {
     status: string;
     firstname: string;
     lastname: string;
-    dateOfBirthDD:string;
-    dateOfBirthMM:string;
-    dateOfBirthYYYY:string;
+    dateOfBirthDD: string;
+    dateOfBirthMM: string;
+    dateOfBirthYYYY: string;
     dateOfBirth: Date;
     gender: string;
     locationId: number;
-    nationalRegisterNumber:string;
-    addressStreet:string;
-    addressNumber:string;
-    addressBox:string;
-    addressZip:string;
-    addressCity:string;
-    email:string;
+    nationalRegisterNumber: string;
+    addressStreet: string;
+    addressNumber: string;
+    addressBox: string;
+    addressZip: string;
+    addressCity: string;
+    email: string;
+    contactFirstname: string;
+    contactLastname: string;
+    contactEmail: string;
+    contactPhone: string;
 }
+
 export async function changeMemberDetails(command: ChangeMemberDetailsCommand) {
     const formData = new FormData();
     formData.append('command', JSON.stringify(command));

@@ -263,7 +263,11 @@ class Member
         string $addressNumber,
         string $addressBox,
         string $addressZip,
-        string $addressCity
+        string $addressCity,
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone
     ): void {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -278,6 +282,10 @@ class Member
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+        $this->contactFirstname = $contactFirstname;
+        $this->contactLastname = $contactLastname;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
     }
 
     public function setSubscriptionDates(

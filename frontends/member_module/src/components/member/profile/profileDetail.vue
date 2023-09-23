@@ -13,7 +13,7 @@
     <div v-if="memberStore.memberDetail">
         <div class="flex flex-row">
             <div class="basis-1/2">
-                <div class="bg-slate-200 p-1 font-bold">Lidgeld</div>
+                <div class="font-bold">Lidgeld</div>
                 <!-- status lidgeld -->
                 <div class="block" :class="memberStatusColor(memberStore.memberDetail)">
                     <div class="mt-2 mb-2 block px-2">
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="basis-1/2 ml-4">
-                <div class="bg-slate-200 p-1 font-bold">Vergunning</div>
+                <div class="font-bold">Vergunning</div>
                 <!-- status vergunning -->
                 <div class="block" :class="licenseStatusColor(memberStore.memberDetail)">
                     <div class="mt-2 mb-2 block px-2">
@@ -87,53 +87,52 @@
             <hr>
         </div>
         <div class="flex flex-row">
-            <div class="basis-1/2">
-                <div>
-                    <span class="uppercase">{{ memberStore.memberDetail.lastname }}</span>
-                    {{ memberStore.memberDetail.firstname }}
-                </div>
-                <div class="text-xs mt-1">
-                    &mdash; {{ memberStore.memberDetail.nationalRegisterNumber }}
-                </div>
-                <div class="mt-2">
-                    ° {{ moment(memberStore.memberDetail.dateOfBirth).format("DD/MM/YYYY") }}
-                    - {{ memberStore.memberDetail.gender }}
-                </div>
-                <div class="mt-4">
-                    <div :style="'background-color: #'+memberStore.memberDetail.grade.color"
-                         class="rounded-full text-white px-2 font-bold text-center w-32 text-sm">
-                        {{ memberStore.memberDetail.grade.name }}
+            <div class="basis-1/2 p-2">
+                <div class="rounded-lg bg-slate-600 text-white p-2">
+                    <div class="font-bold">
+                        <span class="uppercase">{{ memberStore.memberDetail.lastname }}</span>
+                        {{ memberStore.memberDetail.firstname }}
                     </div>
-                </div>
-                <div class="mt-1">
-                    <div class="px-2 bg-sky-400 rounded-full text-white text-xs w-32 text-center">
-                        {{ memberStore.memberDetail.location.name }}
+                    <div class="text-xs mt-1">
+                        &mdash; {{ memberStore.memberDetail.nationalRegisterNumber }}
                     </div>
-                </div>
-                <div class="mt-1">
-                    <group-renderer :member="memberStore.memberDetail"/>
-                </div>
-            </div>
-            <div class="basis-1/2 text-sm">
-                <div class="mb-4">
-                    <div class="text-xs text-gray-300 w-10 float-left">email</div>
-                    {{ memberStore.memberDetail.email }}
-                </div>
-                <hr>
-                <div class="mt-4 mb-4">
-                    <div>
-                        {{ memberStore.memberDetail.addressStreet }}
-                        {{ memberStore.memberDetail.addressNumber }}
-                        <span v-if="memberStore.memberDetail.addressBox != ''">
+                    <div class="mt-2">
+                        ° {{ moment(memberStore.memberDetail.dateOfBirth).format("DD/MM/YYYY") }}
+                        - {{ memberStore.memberDetail.gender }}
+                    </div>
+                    <div class="mt-4 text-xs">
+                        {{ memberStore.memberDetail.email }}
+                    </div>
+                    <div class="mt-4">
+                        <div>
+                            {{ memberStore.memberDetail.addressStreet }}
+                            {{ memberStore.memberDetail.addressNumber }}
+                            <span v-if="memberStore.memberDetail.addressBox != ''">
                             bus {{ memberStore.memberDetail.addressBox }}
                         </span>
-                    </div>
-                    <div>
-                        {{ memberStore.memberDetail.addressZip }}
-                        {{ memberStore.memberDetail.addressCity }}
+                        </div>
+                        <div>
+                            {{ memberStore.memberDetail.addressZip }}
+                            {{ memberStore.memberDetail.addressCity }}
+                        </div>
                     </div>
                 </div>
-                <hr>
+            </div>
+
+            <div class="basis-1/2 text-sm p-2">
+                <div class="rounded-lg bg-slate-200 p-2">
+                    <div>Contactpersoon:</div>
+                    <div class="font-bold mt-4">
+                        <span class="uppercase">{{ memberStore.memberDetail.contactLastname }}</span>
+                        {{ memberStore.memberDetail.contactFirstname }}
+                    </div>
+                    <div class="mt-4 text-xs">
+                        {{ memberStore.memberDetail.contactEmail }}
+                    </div>
+                    <div class="mt-4 text-xs">
+                        {{ memberStore.memberDetail.contactPhone }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -145,9 +144,9 @@
     <Dialog v-model:visible="showExtensionForm"
             v-if="memberStore.memberDetail"
             position="top"
-            :header="'Verleng lidmaatschap voor '+memberStore.memberDetail.lastname.toUpperCase()+' '+memberStore.memberDetail.firstname"
+            :header="'Verleng lidmaatschap/vergunning voor '+memberStore.memberDetail.lastname.toUpperCase()+' '+memberStore.memberDetail.firstname"
             :modal="true">
-        <extension-form :member="memberStore.memberDetail"/>
+        <extension-form :member="memberStore.memberDetail" v-on:submitted="hideExtensionFormFn"/>
     </Dialog>
 
 </template>
@@ -160,12 +159,21 @@ import {memberStatusColor, showMemberSubscriptionExtendButton} from "@/functions
 import {licenseStatusColor} from "@/functions/licenseStatus";
 import ExtensionForm from "@/components/member/subscription/extensionForm.vue";
 import {ref} from "vue";
+import {useMemberOverviewStore} from "@/store/memberOverview";
 
 const memberStore = useMemberStore();
+const memberOverviewStore = useMemberOverviewStore();
 const showExtensionForm = ref<boolean>(false);
 
-function showExtensionFormFn () {
+function showExtensionFormFn() {
     showExtensionForm.value = true;
+}
+
+function hideExtensionFormFn() {
+    void memberOverviewStore.loadActiveMembers();
+    void memberStore.reloadMemberDetail();
+    memberStore.increaseMemberCounter();
+    showExtensionForm.value = false;
 }
 
 </script>

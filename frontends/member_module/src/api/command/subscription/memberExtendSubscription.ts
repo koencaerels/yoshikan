@@ -24,6 +24,7 @@ export interface MemberExtendSubscriptionCommand {
     memberSubscriptionTotal: number;
     memberSubscriptionIsPartSubscription: boolean;
     memberSubscriptionIsHalfYear: boolean;
+    memberSubscriptionIsPayed: boolean;
 
     licenseStart: Date;
     licenseStartMM: string;
@@ -31,6 +32,7 @@ export interface MemberExtendSubscriptionCommand {
     licenseEnd: Date;
     licenseTotal: number;
     licenseIsPartSubscription: boolean;
+    licenseIsPayed: boolean;
 
     numberOfTraining: number;
     isExtraTraining: boolean;
@@ -41,12 +43,10 @@ export interface MemberExtendSubscriptionCommand {
     remarks: string;
 
     isJudogiBelt: boolean;
-    judogi?: Judogi;
 }
-
 export async function memberExtendSubscription(command: MemberExtendSubscriptionCommand) {
     const formData = new FormData();
-    formData.append('group', JSON.stringify(command));
-    const response = await axios.post<boolean>(`/member/${command.memberId}/subscribe`, formData);
+    formData.append('command', JSON.stringify(command));
+    const response = await axios.post<boolean>(`/member/${command.memberId}/extend-subscription`, formData);
     return response.data;
 }
