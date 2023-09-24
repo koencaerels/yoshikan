@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MemberExtendSubscription;
+namespace App\YoshiKan\Application\Command\Member\NewMemberSubscription;
 
-class MemberExtendSubscription
+class NewMemberSubscription
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int $memberId,
+        protected string $type,
         protected int $federationId,
         protected int $locationId,
 
@@ -29,33 +29,45 @@ class MemberExtendSubscription
         protected string $contactEmail,
         protected string $contactPhone,
 
+        protected string $addressStreet,
+        protected string $addressNumber,
+        protected string $addressBox,
+        protected string $addressZip,
+        protected string $addressCity,
+
         protected string $firstname,
         protected string $lastname,
+        protected string $email,
+        protected string $nationalRegisterNumber,
         protected \DateTimeImmutable $dateOfBirth,
         protected string $gender,
 
-        protected string $type,
         protected \DateTimeImmutable $memberSubscriptionStart,
+        protected string $memberSubscriptionStartMM,
+        protected string $memberSubscriptionStartYY,
         protected \DateTimeImmutable $memberSubscriptionEnd,
         protected float $memberSubscriptionTotal,
-        protected bool $memberSubscriptionIsPartSubscription,
-        protected bool $memberSubscriptionIsHalfYear,
-        protected bool $memberSubscriptionIsPayed,
+        protected string $memberSubscriptionIsPartSubscription,
+        protected string $memberSubscriptionIsHalfYear,
+        protected string $memberSubscriptionIsPayed,
 
         protected \DateTimeImmutable $licenseStart,
+        protected string $licenseStartMM,
+        protected string $licenseStartYY,
         protected \DateTimeImmutable $licenseEnd,
         protected float $licenseTotal,
         protected bool $licenseIsPartSubscription,
         protected bool $licenseIsPayed,
 
-        protected int $numberOfTraining,
+        protected string $numberOfTraining,
         protected bool $isExtraTraining,
         protected bool $isNewMember,
         protected bool $isReductionFamily,
-        protected bool $isJudogiBelt,
 
-        protected string $remarks,
         protected float $total,
+        protected string $remarks,
+
+        protected bool $isJudogiBelt,
     ) {
     }
 
@@ -69,25 +81,35 @@ class MemberExtendSubscription
     public static function hydrateFromJson($json): self
     {
         return new self(
-            intval($json->memberId),
+            trim($json->type),
             intval($json->federationId),
             intval($json->locationId),
             trim($json->contactFirstname),
             trim($json->contactLastname),
             trim($json->contactEmail),
             trim($json->contactPhone),
+            trim($json->addressStreet),
+            trim($json->addressNumber),
+            trim($json->addressBox),
+            trim($json->addressZip),
+            trim($json->addressCity),
             trim($json->firstname),
             trim($json->lastname),
+            trim($json->email),
+            trim($json->nationalRegisterNumber),
             new \DateTimeImmutable($json->dateOfBirth),
             trim($json->gender),
-            trim($json->type),
             new \DateTimeImmutable($json->memberSubscriptionStart),
+            trim($json->memberSubscriptionStartMM),
+            trim($json->memberSubscriptionStartYY),
             new \DateTimeImmutable($json->memberSubscriptionEnd),
             floatval($json->memberSubscriptionTotal),
             boolval($json->memberSubscriptionIsPartSubscription),
             boolval($json->memberSubscriptionIsHalfYear),
             boolval($json->memberSubscriptionIsPayed),
             new \DateTimeImmutable($json->licenseStart),
+            trim($json->licenseStartMM),
+            trim($json->licenseStartYY),
             new \DateTimeImmutable($json->licenseEnd),
             floatval($json->licenseTotal),
             boolval($json->licenseIsPartSubscription),
@@ -96,9 +118,9 @@ class MemberExtendSubscription
             boolval($json->isExtraTraining),
             boolval($json->isNewMember),
             boolval($json->isReductionFamily),
-            boolval($json->isJudogiBelt),
-            trim($json->remarks),
             floatval($json->total),
+            trim($json->rmarks),
+            boolval($json->isJudogiBelt),
         );
     }
 
@@ -106,9 +128,9 @@ class MemberExtendSubscription
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getMemberId(): int
+    public function getType(): string
     {
-        return $this->memberId;
+        return $this->type;
     }
 
     public function getFederationId(): int
@@ -141,6 +163,31 @@ class MemberExtendSubscription
         return $this->contactPhone;
     }
 
+    public function getAddressStreet(): string
+    {
+        return $this->addressStreet;
+    }
+
+    public function getAddressNumber(): string
+    {
+        return $this->addressNumber;
+    }
+
+    public function getAddressBox(): string
+    {
+        return $this->addressBox;
+    }
+
+    public function getAddressZip(): string
+    {
+        return $this->addressZip;
+    }
+
+    public function getAddressCity(): string
+    {
+        return $this->addressCity;
+    }
+
     public function getFirstname(): string
     {
         return $this->firstname;
@@ -149,6 +196,16 @@ class MemberExtendSubscription
     public function getLastname(): string
     {
         return $this->lastname;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getNationalRegisterNumber(): string
+    {
+        return $this->nationalRegisterNumber;
     }
 
     public function getDateOfBirth(): \DateTimeImmutable
@@ -161,14 +218,19 @@ class MemberExtendSubscription
         return $this->gender;
     }
 
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
     public function getMemberSubscriptionStart(): \DateTimeImmutable
     {
         return $this->memberSubscriptionStart;
+    }
+
+    public function getMemberSubscriptionStartMM(): string
+    {
+        return $this->memberSubscriptionStartMM;
+    }
+
+    public function getMemberSubscriptionStartYY(): string
+    {
+        return $this->memberSubscriptionStartYY;
     }
 
     public function getMemberSubscriptionEnd(): \DateTimeImmutable
@@ -181,19 +243,34 @@ class MemberExtendSubscription
         return $this->memberSubscriptionTotal;
     }
 
-    public function isMemberSubscriptionIsPartSubscription(): bool
+    public function getMemberSubscriptionIsPartSubscription(): string
     {
         return $this->memberSubscriptionIsPartSubscription;
     }
 
-    public function isMemberSubscriptionIsHalfYear(): bool
+    public function getMemberSubscriptionIsHalfYear(): string
     {
         return $this->memberSubscriptionIsHalfYear;
+    }
+
+    public function getMemberSubscriptionIsPayed(): string
+    {
+        return $this->memberSubscriptionIsPayed;
     }
 
     public function getLicenseStart(): \DateTimeImmutable
     {
         return $this->licenseStart;
+    }
+
+    public function getLicenseStartMM(): string
+    {
+        return $this->licenseStartMM;
+    }
+
+    public function getLicenseStartYY(): string
+    {
+        return $this->licenseStartYY;
     }
 
     public function getLicenseEnd(): \DateTimeImmutable
@@ -211,7 +288,12 @@ class MemberExtendSubscription
         return $this->licenseIsPartSubscription;
     }
 
-    public function getNumberOfTraining(): int
+    public function isLicenseIsPayed(): bool
+    {
+        return $this->licenseIsPayed;
+    }
+
+    public function getNumberOfTraining(): string
     {
         return $this->numberOfTraining;
     }
@@ -231,9 +313,9 @@ class MemberExtendSubscription
         return $this->isReductionFamily;
     }
 
-    public function isJudogiBelt(): bool
+    public function getTotal(): float
     {
-        return $this->isJudogiBelt;
+        return $this->total;
     }
 
     public function getRemarks(): string
@@ -241,18 +323,8 @@ class MemberExtendSubscription
         return $this->remarks;
     }
 
-    public function isMemberSubscriptionIsPayed(): bool
+    public function isJudogiBelt(): bool
     {
-        return $this->memberSubscriptionIsPayed;
-    }
-
-    public function isLicenseIsPayed(): bool
-    {
-        return $this->licenseIsPayed;
-    }
-
-    public function getTotal(): float
-    {
-        return $this->total;
+        return $this->isJudogiBelt;
     }
 }

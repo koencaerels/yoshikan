@@ -9,10 +9,9 @@
 
 import axios from "axios";
 
-export interface MemberExtendSubscriptionCommand {
+export interface newMemberSubscriptionCommand {
 
     type: string;
-    memberId: number;
     federationId: number;
     locationId: number;
 
@@ -21,8 +20,16 @@ export interface MemberExtendSubscriptionCommand {
     contactEmail: string;
     contactPhone: string;
 
+    addressStreet: string;
+    addressNumber: string;
+    addressBox: string;
+    addressZip: string;
+    addressCity: string;
+
     firstname: string;
     lastname: string;
+    email: string;
+    nationalRegisterNumber: string;
     dateOfBirth: Date;
     gender: string;
 
@@ -47,15 +54,16 @@ export interface MemberExtendSubscriptionCommand {
     isExtraTraining: boolean;
     isNewMember: boolean;
     isReductionFamily: boolean;
-    isJudogiBelt: boolean;
 
     total: number;
     remarks: string;
+
+    isJudogiBelt: boolean;
 }
 
-export async function memberExtendSubscription(command: MemberExtendSubscriptionCommand) {
+export async function newMemberSubscription(command: newMemberSubscriptionCommand) {
     const formData = new FormData();
     formData.append('command', JSON.stringify(command));
-    const response = await axios.post<boolean>(`/member/${command.memberId}/extend-subscription`, formData);
+    const response = await axios.post<boolean>(`/member/new-subscription`, formData);
     return response.data;
 }
