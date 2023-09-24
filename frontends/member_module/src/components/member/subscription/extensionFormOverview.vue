@@ -32,7 +32,7 @@
             met vermelding van de referentie
             <span class="font-bold"> "YKS-xxx
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
-            <br>Als {{ props.command.firstname }} niet langer lid wil zijn, geef dan ons een seintje.
+            <br>Als {{ props.command.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje.
             Alvast bedankt.
         </div>
 

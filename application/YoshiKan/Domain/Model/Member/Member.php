@@ -151,6 +151,11 @@ class Member
     #[ORM\OrderBy(['id' => 'DESC'])]
     private ?Collection $memberImages;
 
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: "App\YoshiKan\Domain\Model\Message\Message", fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private ?Collection $messages;
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
@@ -457,7 +462,7 @@ class Member
         return $this->licenseEnd;
     }
 
-    public function licenseIsPayed(): bool
+    public function isLicenseIsPayed(): bool
     {
         return $this->licenseIsPayed;
     }
@@ -505,5 +510,10 @@ class Member
     public function getContactPhone(): string
     {
         return $this->contactPhone;
+    }
+
+    public function getMessages(): array
+    {
+        return $this->messages->getValues();
     }
 }

@@ -122,10 +122,10 @@ class MemberReadModel implements \JsonSerializable
     public static function hydrateFromModel(Member $model, bool $full = false): self
     {
         if ($full) {
-            //            $subscriptions = new SubscriptionReadModelCollection([]);
-            //            foreach ($model->getSubscriptions() as $subscription) {
-            //                $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
-            //            }
+            // $subscriptions = new SubscriptionReadModelCollection([]);
+            // foreach ($model->getSubscriptions() as $subscription) {
+            //     $subscriptions->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
+            // }
 
             $gradeLogs = new GradeLogReadModelCollection([]);
             foreach ($model->getGradeLogs() as $gradeLog) {
@@ -160,7 +160,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->isMemberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
-                $model->licenseIsPayed(),
+                $model->isLicenseIsPayed(),
                 $model->getContactFirstname(),
                 $model->getContactLastname(),
                 $model->getContactEmail(),
@@ -197,7 +197,7 @@ class MemberReadModel implements \JsonSerializable
                 $model->isMemberSubscriptionIsHalfYear(),
                 $model->getLicenseStart(),
                 $model->getLicenseEnd(),
-                $model->licenseIsPayed(),
+                $model->isLicenseIsPayed(),
                 $model->getContactFirstname(),
                 $model->getContactLastname(),
                 $model->getContactEmail(),

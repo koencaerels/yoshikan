@@ -2,18 +2,22 @@
 
 namespace App\YoshiKan\Application\Command\Member\MemberExtendSubscription;
 
+use App\YoshiKan\Application\Command\Common\SubscriptionItemsFactory;
 use App\YoshiKan\Application\Query\Member\Readmodel\SettingsReadModel;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
+use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 use App\YoshiKan\Domain\Model\Member\SubscriptionType;
 use Doctrine\ORM\EntityManagerInterface;
+
 class MemberExtendSubscriptionHandler
 {
     // ———————————————————————————————————————————————————————————————
@@ -21,14 +25,14 @@ class MemberExtendSubscriptionHandler
     // ———————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected FederationRepository   $federationRepository,
-        protected LocationRepository     $locationRepository,
-        protected SettingsRepository     $settingsRepository,
-        protected MemberRepository       $memberRepository,
+        protected FederationRepository $federationRepository,
+        protected LocationRepository $locationRepository,
+        protected SettingsRepository $settingsRepository,
+        protected MemberRepository $memberRepository,
         protected SubscriptionRepository $subscriptionRepository,
+        protected SubscriptionItemRepository $subscriptionItemRepository,
         protected EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     // ———————————————————————————————————————————————————————————————
@@ -42,7 +46,11 @@ class MemberExtendSubscriptionHandler
         $member = $this->memberRepository->getById($command->getMemberId());
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
 
-        // -- todo make subscription validator to be sure the incoming data is correct...
+        // -- validate the command
+        $commandIsValid = $this->isCommandValid($command, $settings);
+        if (!$commandIsValid) {
+            throw new \Exception('Membership extension command is not valid.');
+        }
 
         // -- make a subscription
         $subscription = Subscription::make(
@@ -82,7 +90,19 @@ class MemberExtendSubscriptionHandler
         $subscription->changeStatus(SubscriptionStatus::AWAITING_PAYMENT);
         $this->subscriptionRepository->save($subscription);
 
-        // -- flag new dates in the member
+        // -- make some subscription lines -----------------------------------------------------------------------------
+
+        $subscriptionItemFactory = new SubscriptionItemsFactory(
+            $this->subscriptionRepository,
+            $this->subscriptionItemRepository
+        );
+        $resultItems = $subscriptionItemFactory->saveItemsFromSubscription(
+            $subscription,
+            $federation,
+            $settings
+        );
+
+        // -- flag new dates in the member -----------------------------------------------------------------------------
 
         if ($subscription->isMemberSubscriptionIsPartSubscription()) {
             $member->setSubscriptionDates(
@@ -104,11 +124,19 @@ class MemberExtendSubscriptionHandler
         $this->entityManager->flush();
         $subscriptionId = $this->subscriptionRepository->getMaxId();
 
-        // -- compile a result class
+        // -- compile a result class -----------------------------------------------------------------------------------
+
         $result = new \stdClass();
         $result->id = $subscriptionId;
-        $result->reference = 'YKS-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
+        $result->reference = 'YKS-'.$subscriptionId.': '.$command->getFirstName().' '.$command->getLastName();
 
         return $result;
+    }
+
+    private function isCommandValid(MemberExtendSubscription $command, Settings $settings): bool
+    {
+        // todo
+
+        return true;
     }
 }

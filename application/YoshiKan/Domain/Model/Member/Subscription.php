@@ -16,6 +16,8 @@ namespace App\YoshiKan\Domain\Model\Member;
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -158,7 +160,12 @@ class Subscription
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: "App\YoshiKan\Domain\Model\Member\SubscriptionItem", fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\OrderBy(['sequence' => 'ASC'])]
-    private Collection $subscriptionitems;
+    private Collection $items;
+
+    #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: "App\YoshiKan\Domain\Model\Message\Message", fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private ?Collection $messages;
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -230,6 +237,8 @@ class Subscription
         $this->licenseIsPartSubscription = $licenseIsPartSubscription;
         $this->licenseIsPayed = $licenseIsPayed;
 
+        $this->total = ceil($this->memberSubscriptionTotal + $this->licenseTotal);
+        $this->items = new ArrayCollection();
         $this->member = null;
     }
 
@@ -580,11 +589,6 @@ class Subscription
         return $this->memberSubscriptionIsHalfYear;
     }
 
-    public function getSubscriptionItems(): array
-    {
-        return $this->subscriptionitems->getValues();
-    }
-
     public function isMemberSubscriptionIsPartSubscription(): bool
     {
         return $this->memberSubscriptionIsPartSubscription;
@@ -605,11 +609,24 @@ class Subscription
         return $this->licenseIsPayed;
     }
 
+    public function getMessages(): ?Collection
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @return SubscriptionItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items->getValues();
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Subscription fee calculation function
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getSubscriptionFee(): float
+    public function getSubscriptionFee(bool $withReduction = true): float
     {
         $fee = 0;
         if ($this->memberSubscriptionIsHalfYear) {
@@ -625,7 +642,8 @@ class Subscription
                 $fee = floatval($this->settings['yearlyFee2Training']);
             }
         }
-        if ($this->isReductionFamily) {
+
+        if ($this->isReductionFamily && $withReduction) {
             $reduction = floatval($this->settings['familyDiscount']) * $fee / 100;
             $fee = ceil($fee - $reduction);
         }

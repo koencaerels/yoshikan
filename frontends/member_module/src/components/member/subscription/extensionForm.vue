@@ -706,10 +706,10 @@ const totalAmount = computed((): number => {
         }
     }
 
-    command.value.memberSubscriptionTotal = _totalMemberSubscription;
+    command.value.memberSubscriptionTotal = Math.ceil(_totalMemberSubscription);
     command.value.licenseTotal = _totalLicense;
-    command.value.total = _totalMemberSubscription + _totalLicense;
-    return _totalMemberSubscription + _totalLicense;
+    command.value.total = Math.ceil(_totalMemberSubscription) + _totalLicense;
+    return Math.ceil(_totalMemberSubscription) + _totalLicense;
 });
 
 const formIsValid = computed((): boolean => {

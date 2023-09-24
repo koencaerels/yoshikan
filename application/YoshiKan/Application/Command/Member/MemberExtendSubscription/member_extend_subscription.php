@@ -16,6 +16,7 @@ trait member_extend_subscription
             $this->settingsRepository,
             $this->memberRepository,
             $this->subscriptionRepository,
+            $this->subscriptionItemRepository,
             $this->entityManager,
         );
 

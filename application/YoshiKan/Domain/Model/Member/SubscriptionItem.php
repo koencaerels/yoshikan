@@ -25,7 +25,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @Audit\Auditable()
  */
-#[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\SubscriptionLineRepository::class)]
+#[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\SubscriptionItemRepository::class)]
 class SubscriptionItem
 {
     // -------------------------------------------------------------- attributes
@@ -45,7 +45,7 @@ class SubscriptionItem
     private float $price = 0;
 
     // ---------------------------------------------------------------- associations
-    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY', inversedBy: 'subscriptionItems')]
+    #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Subscription", fetch: 'EXTRA_LAZY', inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     private Subscription $subscription;
 

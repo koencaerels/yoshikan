@@ -138,8 +138,7 @@ trait member_routes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->memberExtendSubscription($command);
 
-        // send mail...
-        // $result = $this->commandBus->WebConfirmationMail($response->id);
+        $result = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

@@ -28,6 +28,7 @@ use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_re
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\member_extend_subscription;
+use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\member_extend_subscription_mail;
 use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
@@ -41,6 +42,7 @@ use App\YoshiKan\Application\Command\Product\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Product\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Product\OrderJudogi\order_judogi;
 use App\YoshiKan\Application\Security\BasePermissionService;
+use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
@@ -49,9 +51,10 @@ use App\YoshiKan\Domain\Model\Member\MemberImageRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
-use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -85,6 +88,7 @@ class MemberCommandBus
 
     // -- subscription ----------------------------------------------------------
     use member_extend_subscription;
+    use member_extend_subscription_mail;
 
     // -- member images ---------------------------------------------------------
     use upload_member_image;
@@ -117,9 +121,11 @@ class MemberCommandBus
         protected PeriodRepository $periodRepository,
         protected SettingsRepository $settingsRepository,
         protected SubscriptionRepository $subscriptionRepository,
+        protected SubscriptionItemRepository $subscriptionItemRepository,
         protected GradeLogRepository $gradeLogRepository,
         protected MemberImageRepository $memberImageRepository,
         protected FederationRepository $federationRepository,
+        protected MessageRepository $messageRepository,
         protected JudogiRepository $judogiRepository,
     ) {
         $this->permission = new BasePermissionService(
