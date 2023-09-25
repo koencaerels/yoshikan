@@ -51,8 +51,8 @@ function closeDropZone() {
 </script>
 
 <style scoped>
-    #dropZoneMemberImage {
-        height: 200px !important;
-        padding: 2px !important;
-    }
+#dropZoneMemberImage {
+    height: 200px !important;
+    padding: 2px !important;
+}
 </style>

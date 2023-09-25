@@ -14,7 +14,7 @@ trait member_image_routes
     public function streamMemberImageById(int $id, Request $request): Response
     {
         $image = $this->queryBus->getMemberImageById($id);
-        $file = $this->uploadFolder.$image->getPath();
+        $file = $this->uploadFolder . $image->getPath();
 
         return $this->file($file, $image->getOriginalName(), ResponseHeaderBag::DISPOSITION_INLINE);
     }

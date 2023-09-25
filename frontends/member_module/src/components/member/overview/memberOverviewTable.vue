@@ -61,7 +61,7 @@
             </Column>
             <Column field="lastname" sortable header="Naam" class="text-xs">
                 <template #body="{ data }">
-                    <div @click="showDetailDialogFullFn(data.id)" class="text-base uppercase font-bold">
+                    <div @click="showDetailDialogFullFn(data.id)" class="text-base uppercase font-bold text-sm">
                         {{ data.lastname }}
                     </div>
                 </template>
@@ -72,7 +72,7 @@
             </Column>
             <Column field="firstname" sortable header="Voornaam" class="text-xs">
                 <template #body="{ data }">
-                    <div class="text-base font-bold" @click="showDetailDialogFullFn(data.id)">
+                    <div class="text-base font-bold text-sm" @click="showDetailDialogFullFn(data.id)">
                         {{ data.firstname }}
                     </div>
                 </template>

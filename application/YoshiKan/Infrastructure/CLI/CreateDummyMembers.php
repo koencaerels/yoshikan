@@ -19,11 +19,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateDummyMembers extends Command
 {
-    private readonly EntityManagerInterface $entityManager;
-    private readonly MemberRepository $memberRepository;
-    private readonly GradeRepository $gradeRepository;
-    private readonly FederationRepository $federationRepository;
-    private readonly LocationRepository $locationRepository;
+    private readonly public EntityManagerInterface $entityManager;
+    private readonly public MemberRepository $memberRepository;
+    private readonly public GradeRepository $gradeRepository;
+    private readonly public FederationRepository $federationRepository;
+    private readonly public LocationRepository $locationRepository;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -97,8 +97,8 @@ class CreateDummyMembers extends Command
             }
 
             $startPeriodDate = $faker->dateTimeThisDecade('now');
-            $startPeriod = $startPeriodDate->format('Y-m').'-01';
-            $endPeriod = (intval($startPeriodDate->format('Y')) + 1).'-'.$startPeriodDate->format('m').'-01';
+            $startPeriod = $startPeriodDate->format('Y-m') . '-01';
+            $endPeriod = (intval($startPeriodDate->format('Y')) + 1) . '-' . $startPeriodDate->format('m') . '-01';
             $member->setSubscriptionDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod), false);
             $member->setLicenseDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod));
 

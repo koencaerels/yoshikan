@@ -123,11 +123,11 @@ trait member_routes
     public function getMemberProfileImage(int $id): Response
     {
         $member = $this->queryBus->getMemberById($id);
-        $file = $this->uploadFolder.$member->getProfileImage();
+        $file = $this->uploadFolder . $member->getProfileImage();
 
         return $this->file(
             $file,
-            $member->getFirstname().'-'.$member->getFirstname().'.png',
+            $member->getFirstname() . '-' . $member->getFirstname() . '.png',
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }

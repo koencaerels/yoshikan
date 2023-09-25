@@ -26,6 +26,8 @@ use App\YoshiKan\Domain\Model\Member\MemberImage;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
+use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Bolt\Controller\TwigAwareController;
@@ -111,9 +113,11 @@ class MemberModuleController
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Subscription::class),
+            $this->entityManager->getRepository(SubscriptionItem::class),
             $this->entityManager->getRepository(GradeLog::class),
             $this->entityManager->getRepository(MemberImage::class),
             $this->entityManager->getRepository(Federation::class),
+            $this->entityManager->getRepository(Message::class),
             $this->entityManager->getRepository(Judogi::class),
         );
 
