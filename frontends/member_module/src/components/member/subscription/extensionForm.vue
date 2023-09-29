@@ -154,13 +154,13 @@
                         </div>
                         <div class="basis-1/2">
                             <div v-if="appStore.configuration">
-                            <span v-for="federation in appStore.configuration.federations" class="mr-4">
-                                <RadioButton name="location" :value="federation.id"
-                                             :disabled="!(command.licenseIsPartSubscription)"
-                                             v-model="command.federationId"
-                                             :input-id="federation.name"/>
-                                <label :for="federation.name" class="ml-2"> {{ federation.name }} </label>
-                            </span>
+                                <span v-for="federation in appStore.configuration.federations" class="mr-4">
+                                    <RadioButton name="federation" :value="federation.id"
+                                                 :disabled="!(command.licenseIsPartSubscription)"
+                                                 v-model="command.federationId"
+                                                 :input-id="federation.name"/>
+                                    <label :for="federation.name" class="ml-2"> {{ federation.name }} </label>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -713,7 +713,7 @@ const totalAmount = computed((): number => {
 });
 
 const formIsValid = computed((): boolean => {
-    if (extend$.$invalid) return false;
+    if (extend$.value.$invalid) return false;
     if (command.value.total === 0) return false;
     return true;
 });

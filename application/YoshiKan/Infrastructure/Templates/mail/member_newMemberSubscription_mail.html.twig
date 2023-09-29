@@ -10,22 +10,20 @@
         Beste {{ subscription.contactFirstname }} {{ subscription.contactLastname }},
     </p>
     <p>
-        {% if(subscription.type.value == 'hernieuwing_lidmaatschap') %}
-            Het lidmaatschap
-        {% endif %}
-        {% if(subscription.type.value == 'hernieuwing_vergunning') %}
-            De vergunning
-        {% endif %}
-        {% if(subscription.type.value == 'volledige_hernieuwing') %}
-            Het lidmaatschap en de vergunning
-        {% endif %}
-        is verlopen of staat op het punt binnenkort te verlopen.
-        Als <strong>{{ subscription.lastname | upper }} {{ subscription.firstname }},</strong>
-        lid wil blijven van onze judoclub voor het komende jaar,
-        verzoeken wij je vriendelijk om een bedrag van <strong>{{ subscription.total }} €</strong> over te maken naar
-        het volgende bankrekeningnummer: <strong>BE37 7330 0101 8328</strong> met vermelding van de referentie
-        <strong>"YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}"</strong>.
-        Als {{ subscription.firstname }} niet langer lid wenst te  zijn, geef dan ons een seintje. Alvast bedankt.
+        Welkom {{ subscription.firstname }} {{ subscription.lastname }}, bij Yoshi-Kan,
+        de plek waar judo-liefhebbers samenkomen om hun passie voor
+        deze prachtige sport te delen. We zijn verheugd dat je ervoor hebt gekozen
+        om deel uit te maken van onze judo familie!
+    </p>
+    <p>
+        Om de inschrijving definitief te maken en ervoor te zorgen dat je volop kunt genieten
+        van onze judolessen, verzoeken wij je vriendelijk om een bedrag van <strong>{{ subscription.total }} €</strong>
+        over te maken naar onze bankrekening op het volgende nummer: <strong>BE37 7330 0101 8328</strong> met vermelding
+        van volgende referentie
+        "<strong>"YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}"</strong>".
+        Zo kunnen we je betaling snel identificeren. Wanneer we je betaling hebben ontvangen, zullen we je officieel
+        inschrijven en krijg je toegang tot al onze trainingen en evenementen.
+        We staan te popelen om je te verwelkomen op de mat.
     </p>
     <p>
         Mocht je nog vragen hebben of extra informatie nodig hebben, aarzel dan niet om contact
@@ -51,7 +49,7 @@
         </div>
     </p>
     <p>
-        <table width="100%" cellpadding="2" cellspacing="1" border="0">
+    <table width="100%" cellpadding="2" cellspacing="1" border="0">
         {% for item in items %}
             {% if(item.price == 0) %}
                 <tr>
@@ -66,9 +64,10 @@
         {% endfor %}
         <tr>
             <td align="right" width="80%"><strong>Totaal</strong></td>
-            <td align="right" width="20%" style="background-color: #E6E7E8;"><strong>{{ subscription.total }} €</strong></td>
+            <td align="right" width="20%" style="background-color: #E6E7E8;"><strong>{{ subscription.total }} €</strong>
+            </td>
         </tr>
-        </table>
+    </table>
     </p>
     <p>&nbsp;</p>
     {% if(subscription.remarks != '') %}

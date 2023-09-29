@@ -34,6 +34,7 @@ class SubscriptionReadModel implements \JsonSerializable
         protected float $total,
         protected \stdClass $settings,
         protected bool $isPaymentOverviewSend,
+        protected bool $isPrinted,
         protected string $nationalRegisterNumber,
         protected string $addressStreet,
         protected string $addressNumber,
@@ -83,6 +84,7 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->total = $this->getTotal();
         $json->settings = $this->getSettings();
         $json->isPaymentOverviewSend = $this->isPaymentOverviewSend();
+        $json->isPrinted = $this->isPrinted();
         $json->nationalRegisterNumber = $this->getNationalRegisterNumber();
         $json->addressStreet = $this->getAddressStreet();
         $json->addressNumber = $this->getAddressNumber();
@@ -138,6 +140,7 @@ class SubscriptionReadModel implements \JsonSerializable
             $model->getTotal(),
             $model->getSettings(),
             $model->isPaymentOverviewSend(),
+            $model->isPrinted(),
             $model->getNationalRegisterNumber(),
             $model->getAddressStreet(),
             $model->getAddressNumber(),
@@ -356,5 +359,10 @@ class SubscriptionReadModel implements \JsonSerializable
     public function isMemberSubscriptionIsHalfYear(): bool
     {
         return $this->memberSubscriptionIsHalfYear;
+    }
+
+    public function isPrinted(): bool
+    {
+        return $this->isPrinted;
     }
 }

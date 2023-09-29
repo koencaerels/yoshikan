@@ -9,7 +9,7 @@
 
 import axios from "axios";
 
-export interface newMemberSubscriptionCommand {
+export interface NewMemberSubscriptionCommand {
 
     type: string;
     federationId: number;
@@ -30,6 +30,9 @@ export interface newMemberSubscriptionCommand {
     lastname: string;
     email: string;
     nationalRegisterNumber: string;
+    dateOfBirthDD: '',
+    dateOfBirthMM: '',
+    dateOfBirthYYYY: '',
     dateOfBirth: Date;
     gender: string;
 
@@ -61,7 +64,7 @@ export interface newMemberSubscriptionCommand {
     isJudogiBelt: boolean;
 }
 
-export async function newMemberSubscription(command: newMemberSubscriptionCommand) {
+export async function newMemberSubscription(command: NewMemberSubscriptionCommand) {
     const formData = new FormData();
     formData.append('command', JSON.stringify(command));
     const response = await axios.post<boolean>(`/member/new-subscription`, formData);

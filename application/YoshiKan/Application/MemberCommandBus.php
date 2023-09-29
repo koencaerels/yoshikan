@@ -29,6 +29,8 @@ use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\member_extend_subscription;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\member_extend_subscription_mail;
+use App\YoshiKan\Application\Command\Member\NewMemberSubscription\new_member_subscription;
+use App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail\new_member_subscription_mail;
 use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
 use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
 use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
@@ -89,6 +91,8 @@ class MemberCommandBus
     // -- subscription ----------------------------------------------------------
     use member_extend_subscription;
     use member_extend_subscription_mail;
+    use new_member_subscription;
+    use new_member_subscription_mail;
 
     // -- member images ---------------------------------------------------------
     use upload_member_image;

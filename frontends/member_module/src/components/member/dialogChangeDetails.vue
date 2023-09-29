@@ -97,7 +97,7 @@
             <div class="basis-2/6">
                 <div class="flex flex-row mt-8">
                     <div class="basis-1/4 text-right">
-                        Locatie*
+                        Locatie *
                     </div>
                     <div class="basis-3/4 ml-4">
                         <div v-if="appStore.configuration">
@@ -167,7 +167,7 @@
                 <hr class="mt-2">
                 <div class="flex flex-row mt-1">
                     <div class="basis-1/2">
-                        <div class="mb-1"><label class="text-xs">Naam *</label></div>
+                        <div class="mb-1"><label class="text-xs">Contact Naam *</label></div>
                         <span class="p-input-icon-right w-full">
                             <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
                             <i v-if="!change$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
@@ -175,7 +175,7 @@
                         </span>
                     </div>
                     <div class="basis-1/2 ml-2">
-                        <div class="mb-1"><label class="text-xs">Contact Voornaam *</label></div>
+                        <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
                         <span class="p-input-icon-right w-full">
                             <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
                             <i v-if="!change$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>

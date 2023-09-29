@@ -47,9 +47,9 @@ class NewMemberSubscription
         protected string $memberSubscriptionStartYY,
         protected \DateTimeImmutable $memberSubscriptionEnd,
         protected float $memberSubscriptionTotal,
-        protected string $memberSubscriptionIsPartSubscription,
-        protected string $memberSubscriptionIsHalfYear,
-        protected string $memberSubscriptionIsPayed,
+        protected bool $memberSubscriptionIsPartSubscription,
+        protected bool $memberSubscriptionIsHalfYear,
+        protected bool $memberSubscriptionIsPayed,
 
         protected \DateTimeImmutable $licenseStart,
         protected string $licenseStartMM,
@@ -59,7 +59,7 @@ class NewMemberSubscription
         protected bool $licenseIsPartSubscription,
         protected bool $licenseIsPayed,
 
-        protected string $numberOfTraining,
+        protected int $numberOfTraining,
         protected bool $isExtraTraining,
         protected bool $isNewMember,
         protected bool $isReductionFamily,
@@ -119,7 +119,7 @@ class NewMemberSubscription
             boolval($json->isNewMember),
             boolval($json->isReductionFamily),
             floatval($json->total),
-            trim($json->rmarks),
+            trim($json->remarks),
             boolval($json->isJudogiBelt),
         );
     }
@@ -243,21 +243,6 @@ class NewMemberSubscription
         return $this->memberSubscriptionTotal;
     }
 
-    public function getMemberSubscriptionIsPartSubscription(): string
-    {
-        return $this->memberSubscriptionIsPartSubscription;
-    }
-
-    public function getMemberSubscriptionIsHalfYear(): string
-    {
-        return $this->memberSubscriptionIsHalfYear;
-    }
-
-    public function getMemberSubscriptionIsPayed(): string
-    {
-        return $this->memberSubscriptionIsPayed;
-    }
-
     public function getLicenseStart(): \DateTimeImmutable
     {
         return $this->licenseStart;
@@ -293,7 +278,7 @@ class NewMemberSubscription
         return $this->licenseIsPayed;
     }
 
-    public function getNumberOfTraining(): string
+    public function getNumberOfTraining(): int
     {
         return $this->numberOfTraining;
     }
@@ -326,5 +311,20 @@ class NewMemberSubscription
     public function isJudogiBelt(): bool
     {
         return $this->isJudogiBelt;
+    }
+
+    public function isMemberSubscriptionIsPartSubscription(): bool
+    {
+        return $this->memberSubscriptionIsPartSubscription;
+    }
+
+    public function isMemberSubscriptionIsHalfYear(): bool
+    {
+        return $this->memberSubscriptionIsHalfYear;
+    }
+
+    public function isMemberSubscriptionIsPayed(): bool
+    {
+        return $this->memberSubscriptionIsPayed;
     }
 }

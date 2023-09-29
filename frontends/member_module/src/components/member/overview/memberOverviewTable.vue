@@ -11,22 +11,30 @@
 
 <template>
     <!-- header -->
-    <div id="memberOverviewHeader" class="p-1 bg-gradient-to-r from-slate-600 to-slate-200 text-white">
+    <div id="memberOverviewHeader" class="p-1 bg-gradient-to-r from-slate-600 to-slate-400 text-white">
         <div class="flex flex-row">
             <div class="basis-1/2">
-                <div class="flex mt-1.5">
-                    <div class="ml-2">
-                        <InputSwitch v-model="filterMemberList"/>
-                    </div>
-                    <div class="ml-4 mt-0.5">
-                        Toon te verlengen leden.
-                    </div>
+                <div class="flex gap-2 mt-1 ml-1">
+                    <Button label="Lid aanmaken"
+                            @click="showNewMemberFormFn"
+                            icon="pi pi-user-plus"
+                            class="p-button-sm"/>
                 </div>
             </div>
             <div class="basis-1/2 text-right">
-                <Button label="Download overzicht te betalen"
-                        icon="pi pi-download"
-                        class="p-button-sm p-button-secondary"/>
+                <div class="flex gap-2 float-right mt-0.5">
+                    <div class="flex mt-1.5">
+                        <div class="ml-2">
+                            <InputSwitch v-model="filterMemberList" input-id="showMemberExtensions"/>
+                        </div>
+                        <div class="ml-4 mr-4 mt-0.5">
+                            <label for="showMemberExtensions">Toon te verlengen leden.</label>
+                        </div>
+                    </div>
+                    <Button label="Download overzicht te betalen"
+                            icon="pi pi-download"
+                            class="p-button-sm p-button-secondary"/>
+                </div>
             </div>
         </div>
     </div>
@@ -268,6 +276,13 @@
     <!-- dialogs                                                                                                     -->
     <!-- ----------------------------------------------------------------------------------------------------------- -->
 
+    <Dialog v-model:visible="showDialogNewMember"
+            position="topleft"
+            :header="'Maak een nieuw lid aan...' "
+            :modal="true">
+        <new-member-form v-on:submitted="hideNewMemberFormFn"/>
+    </Dialog>
+
     <Dialog v-model:visible="showDialogDetail"
             v-if="memberStore.memberDetail"
             position="top"
@@ -318,6 +333,7 @@ import {useAppStore} from "@/store/app";
 import {memberStatusColor, showMemberSubscriptionExtendButton} from "@/functions/memberStatus";
 import {licenseStatusColor, showLicenseExtendButton} from "@/functions/licenseStatus";
 import type {Member} from "@/api/query/model";
+import NewMemberForm from "@/components/member/subscription/newMemberForm.vue";
 
 const memberOverviewStore = useMemberOverviewStore();
 const memberStore = useMemberStore();
@@ -399,6 +415,19 @@ async function showExtensionFormFn(id: number) {
 function hideExtensionFormFn(): void {
     loadActiveMembers();
     showExtensionForm.value = false;
+}
+
+// new membership form
+
+const showDialogNewMember = ref<boolean>(false);
+
+function showNewMemberFormFn() {
+    showDialogNewMember.value = true;
+}
+
+function hideNewMemberFormFn(): void {
+    loadActiveMembers();
+    showDialogNewMember.value = false;
 }
 
 </script>

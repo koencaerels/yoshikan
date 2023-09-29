@@ -124,6 +124,9 @@ class Subscription
     #[ORM\Column(options: ['default' => 0])]
     private bool $licenseIsPayed;
 
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $isPrinted;
+
     // -- extra fields for new members ------------------------------------------
 
     #[ORM\Column(length: 16, nullable: true)]
@@ -236,6 +239,9 @@ class Subscription
         $this->licenseTotal = $licenseTotal;
         $this->licenseIsPartSubscription = $licenseIsPartSubscription;
         $this->licenseIsPayed = $licenseIsPayed;
+
+        $this->isPaymentOverviewSend = false;
+        $this->isPrinted = false;
 
         $this->total = ceil($this->memberSubscriptionTotal + $this->licenseTotal);
         $this->items = new ArrayCollection();
@@ -381,6 +387,11 @@ class Subscription
         $this->isPaymentOverviewSend = true;
     }
 
+    public function flagSubscriptionIsPrinted(): void
+    {
+        $this->isPrinted = true;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
@@ -493,6 +504,11 @@ class Subscription
     public function isPaymentOverviewSend(): bool
     {
         return $this->isPaymentOverviewSend;
+    }
+
+    public function isPrinted(): bool
+    {
+        return $this->isPrinted;
     }
 
     public function getNationalRegisterNumber(): ?string

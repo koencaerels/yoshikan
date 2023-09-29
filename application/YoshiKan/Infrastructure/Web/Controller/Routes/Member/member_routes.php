@@ -123,11 +123,11 @@ trait member_routes
     public function getMemberProfileImage(int $id): Response
     {
         $member = $this->queryBus->getMemberById($id);
-        $file = $this->uploadFolder . $member->getProfileImage();
+        $file = $this->uploadFolder.$member->getProfileImage();
 
         return $this->file(
             $file,
-            $member->getFirstname() . '-' . $member->getFirstname() . '.png',
+            $member->getFirstname().'-'.$member->getFirstname().'.png',
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }
@@ -139,6 +139,20 @@ trait member_routes
         $response = $this->commandBus->memberExtendSubscription($command);
 
         $result = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route('/mm/api/member/new-subscription', methods: ['POST', 'PUT'])]
+    public function newMemberSubscription(Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->memberNewSubscription($command);
+
+        $result = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

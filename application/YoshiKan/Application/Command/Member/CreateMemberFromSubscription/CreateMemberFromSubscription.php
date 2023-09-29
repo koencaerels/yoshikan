@@ -11,37 +11,34 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail;
+namespace App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription;
 
-class NewMemberSubscriptionMail
+class CreateMemberFromSubscription
 {
+
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int $subscriptionId,
-        protected string $fromName,
-        protected string $fromEmail,
-    ) {
+        protected int    $id,
+        protected string $memberEmail
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getSubscriptionId(): int
+    public function getId(): int
     {
-        return $this->subscriptionId;
+        return $this->id;
     }
 
-    public function getFromName(): string
+    public function getMemberEmail(): string
     {
-        return $this->fromName;
+        return $this->memberEmail;
     }
 
-    public function getFromEmail(): string
-    {
-        return $this->fromEmail;
-    }
 }

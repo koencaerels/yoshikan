@@ -293,6 +293,18 @@ class Member
         $this->contactPhone = $contactPhone;
     }
 
+    public function setContactInformation(
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone
+    ): void {
+        $this->contactFirstname = $contactFirstname;
+        $this->contactLastname = $contactLastname;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
+    }
+
     public function setSubscriptionDates(
         \DateTimeImmutable $start,
         \DateTimeImmutable $end,

@@ -42,15 +42,15 @@ class UploadMemberImageHandler
         $member = $this->memberRepository->getById($command->getId());
 
         // -- make the upload folder
-        $uploadFolder = 'YK-' . $member->getId() . '/images/';
-        if (!file_exists($command->getUploadsFolder() . $uploadFolder)) {
-            mkdir($command->getUploadsFolder() . $uploadFolder, 0777, true);
+        $uploadFolder = 'YK-'.$member->getId().'/images/';
+        if (!file_exists($command->getUploadsFolder().$uploadFolder)) {
+            mkdir($command->getUploadsFolder().$uploadFolder, 0777, true);
         }
 
         $imageUuid = $this->memberImageRepository->nextIdentity();
-        $uploadFile = $imageUuid . '.' . $extension;
+        $uploadFile = $imageUuid.'.'.$extension;
         try {
-            $image->move($command->getUploadsFolder() . $uploadFolder, $uploadFile);
+            $image->move($command->getUploadsFolder().$uploadFolder, $uploadFile);
         } catch (FileException $e) {
             throw new \Exception('Could not copy the uploaded file');
 
@@ -61,7 +61,7 @@ class UploadMemberImageHandler
         $memberImage = MemberImage::make(
             $imageUuid,
             $originalFileName,
-            $uploadFolder . $uploadFile,
+            $uploadFolder.$uploadFile,
             $member
         );
         $this->memberImageRepository->save($memberImage);

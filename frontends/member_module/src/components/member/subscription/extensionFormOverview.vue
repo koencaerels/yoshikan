@@ -36,7 +36,7 @@
             Als <span class="uppercase font-bold">{{ props.command.lastname }}</span>
             <span class="font-bold">&nbsp;{{ props.command.firstname }}</span>
             lid wil blijven van onze judoclub voor het komende <span v-if="props.command.memberSubscriptionIsHalfYear">half </span>
-            jaar, verzoeken wij u vriendelijk om een bedrag van
+            jaar, verzoeken wij je vriendelijk om een bedrag van
             <span class="font-bold">{{ props.command.total }} €</span>
             over te maken naar het volgende bankrekeningnummer:
             <span class="font-bold">BE37 7330 0101 8328</span>
@@ -45,6 +45,12 @@
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
             <br>Als {{ props.command.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje.
             Alvast bedankt.
+        </div>
+
+        <div class="mt-2">
+            Mocht je nog vragen hebben of extra informatie nodig hebben, aarzel dan niet om contact
+            met ons op te nemen via <strong>judo.yoshikan@gmail.com</strong>.
+            Ons team staat altijd klaar om je te helpen.
         </div>
 
         <div class="mt-4 border-t-[1px] w-[750px] border-black mt-2 pt-2">

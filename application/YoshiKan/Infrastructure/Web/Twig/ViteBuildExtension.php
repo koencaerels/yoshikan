@@ -67,7 +67,7 @@ class ViteBuildExtension extends AbstractExtension
      */
     private function readManifestFile(string $app): array
     {
-        $manifestFile = $this->kernel->getProjectDir() . '/public/' . $app . '/manifest.json';
+        $manifestFile = $this->kernel->getProjectDir().'/public/'.$app.'/manifest.json';
         $manifestContent = file_get_contents($manifestFile);
         $manifestVariables = json_decode($manifestContent, true, 512, \JSON_THROW_ON_ERROR);
 

@@ -19,6 +19,6 @@ enum SubscriptionItemType: string
     case MEMBERSHIP = 'membership';
     case EXTRA_TRAINING = 'extra_training';
     case REDUCTION = 'reduction';
-    case JUDOGI = 'judogi';
+    case SUBSCRIPTION_WELCOME = 'subscription_welcome';
     case OTHER = 'other';
 }
