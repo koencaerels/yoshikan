@@ -15,16 +15,14 @@ namespace App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription;
 
 class CreateMemberFromSubscription
 {
-
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $memberEmail
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -40,5 +38,4 @@ class CreateMemberFromSubscription
     {
         return $this->memberEmail;
     }
-
 }

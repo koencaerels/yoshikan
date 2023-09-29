@@ -19,7 +19,7 @@ trait create_member_from_subscription
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = new CreateMemberFromSubscription($id,'-');
+        $command = new CreateMemberFromSubscription($id, '-');
         $commandHandler = new CreateMemberFromSubscriptionHandler(
             $this->subscriptionRepository,
             $this->memberRepository,

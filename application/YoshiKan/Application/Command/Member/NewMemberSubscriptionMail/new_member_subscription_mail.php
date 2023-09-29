@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail;
 
-use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\MemberExtendSubscriptionMail;
-
 trait new_member_subscription_mail
 {
     public function sendMemberNewSubscriptionMail(int $subscriptionId): bool

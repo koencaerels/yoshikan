@@ -22,10 +22,9 @@ class CreateMemberFromSubscriptionHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected MemberRepository       $memberRepository,
-        protected GradeRepository        $gradeRepository,
-    )
-    {
+        protected MemberRepository $memberRepository,
+        protected GradeRepository $gradeRepository,
+    ) {
     }
 
     public function go(CreateMemberFromSubscription $command): bool
@@ -109,9 +108,7 @@ class CreateMemberFromSubscriptionHandler
             $this->subscriptionRepository->save($subscription);
 
             return true;
-
         } else {
-
             // -- set contact info
             $member->setContactInformation(
                 $subscription->getContactFirstname(),

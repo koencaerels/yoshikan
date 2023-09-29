@@ -98,7 +98,7 @@ class SubscriptionItemsFactory
 
         //  -- new membership welcome package --------------------------------------------------------------------------
 
-        if($subscription->isNewMember()) {
+        if ($subscription->isNewMember()) {
             ++$sequence;
             $itemName = 'Inschrijvingspakket (judogids, judopaspoort, leskaart en sportzak).';
             $welcomeItem = SubscriptionItem::make(
