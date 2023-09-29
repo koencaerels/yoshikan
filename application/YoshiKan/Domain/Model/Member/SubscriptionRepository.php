@@ -29,11 +29,9 @@ interface SubscriptionRepository
 
     public function getAll(): array;
 
-    public function getTodoByPeriod(Period $period): array;
-
-    public function getByPeriod(Period $period): array;
-
     public function getByListId(array $list): array;
+
+    public function getByDuePaymentByLocation(Location $location): array;
 
     public function getMaxId(): int;
 }

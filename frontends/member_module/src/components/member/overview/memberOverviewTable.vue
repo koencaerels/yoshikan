@@ -31,7 +31,8 @@
                             <label for="showMemberExtensions">Toon te verlengen leden.</label>
                         </div>
                     </div>
-                    <Button label="Download overzicht te betalen"
+                    <Button @click="downloadListDuePayments"
+                            label="Download overzicht te betalen"
                             icon="pi pi-download"
                             class="p-button-sm p-button-secondary"/>
                 </div>
@@ -343,16 +344,18 @@ const showDialogFullDetail = ref<boolean>(false);
 const showDialogDetail = ref<boolean>(false);
 const filterMemberList = ref<boolean>(false);
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // -- computed property to filter the list with members to pay
 
-const members = computed( ():Array<Member> => {
+const members = computed((): Array<Member> => {
     let _result: Array<Member> = [];
-    if(!filterMemberList.value === true){
+    if (!filterMemberList.value === true) {
         _result = memberOverviewStore.members;
     } else {
         for (const _member of memberOverviewStore.members) {
-            if(showMemberSubscriptionExtendButton(_member) || showLicenseExtendButton(_member)) {
-             _result.push(_member);
+            if (showMemberSubscriptionExtendButton(_member) || showLicenseExtendButton(_member)) {
+                _result.push(_member);
             }
         }
     }
@@ -428,6 +431,11 @@ function showNewMemberFormFn() {
 function hideNewMemberFormFn(): void {
     loadActiveMembers();
     showDialogNewMember.value = false;
+}
+
+function downloadListDuePayments() {
+    let url = apiUrl + '/member/overview-due-payments';
+    window.open(url, '_blank');
 }
 
 </script>

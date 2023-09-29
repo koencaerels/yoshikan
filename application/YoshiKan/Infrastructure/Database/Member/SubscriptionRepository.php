@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Member;
 
-use App\YoshiKan\Domain\Model\Member\Period;
+use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -115,35 +115,23 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         return $q->getQuery()->getResult();
     }
 
-    public function getTodoByPeriod(Period $period): array
-    {
-        $q = $this->createQueryBuilder('t');
-        $q->andWhere('t.status = :new OR t.status = :awaiting_payment OR t.status = :payed');
-        $q->setParameter('new', SubscriptionStatus::NEW->value);
-        $q->setParameter('awaiting_payment', SubscriptionStatus::AWAITING_PAYMENT->value);
-        $q->setParameter('payed', SubscriptionStatus::PAYED->value);
-        $q->andWhere('t.period = :periodId');
-        $q->setParameter('periodId', $period->getId());
-        $q->addOrderBy('t.id', 'DESC');
-
-        return $q->getQuery()->getResult();
-    }
-
-    public function getByPeriod(Period $period): array
-    {
-        $q = $this->createQueryBuilder('t');
-        $q->andWhere('t.period = :periodId');
-        $q->setParameter('periodId', $period->getId());
-        $q->addOrderBy('t.id', 'DESC');
-
-        return $q->getQuery()->getResult();
-    }
-
     public function getByListId(array $list): array
     {
         $q = $this->createQueryBuilder('t');
         $q->andWhere('t.id IN (:listId)');
         $q->setParameter('listId', array_values($list));
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function getByDuePaymentByLocation(Location $location): array
+    {
+        $q = $this->createQueryBuilder('t');
+        $q->andWhere('t.status = :awaiting_payment');
+        $q->setParameter('awaiting_payment', SubscriptionStatus::AWAITING_PAYMENT->value);
+        $q->andWhere('t.location = :locationId');
+        $q->setParameter('locationId', $location->getId());
         $q->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();

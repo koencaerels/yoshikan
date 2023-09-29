@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Query\Member\download_due_payments;
 use App\YoshiKan\Application\Query\Member\get_configuration;
 use App\YoshiKan\Application\Query\Member\get_member;
 use App\YoshiKan\Application\Query\Member\get_member_image;
@@ -36,6 +37,8 @@ class MemberQueryBus
     use get_configuration;
     use get_member;
     use get_member_image;
+    use download_due_payments;
+
     protected BasePermissionService $permission;
 
     // ——————————————————————————————————————————————————————————————————————————

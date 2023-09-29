@@ -156,4 +156,12 @@ trait member_routes
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
+
+    #[Route('/mm/api/member/overview-due-payments', methods: ['GET'])]
+    public function downloadOverviewDuePayments(Request $request): JsonResponse
+    {
+        $response = $this->queryBus->downloadDuePayments();
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
 }
