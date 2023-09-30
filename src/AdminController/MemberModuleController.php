@@ -78,7 +78,7 @@ class MemberModuleController
     // Profile image route
     // ——————————————————————————————————————————————————————————————————————————
     /**
-     * @Route("/member-image-upload/", name="app_member_image_upload")
+     * @Route("/miu/", name="app_member_image_upload")
      */
     public function image_upload(Request $request): Response
     {

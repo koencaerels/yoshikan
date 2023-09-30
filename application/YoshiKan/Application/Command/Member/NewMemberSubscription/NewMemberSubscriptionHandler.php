@@ -113,9 +113,10 @@ class NewMemberSubscriptionHandler
             $command->getAddressCity()
         );
 
+        // -- flush the subscription and get the database id via the uuid
         $this->entityManager->flush();
-
-        $subscriptionId = $this->subscriptionRepository->getMaxId();
+        $subscription = $this->subscriptionRepository->getByUuid($subscription->getUuid());
+        $subscriptionId = $subscription->getId();
 
         // -- create a member from a subscription ----------------------------------------------------------------------
 

@@ -44,7 +44,7 @@
         <DataTable :value="members"
                    v-model:filters="filters"
                    class="p-datatable-sm text-xs"
-                   paginator :rows="15"
+                   paginator :rows="20"
                    show-gridlines
                    filterDisplay="menu"
                    dataKey="id"
