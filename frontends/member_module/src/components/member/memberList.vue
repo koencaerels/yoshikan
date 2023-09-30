@@ -143,7 +143,7 @@
             <div class="w-16 ml-2 text-center">Graad</div>
         </div>
 
-        <list-wrapper :estate-height="400">
+        <list-wrapper :estate-height="350">
 
             <div v-for="member in members" v-if="isCompactView"
                  :class="selectedClass(member.id)"

@@ -15,8 +15,8 @@ namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
-use Query\SubscriptionReadModel;
-use Query\SubscriptionReadModelCollection;
+use backend\Query\SubscriptionReadModel;
+use backend\Query\SubscriptionReadModelCollection;
 
 class GetSubscription
 {

@@ -25,9 +25,14 @@ const router = createRouter({
             component: HomeView,
             children: [
                 {
-                    path: 'todo',
-                    name: 'todo',
-                    component: () => import('../views/subscription/SubscriptionStartView.vue')
+                    path: 'nieuw',
+                    name: 'nieuw',
+                    component: () => import('../views/subscription/SubscriptionNew.vue')
+                },
+                {
+                    path: 'te-betalen',
+                    name: 'te-betalen',
+                    component: () => import('../views/subscription/SubscriptionDuePayment.vue')
                 },
                 {
                     path: 'export',

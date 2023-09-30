@@ -114,7 +114,9 @@ class NewMemberSubscriptionHandler
         );
 
         // -- flush the subscription and get the database id via the uuid
+        $this->subscriptionRepository->save($subscription);
         $this->entityManager->flush();
+
         $subscription = $this->subscriptionRepository->getByUuid($subscription->getUuid());
         $subscriptionId = $subscription->getId();
 

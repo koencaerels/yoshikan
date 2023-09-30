@@ -27,7 +27,7 @@
                         <div class="ml-2">
                             <InputSwitch v-model="filterMemberList" input-id="showMemberExtensions"/>
                         </div>
-                        <div class="ml-4 mr-4 mt-0.5">
+                        <div class="ml-4 mr-4 text-sm">
                             <label for="showMemberExtensions">Toon te verlengen leden.</label>
                         </div>
                     </div>

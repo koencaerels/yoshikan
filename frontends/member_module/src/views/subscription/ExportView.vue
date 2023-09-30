@@ -1,9 +1,9 @@
 <template>
     <div id="ExportView">
-        <subscription-export/>
+        export
     </div>
 </template>
 
 <script setup lang="ts">
-import SubscriptionExport from "@/components/subscription/export/subscriptionExport.vue";
+
 </script>

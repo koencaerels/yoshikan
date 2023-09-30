@@ -10,7 +10,7 @@
 -->
 
 <template>
-    <div>
+    <div class="text-sm">
         <div class="text-right">
             Heist op den Berg, {{ currentFormattedDate }},
         </div>

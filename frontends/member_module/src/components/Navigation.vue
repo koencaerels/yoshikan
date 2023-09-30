@@ -15,9 +15,9 @@ const items = computed(() => {
             to: '/leden-overzicht'
         },
         {
-            label: '(Her)inschrijvingen',
+            label: 'Inschrijvingen',
             icon: 'pi pi-user-plus',
-            to: '/inschrijvingen/todo'
+            to: '/inschrijvingen/nieuw'
         },
         {
             label: 'Archief Leden',

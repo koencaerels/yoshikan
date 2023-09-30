@@ -79,19 +79,19 @@
                                     <i v-if="new$.nationalRegisterNumber.$invalid" class="pi pi-times text-red-600"/>
                                 </span>
                             </div>
-                            <div class="mt-1">
+                            <div class="text-sm">
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <span>
                                     <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
-                                    <label for="M" class="text-xs"> M </label>
+                                    <label for="M" class="text-sm"> M </label>
                                 </span>
                                 <span class="ml-2">
                                     <RadioButton name="gender" value="V" v-model="command.gender" input-id="V"/>
-                                    <label for="V" class="text-xs"> V </label>
+                                    <label for="V" class="text-sm"> V </label>
                                 </span>
                                 <span class="ml-2">
                                     <RadioButton name="gender" value="X" v-model="command.gender" input-id="X"/>
-                                    <label for="X" class="text-xs"> X </label>
+                                    <label for="X" class="text-sm"> X </label>
                                 </span>
                             </div>
                         </div>
@@ -332,24 +332,24 @@
 
                 <!-- berekening ---------------------------------------------------------------------------------------- -->
                 <div class="flex flex-row mt-3 bg-gray-500 py-1 px-4 text-white">
-                    <div class="basis-1/4 flex mt-1">
+                    <div class="basis-1/4 flex">
                         <div class="mr-2">
                             Gezinskorting?
                         </div>
-                        <div>
+                        <div class="mt-1">
                             <InputSwitch v-model="command.isReductionFamily"/>
                         </div>
                     </div>
-                    <div class="basis-1/6 text-right mr-4 text-xs mt-2.5">
+                    <div class="basis-1/6 text-right mr-4 text-xs mt-1">
                         Totaal:
                     </div>
-                    <div class="basis-3/6 mt-1">
+                    <div class="basis-3/6">
                         {{ command.memberSubscriptionTotal }} €
                     </div>
-                    <div class="basis-1/6 mt-1">
+                    <div class="basis-1/6">
                         + {{ command.licenseTotal }} €
                     </div>
-                    <div class="basis-1/6 font-bold text-right mt-1">
+                    <div class="basis-1/6 font-bold text-right">
                         = {{ totalAmount }} €
                     </div>
                 </div>
@@ -360,7 +360,7 @@
                         Opmerkingen
                     </div>
                     <div class="basis-3/4">
-                        <Textarea v-model="command.remarks" :autoResize="true" rows="4" cols="30" class="w-full"/>
+                        <Textarea v-model="command.remarks" :autoResize="true" rows="3" cols="30" class="w-full"/>
                     </div>
                 </div>
                 <div class="mt-4">

@@ -10,7 +10,7 @@
 -->
 
 <template>
-    <div id="extensionOverview">
+    <div id="extensionOverview" class="text-sm">
 
         <div class="text-right">
             Heist op den Berg, {{ currentFormattedDate }} ,

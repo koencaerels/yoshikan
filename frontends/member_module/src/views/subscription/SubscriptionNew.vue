@@ -1,6 +1,6 @@
 <template>
-    <div id="SubscriptionArchiveView">
-        archief
+    <div id="SubscriptionNewView">
+        nieuwe inschrijvingen
     </div>
 </template>
 

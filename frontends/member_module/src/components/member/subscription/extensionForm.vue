@@ -55,20 +55,20 @@
                 <div class="basis-5/6">
                     <div class="flex flex-row">
                         <div class="basis-1/2">
-                            <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
-                            <span class="p-input-icon-right w-full">
-                            <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
-                            <i v-if="!extend$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>
-                            <i v-if="extend$.contactFirstname.$invalid" class="pi pi-times text-red-600"/>
-                        </span>
-                        </div>
-                        <div class="basis-1/2 ml-4">
                             <div class="mb-1"><label class="text-xs">Naam *</label></div>
                             <span class="p-input-icon-right w-full">
-                            <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
-                            <i v-if="!extend$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
-                            <i v-if="extend$.contactLastname.$invalid" class="pi pi-times text-red-600"/>
-                        </span>
+                                <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
+                                <i v-if="!extend$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
+                                <i v-if="extend$.contactLastname.$invalid" class="pi pi-times text-red-600"/>
+                            </span>
+                        </div>
+                        <div class="basis-1/2 ml-4">
+                            <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
+                            <span class="p-input-icon-right w-full">
+                                <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
+                                <i v-if="!extend$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>
+                                <i v-if="extend$.contactFirstname.$invalid" class="pi pi-times text-red-600"/>
+                            </span>
                         </div>
                     </div>
                     <div class="flex flex-row mt-1">
@@ -148,8 +148,10 @@
                             <div class="mr-2">
                                 Gezinskorting?
                             </div>
-                            <div>
-                                <InputSwitch v-model="command.isReductionFamily"/>
+                            <div class="mt-1.5">
+                                <InputSwitch
+                                    v-model="command.isReductionFamily"
+                                    :disabled="!(command.memberSubscriptionIsPartSubscription)"/>
                             </div>
                         </div>
                         <div class="basis-1/2">
@@ -185,9 +187,10 @@
                             </div>
                         </div>
                         <div class="basis-1/6">
-                            <div v-if="showMemberSubscriptionExtendButton(props.member)" class="bg-gray-500">
+                            <div v-if="showMemberSubscriptionExtendButton(props.member)" class="h-10"
+                                 :class="memberStatusColor(props.member)">
                                 <InputSwitch v-model="command.memberSubscriptionIsPartSubscription"
-                                             class="mt-1.5 ml-2"/>
+                                             class="mt-2.5 ml-4"/>
                             </div>
                         </div>
                         <div class="basis-1/6">
@@ -201,8 +204,9 @@
                             </div>
                         </div>
                         <div class="basis-1/6">
-                            <div v-if="showLicenseExtendButton(props.member)" class="bg-gray-500">
-                                <InputSwitch v-model="command.licenseIsPartSubscription" class="mt-1.5 ml-2"/>
+                            <div v-if="showLicenseExtendButton(props.member)" class="h-10"
+                                 :class="licenseStatusColor(props.member)">
+                                <InputSwitch v-model="command.licenseIsPartSubscription" class="mt-2.5 ml-4"/>
                             </div>
                         </div>
                     </div>

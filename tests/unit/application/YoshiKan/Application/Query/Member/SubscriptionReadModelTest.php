@@ -6,9 +6,9 @@ use App\Tests\unit\application\YoshiKan\Domain\Model\ModelFactory;
 use App\YoshiKan\Domain\Model\Member\Gender;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionType;
+use backend\Query\SubscriptionReadModel;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Query\SubscriptionReadModel;
 use Symfony\Component\Uid\Uuid;
 
 class SubscriptionReadModelTest extends TestCase

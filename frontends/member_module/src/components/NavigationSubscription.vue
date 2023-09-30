@@ -10,19 +10,24 @@ import {computed} from "vue";
 const items = computed(() => {
     let navigation = [
         {
-            label: 'Te behandelen',
-            icon: 'pi pi-file-edit',
-            to: '/inschrijvingen/todo'
+            label: 'Nieuwe inschrijvingen',
+            icon: 'pi pi-user',
+            to: '/inschrijvingen/nieuw'
         },
         {
-            label: 'Export',
+            label: 'Te betalen',
             icon: 'pi pi-file-excel',
-            to: '/inschrijvingen/export'
+            to: '/inschrijvingen/te-betalen'
         },
         {
             label: 'Archief',
             icon: 'pi pi-bars',
             to: '/inschrijvingen/archief'
+        },
+        {
+            label: 'Export',
+            icon: 'pi pi-file-excel',
+            to: '/inschrijvingen/export'
         },
     ];
     return navigation;

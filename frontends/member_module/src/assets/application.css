@@ -141,3 +141,19 @@ label {
 .p-tabview-nav-link:focus {
     box-shadow: 0 0 0 0 !important;
 }
+
+.p-radiobutton {
+    width:20px !important;
+    height:20px !important;
+}
+
+.p-radiobutton-box {
+    width:18px !important;
+    height:18px !important;
+}
+
+.p-radiobutton-icon {
+    width:11px !important;
+    height:11px !important;
+    background-color: #0c223b !important;
+}

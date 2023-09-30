@@ -25,7 +25,7 @@
                 <div class="basis-1/5">
                     <!--  status -->
                     <div class="flex">
-                        <div class="mt-1.5 ml-2">
+                        <div class="ml-2">
                             Actief?
                         </div>
                         <div class="ml-4 mt-0.5">
@@ -48,27 +48,27 @@
                         <i v-if="change$.nationalRegisterNumber.$invalid" class="pi pi-times text-red-600"/>
                     </span>
                 </div>
-                <div class="basis-1/5 ml-2 mt-2">
-                <span>
-                    <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
-                    <label for="M" class="text-xs"> M </label>
-                </span>
-                    <span class="ml-2">
-                    <RadioButton name="gender" value="V" v-model="command.gender" input-id="V"/>
-                    <label for="V" class="text-xs"> V </label>
-                </span>
-                    <span class="ml-2">
-                    <RadioButton name="gender" value="X" v-model="command.gender" input-id="X"/>
-                    <label for="X" class="text-xs"> X </label>
-                </span>
+                <div class="basis-1/5 ml-4 mt-0.5 text-sm">
+                    <span>
+                        <RadioButton name="gender" value="M" v-model="command.gender" input-id="M"/>
+                        <label for="M" class=""> M </label>
+                    </span>
+                        <span class="ml-2">
+                        <RadioButton name="gender" value="V" v-model="command.gender" input-id="V"/>
+                        <label for="V" class=""> V </label>
+                    </span>
+                        <span class="ml-2">
+                        <RadioButton name="gender" value="X" v-model="command.gender" input-id="X"/>
+                        <label for="X" class=""> X </label>
+                    </span>
                 </div>
             </div>
-            <div class="flex flex-row mt-2 mb-2">
+            <div class="flex flex-row mt-4 mb-2">
                 <div class="basis-1/5">&nbsp;</div>
                 <div class="basis-1/5 text-right text-xs mr-4 font-bold">
                     Geboortedatum *
                 </div>
-                <div class="basis-1/5 ml-5">
+                <div class="basis-1/5 ml-4">
                 <span class="p-input-icon-right w-3/4">
                     <InputText class="w-full p-inputtext-sm" v-model="command.dateOfBirthDD"/>
                     <i v-if="!change$.dateOfBirthDD.$invalid" class="pi pi-check text-green-600"/>
@@ -99,9 +99,9 @@
                     <div class="basis-1/4 text-right">
                         Locatie *
                     </div>
-                    <div class="basis-3/4 ml-4">
+                    <div class="basis-3/4 ml-4 mt-1">
                         <div v-if="appStore.configuration">
-                            <div v-for="location in appStore.configuration.locations" class="mr-4 mt-1">
+                            <div v-for="location in appStore.configuration.locations" class="mr-4 mb-3">
                                 <RadioButton name="location" :value="location.id"
                                              v-model="command.locationId"
                                              :input-id="location.name"/>
@@ -164,8 +164,8 @@
                 </div>
 
                 <!-- contact details ------------------------------------------------------------------------------  -->
-                <hr class="mt-2">
-                <div class="flex flex-row mt-1">
+                <hr class="mt-3">
+                <div class="flex flex-row mt-2">
                     <div class="basis-1/2">
                         <div class="mb-1"><label class="text-xs">Contact Naam *</label></div>
                         <span class="p-input-icon-right w-full">
