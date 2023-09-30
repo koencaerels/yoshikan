@@ -1,3 +1,6 @@
+
+
+
 <template>
     <div id="GroupView">
         <div class="configurationWrapper">
