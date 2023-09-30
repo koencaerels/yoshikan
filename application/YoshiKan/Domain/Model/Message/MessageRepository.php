@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Domain\Model\Message;
 
+use App\YoshiKan\Domain\Model\Member\Member;
+use App\YoshiKan\Domain\Model\Member\Subscription;
 use Symfony\Component\Uid\Uuid;
 
 interface MessageRepository
@@ -17,4 +19,8 @@ interface MessageRepository
     public function getById(int $id): Message;
 
     public function getByUuid(Uuid $uuid): Message;
+
+    public function getByMember(Member $member): array;
+
+    public function getBySubscription(Subscription $subscription): array;
 }

@@ -32,15 +32,15 @@ class SubscriptionReadModel implements \JsonSerializable
         protected bool $isJudogiBelt,
         protected string $remarks,
         protected float $total,
-        protected \stdClass $settings,
+        protected array $settings,
         protected bool $isPaymentOverviewSend,
         protected bool $isPrinted,
-        protected string $nationalRegisterNumber,
-        protected string $addressStreet,
-        protected string $addressNumber,
-        protected string $addressBox,
-        protected string $addressZip,
-        protected string $addressCity,
+        protected ?string $nationalRegisterNumber,
+        protected ?string $addressStreet,
+        protected ?string $addressNumber,
+        protected ?string $addressBox,
+        protected ?string $addressZip,
+        protected ?string $addressCity,
         protected \DateTimeImmutable $memberSubscriptionStart,
         protected \DateTimeImmutable $memberSubscriptionEnd,
         protected float $memberSubscriptionTotal,
@@ -53,6 +53,7 @@ class SubscriptionReadModel implements \JsonSerializable
         protected LocationReadModel $location,
         protected FederationReadModel $federation,
         protected array $subscriptionitems,
+        protected ?int $memberId,
     ) {
     }
 
@@ -67,6 +68,7 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->uuid = $this->getUuid();
         $json->status = $this->getStatus();
         $json->type = $this->getType();
+        $json->memberId = $this->getMemberId();
         $json->contactFirstname = $this->getContactFirstname();
         $json->contactLastname = $this->getContactLastname();
         $json->contactEmail = $this->getContactEmail();
@@ -114,8 +116,13 @@ class SubscriptionReadModel implements \JsonSerializable
     public static function hydrateFromModel(Subscription $model): self
     {
         $itemCollection = new SubscriptionItemReadModelCollection();
-        foreach ($model->getSubscriptionItems() as $item) {
+        foreach ($model->getItems() as $item) {
             $itemCollection->addItem(SubscriptionItemReadModel::hydrateFromModel($item));
+        }
+
+        $memberId = null;
+        if ($model->getMember()) {
+            $memberId = $model->getMember()->getId();
         }
 
         return new self(
@@ -159,6 +166,7 @@ class SubscriptionReadModel implements \JsonSerializable
             LocationReadModel::hydrateFromModel($model->getLocation()),
             FederationReadModel::hydrateFromModel($model->getFederation()),
             $itemCollection->getCollection(),
+            $memberId
         );
     }
 
@@ -261,7 +269,7 @@ class SubscriptionReadModel implements \JsonSerializable
         return $this->total;
     }
 
-    public function getSettings(): \stdClass
+    public function getSettings(): array
     {
         return $this->settings;
     }
@@ -271,32 +279,32 @@ class SubscriptionReadModel implements \JsonSerializable
         return $this->isPaymentOverviewSend;
     }
 
-    public function getNationalRegisterNumber(): string
+    public function getNationalRegisterNumber(): ?string
     {
         return $this->nationalRegisterNumber;
     }
 
-    public function getAddressStreet(): string
+    public function getAddressStreet(): ?string
     {
         return $this->addressStreet;
     }
 
-    public function getAddressNumber(): string
+    public function getAddressNumber(): ?string
     {
         return $this->addressNumber;
     }
 
-    public function getAddressBox(): string
+    public function getAddressBox(): ?string
     {
         return $this->addressBox;
     }
 
-    public function getAddressZip(): string
+    public function getAddressZip(): ?string
     {
         return $this->addressZip;
     }
 
-    public function getAddressCity(): string
+    public function getAddressCity(): ?string
     {
         return $this->addressCity;
     }
@@ -364,5 +372,10 @@ class SubscriptionReadModel implements \JsonSerializable
     public function isPrinted(): bool
     {
         return $this->isPrinted;
+    }
+
+    public function getMemberId(): ?int
+    {
+        return $this->memberId;
     }
 }

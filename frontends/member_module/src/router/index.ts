@@ -25,8 +25,8 @@ const router = createRouter({
             component: HomeView,
             children: [
                 {
-                    path: 'nieuw',
-                    name: 'nieuw',
+                    path: 'web',
+                    name: 'web',
                     component: () => import('../views/subscription/SubscriptionNew.vue')
                 },
                 {

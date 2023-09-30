@@ -146,6 +146,25 @@ trait member_routes
     /**
      * @throws \Exception
      */
+    #[Route('/mm/api/member/{id}/messages', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getMemberImages(int $id, Request $request): JsonResponse
+    {
+        $response = $this->queryBus->getMessagesByMemberId($id);
+
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/{id}/subscriptions', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getMemberSubscriptions(int $id, Request $request): JsonResponse
+    {
+        $response = $this->queryBus->getSubscriptionsByMemberId($id);
+
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
+    /**
+     * @throws \Exception
+     */
     #[Route('/mm/api/member/new-subscription', methods: ['POST', 'PUT'])]
     public function newMemberSubscription(Request $request): JsonResponse
     {

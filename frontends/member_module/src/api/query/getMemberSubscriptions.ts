@@ -10,7 +10,7 @@
 import axios from "axios";
 import type {Subscription} from "@/api/query/model";
 
-export async function getSubscriptionByActivePeriod() {
-    const response = await axios.get<Subscription[]>(`/subscription/active-period`);
+export async function getMemberSubscriptions(id: number) {
+    const response = await axios.get<Array<Subscription>>(`/member/${id}/subscriptions`);
     return response.data;
 }

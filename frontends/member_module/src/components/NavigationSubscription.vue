@@ -10,9 +10,9 @@ import {computed} from "vue";
 const items = computed(() => {
     let navigation = [
         {
-            label: 'Nieuwe inschrijvingen',
+            label: 'Web inschrijvingen',
             icon: 'pi pi-user',
-            to: '/inschrijvingen/nieuw'
+            to: '/inschrijvingen/web'
         },
         {
             label: 'Te betalen',

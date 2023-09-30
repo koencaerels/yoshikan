@@ -40,6 +40,7 @@ use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
 use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
+use App\YoshiKan\Application\Command\Message\ResendMessage\resend_message;
 use App\YoshiKan\Application\Command\Product\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Product\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Product\OrderJudogi\order_judogi;
@@ -98,6 +99,9 @@ class MemberCommandBus
     use upload_member_image;
     use upload_profile_image;
     use delete_member_image;
+
+    // -- message --------------------------------------------------------------
+    use resend_message;
 
     // -- product --------------------------------------------------------------
     use add_judogi;

@@ -34,4 +34,8 @@ interface SubscriptionRepository
     public function getByDuePaymentByLocation(Location $location): array;
 
     public function getMaxId(): int;
+
+    public function getByMember(Member $member): array;
+
+    public function getByStatus(SubscriptionStatus $status): array;
 }

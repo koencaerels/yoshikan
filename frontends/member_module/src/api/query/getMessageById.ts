@@ -8,9 +8,9 @@
  */
 
 import axios from "axios";
-import type {Subscription} from "@/api/query/model";
+import type {Message} from "@/api/query/model";
 
-export async function getSubscriptionTodo() {
-    const response = await axios.get<Subscription[]>(`/subscription/todo`);
+export async function getMessageById(id: number) {
+    const response = await axios.get<Message>(`/message/${id}`);
     return response.data;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Message;
 
+use App\YoshiKan\Domain\Model\Member\Member;
+use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Message\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
@@ -80,4 +82,24 @@ final class MessageRepository extends ServiceEntityRepository implements \App\Yo
     // —————————————————————————————————————————————————————————————————————————
     // Multiple entity functions
     // —————————————————————————————————————————————————————————————————————————
+
+    public function getByMember(Member $member): array
+    {
+        $q = $this->createQueryBuilder('t');
+        $q->andWhere('t.member = :memberId');
+        $q->setParameter('memberId', $member->getId());
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function getBySubscription(Subscription $subscription): array
+    {
+        $q = $this->createQueryBuilder('t');
+        $q->andWhere('t.subscription = :subscriptionId');
+        $q->setParameter('subscriptionId', $subscription->getId());
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
 }

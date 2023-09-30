@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace App\YoshiKan\Infrastructure\Database\Member;
 
 use App\YoshiKan\Domain\Model\Member\Location;
+use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -132,6 +133,26 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         $q->setParameter('awaiting_payment', SubscriptionStatus::AWAITING_PAYMENT->value);
         $q->andWhere('t.location = :locationId');
         $q->setParameter('locationId', $location->getId());
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function getByMember(Member $member): array
+    {
+        $q = $this->createQueryBuilder('t');
+        $q->andWhere('t.member = :memberId');
+        $q->setParameter('memberId', $member->getId());
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function getByStatus(SubscriptionStatus $status): array
+    {
+        $q = $this->createQueryBuilder('t');
+        $q->andWhere('t.status = :status');
+        $q->setParameter('status', $status->value);
         $q->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();

@@ -17,6 +17,8 @@ use App\YoshiKan\Application\Query\Member\download_due_payments;
 use App\YoshiKan\Application\Query\Member\get_configuration;
 use App\YoshiKan\Application\Query\Member\get_member;
 use App\YoshiKan\Application\Query\Member\get_member_image;
+use App\YoshiKan\Application\Query\Member\get_subscription;
+use App\YoshiKan\Application\Query\Message\get_message;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
@@ -26,6 +28,7 @@ use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,10 +37,20 @@ use Twig\Environment;
 
 class MemberQueryBus
 {
+    // ——————————————————————————————————————————————————————————————————————————
+    // —— Traits
+    // ——————————————————————————————————————————————————————————————————————————
+
     use get_configuration;
     use get_member;
     use get_member_image;
+    use get_message;
+    use get_subscription;
     use download_due_payments;
+
+    // ——————————————————————————————————————————————————————————————————————————
+    // —— Security
+    // ——————————————————————————————————————————————————————————————————————————
 
     protected BasePermissionService $permission;
 
@@ -60,6 +73,7 @@ class MemberQueryBus
         protected SubscriptionRepository $subscriptionRepository,
         protected MemberImageRepository $memberImageRepository,
         protected FederationRepository $federationRepository,
+        protected MessageRepository $messageRepository,
         protected JudogiRepository $judogiRepository
     ) {
         $this->permission = new BasePermissionService(
@@ -68,8 +82,4 @@ class MemberQueryBus
             $this->isolationMode,
         );
     }
-
-    // ——————————————————————————————————————————————————————————————————————————
-    // —— Output
-    // ——————————————————————————————————————————————————————————————————————————
 }

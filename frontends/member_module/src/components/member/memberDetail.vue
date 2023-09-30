@@ -104,14 +104,14 @@
             <!-- -- subscriptions ---------------------------------------------------------------------------------- -->
             <TabPanel header="Inschrijvingen">
                 <detail-wrapper :estate-height="estateHeight" class="p-2">
-                    todo
+                    <overview-subscriptions/>
                 </detail-wrapper>
             </TabPanel>
 
             <!-- -- berichten -------------------------------------------------------------------------------------- -->
             <TabPanel header="Berichten">
                 <detail-wrapper :estate-height="estateHeight" class="p-2">
-                    berichten todo
+                    <overview-messages/>
                 </detail-wrapper>
             </TabPanel>
 
@@ -171,6 +171,8 @@ import {useAppStore} from "@/store/app";
 import EditButton from "@/components/common/editButton.vue";
 import AddButton from "@/components/common/addButton.vue";
 import ProfileDetail from "@/components/member/profile/profileDetail.vue";
+import OverviewSubscriptions from "@/components/member/memberDetail/overviewSubscriptions.vue";
+import OverviewMessages from "@/components/member/memberDetail/overviewMessages.vue";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);

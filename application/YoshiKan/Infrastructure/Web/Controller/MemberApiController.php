@@ -39,6 +39,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\message_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -68,6 +69,7 @@ class MemberApiController extends AbstractController
     use member_routes;
     use member_image_routes;
     use federation_routes;
+    use message_routes;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Attributes
@@ -114,6 +116,7 @@ class MemberApiController extends AbstractController
             $this->entityManager->getRepository(Subscription::class),
             $this->entityManager->getRepository(MemberImage::class),
             $this->entityManager->getRepository(Federation::class),
+            $this->entityManager->getRepository(Message::class),
             $this->entityManager->getRepository(Judogi::class),
         );
 

@@ -78,6 +78,9 @@ class Subscription
     private bool $isNewMember = false;
 
     #[ORM\Column(options: ['default' => 0])]
+    private bool $isJudogiBelt = false;
+
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isReductionFamily = false;
 
     #[ORM\Column(type: 'text')]

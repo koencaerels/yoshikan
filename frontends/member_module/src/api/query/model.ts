@@ -188,3 +188,17 @@ export interface MemberImage {
     uuid: string;
     originalName: string;
 }
+
+export interface Message {
+    id: number;
+    uuid: string;
+    sendOn: Date;
+    fromName: string;
+    fromEmail: string;
+    toName: string;
+    toEmail: string;
+    subject: string;
+    message: string;
+    member?: Member;
+    subscription?: Subscription;
+}

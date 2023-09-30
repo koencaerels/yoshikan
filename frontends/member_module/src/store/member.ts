@@ -8,53 +8,57 @@
  */
 
 import {defineStore} from 'pinia'
-import type {Member, Subscription} from "@/api/query/model";
-import {getSubscriptionTodo} from "@/api/query/getSubscriptionTodo";
+import type {Member, Message, Subscription} from "@/api/query/model";
 import {getSubscriptionById} from "@/api/query/getSubscriptionById";
-import {getSubscriptionByActivePeriod} from "@/api/query/getSubscriptionByActivePeriod";
-import {getSubscriptionAll} from "@/api/query/getSubscriptionAll";
 import {getMemberById} from "@/api/query/getMemberById";
+import {getMemberMessages} from "@/api/query/getMemberMessages";
+import {getMemberSubscriptions} from "@/api/query/getMemberSubscriptions";
+import {getMessageById} from "@/api/query/getMessageById";
 
 export type MemberState = {
+    // -- subscription
     isLoading: boolean;
-    subscriptionTodos: Subscription[];
+    subscriptionId: number;
     subscriptionDetail?: Subscription;
     refreshCounter: number;
-    subscriptionsActivePeriod: Subscription[];
-    subscriptionsArchive: Subscription[];
+    // -- member
     isMemberLoading: boolean;
     memberId: number;
     memberDetail?: Member;
     memberCounter: number;
+    memberMessages: Array<Message>;
+    memberSubscriptions: Array<Subscription>;
+    // -- message
+    isMessageLoading: boolean;
+    messageId: number;
+    messageDetail?: Message;
+    messageCounter: number;
 }
 
 export const useMemberStore = defineStore({
     id: "member",
     state: (): MemberState => ({
+        // -- subscription
         isLoading: false,
-        subscriptionTodos: [],
+        subscriptionId: 0,
         subscriptionDetail: undefined,
         refreshCounter: 0,
-        subscriptionsActivePeriod: [],
-        subscriptionsArchive: [],
+
+        // -- member
         isMemberLoading: false,
         memberId: 0,
         memberDetail: undefined,
         memberCounter: 0,
+        memberMessages: [],
+        memberSubscriptions: [],
+
+        // -- message
+        isMessageLoading: false,
+        messageId: 0,
+        messageDetail: undefined,
+        messageCounter: 0
     }),
     actions: {
-
-        // -- subscription lists -------------------------------------------------
-
-        async loadSubscriptionTodo() {
-            this.subscriptionTodos = await getSubscriptionTodo();
-        },
-        async loadSubscriptionsByActivePeriod() {
-            this.subscriptionsActivePeriod = await getSubscriptionByActivePeriod();
-        },
-        async loadSubscriptionsArchive() {
-            this.subscriptionsArchive = await getSubscriptionAll();
-        },
 
         // -- subscription detail ------------------------------------------------
 
@@ -78,16 +82,36 @@ export const useMemberStore = defineStore({
             this.memberId = id;
             this.isMemberLoading = true;
             this.memberDetail = await getMemberById(id);
+            this.memberMessages = await getMemberMessages(id);
+            this.memberSubscriptions = await getMemberSubscriptions(id);
             this.isMemberLoading = false;
         },
         async reloadMemberDetail() {
             if (this.memberId != 0) {
                 this.memberDetail = await getMemberById(this.memberId);
+                this.memberMessages = await getMemberMessages(this.memberId);
+                this.memberSubscriptions = await getMemberSubscriptions(this.memberId);
             }
         },
         increaseMemberCounter() {
             this.memberCounter++;
-        }
+        },
+
+        // -- message detail -----------------------------------------------------
+
+        async loadMessageDetail(id: number) {
+            this.isLoading = true;
+            this.messageDetail = await getMessageById(id);
+            this.isLoading = false;
+        },
+        async reloadMessageDetail() {
+            if (this.messageDetail) {
+                this.messageDetail = await getMessageById(this.messageDetail.id);
+            }
+        },
+        increaseMessageCounter() {
+            this.messageCounter++;
+        },
 
     },
     getters: {
