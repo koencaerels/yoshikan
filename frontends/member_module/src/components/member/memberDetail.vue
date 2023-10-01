@@ -25,7 +25,6 @@
                     <i class="pi pi-times"></i>
                 </router-link>
             </div>
-
             <div class="ml-4">
                 Wijzig >
             </div>
@@ -41,7 +40,6 @@
             <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogProfileImage = true)">
                 Profiel foto
             </div>
-
         </div>
 
         <!-- -- member badge --------------------------------------------------------------------------------------- -->

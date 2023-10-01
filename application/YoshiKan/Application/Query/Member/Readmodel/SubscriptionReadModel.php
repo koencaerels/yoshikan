@@ -93,13 +93,13 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->addressBox = $this->getAddressBox();
         $json->addressZip = $this->getAddressZip();
         $json->addressCity = $this->getAddressCity();
-        $json->memberSubscriptionStart = $this->getMemberSubscriptionStart();
-        $json->memberSubscriptionEnd = $this->getMemberSubscriptionEnd();
+        $json->memberSubscriptionStart = $this->getMemberSubscriptionStart()->format(\DateTimeInterface::ATOM);
+        $json->memberSubscriptionEnd = $this->getMemberSubscriptionEnd()->format(\DateTimeInterface::ATOM);
         $json->memberSubscriptionTotal = $this->getMemberSubscriptionTotal();
         $json->memberSubscriptionIsPartSubscription = $this->memberSubscriptionIsPartSubscription();
         $json->memberSubscriptionIsHalfYear = $this->isMemberSubscriptionIsHalfYear();
-        $json->licenseStart = $this->getLicenseStart();
-        $json->licenseEnd = $this->getLicenseEnd();
+        $json->licenseStart = $this->getLicenseStart()->format(\DateTimeInterface::ATOM);
+        $json->licenseEnd = $this->getLicenseEnd()->format(\DateTimeInterface::ATOM);
         $json->licenseTotal = $this->getLicenseTotal();
         $json->licenseIsPartSubscription = $this->licenseIsPartSubscription();
         $json->location = $this->getLocation();

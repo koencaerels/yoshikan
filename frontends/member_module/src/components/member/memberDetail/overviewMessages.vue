@@ -16,7 +16,7 @@
                         {{ message.toEmail }}
                     </div>
                 </div>
-                <div class="text-sm">
+                <div class="text-sm grow">
                     <div class="line-clamp-1">
                         {{ message.subject }}
                     </div>

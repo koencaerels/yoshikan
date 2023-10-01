@@ -16,11 +16,13 @@ import {getMemberSubscriptions} from "@/api/query/getMemberSubscriptions";
 import {getMessageById} from "@/api/query/getMessageById";
 
 export type MemberState = {
+
     // -- subscription
     isLoading: boolean;
     subscriptionId: number;
     subscriptionDetail?: Subscription;
     refreshCounter: number;
+
     // -- member
     isMemberLoading: boolean;
     memberId: number;
@@ -28,6 +30,7 @@ export type MemberState = {
     memberCounter: number;
     memberMessages: Array<Message>;
     memberSubscriptions: Array<Subscription>;
+
     // -- message
     isMessageLoading: boolean;
     messageId: number;
@@ -38,6 +41,7 @@ export type MemberState = {
 export const useMemberStore = defineStore({
     id: "member",
     state: (): MemberState => ({
+
         // -- subscription
         isLoading: false,
         subscriptionId: 0,
@@ -57,6 +61,7 @@ export const useMemberStore = defineStore({
         messageId: 0,
         messageDetail: undefined,
         messageCounter: 0
+
     }),
     actions: {
 
@@ -100,9 +105,9 @@ export const useMemberStore = defineStore({
         // -- message detail -----------------------------------------------------
 
         async loadMessageDetail(id: number) {
-            this.isLoading = true;
+            this.isMessageLoading = true;
             this.messageDetail = await getMessageById(id);
-            this.isLoading = false;
+            this.isMessageLoading = false;
         },
         async reloadMessageDetail() {
             if (this.messageDetail) {
@@ -131,6 +136,9 @@ export const useMemberStore = defineStore({
                         fee = parseFloat(this.subscriptionDetail.settings.halfYearlyFee2Training);
                     }
                 }
+
+                // todo new member fee...
+
                 if (this.subscriptionDetail.isReductionFamily) {
                     let reduction = (parseFloat(this.subscriptionDetail.settings.familyDiscount) * fee) / 100;
                     fee = Math.ceil(fee - reduction);

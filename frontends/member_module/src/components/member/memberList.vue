@@ -133,14 +133,14 @@
         </div>
 
         <!-- -- member result list ---------------------------------------------------------  -->
-        <div class="flex font-bold border-b-[1px] border-black mt-1 text-sm pb-1">
-            <div class="w-8">&nbsp;</div>
-            <div class="w-16 ml-2">Lidnr.</div>
-            <div class="w-64 ml-2">Naam</div>
-            <div class="w-[6rem] ml-2" v-if="isCompactView">Geboortedatum</div>
-            <div class="w-32 ml-2 text-center" v-if="!isCompactView">Groep / Locatie</div>
-            <div class="w-[6rem] ml-2 text-center" v-if="isCompactView">Groep</div>
-            <div class="w-16 ml-2 text-center">Graad</div>
+        <div class="flex font-bold border-b-[1px] border-black mt-1 text-sm pb-1 gap-2">
+            <div class="flex-none w-8">&nbsp;</div>
+            <div class="flex-none w-16" >Lidnr.</div>
+            <div class="line-clamp-1 grow">Naam</div>
+            <div class="flex-none w-[6rem]" v-if="isCompactView">Geboortedatum</div>
+            <div class="flex-none w-32 text-center" v-if="!isCompactView">Groep / Locatie</div>
+            <div class="flex-none w-[6rem] text-center" v-if="isCompactView">Groep</div>
+            <div class="flex-none w-16  text-center">Graad</div>
         </div>
 
         <list-wrapper :estate-height="350">
@@ -148,32 +148,32 @@
             <div v-for="member in members" v-if="isCompactView"
                  :class="selectedClass(member.id)"
                  @click="loadMemberDetail(member.id)"
-                 class="border-b-[1px] border-gray-400 flex py-1 cursor-pointer hover:bg-indigo-50">
+                 class="border-b-[1px] border-gray-400 flex py-1 cursor-pointer hover:bg-indigo-50 gap-2">
 
-                <div class="text-xs w-[1rem] ml-2 text-gray-300">
+                <div class="flex-none text-xs w-[1rem] text-gray-300 ml-2">
                     <font-awesome-icon icon="fa-solid fa-pen"/>
                 </div>
-                <div class="w-16 ml-2">
+                <div class="flex-none w-16">
                     <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
                         YK-{{ member.id }}
                     </div>
                 </div>
-                <div class="w-64 ml-2">
-                    <div class="font-bold text-sm">
+                <div class="w-auto grow">
+                    <div class="font-bold text-sm line-clamp-1">
                         <span class="uppercase">{{ member.lastname }}</span>
                         {{ member.firstname }}
                     </div>
                 </div>
-                <div class="w-[6rem] ml-2 text-sm">
+                <div class="flex-none w-[6rem] text-sm">
                     <div class="text-xs">
                         ° {{ moment(member.dateOfBirth).format("DD/MM/YYYY") }}
                         - {{ member.gender }}
                     </div>
                 </div>
-                <div class="w-[6rem] ml-2 text-sm">
+                <div class="flex-none w-[6rem] text-sm">
                     <group-renderer :member="member"/>
                 </div>
-                <div class="w-16 ml-2 pr-2">
+                <div class="flex-none w-16 pr-2">
                     <div class="text-white rounded-full text-xs px-2 text-center"
                          :style="'background-color:#'+member.grade.color">
                         {{ member.grade.name }}
@@ -184,16 +184,16 @@
             <div v-for="member in members" v-if="!isCompactView"
                  :class="selectedClass(member.id)"
                  class="border-b-[1px] border-gray-400">
-                <div class="flex pt-1 pb-1">
-                    <div class="w-8 pl-1">
+                <div class="flex pt-1 pb-1 gap-2">
+                    <div class="flex-none w-8 pl-2">
                         <edit-button @click="loadMemberDetail(member.id)"/>
                     </div>
-                    <div class="w-16 mt-1.5 ml-2">
+                    <div class="flex-none w-16 mt-1.5">
                         <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
                             YK-{{ member.id }}
                         </div>
                     </div>
-                    <div class="w-64 ml-2">
+                    <div class="grow">
                         <div class="font-bold">
                             <span class="uppercase">{{ member.lastname }}</span>
                             {{ member.firstname }}
@@ -203,7 +203,7 @@
                             - {{ member.gender }}
                         </div>
                     </div>
-                    <div class="w-32 ml-2 text-sm mt-0.5">
+                    <div class="flex-none w-32 text-sm mt-0.5">
                         <div class="px-2 bg-sky-400 rounded-full text-white text-xs w-32 text-center">
                             {{ member.location.name }}
                         </div>
@@ -211,8 +211,8 @@
                             <group-renderer :member="member"/>
                         </div>
                     </div>
-                    <div class="w-16 ml-2 mt-1">
-                        <div class="text-white rounded-full text-xs px-2 text-center"
+                    <div class="flex-none w-16 mt-1">
+                        <div class="text-white rounded-full text-xs px-2 text-center mr-2"
                              :style="'background-color:#'+member.grade.color">
                             {{ member.grade.name }}
                         </div>
