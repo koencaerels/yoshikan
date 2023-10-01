@@ -9,20 +9,18 @@
 
 import {createRouter, createWebHashHistory} from 'vue-router'
 
-import HomeView from '../views/HomeView.vue'
-
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
             name: 'home',
-            component: () => import('../views/MemberOverview.vue')
+            component: () => import('../views/DashboardView.vue')
         },
         {
             path: '/inschrijvingen',
             name: 'inschrijvingen',
-            component: HomeView,
+            component: () => import('../views/SubscriptionView.vue'),
             children: [
                 {
                     path: 'web',

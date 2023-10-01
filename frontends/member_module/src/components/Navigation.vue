@@ -21,6 +21,11 @@ import {computed} from "vue";
 const items = computed(() => {
     let navigation = [
         {
+            label: 'Dashboard',
+            icon: 'pi pi-chart-bar',
+            to: '/'
+        },
+        {
             label: 'Actieve leden',
             icon: 'pi pi-users',
             to: '/leden-overzicht'
@@ -34,6 +39,11 @@ const items = computed(() => {
             label: 'Archief Leden',
             icon: 'pi pi-users',
             to: '/leden'
+        },
+        {
+            label: 'Producten',
+            icon: 'pi pi-shopping-cart',
+            to: '/producten'
         },
         {
             label: 'Configuratie',
