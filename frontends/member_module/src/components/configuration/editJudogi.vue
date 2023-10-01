@@ -1,5 +1,5 @@
 <template>
-    <tr id="Component_Edit_Location"
+    <tr id="Component_Edit_Judogi"
         class="border-b-[1px]"
         v-on:keyup.enter="save"
         v-on:keyup.esc="viewForm">

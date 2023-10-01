@@ -16,14 +16,22 @@ namespace App\YoshiKan\Domain\Model\Member;
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 use App\YoshiKan\Domain\Model\Common\IdEntity;
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation as Audit;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Uid\Uuid;
 
+/**
+ * @Audit\Auditable()
+ */
 #[ORM\Entity(repositoryClass: \App\YoshiKan\Infrastructure\Database\Member\FederationRepository::class)]
 class Federation
 {
     use IdEntity;
+    use BlameableEntity;
+    use TimestampableEntity;
     use SequenceEntity;
     use ChecksumEntity;
 
