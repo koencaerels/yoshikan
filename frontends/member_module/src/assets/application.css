@@ -157,3 +157,7 @@ label {
     height:11px !important;
     background-color: #0c223b !important;
 }
+
+.p-dialog-header-close:focus {
+    box-shadow: unset !important;
+}
