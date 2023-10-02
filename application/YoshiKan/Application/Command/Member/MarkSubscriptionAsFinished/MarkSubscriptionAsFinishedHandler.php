@@ -13,8 +13,7 @@ class MarkSubscriptionAsFinishedHandler
 
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -25,7 +24,7 @@ class MarkSubscriptionAsFinishedHandler
         $result = false;
         $subscription = $this->subscriptionRepository->getById($command->getId());
 
-        if ($subscription->getStatus() === SubscriptionStatus::PAYED) {
+        if (SubscriptionStatus::PAYED === $subscription->getStatus()) {
             $subscription->changeStatus(SubscriptionStatus::COMPLETE);
             $this->subscriptionRepository->save($subscription);
             $result = true;

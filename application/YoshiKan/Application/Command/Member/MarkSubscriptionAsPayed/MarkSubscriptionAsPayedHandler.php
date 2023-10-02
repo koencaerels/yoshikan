@@ -16,9 +16,8 @@ class MarkSubscriptionAsPayedHandler
 
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected MemberRepository       $memberRepository
-    )
-    {
+        protected MemberRepository $memberRepository
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -30,7 +29,7 @@ class MarkSubscriptionAsPayedHandler
         $result = false;
         $subscription = $this->subscriptionRepository->getById($command->getId());
 
-        if ($subscription->getStatus() === SubscriptionStatus::AWAITING_PAYMENT) {
+        if (SubscriptionStatus::AWAITING_PAYMENT === $subscription->getStatus()) {
             $subscription->changeStatus(SubscriptionStatus::PAYED);
             $this->subscriptionRepository->save($subscription);
             $result = true;

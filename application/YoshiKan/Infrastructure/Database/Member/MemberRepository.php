@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Database\Member;
 
+use App\YoshiKan\Domain\Model\Member\Federation;
 use App\YoshiKan\Domain\Model\Member\Grade;
 use App\YoshiKan\Domain\Model\Member\Location;
 use App\YoshiKan\Domain\Model\Member\Member;
@@ -162,6 +163,20 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         $q = $this->createQueryBuilder('t')
             ->where('t.status = :status')
             ->setParameter('status', MemberStatus::ACTIVE->value)
+            ->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    public function getActiveMembersByFederationAndLocation(Federation $federation, Location $location): array
+    {
+        $q = $this->createQueryBuilder('t')
+            ->where('t.status = :status')
+            ->setParameter('status', MemberStatus::ACTIVE->value)
+            ->andWhere('t.location = :locationId')
+            ->setParameter('locationId', $location->getId())
+            ->andWhere('t.federation = :federationId')
+            ->setParameter('federationId', $federation->getId())
             ->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();

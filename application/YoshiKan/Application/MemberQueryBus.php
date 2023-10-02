@@ -19,6 +19,7 @@ use App\YoshiKan\Application\Query\Member\get_member;
 use App\YoshiKan\Application\Query\Member\get_member_image;
 use App\YoshiKan\Application\Query\Member\get_subscription;
 use App\YoshiKan\Application\Query\Message\get_message;
+use App\YoshiKan\Application\Query\Reporting\get_reporting;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
@@ -47,6 +48,7 @@ class MemberQueryBus
     use get_message;
     use get_subscription;
     use download_due_payments;
+    use get_reporting;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security

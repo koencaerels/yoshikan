@@ -29,6 +29,7 @@
     "@zxcvbn-ts/language-common": "^2.0.0",
     "@zxcvbn-ts/language-en": "^2.0.0",
     "axios": "^0.27.2",
+    "chart.js": "^4.4.0",
     "dropzone": "^6.0.0-beta.2",
     "html-to-image": "^1.10.10",
     "maska": "^2.1.7",

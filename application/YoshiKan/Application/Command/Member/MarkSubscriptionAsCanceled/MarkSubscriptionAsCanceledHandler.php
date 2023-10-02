@@ -13,8 +13,7 @@ class MarkSubscriptionAsCanceledHandler
 
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -26,8 +25,8 @@ class MarkSubscriptionAsCanceledHandler
         $subscription = $this->subscriptionRepository->getById($command->getId());
         $result = false;
 
-        if ($subscription->getStatus() === SubscriptionStatus::NEW
-            || $subscription->getStatus() === SubscriptionStatus::AWAITING_PAYMENT) {
+        if (SubscriptionStatus::NEW === $subscription->getStatus()
+            || SubscriptionStatus::AWAITING_PAYMENT === $subscription->getStatus()) {
             $subscription->changeStatus(SubscriptionStatus::CANCELED);
             $this->subscriptionRepository->save($subscription);
             $result = true;
