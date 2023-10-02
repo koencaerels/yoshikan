@@ -88,6 +88,7 @@ export interface Subscription {
     uuid: string;
     status: string;
     type: string;
+    memberId: number;
     contactFirstname: string;
     contactLastname: string;
     contactEmail: string;

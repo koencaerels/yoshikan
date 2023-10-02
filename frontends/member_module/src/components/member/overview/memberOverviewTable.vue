@@ -320,7 +320,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useMemberOverviewStore} from "@/store/memberOverview";
 import moment from "moment/moment";
 import {FilterMatchMode} from "primevue/api";
@@ -380,6 +380,12 @@ const filters = ref({
 });
 
 onMounted((): void => {
+    loadActiveMembers();
+});
+
+const subscriptionCounter = computed((): number => memberStore.refreshCounter);
+
+watch(subscriptionCounter, (): void => {
     loadActiveMembers();
 });
 

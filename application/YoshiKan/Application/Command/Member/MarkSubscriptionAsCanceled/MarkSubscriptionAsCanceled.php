@@ -1,8 +1,8 @@
 <?php
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed;
+namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled;
 
-class MarkSubscriptionAsPayed
+class MarkSubscriptionAsCanceled
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

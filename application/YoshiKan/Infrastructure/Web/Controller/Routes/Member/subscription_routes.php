@@ -30,24 +30,48 @@ trait subscription_routes
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
-    #[Route('/mm/api/subscriptions/export', methods: ['GET'])]
-    public function exportSubscriptions(Request $request): void
+    #[Route('/mm/api/subscription/{id}/mark-as-paid', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function markSubscriptionAsPayed(int $id, Request $request): JsonResponse
     {
-        $listIds = $request->query->get('ids');
-        $arListIds = explode(',', $listIds);
-        $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
-        $now = new \DateTimeImmutable();
-        $fileName = $now->format('Ymd').'_yoshi-kan_inschrijvingen.xlsx';
-        $writer = new Xlsx($spreadsheet);
+        $jsonCommand = json_decode($request->request->get('command'));
+        $response = $this->commandBus->markSubscriptionAsPayed($jsonCommand);
 
-        ob_end_clean();
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
-        $writer->save('php://output');
-        exit;
+        return new JsonResponse($response, 200, $this->apiAccess);
     }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route('/mm/api/subscription/{id}/cancel', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function markSubscriptionAsCanceled(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('command'));
+        $response = $this->commandBus->markSubscriptionAsCanceled($jsonCommand);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    //    /**
+    //     * @throws Exception
+    //     */
+    //    #[Route('/mm/api/subscriptions/export', methods: ['GET'])]
+    //    public function exportSubscriptions(Request $request): void
+    //    {
+    //        $listIds = $request->query->get('ids');
+    //        $arListIds = explode(',', $listIds);
+    //        $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
+    //        $now = new \DateTimeImmutable();
+    //        $fileName = $now->format('Ymd').'_yoshi-kan_inschrijvingen.xlsx';
+    //        $writer = new Xlsx($spreadsheet);
+    //
+    //        ob_end_clean();
+    //        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
+    //        $writer->save('php://output');
+    //        exit;
+    //    }
 
     //    #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]
     //    public function backendSubscribeAction(Request $request): JsonResponse

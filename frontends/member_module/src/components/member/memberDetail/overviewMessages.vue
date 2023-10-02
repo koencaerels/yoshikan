@@ -27,7 +27,6 @@
 
     <!-- -- detail ------------------------------------------------------------------------------------------------- -->
     <Dialog v-model:visible="showMessageDetail"
-            position="top"
             v-if="messageDetail"
             :header="messageDetail.subject"
             :modal="true">

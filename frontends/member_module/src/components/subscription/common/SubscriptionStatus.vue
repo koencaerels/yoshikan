@@ -25,7 +25,7 @@ const statusColor = computed((): string => {
             _color = 'border-green-400';
             break;
         case 'canceled':
-            _color = 'border-red-300 text-white';
+            _color = 'border-red-300 text-gray-400';
             break;
         default:
             _color = 'border-yellow-300';

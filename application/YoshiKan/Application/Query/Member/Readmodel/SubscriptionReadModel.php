@@ -75,7 +75,7 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->contactPhone = $this->getContactPhone();
         $json->firstname = $this->getFirstname();
         $json->lastname = $this->getLastname();
-        $json->dateOfBirth = $this->getDateOfBirth();
+        $json->dateOfBirth = $this->getDateOfBirth()->format(\DateTimeInterface::ATOM);
         $json->gender = $this->getGender();
         $json->numberOfTraining = $this->getNumberOfTraining();
         $json->isExtraTraining = $this->isExtraTraining();

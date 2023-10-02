@@ -27,6 +27,9 @@ use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grad
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\mark_subscription_as_canceled;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\mark_subscription_as_finished;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\mark_subscription_as_paid;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\member_extend_subscription;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\member_extend_subscription_mail;
 use App\YoshiKan\Application\Command\Member\NewMemberSubscription\new_member_subscription;
@@ -94,6 +97,9 @@ class MemberCommandBus
     use member_extend_subscription_mail;
     use new_member_subscription;
     use new_member_subscription_mail;
+    use mark_subscription_as_paid;
+    use mark_subscription_as_finished;
+    use mark_subscription_as_canceled;
 
     // -- member images ---------------------------------------------------------
     use upload_member_image;

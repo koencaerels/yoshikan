@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail;
 
+use App\YoshiKan\Application\Settings;
+
 trait new_member_subscription_mail
 {
     public function sendMemberNewSubscriptionMail(int $subscriptionId): bool
@@ -33,8 +35,8 @@ trait new_member_subscription_mail
 
         $command = new NewMemberSubscriptionMail(
             $subscriptionId,
-            'Yoshi-Kan',
-            'no-reply@yoshi-kan.be'
+            Settings::FROM_NAME->value,
+            Settings::FROM_EMAIL->value
         );
 
         $result = $handler->go($command);
