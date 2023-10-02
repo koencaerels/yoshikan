@@ -13,8 +13,9 @@ namespace App\YoshiKan\Domain\Model\Member;
 
 enum SubscriptionType: string
 {
-    case NEW_SUBSCRIPTION = 'nieuwe_inschrijving';
-    case RENEWAL_FULL = 'volledige_hernieuwing';
-    case RENEWAL_MEMBERSHIP = 'hernieuwing_lidmaatschap';
-    case RENEWAL_LICENSE = 'hernieuwing_vergunning';
+    case NEW_SUBSCRIPTION = 'nieuwe-inschrijving';
+    case RENEWAL_FULL = 'volledige-hernieuwing';
+    case RENEWAL_MEMBERSHIP = 'hernieuwing-lidmaatschap';
+    case RENEWAL_LICENSE = 'hernieuwing-vergunning';
+
 }

@@ -53,6 +53,13 @@ trait subscription_routes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/subscription/{status}', methods: ['GET'])]
+    public function getAllSubscriptions(string $status, Request $request): JsonResponse
+    {
+          $response = $this->queryBus->getSubscriptionsByStatus($status);
+          return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
     //    /**
     //     * @throws Exception
     //     */

@@ -117,7 +117,8 @@
         </div>
 
         <div class="flex gap-2 mt-4"
-             v-if="memberStore.subscriptionDetail.memberId !== 0 && memberStore.subscriptionDetail.status === 'wachtend op betaling'">
+             v-if="memberStore.subscriptionDetail.memberId !== 0
+             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.AWAITING_PAYMENT">
             <div class="flex-none w-48 text-right text-xs text-gray-600">
                 Acties
             </div>
@@ -162,6 +163,7 @@ import type {MarkSubscriptionAsPayedCommand} from "@/api/command/subscription/ma
 import {markSubscriptionAsPayed} from "@/api/command/subscription/markSubscriptionAsPayed";
 import type {MarkSubscriptionAsCanceledCommand} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {markSubscriptionAsCanceled} from "@/api/command/subscription/markSubscriptionAsCanceled";
+import {SubscriptionStatusEnum} from "@/api/query/enum";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
@@ -184,7 +186,7 @@ async function markAsPaid() {
         let result = await markSubscriptionAsPayed(commandPay.value);
         toaster.add({
             severity: "success",
-            summary: "Betaling voor de inschrijving in ingevoerd.",
+            summary: "Betaling voor de inschrijving is geconfirmeerd.",
             detail: "",
             life: appStore.toastLifeTime,
         });

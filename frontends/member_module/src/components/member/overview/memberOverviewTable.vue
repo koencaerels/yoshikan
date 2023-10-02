@@ -52,7 +52,9 @@
                    tableStyle="min-width: 50rem">
 
             <template #empty> Geen leden gevonden.</template>
-            <template #loading> Loading member data. Please wait.</template>
+            <template #loading>
+                <div class="p-2"><i class="pi pi-spin pi-spinner"></i></div>
+            </template>
             <template #paginatorstart>
                 <Button type="button" icon="pi pi-refresh" text @click="loadActiveMembers"/>
             </template>
@@ -451,15 +453,6 @@ function downloadListDuePayments() {
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
 <style>
-
-.p-datatable-wrapper {
-    border-top: 2px solid gray !important;
-}
-
-.p-paginator-bottom {
-    border-top: 2px solid gray !important;
-    border-bottom: 2px solid gray !important;
-}
 
 .p-column-filter-menu-button-active {
     background-color: gray !important;

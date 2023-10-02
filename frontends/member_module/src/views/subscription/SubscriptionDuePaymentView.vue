@@ -10,11 +10,12 @@
 -->
 
 <template>
-    <div id="SubscriptionNewView">
-        nieuwe inschrijvingen
+    <div id="SubscriptionDuePaymentView">
+        <overview-due-payment/>
     </div>
 </template>
 
 <script setup lang="ts">
+import OverviewDuePayment from "@/components/subscription/overview/overviewDuePayment.vue";
 
 </script>

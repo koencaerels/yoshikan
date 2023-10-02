@@ -35,11 +35,6 @@ const items = computed(() => {
             icon: 'pi pi-bars',
             to: '/inschrijvingen/archief'
         },
-        {
-            label: 'Export',
-            icon: 'pi pi-file-excel',
-            to: '/inschrijvingen/export'
-        },
     ];
     return navigation;
 });

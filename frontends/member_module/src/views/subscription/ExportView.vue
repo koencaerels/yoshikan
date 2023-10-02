@@ -11,7 +11,7 @@
 
 <template>
     <div id="ExportView">
-        export
+        Export view
     </div>
 </template>
 

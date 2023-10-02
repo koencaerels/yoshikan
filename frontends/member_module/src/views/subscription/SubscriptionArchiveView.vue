@@ -11,10 +11,11 @@
 
 <template>
     <div id="SubscriptionArchiveView">
-        archief
+        <overview-archive/>
     </div>
 </template>
 
 <script setup lang="ts">
+import OverviewArchive from "@/components/subscription/overview/overviewArchive.vue";
 
 </script>

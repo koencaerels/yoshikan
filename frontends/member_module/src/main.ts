@@ -116,8 +116,6 @@ app.component("Chart", Chart);
 
 app.directive('tooltip', Tooltip);
 
-
-
 // ---------------------------------------------------------------------- vue progress bar
 // @ts-ignore
 import VueProgressBar from '@aacassandra/vue3-progressbar';
@@ -132,7 +130,7 @@ const options = {
         termination: 300,
     },
     autoRevert: true,
-    location: "bottom",
+    location: "top",
     inverse: false,
 };
 app.use(VueProgressBar, options);
@@ -169,7 +167,7 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 // ---------------------------------------------------------------------------------------
 app.use(router)
 app.use(createPinia())
-app.use(PrimeVue, {ripple: true});
+app.use(PrimeVue, { ripple: true, inputStyle: "filled" , unstyled: false});
 app.use(ConfirmationService);
 app.use(ToastService);
 

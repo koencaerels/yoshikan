@@ -37,7 +37,7 @@
     "nomnoml": "^1.5.2",
     "pinia": "^2.0.21",
     "primeicons": "^6.0.0",
-    "primevue": "^3.17.0",
+    "primevue": "3.34.1",
     "simple-syntax-highlighter": "^2.2.3",
     "vue": "^3.2.38",
     "vue-advanced-cropper": "^2.8.6",

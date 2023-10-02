@@ -72,8 +72,7 @@ async function showSubscriptionDetailFn(subscription: Subscription) {
     showSubscriptionDetail.value = true;
 }
 
-async function hideSubscriptionDetailFn() {
-    console.log('hide subscription detail');
+function hideSubscriptionDetailFn() {
     showSubscriptionDetail.value = false;
 }
 
