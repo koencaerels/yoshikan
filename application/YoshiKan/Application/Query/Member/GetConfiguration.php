@@ -103,15 +103,19 @@ class GetConfiguration
 
     public function getWebConfiguration(): WebConfigurationReadModel
     {
-        $grades = $this->gradeRepository->getAll();
         $locations = $this->locationRepository->getAll();
-        $groups = $this->groupRepository->getAll();
         $activePeriod = $this->periodRepository->getActive();
         $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
+        $federations = $this->federationRepository->getAll();
 
         $locationCollection = new LocationReadModelCollection();
         foreach ($locations as $location) {
             $locationCollection->addItem(LocationReadModel::hydrateFromModel($location));
+        }
+
+        $federationCollection = new FederationReadModelCollection();
+        foreach ($federations as $federation) {
+            $federationCollection->addItem(FederationReadModel::hydrateFromModel($federation));
         }
 
         $activePeriodReadModel = PeriodReadModel::hydrateFromModel($activePeriod);
@@ -120,7 +124,8 @@ class GetConfiguration
         return new WebConfigurationReadModel(
             $locationCollection,
             $activePeriodReadModel,
-            $settingsReadModel
+            $settingsReadModel,
+            $federationCollection
         );
     }
 }

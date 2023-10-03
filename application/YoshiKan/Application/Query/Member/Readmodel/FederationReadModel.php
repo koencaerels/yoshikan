@@ -11,12 +11,14 @@ class FederationReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int $id,
+        protected int    $id,
         protected string $uuid,
         protected string $code,
         protected string $name,
-        protected int $yearlySubscriptionFee,
-    ) {
+        protected int    $yearlySubscriptionFee,
+        protected string $publicLabel,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -30,6 +32,7 @@ class FederationReadModel implements \JsonSerializable
         $json->uuid = $this->getUuid();
         $json->code = $this->getCode();
         $json->name = $this->getName();
+        $json->publicLabel = $this->getPublicLabel();
         $json->yearlySubscriptionFee = $this->getYearlySubscriptionFee();
 
         return $json;
@@ -47,6 +50,7 @@ class FederationReadModel implements \JsonSerializable
             $model->getCode(),
             $model->getName(),
             $model->getYearlySubscriptionFee(),
+            $model->getPublicLabel()
         );
     }
 
@@ -78,4 +82,10 @@ class FederationReadModel implements \JsonSerializable
     {
         return $this->yearlySubscriptionFee;
     }
+
+    public function getPublicLabel(): string
+    {
+        return $this->publicLabel;
+    }
+
 }

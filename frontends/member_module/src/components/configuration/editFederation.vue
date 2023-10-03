@@ -15,6 +15,7 @@
         </td>
         <td v-if="isView">{{ item.code }}</td>
         <td v-if="isView">{{ item.name }}</td>
+        <td v-if="isView">{{ item.publicLabel }}</td>
         <td v-if="isView">{{ item.yearlySubscriptionFee }} €</td>
 
         <!-- edit mode ------------------------------------------------- -->
@@ -31,6 +32,13 @@
                 <InputText class="p-inputtext-sm w-full" placeholder="name" v-model="command.name"/>
                 <i v-if="!edit$.name.$invalid" class="pi pi-check text-green-600"/>
                 <i v-if="edit$.name.$invalid" class="pi pi-times text-red-600"/>
+            </span>
+        </td>
+        <td v-if="!isView" class="pl-2">
+            <span class="p-input-icon-right w-full">
+                <InputText class="p-inputtext-sm w-full" placeholder="name" v-model="command.publicLabel"/>
+                <i v-if="!edit$.publicLabel.$invalid" class="pi pi-check text-green-600"/>
+                <i v-if="edit$.publicLabel.$invalid" class="pi pi-times text-red-600"/>
             </span>
         </td>
         <td v-if="!isView" class="pl-2">
@@ -84,12 +92,14 @@ const command = ref<ChangeFederationCommand>({
     id: props.item.id,
     code: props.item.code,
     name: props.item.name,
+    publicLabel: props.item.publicLabel,
     yearlySubscriptionFee:props.item.yearlySubscriptionFee.toString(),
 });
 
 const rules = {
     name: {required},
     code: {required},
+    publicLabel: {required},
     yearlySubscriptionFee: {required,numeric}
 };
 

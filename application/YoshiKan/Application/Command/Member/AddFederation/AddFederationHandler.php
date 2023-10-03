@@ -36,7 +36,9 @@ class AddFederationHandler
             1,
             $command->getCode(),
             $command->getName(),
-            $command->getYearlySubscriptionFee()
+            $command->getYearlySubscriptionFee(),
+            $command->getPublicLabel()
+
         );
         $this->federationRepo->save($model);
 

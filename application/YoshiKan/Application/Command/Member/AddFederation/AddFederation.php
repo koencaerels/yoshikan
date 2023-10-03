@@ -20,8 +20,10 @@ class AddFederation
     private function __construct(
         protected string $code,
         protected string $name,
-        protected int $yearlySubscriptionFee,
-    ) {
+        protected int    $yearlySubscriptionFee,
+        protected string $publicLabel,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -34,6 +36,7 @@ class AddFederation
             trim($json->code),
             trim($json->name),
             intval($json->yearlySubscriptionFee),
+            trim($json->publicLabel),
         );
     }
 
@@ -55,4 +58,10 @@ class AddFederation
     {
         return $this->yearlySubscriptionFee;
     }
+
+    public function getPublicLabel(): string
+    {
+        return $this->publicLabel;
+    }
+
 }

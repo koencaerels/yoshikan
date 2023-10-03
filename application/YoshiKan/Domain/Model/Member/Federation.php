@@ -37,10 +37,13 @@ class Federation
 
     // -------------------------------------------------------------- attributes
     #[ORM\Column(length: 191)]
-    private ?string $code = null;
+    private string $code;
 
     #[ORM\Column(length: 191)]
-    private ?string $name = null;
+    private string $name;
+
+    #[ORM\Column(length: 191)]
+    private string $publicLabel;
 
     #[ORM\Column]
     private ?int $yearlySubscriptionFee = null;
@@ -74,6 +77,7 @@ class Federation
         string $code,
         string $name,
         int $yearlySubscriptionFee,
+        string $publicLabel,
     ) {
         // -------------------------------------------------- set the attributes
         $this->uuid = $uuid;
@@ -93,6 +97,7 @@ class Federation
         string $code,
         string $name,
         int $yearlySubscriptionFee,
+        string $publicLabel,
     ): self {
         return new self(
             $uuid,
@@ -100,6 +105,7 @@ class Federation
             $code,
             $name,
             $yearlySubscriptionFee,
+            $publicLabel
         );
     }
 
@@ -107,10 +113,12 @@ class Federation
         string $code,
         string $name,
         int $yearlySubscriptionFee,
+        string $publicLabel,
     ): void {
-        $this->code = $code;
-        $this->name = $name;
+        $this->code = trim($code);
+        $this->name = trim($name);
         $this->yearlySubscriptionFee = $yearlySubscriptionFee;
+        $this->publicLabel = trim($publicLabel);
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -121,14 +129,19 @@ class Federation
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getPublicLabel(): string
+    {
+        return $this->publicLabel;
     }
 
     public function getYearlySubscriptionFee(): ?int

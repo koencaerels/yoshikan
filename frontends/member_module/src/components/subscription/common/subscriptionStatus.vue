@@ -1,5 +1,5 @@
 <template>
-    <div class="px-2 rounded-full text-xs text-center border-[1px] text-gray-900" :class="statusColor">
+    <div class="px-2 rounded-full text-xs text-center border-[1px] text-gray-900 w-[9rem]" :class="statusColor">
         {{subscription.status}}
     </div>
 </template>

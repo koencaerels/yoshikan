@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\new_member_web_subscription;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\new_member_web_subscription_mail;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
@@ -21,8 +23,6 @@ use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
-use backend\Command\WebConfirmationMail\web_confirmation_mail;
-use backend\Command\WebSubscribe\web_subscribe;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -34,8 +34,8 @@ class CommandBus
     // —— Traits
     // ——————————————————————————————————————————————————————————————————————————
 
-    use web_subscribe;
-    use web_confirmation_mail;
+    use new_member_web_subscription;
+    use new_member_web_subscription_mail;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security

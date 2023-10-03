@@ -34,7 +34,8 @@ class ChangeFederationHandler
         $model->change(
             $command->getCode(),
             $command->getName(),
-            $command->getYearlySubscriptionFee()
+            $command->getYearlySubscriptionFee(),
+            $command->getPublicLabel()
         );
         $this->federationRepo->save($model);
 

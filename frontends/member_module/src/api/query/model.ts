@@ -81,6 +81,7 @@ export interface Federation {
     code: string;
     name: string;
     yearlySubscriptionFee: number;
+    publicLabel: string;
 }
 
 export interface Subscription {

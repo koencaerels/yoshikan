@@ -18,11 +18,13 @@ class ChangeFederation
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int $id,
+        protected int    $id,
         protected string $code,
         protected string $name,
-        protected int $yearlySubscriptionFee,
-    ) {
+        protected int    $yearlySubscriptionFee,
+        protected string $publicLabel,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -36,6 +38,7 @@ class ChangeFederation
             trim($json->code),
             trim($json->name),
             intval($json->yearlySubscriptionFee),
+            trim($json->publicLabel)
         );
     }
 
@@ -62,4 +65,10 @@ class ChangeFederation
     {
         return $this->yearlySubscriptionFee;
     }
+
+    public function getPublicLabel(): string
+    {
+        return $this->publicLabel;
+    }
+
 }
