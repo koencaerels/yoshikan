@@ -21,13 +21,12 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 class GetReporting
 {
     public function __construct(
-        protected MemberRepository       $memberRepository,
-        protected LocationRepository     $locationRepository,
-        protected FederationRepository   $federationRepository,
+        protected MemberRepository $memberRepository,
+        protected LocationRepository $locationRepository,
+        protected FederationRepository $federationRepository,
         protected SubscriptionRepository $subscriptionRepository,
-        protected PeriodRepository       $periodRepository
-    )
-    {
+        protected PeriodRepository $periodRepository
+    ) {
     }
 
     public function getDashboardNumbers(): DashboardNumbersReadmodel
@@ -79,6 +78,7 @@ class GetReporting
         foreach ($this->mergeLocationReports($locationReports) as $locationReport) {
             $report->addLocationReport($locationReport);
         }
+
         return $report;
     }
 
@@ -103,6 +103,7 @@ class GetReporting
         foreach ($resultObject as $key => $value) {
             $result[] = new LocationReport($value->location, $value->activeMembers, $value->duePayments, $value->totalAmount);
         }
+
         return $result;
     }
 }

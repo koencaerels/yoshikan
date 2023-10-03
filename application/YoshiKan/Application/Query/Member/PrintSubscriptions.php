@@ -31,8 +31,8 @@ class PrintSubscriptions
     // Print an overview of the selected subscriptions
     // ——————————————————————————————————————————————————————————————————————————
 
-    public function printOverview(array $listIds): void {
-
+    public function printOverview(array $listIds): void
+    {
         $subscriptions = $this->subscriptionRepository->getByListId($listIds);
         $renderList = new \stdClass();
         $renderList->generatedOn = new \DateTimeImmutable();
@@ -61,5 +61,4 @@ class PrintSubscriptions
 
         exit;
     }
-
 }

@@ -28,6 +28,7 @@ use App\YoshiKan\Application\Query\Member\Readmodel\SettingsReadModel;
 use App\YoshiKan\Application\Query\Member\Readmodel\WebConfigurationReadModel;
 use App\YoshiKan\Application\Query\Product\JudogiReadModel;
 use App\YoshiKan\Application\Query\Product\JudogiReadModelCollection;
+use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\GroupRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
@@ -35,7 +36,6 @@ use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsCode;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
-use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
 
 class GetConfiguration
 {

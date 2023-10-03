@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application\Command\Member\SetupConfiguration;
 
 use App\YoshiKan\Domain\Model\Member\Period;
+use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
-use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
 
 class SetupConfigurationHandler
 {

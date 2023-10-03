@@ -15,9 +15,9 @@ namespace App\YoshiKan\Application\Query\Message;
 
 use App\YoshiKan\Application\Query\Message\Readmodel\MessageReadModel;
 use App\YoshiKan\Application\Query\Message\Readmodel\MessageReadModelCollection;
+use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Message\MessageRepository;
-use App\YoshiKan\Infrastructure\Database\Member\MemberRepository;
 
 class GetMessage
 {

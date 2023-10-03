@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Security\BasePermissionService;
+use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\MemberRepository;
+use App\YoshiKan\Domain\Model\Member\PeriodRepository;
+use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
-use App\YoshiKan\Infrastructure\Database\Member\FederationRepository;
-use App\YoshiKan\Infrastructure\Database\Member\MemberRepository;
-use App\YoshiKan\Infrastructure\Database\Member\PeriodRepository;
-use App\YoshiKan\Infrastructure\Database\Member\SettingsRepository;
 use backend\Command\WebConfirmationMail\web_confirmation_mail;
 use backend\Command\WebSubscribe\web_subscribe;
 use Doctrine\ORM\EntityManagerInterface;

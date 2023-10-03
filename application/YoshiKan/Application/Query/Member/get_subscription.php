@@ -83,5 +83,4 @@ trait get_subscription
 
         return true;
     }
-
 }

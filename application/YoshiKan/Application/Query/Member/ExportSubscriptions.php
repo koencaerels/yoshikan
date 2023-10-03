@@ -21,9 +21,8 @@ class ExportSubscriptions
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected PeriodRepository       $periodRepository
-    )
-    {
+        protected PeriodRepository $periodRepository
+    ) {
     }
 
     public function exportSubscriptions(array $listIds): Spreadsheet
@@ -50,26 +49,26 @@ class ExportSubscriptions
         // -- data -----------------------------------------------------------------
         ++$rowCounter;
         foreach ($subscriptions as $subscription) {
-            $sheet->setCellValue([1, $rowCounter], 'YKS-' . $subscription->getId());
+            $sheet->setCellValue([1, $rowCounter], 'YKS-'.$subscription->getId());
             $sheet->setCellValue([2, $rowCounter], strtoupper($subscription->getLastname()));
             $sheet->setCellValue([3, $rowCounter], $subscription->getFirstname());
             $sheet->setCellValue([4, $rowCounter], $subscription->getDateOfBirth()->format('d/m/Y'));
             $sheet->setCellValue([5, $rowCounter], $subscription->getGenderAsString());
             if (!is_null($subscription->getMember())) {
-                $sheet->setCellValue([6, $rowCounter], 'YK-' . $subscription->getMember()->getId());
+                $sheet->setCellValue([6, $rowCounter], 'YK-'.$subscription->getMember()->getId());
                 $sheet->setCellValue([7, $rowCounter], $subscription->getMember()->getGrade()->getName());
             } else {
                 $sheet->setCellValue([6, $rowCounter], 'n/a');
                 $sheet->setCellValue([7, $rowCounter], 'n/a');
             }
-            $sheet->setCellValue([8, $rowCounter], $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname());
+            $sheet->setCellValue([8, $rowCounter], $subscription->getContactFirstname().' '.$subscription->getContactLastname());
             $sheet->setCellValue([9, $rowCounter], $subscription->getContactEmail());
             ++$rowCounter;
         }
 
         // -- first row bold ------------------------------------------------------
         $highestColumn = $sheet->getHighestColumn();
-        $sheet->getStyle('A1:' . $highestColumn . '1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:'.$highestColumn.'1')->getFont()->setBold(true);
         $sheet->setSelectedCell('A1');
 
         // -- autosize the columns ------------------------------------------------

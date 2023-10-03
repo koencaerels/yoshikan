@@ -17,5 +17,4 @@ enum SubscriptionType: string
     case RENEWAL_FULL = 'volledige-hernieuwing';
     case RENEWAL_MEMBERSHIP = 'hernieuwing-lidmaatschap';
     case RENEWAL_LICENSE = 'hernieuwing-vergunning';
-
 }

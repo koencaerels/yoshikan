@@ -57,6 +57,7 @@ trait subscription_routes
     public function getAllSubscriptions(string $status, Request $request): JsonResponse
     {
         $response = $this->queryBus->getSubscriptionsByStatus($status);
+
         return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
     }
 
@@ -69,12 +70,12 @@ trait subscription_routes
         $listIds = $request->query->get('ids');
         $spreadsheet = $this->queryBus->exportSubscriptions($this->convertToArrayOfIds($listIds));
         $now = new \DateTimeImmutable();
-        $fileName = $now->format('Ymd') . '_yoshi-kan-inschrijvingen.xlsx';
+        $fileName = $now->format('Ymd').'_yoshi-kan-inschrijvingen.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
         $writer->save('php://output');
         exit;
     }
@@ -88,7 +89,8 @@ trait subscription_routes
         exit;
     }
 
-    private function convertToArrayOfIds(string $ids): array {
+    private function convertToArrayOfIds(string $ids): array
+    {
         $arListIdsInt = [];
         foreach (explode(',', $ids) as $id) {
             $arListIdsInt[] = intval($id);
@@ -96,7 +98,6 @@ trait subscription_routes
 
         return $arListIdsInt;
     }
-
 
     //    #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]
     //    public function backendSubscribeAction(Request $request): JsonResponse
