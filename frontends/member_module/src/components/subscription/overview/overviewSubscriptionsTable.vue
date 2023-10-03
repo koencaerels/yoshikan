@@ -19,7 +19,10 @@
                 </div>
             </div>
             <div class="basis-1/2 text-right">
-
+                <Button @click="downloadListDuePayments" v-if="(type === 'duePayment')"
+                        label="Download overzicht te betalen"
+                        icon="pi pi-download"
+                        class="p-button-sm p-button-secondary"/>
             </div>
         </div>
     </div>
@@ -345,6 +348,11 @@ const showDialogFullDetail = ref<boolean>(false);
 async function showDetailDialogFullFn(id: number): void {
     await memberStore.loadMemberDetail(id);
     showDialogFullDetail.value = true;
+}
+
+function downloadListDuePayments() {
+    let url = apiUrl + '/member/overview-due-payments';
+    window.open(url, '_blank');
 }
 
 // -- computed properties ----------------------------------------------------------------------------------------------
