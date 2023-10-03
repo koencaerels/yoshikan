@@ -26,7 +26,7 @@ const statusColor = computed((): string => {
             _color = 'border-green-400';
             break;
         case SubscriptionStatusEnum.CANCELED:
-            _color = 'border-red-300 text-white';
+            _color = 'border-red-300 text-red-400';
             break;
         default:
             _color = 'border-yellow-300';

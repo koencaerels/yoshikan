@@ -57,10 +57,10 @@ import {useMemberStore} from "@/store/member";
 import {ref} from "vue";
 import type {Subscription} from "@/api/query/model";
 import moment from "moment";
-import SubscriptionBadge from "@/components/subscription/common/SubscriptionBadge.vue";
-import SubscriptionStatus from "@/components/subscription/common/SubscriptionStatus.vue";
-import SubscriptionType from "@/components/subscription/common/SubscriptionType.vue";
-import SubscriptionDetail from "@/components/subscription/detail/SubscriptionDetail.vue";
+import SubscriptionBadge from "@/components/subscription/common/subscriptionBadge.vue";
+import SubscriptionStatus from "@/components/subscription/common/subscriptionStatus.vue";
+import SubscriptionType from "@/components/subscription/common/subscriptionType.vue";
+import SubscriptionDetail from "@/components/subscription/detail/subscriptionDetail.vue";
 
 const memberStore = useMemberStore();
 const showSubscriptionDetail = ref<boolean>(false);

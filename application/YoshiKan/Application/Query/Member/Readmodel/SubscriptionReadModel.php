@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Message\Message;
 
 class SubscriptionReadModel implements \JsonSerializable
 {
@@ -13,48 +14,50 @@ class SubscriptionReadModel implements \JsonSerializable
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected int $id,
-        protected string $uuid,
-        protected string $status,
-        protected string $type,
-        protected string $contactFirstname,
-        protected string $contactLastname,
-        protected string $contactEmail,
-        protected string $contactPhone,
-        protected string $firstname,
-        protected string $lastname,
-        protected \DateTimeImmutable $dateOfBirth,
-        protected string $gender,
-        protected int $numberOfTraining,
-        protected bool $isExtraTraining,
-        protected bool $isNewMember,
-        protected bool $isReductionFamily,
-        protected bool $isJudogiBelt,
-        protected string $remarks,
-        protected float $total,
-        protected array $settings,
-        protected bool $isPaymentOverviewSend,
-        protected bool $isPrinted,
-        protected ?string $nationalRegisterNumber,
-        protected ?string $addressStreet,
-        protected ?string $addressNumber,
-        protected ?string $addressBox,
-        protected ?string $addressZip,
-        protected ?string $addressCity,
-        protected \DateTimeImmutable $memberSubscriptionStart,
-        protected \DateTimeImmutable $memberSubscriptionEnd,
-        protected float $memberSubscriptionTotal,
-        protected bool $memberSubscriptionIsPartSubscription,
-        protected bool $memberSubscriptionIsHalfYear,
-        protected \DateTimeImmutable $licenseStart,
-        protected \DateTimeImmutable $licenseEnd,
-        protected float $licenseTotal,
-        protected bool $licenseIsPartSubscription,
-        protected LocationReadModel $location,
+        protected int                 $id,
+        protected string              $uuid,
+        protected string              $status,
+        protected string              $type,
+        protected string              $contactFirstname,
+        protected string              $contactLastname,
+        protected string              $contactEmail,
+        protected string              $contactPhone,
+        protected string              $firstname,
+        protected string              $lastname,
+        protected \DateTimeImmutable  $dateOfBirth,
+        protected string              $gender,
+        protected int                 $numberOfTraining,
+        protected bool                $isExtraTraining,
+        protected bool                $isNewMember,
+        protected bool                $isReductionFamily,
+        protected bool                $isJudogiBelt,
+        protected string              $remarks,
+        protected float               $total,
+        protected array               $settings,
+        protected bool                $isPaymentOverviewSend,
+        protected bool                $isPrinted,
+        protected ?string             $nationalRegisterNumber,
+        protected ?string             $addressStreet,
+        protected ?string             $addressNumber,
+        protected ?string             $addressBox,
+        protected ?string             $addressZip,
+        protected ?string             $addressCity,
+        protected \DateTimeImmutable  $memberSubscriptionStart,
+        protected \DateTimeImmutable  $memberSubscriptionEnd,
+        protected float               $memberSubscriptionTotal,
+        protected bool                $memberSubscriptionIsPartSubscription,
+        protected bool                $memberSubscriptionIsHalfYear,
+        protected \DateTimeImmutable  $licenseStart,
+        protected \DateTimeImmutable  $licenseEnd,
+        protected float               $licenseTotal,
+        protected bool                $licenseIsPartSubscription,
+        protected LocationReadModel   $location,
         protected FederationReadModel $federation,
-        protected array $subscriptionitems,
-        protected ?int $memberId,
-    ) {
+        protected array               $subscriptionitems,
+        protected ?int                $memberId,
+        protected ?int                $messageId,
+    )
+    {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -69,6 +72,7 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->status = $this->getStatus();
         $json->type = $this->getType();
         $json->memberId = $this->getMemberId();
+        $json->messageId = $this->getMessageId();
         $json->contactFirstname = $this->getContactFirstname();
         $json->contactLastname = $this->getContactLastname();
         $json->contactEmail = $this->getContactEmail();
@@ -125,6 +129,16 @@ class SubscriptionReadModel implements \JsonSerializable
             $memberId = $model->getMember()->getId();
         }
 
+        $messageId = null;
+        $messages = $model->getMessages();
+        if (count($messages) > 0) {
+            /** @var Message $message */
+            foreach ($messages as $message) {
+                $messageId = $message->getId();
+                break;
+            }
+        }
+
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
@@ -166,7 +180,8 @@ class SubscriptionReadModel implements \JsonSerializable
             LocationReadModel::hydrateFromModel($model->getLocation()),
             FederationReadModel::hydrateFromModel($model->getFederation()),
             $itemCollection->getCollection(),
-            $memberId
+            $memberId,
+            $messageId
         );
     }
 
@@ -378,4 +393,11 @@ class SubscriptionReadModel implements \JsonSerializable
     {
         return $this->memberId;
     }
+
+    public function getMessageId(): ?int
+    {
+        return $this->messageId;
+    }
+
+
 }

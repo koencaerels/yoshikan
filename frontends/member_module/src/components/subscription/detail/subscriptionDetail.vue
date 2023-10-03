@@ -1,8 +1,28 @@
 <template>
     <div style="width:900px;" v-if="memberStore.subscriptionDetail">
 
-        <div class="flex gap-2">
-            <div class="flex-none w-48 text-right text-xs text-gray-600">Status</div>
+        <div class="flex gap-2 border-b-[1px] border-gray-400 pb-2">
+
+            <div class="flex-none w-48 flex gap-8">
+                <div>
+                    <i class="pi pi-times-circle cursor-pointer"
+                       title="Sluit de inschrijving"
+                       @click="emit('canceled')"></i>
+                </div>
+                <div class="grow">&nbsp;</div>
+                <div v-if="memberStore.subscriptionDetail.isPrinted">
+                    <i class="pi pi-print cursor-pointer"
+                       title="Inschrijving afdrukken"
+                       @click="printSubscription"></i>
+                </div>
+                <div class="grow">&nbsp;</div>
+                <div v-if="memberStore.subscriptionDetail.isPaymentOverviewSend && memberStore.subscriptionDetail.messageId">
+                    <i class="pi pi-send cursor-pointer"
+                       title="Bekijk bericht van de inschrijving"
+                       @click="showMessageDetailFn(memberStore.subscriptionDetail.messageId)"></i>
+                </div>
+                <div class="grow">&nbsp;</div>
+            </div>
             <div class="flex-none w-24">
                 <subscription-badge :subscription="memberStore.subscriptionDetail" class="mt-1"/>
             </div>
@@ -37,6 +57,7 @@
                 <subscription-type :subscription="memberStore.subscriptionDetail"/>
             </div>
         </div>
+
 
         <div class="flex gap-2 mt-4">
             <div class="flex-none w-48 text-right text-xs text-gray-600">
@@ -148,13 +169,23 @@
             </div>
         </div>
     </div>
+
+    <!-- -- detail ------------------------------------------------------------------------------------------------- -->
+    <Dialog v-model:visible="showMessageDetail"
+            v-if="memberStore.messageDetail"
+            :header="memberStore.messageDetail.subject"
+            :modal="true">
+        <message-detail/>
+    </Dialog>
+
+
 </template>
 
 <script setup lang="ts">
 import {useMemberStore} from "@/store/member";
-import SubscriptionBadge from "@/components/subscription/common/SubscriptionBadge.vue";
-import SubscriptionStatus from "@/components/subscription/common/SubscriptionStatus.vue";
-import SubscriptionType from "@/components/subscription/common/SubscriptionType.vue";
+import SubscriptionBadge from "@/components/subscription/common/subscriptionBadge.vue";
+import SubscriptionStatus from "@/components/subscription/common/subscriptionStatus.vue";
+import SubscriptionType from "@/components/subscription/common/subscriptionType.vue";
 import moment from "moment/moment";
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
@@ -164,11 +195,26 @@ import {markSubscriptionAsPayed} from "@/api/command/subscription/markSubscripti
 import type {MarkSubscriptionAsCanceledCommand} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {markSubscriptionAsCanceled} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {SubscriptionStatusEnum} from "@/api/query/enum";
+import MessageDetail from "@/components/message/messageDetail.vue";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
 const toaster = useToast();
 const appStore = useAppStore();
+const showMessageDetail = ref<boolean>(false);
+const apiUrl = import.meta.env.VITE_API_URL as string;
+
+async function showMessageDetailFn(messageId:number) {
+    await memberStore.loadMessageDetail(messageId);
+    showMessageDetail.value = true;
+}
+
+function printSubscription() {
+    let url = apiUrl + '/subscriptions/print?ids=' + memberStore.subscriptionDetail.id;
+    window.open(url, '_blank');
+}
+
+// -- pay and cancel functions -----------------------------------------------------------------------------------------
 
 const emit = defineEmits(["paid", "canceled"]);
 

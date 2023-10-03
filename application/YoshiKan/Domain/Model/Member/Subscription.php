@@ -628,9 +628,9 @@ class Subscription
         return $this->licenseIsPayed;
     }
 
-    public function getMessages(): ?Collection
+    public function getMessages(): array
     {
-        return $this->messages;
+        return $this->messages->getValues();
     }
 
     /**

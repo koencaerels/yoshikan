@@ -37,7 +37,7 @@
         }
 
         .gray {
-            color:gray;
+            color: gray;
         }
 
     </style>
@@ -48,112 +48,115 @@
 
 {% for subscription in list.subscriptions %}
 
-<table width="100%" style="border:3px solid black;margin-top:20px;" cellspacing="0" cellpadding="0">
-    <tr>
-        <td width="65%" valign="top">
-            <table width="100%" cellpadding="10" cellspacing="0" style="border-bottom: 1px solid black;" class="small">
-                <tr>
-                    <td><span class="small gray">Datum</span>&nbsp;&nbsp;{{ list.generatedOn |date('d/m/Y') }}</td>
-                    <td><span class="small gray">Plaats</span>&nbsp;&nbsp;{{ subscription.location.name }}</td>
-                    <td><span class="small gray">Ref.</span>&nbsp;&nbsp;
-                        <strong>YKS-{{ subscription.id }}</strong>
-                    </td>
-                </tr>
-            </table>
-            <table width="100%" cellpadding="3" cellspacing="0"
-                   style="font-size: 12px;margin-left: 8px; margin-top: 5px;">
-                <tr>
-                    <td><span class="small gray">Naam</span></td>
-                    <td><strong>{{ subscription.lastname | upper }} {{ subscription.firstname }}</strong></td>
-                </tr>
-                <tr>
-                    <td><span class="small gray">Gebdatum</span></td>
-                    <td>
-                        ° {{ subscription.dateOfBirth |date('d/m/Y') }} ( {{ subscription.gender.value}} )
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="small gray">Adres</span></td>
-                    <td>
-                        {{ subscription.member.addressStreet }}
-                        {{ subscription.member.addressNumber }}
-                        {% if(subscription.member.addressBox != '') %}
-                            bus {{ subscription.member.addressBox }}
-                        {% endif %}
-                        <br>{{ subscription.member.addressZip }}
-                        {{ subscription.member.addressCity }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="small gray">Contact</span></td>
-                    <td>
-                        {{ subscription.contactLastname }} {{ subscription.contactFirstname }} &lt;{{ subscription.contactEmail }}&gt;
-                        {% if(subscription.contactPhone != '') %}
-                        <br>{{ subscription.contactPhone }}
-                        {% endif %}
-                    </td>
-                </tr>
-            </table>
-            <table width="100%" cellpadding="10" cellspacing="0" style="border-top: 1px solid black;margin-top: 8px;"
-                   class="small">
+    <table width="100%" style="border:3px solid black;margin-top:20px;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="65%" valign="top">
+                <table width="100%" cellpadding="10" cellspacing="0" style="border-bottom: 1px solid black;"
+                       class="small">
+                    <tr>
+                        <td><span class="small gray">Datum</span>&nbsp;&nbsp;{{ list.generatedOn |date('d/m/Y') }}</td>
+                        <td><span class="small gray">Plaats</span>&nbsp;&nbsp;{{ subscription.location.name }}</td>
+                        <td><span class="small gray">Ref.</span>&nbsp;&nbsp;
+                            <strong>YKS-{{ subscription.id }}</strong>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" cellpadding="3" cellspacing="0"
+                       style="font-size: 12px;margin-left: 8px; margin-top: 5px;">
+                    <tr>
+                        <td><span class="small gray">Naam</span></td>
+                        <td><strong>{{ subscription.lastname | upper }} {{ subscription.firstname }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td><span class="small gray">Gebdatum</span></td>
+                        <td>
+                            ° {{ subscription.dateOfBirth |date('d/m/Y') }} ( {{ subscription.gender.value }} )
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="small gray">Adres</span></td>
+                        <td>
+                            {{ subscription.member.addressStreet }}
+                            {{ subscription.member.addressNumber }}
+                            {% if(subscription.member.addressBox != '') %}
+                                bus {{ subscription.member.addressBox }}
+                            {% endif %}
+                            <br>{{ subscription.member.addressZip }}
+                            {{ subscription.member.addressCity }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="small gray">Contact</span></td>
+                        <td>
+                            {{ subscription.contactLastname }} {{ subscription.contactFirstname }}
+                            &lt;{{ subscription.contactEmail }}&gt;
+                            {% if(subscription.contactPhone != '') %}
+                                <br>{{ subscription.contactPhone }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" cellpadding="10" cellspacing="0"
+                       style="border-top: 1px solid black;margin-top: 8px;"
+                       class="small">
 
-                {% for item in subscription.items %}
+                    {% for item in subscription.items %}
                     {% if loop.first %}
-                        <tr>
-                    {% else %}
-                        <tr style="border-top: 1px solid silver;margin-top: 8px;">
-                    {% endif %}
+                    <tr>
+                {% else %}
+                    <tr style="border-top: 1px solid silver;margin-top: 8px;">
+                        {% endif %}
 
-                    {% if(item.price == 0) %}
-                            <td colspan="2" style="font-size: 12px;">{{ item.name }}</td>
-                        </tr>
+                        {% if(item.price == 0) %}
+                        <td colspan="2" style="font-size: 12px;">{{ item.name }}</td>
+                    </tr>
                     {% else %}
-                            <td width="80%"> {{ item.name }}</td>
-                            <td align="right" width="20%"> {{ item.price }} €</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-            <div style="border-top: 1px solid black;">
-                <div style="padding:10px;">
-                    <div class="small">
-                        Door het ondertekenen of het uitvoeren van de betaling, gaat U akkoord met ons
-                        reglement en privacy verklaring, terug te vinden op onze website www.yoshi-kan.be
-                    </div>
-                </div>
-            </div>
-        </td>
-        <td width="35%" style="border-left: 1px solid black; padding-left:20px;">
-            <div style="font-size: 20px;margin-top: 20px;">
-                <strong>JC Yoshi-Kan v.z.w.</strong>
-            </div>
-            <div class="smaller">
-                <br>Secr: Spekstraat 80
-                <br>2220 Heist o/d Berg
-                <br>
-                <br>
-                G&nbsp;&nbsp;0474 51 13 98
-                <br>E&nbsp;&nbsp;judo.yoshikan@gmail.com
-            </div>
+                    <td width="80%"> {{ item.name }}</td>
+                    <td align="right" width="20%"> {{ item.price }} €</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    <div style="border-top: 1px solid black;">
+        <div style="padding:10px;">
             <div class="small">
-                <br>IBAN: BE37 7330 0101 8328
-                <br>BIC: KRED BE BB
+                Door het ondertekenen of het uitvoeren van de betaling, gaat U akkoord met ons
+                reglement en privacy verklaring, terug te vinden op onze website www.yoshi-kan.be
             </div>
-            <div style="margin-top: 20px;margin-bottom: 20px;margin-right: 20px;">
-                <div style="border: 1px solid black;padding:10px;background-color: silver">
-                    <strong>
-                        Totaal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {{ subscription.total }} €
-                    </strong>
-                </div>
+        </div>
+    </div>
+    </td>
+    <td width="35%" style="border-left: 1px solid black; padding-left:20px;" valign="top">
+        <div style="font-size: 20px;margin-top: 20px;">
+            <strong>JC Yoshi-Kan v.z.w.</strong>
+        </div>
+        <div class="smaller">
+            <br>Secr: Spekstraat 80
+            <br>2220 Heist o/d Berg
+            <br>
+            <br>
+            G&nbsp;&nbsp;0474 51 13 98
+            <br>E&nbsp;&nbsp;judo.yoshikan@gmail.com
+        </div>
+        <div class="small">
+            <br>IBAN: BE37 7330 0101 8328
+            <br>BIC: KRED BE BB
+        </div>
+        <div style="margin-top: 20px;margin-bottom: 20px;margin-right: 20px;">
+            <div style="border: 1px solid black;padding:10px;background-color: silver">
+                <strong>
+                    Totaal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ subscription.total }} €
+                </strong>
             </div>
-            <div class="small">
-                Handtekening ouder of voogd:
-                <br><br><br>&nbsp;
-            </div>
-        </td>
+        </div>
+        <div class="small">
+            Handtekening ouder of voogd:
+            <br><br><br>&nbsp;
+        </div>
+    </td>
     </tr>
-</table>
+    </table>
 
 {% endfor %}
 
