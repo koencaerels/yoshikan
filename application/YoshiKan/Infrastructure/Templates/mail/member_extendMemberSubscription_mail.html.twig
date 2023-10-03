@@ -10,13 +10,13 @@
         Beste {{ subscription.contactFirstname }} {{ subscription.contactLastname }},
     </p>
     <p>
-        {% if(subscription.type.value == 'hernieuwing_lidmaatschap') %}
+        {% if(subscription.type.value == 'hernieuwing-lidmaatschap') %}
             Het lidmaatschap
         {% endif %}
-        {% if(subscription.type.value == 'hernieuwing_vergunning') %}
+        {% if(subscription.type.value == 'hernieuwing-vergunning') %}
             De vergunning
         {% endif %}
-        {% if(subscription.type.value == 'volledige_hernieuwing') %}
+        {% if(subscription.type.value == 'volledige-hernieuwing') %}
             Het lidmaatschap en de vergunning
         {% endif %}
         is verlopen of staat op het punt binnenkort te verlopen.

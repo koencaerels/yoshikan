@@ -123,14 +123,14 @@ import VueProgressBar from '@aacassandra/vue3-progressbar';
 const options = {
     color: "#324bed",
     failedColor: "#ff0000",
-    thickness: "2px",
+    thickness: "10px",
     transition: {
         speed: "0.2s",
         opacity: "0.6s",
         termination: 300,
     },
     autoRevert: true,
-    location: "top",
+    location: "bottom",
     inverse: false,
 };
 app.use(VueProgressBar, options);

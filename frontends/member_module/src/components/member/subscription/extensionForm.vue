@@ -424,6 +424,7 @@ import {changeMemberDetails} from "@/api/command/changeMemberDetails";
 import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
 import {memberExtendSubscription} from "@/api/command/subscription/memberExtendSubscription";
+import {SubscriptionTypeEnum} from "@/api/query/enum";
 
 const emit = defineEmits(["submitted"]);
 const props = defineProps<{ member: Member, }>();
@@ -654,7 +655,7 @@ const totalAmount = computed((): number => {
     if (appStore.configuration?.settings && appStore.configuration?.federations) {
 
         if (command.value.memberSubscriptionIsPartSubscription) {
-            command.value.type = 'hernieuwing_lidmaatschap';
+            command.value.type = SubscriptionTypeEnum.RENEWAL_MEMBERSHIP;
             command.value.memberSubscriptionStartMM = moment(props.member.memberSubscriptionEnd).format("MM");
             command.value.memberSubscriptionStartYY = moment(props.member.memberSubscriptionEnd).format("YYYY");
             command.value.memberSubscriptionStart = props.member.memberSubscriptionEnd;
@@ -687,7 +688,7 @@ const totalAmount = computed((): number => {
         }
 
         if (command.value.licenseIsPartSubscription) {
-            command.value.type = 'hernieuwing_vergunning';
+            command.value.type = SubscriptionTypeEnum.RENEWAL_LICENSE;
             command.value.licenseStartMM = moment(props.member.licenseEnd).format("MM");
             command.value.licenseStartYY = moment(props.member.licenseEnd).format("YYYY");
             command.value.licenseStart = props.member.licenseEnd;
@@ -706,7 +707,7 @@ const totalAmount = computed((): number => {
         }
 
         if (command.value.licenseIsPartSubscription && command.value.memberSubscriptionIsPartSubscription) {
-            command.value.type = 'volledige_hernieuwing';
+            command.value.type = SubscriptionTypeEnum.RENEWAL_FULL;
         }
     }
 

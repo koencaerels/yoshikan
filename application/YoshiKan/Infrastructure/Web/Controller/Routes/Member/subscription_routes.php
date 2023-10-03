@@ -56,29 +56,47 @@ trait subscription_routes
     #[Route('/mm/api/subscription/{status}', methods: ['GET'])]
     public function getAllSubscriptions(string $status, Request $request): JsonResponse
     {
-          $response = $this->queryBus->getSubscriptionsByStatus($status);
-          return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+        $response = $this->queryBus->getSubscriptionsByStatus($status);
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
     }
 
-    //    /**
-    //     * @throws Exception
-    //     */
-    //    #[Route('/mm/api/subscriptions/export', methods: ['GET'])]
-    //    public function exportSubscriptions(Request $request): void
-    //    {
-    //        $listIds = $request->query->get('ids');
-    //        $arListIds = explode(',', $listIds);
-    //        $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
-    //        $now = new \DateTimeImmutable();
-    //        $fileName = $now->format('Ymd').'_yoshi-kan_inschrijvingen.xlsx';
-    //        $writer = new Xlsx($spreadsheet);
-    //
-    //        ob_end_clean();
-    //        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
-    //        $writer->save('php://output');
-    //        exit;
-    //    }
+    /**
+     * @throws Exception
+     */
+    #[Route('/mm/api/subscriptions/export', methods: ['GET'])]
+    public function exportSubscriptions(Request $request): void
+    {
+        $listIds = $request->query->get('ids');
+        $spreadsheet = $this->queryBus->exportSubscriptions($this->convertToArrayOfIds($listIds));
+        $now = new \DateTimeImmutable();
+        $fileName = $now->format('Ymd') . '_yoshi-kan-inschrijvingen.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        $writer->save('php://output');
+        exit;
+    }
+
+    #[Route('/mm/api/subscriptions/print', methods: ['GET'])]
+    public function printSubscriptions(Request $request): void
+    {
+        $listIds = $request->query->get('ids');
+        $document = $this->queryBus->printSubscriptions($this->convertToArrayOfIds($listIds));
+
+        exit;
+    }
+
+    private function convertToArrayOfIds(string $ids): array {
+        $arListIdsInt = [];
+        foreach (explode(',', $ids) as $id) {
+            $arListIdsInt[] = intval($id);
+        }
+
+        return $arListIdsInt;
+    }
+
 
     //    #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]
     //    public function backendSubscribeAction(Request $request): JsonResponse

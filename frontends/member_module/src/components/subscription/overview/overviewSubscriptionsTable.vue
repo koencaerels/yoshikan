@@ -4,15 +4,18 @@
         <div class="flex flex-row py-1">
             <div class="basis-1/2">
                 <div class="flex gap-2 ml-1">
-                    <Button v-if="(type === 'duePayment')"
+                    <div v-if="(type === 'duePayment')">
+                        <Button label="Afdrukken" @click="printSubscriptions"
                             :disabled="selectedSubscriptions.length === 0"
-                            label="Afdrukken"
                             icon="pi pi-print"
                             class="p-button-sm p-button-warning"/>
-                    <Button label="Exporteren"
-                            :disabled="selectedSubscriptions.length === 0"
-                            icon="pi pi-file-excel"
-                            class="p-button-sm p-button-warning"/>
+                    </div>
+                    <div>
+                        <Button label="Exporteren" @click="downloadExport"
+                                :disabled="selectedSubscriptions.length === 0"
+                                icon="pi pi-file-excel"
+                                class="p-button-sm p-button-warning"/>
+                    </div>
                 </div>
             </div>
             <div class="basis-1/2 text-right">
@@ -42,7 +45,8 @@
                 <div class="p-2"><i class="pi pi-spin pi-spinner"></i></div>
             </template>
             <template #paginatorstart>
-                <Button type="button" icon="pi pi-refresh" text @click="subscriptionsOverviewStore.loadSubscriptions()"/>
+                <Button type="button" icon="pi pi-refresh" text
+                        @click="subscriptionsOverviewStore.loadSubscriptions()"/>
             </template>
 
             <Column selectionMode="multiple" headerStyle="width: 3rem" class="text-center"></Column>
@@ -50,7 +54,7 @@
             <!-- --------------------------------------------------------------------------------------------------- -->
             <!-- actions                                                                                             -->
             <!-- --------------------------------------------------------------------------------------------------- -->
-            <Column field="isPrinted" data-type="boolean" sortable header="" class="text-xs">
+            <Column field="isPrinted" data-type="boolean" sortable header="" class="text-xs" v-if="(type === 'duePayment')">
                 <template #body="{ data }">
                     <div class="text-xs text-center">
                         <i class="pi pi-print" v-if="data.isPrinted"></i>
@@ -60,7 +64,7 @@
                     <TriStateCheckbox v-model="filterModel.value" @change="filterCallback()"/>
                 </template>
             </Column>
-            <Column field="isPaymentOverviewSend" data-type="boolean" sortable header=""
+            <Column field="isPaymentOverviewSend" data-type="boolean" sortable header="" v-if="(type === 'duePayment')"
                     class="text-xs">
                 <template #body="{ data }">
                     <div class="text-xs text-center">
@@ -82,7 +86,7 @@
                     </div>
                     <div v-else>
                         <subscription-badge @click="showSubscriptionDetailFn(data)"
-                            :subscription="data" class="w-[4rem] cursor-pointer"/>
+                                            :subscription="data" class="w-[4rem] cursor-pointer"/>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">
@@ -92,18 +96,20 @@
             </Column>
             <Column field="status" sortable header="Status" class="text-xs">
                 <template #body="{data}">
-                    <subscription-status @click="showSubscriptionDetailFn(data)" class="cursor-pointer" :subscription="data"/>
+                    <subscription-status @click="showSubscriptionDetailFn(data)" class="cursor-pointer"
+                                         :subscription="data"/>
                 </template>
             </Column>
             <Column field="type" sortable header="Type" class="text-xs">
                 <template #body="{data}">
-                    <subscription-type @click="showSubscriptionDetailFn(data)" class="cursor-pointer" :subscription="data"/>
+                    <subscription-type @click="showSubscriptionDetailFn(data)" class="cursor-pointer"
+                                       :subscription="data"/>
                 </template>
             </Column>
             <Column field="total" sortable header="Bedrag" class="text-sm">
                 <template #body="{data}">
                     <div class="font-bold cursor-pointer" @click="showSubscriptionDetailFn(data)">
-                        {{data.total}} €
+                        {{ data.total }} €
                     </div>
                 </template>
             </Column>
@@ -111,7 +117,8 @@
 
             <Column field="memberId" sortable header="Lidnr." class="text-xs" style="border-left:1px solid black;">
                 <template #body="{data}">
-                    <div v-if="memberStore.isMemberLoading && memberStore.memberId === data.memberId" class="text-center">
+                    <div v-if="memberStore.isMemberLoading && memberStore.memberId === data.memberId"
+                         class="text-center">
                         <i class="pi pi-spin pi-spinner"></i>
                     </div>
                     <div v-else class="text-gray-500 text-center ml-2">
@@ -126,7 +133,7 @@
             <Column field="lastname" sortable header="Naam" class="text-xs">
                 <template #body="{ data }">
                     <div @click="showDetailDialogFullFn(data.memberId)"
-                        class="text-base uppercase font-bold text-sm p-1 cursor-pointer">
+                         class="text-base uppercase font-bold text-sm p-1 cursor-pointer">
                         {{ data.lastname }}
                     </div>
                 </template>
@@ -138,7 +145,7 @@
             <Column field="firstname" sortable header="Voornaam" class="text-xs">
                 <template #body="{ data }">
                     <div @click="showDetailDialogFullFn(data.memberId)"
-                        class="text-base font-bold text-sm cursor-pointer">
+                         class="text-base font-bold text-sm cursor-pointer">
                         {{ data.firstname }}
                     </div>
                 </template>
@@ -284,9 +291,12 @@ const props = defineProps<{
     type: 'new' | 'duePayment' | 'archive',
 }>();
 
+const apiUrl = import.meta.env.VITE_API_URL as string;
 const appStore = useAppStore();
 const subscriptionsOverviewStore = useSubscriptionOverviewStore();
 const memberStore = useMemberStore();
+
+// -- datatable --------------------------------------------------------------------------------------------------------
 
 const selectedSubscriptions = ref<Array<Subscription>>([]);
 
@@ -301,6 +311,20 @@ const filters = ref({
     isPrinted: {value: null, matchMode: FilterMatchMode.EQUALS},
     isPaymentOverviewSend: {value: null, matchMode: FilterMatchMode.EQUALS},
 });
+
+// -- button actions ---------------------------------------------------------------------------------------------------
+
+function downloadExport() {
+    let url = apiUrl + '/subscriptions/export?ids=' + selectedIds.value.toString();
+    window.open(url, '_blank');
+}
+
+function printSubscriptions() {
+    let url = apiUrl + '/subscriptions/print?ids=' + selectedIds.value.toString();
+    window.open(url, '_blank');
+}
+
+// -- detail dialogs ---------------------------------------------------------------------------------------------------
 
 const subscriptionToLoad = ref<number>(0);
 const showSubscriptionDetail = ref<boolean>(false);
@@ -323,6 +347,8 @@ async function showDetailDialogFullFn(id: number): void {
     showDialogFullDetail.value = true;
 }
 
+// -- computed properties ----------------------------------------------------------------------------------------------
+
 const headerColor = computed((): string => {
     switch (props.type) {
         case "archive":
@@ -334,5 +360,12 @@ const headerColor = computed((): string => {
     }
 });
 
-</script>
+const selectedIds = computed((): number[] => {
+    let result = [];
+    for (let subscription of selectedSubscriptions.value) {
+        result.push(subscription.id);
+    }
+    return result;
+});
 
+</script>

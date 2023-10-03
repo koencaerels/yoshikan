@@ -17,9 +17,9 @@
         </div>
         <div class="mt-4 italic">
             Betreft:
-            <span v-if="command.type==='hernieuwing_lidmaatschap'">Vernieuwing lidmaatschap</span>
-            <span v-if="command.type==='hernieuwing_vergunning'">Vernieuwing vergunning</span>
-            <span v-if="command.type==='volledige_hernieuwing'">Vernieuwing lidmaatschap + vergunning</span>
+            <span v-if="command.type=== SubscriptionTypeEnum.RENEWAL_MEMBERSHIP">Vernieuwing lidmaatschap</span>
+            <span v-if="command.type=== SubscriptionTypeEnum.RENEWAL_LICENSE">Vernieuwing vergunning</span>
+            <span v-if="command.type=== SubscriptionTypeEnum.RENEWAL_FULL">Vernieuwing lidmaatschap + vergunning</span>
             &mdash; <span class="uppercase">{{ props.command.lastname }}</span>
             <span>&nbsp;{{ props.command.firstname }}</span>.
         </div>
@@ -130,6 +130,7 @@ import type {MemberExtendSubscriptionCommand} from "@/api/command/subscription/m
 import {computed} from "vue";
 import moment from "moment";
 import OverviewFooter from "@/components/member/subscription/overviewFooter.vue";
+import {SubscriptionTypeEnum} from "@/api/query/enum";
 
 const props = defineProps<{
     member: Member,
