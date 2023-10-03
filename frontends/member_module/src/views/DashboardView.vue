@@ -22,8 +22,22 @@
                     <p>Nog te betalen: {{ federationReport.duePayments }} €</p>
                     <p>Total: {{ federationReport.totalAmount }} €</p>
                 </div>
+
+                <div class="mt-8">
+                    <div v-if="appStore.dashboardNumbers.numberOfWebSubscriptions != 0">
+                        <router-link to="/inschrijvingen/web" class="px-4 py-2 bg-yellow-300 w-full rounded-lg hover:bg-yellow-400">
+                            {{appStore.dashboardNumbers.numberOfWebSubscriptions}} web inschrijvingen
+                        </router-link>
+                    </div>
+                    <div class="mt-8" v-if="appStore.dashboardNumbers.numberOfDuePayments != 0">
+                        <router-link to="/inschrijvingen/te-betalen" class="px-4 py-2 bg-orange-300 w-full rounded-lg hover:bg-orange-400">
+                        {{appStore.dashboardNumbers.numberOfDuePayments}} inschrijvingen nog te betalen
+                        </router-link>
+                    </div>
+                </div>
+
             </div>
-            <div class="basis-1/6 text-xs">
+            <div class="basis-1/6 text-sm">
                 <div v-for="locationReport in appStore.dashboardNumbers.locationReports" class="mb-2">
                     <p class="font-bold">{{ locationReport.location.name }}</p>
                     <p>Actieve leden: {{ locationReport.activeMembers }}</p>
@@ -32,7 +46,7 @@
                 </div>
             </div>
             <div class="basis-1/4">
-                Overzicht web inschrijvingen.
+              &nbsp;
             </div>
         </div>
     </div>

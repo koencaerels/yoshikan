@@ -346,8 +346,10 @@ function hideSubscriptionDetailFn() {
 const showDialogFullDetail = ref<boolean>(false);
 
 async function showDetailDialogFullFn(id: number): void {
-    await memberStore.loadMemberDetail(id);
-    showDialogFullDetail.value = true;
+    if(id) {
+        await memberStore.loadMemberDetail(id);
+        showDialogFullDetail.value = true;
+    }
 }
 
 function downloadListDuePayments() {

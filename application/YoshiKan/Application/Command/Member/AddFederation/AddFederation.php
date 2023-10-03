@@ -20,10 +20,9 @@ class AddFederation
     private function __construct(
         protected string $code,
         protected string $name,
-        protected int    $yearlySubscriptionFee,
+        protected int $yearlySubscriptionFee,
         protected string $publicLabel,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -63,5 +62,4 @@ class AddFederation
     {
         return $this->publicLabel;
     }
-
 }

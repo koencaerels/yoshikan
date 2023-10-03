@@ -63,6 +63,11 @@ class MemberExtendSubscriptionHandler
             throw new \Exception('Membership extension command is not valid.');
         }
 
+        $extraTraining = false;
+        if (3 === $command->getNumberOfTraining()) {
+            $extraTraining = true;
+        }
+
         // -- make a subscription
         $subscription = Subscription::make(
             $this->subscriptionRepository->nextIdentity(),
@@ -76,7 +81,7 @@ class MemberExtendSubscriptionHandler
             Gender::from($command->getGender()),
             SubscriptionType::from($command->getType()),
             $command->getNumberOfTraining(),
-            $command->isExtraTraining(),
+            $extraTraining,
             $command->isNewMember(),
             $command->isReductionFamily(),
             $command->isJudogiBelt(),
@@ -99,6 +104,7 @@ class MemberExtendSubscriptionHandler
 
         $subscription->setMember($member);
         $subscription->changeStatus(SubscriptionStatus::AWAITING_PAYMENT);
+        $subscription->calculate();
         $this->subscriptionRepository->save($subscription);
 
         // -- make some subscription lines -----------------------------------------------------------------------------

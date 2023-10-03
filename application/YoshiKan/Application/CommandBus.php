@@ -21,6 +21,7 @@ use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +56,7 @@ class CommandBus
         protected MailerInterface $mailer,
         protected string $uploadFolder,
         protected SubscriptionRepository $subscriptionRepository,
+        protected SubscriptionItemRepository $subscriptionItemRepository,
         protected LocationRepository $locationRepository,
         protected PeriodRepository $periodRepository,
         protected JudogiRepository $judogiRepository,

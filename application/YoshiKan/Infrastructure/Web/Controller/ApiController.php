@@ -23,6 +23,7 @@ use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Product\Judogi;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -89,6 +90,7 @@ class ApiController extends AbstractController
             $this->mailer,
             $this->uploadFolder,
             $this->entityManager->getRepository(Subscription::class),
+            $this->entityManager->getRepository(SubscriptionItem::class),
             $this->entityManager->getRepository(Location::class),
             $this->entityManager->getRepository(Period::class),
             $this->entityManager->getRepository(Judogi::class),
@@ -133,12 +135,15 @@ class ApiController extends AbstractController
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/inschrijving/api/subscribe', name: 'inschrijving_subscribe', methods: ['POST', 'PUT'])]
     public function subscribeAction(Request $request): JsonResponse
     {
         $jsonCommand = json_decode($request->request->get('subscription'));
-        $response = $this->commandBus->WebSubscriptionAction($jsonCommand);
-        $result = $this->commandBus->WebConfirmationMail($response->id);
+        $response = $this->commandBus->newMemberWebSubscription($jsonCommand);
+        $result = $this->commandBus->newMemberWebSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

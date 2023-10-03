@@ -18,13 +18,12 @@ class ChangeFederation
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int    $id,
+        protected int $id,
         protected string $code,
         protected string $name,
-        protected int    $yearlySubscriptionFee,
+        protected int $yearlySubscriptionFee,
         protected string $publicLabel,
-    )
-    {
+    ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -70,5 +69,4 @@ class ChangeFederation
     {
         return $this->publicLabel;
     }
-
 }

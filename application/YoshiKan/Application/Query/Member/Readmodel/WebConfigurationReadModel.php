@@ -33,7 +33,7 @@ class WebConfigurationReadModel implements \JsonSerializable
         $json->locations = $this->getLocations()->getCollection();
         $json->activePeriod = $this->getActivePeriod();
         $json->settings = $this->getSettings();
-        $json->federations = $this->getFederations();
+        $json->federations = $this->getFederations()->getCollection();
 
         return $json;
     }

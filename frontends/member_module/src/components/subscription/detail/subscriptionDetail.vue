@@ -58,17 +58,16 @@
             </div>
         </div>
 
-
         <div class="flex gap-2 mt-4">
             <div class="flex-none w-48 text-right text-xs text-gray-600">
-                Lid
+                Judoka
             </div>
-            <div v-if="memberStore.subscriptionDetail.memberId != 0">
+            <div v-if="memberStore.subscriptionDetail.memberId">
                 <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs mt-1">
                     YK-{{ memberStore.subscriptionDetail.memberId }}
                 </div>
             </div>
-            <div>
+            <div class="ml-2">
                 <span class="font-bold">
                     <span class="uppercase">{{ memberStore.subscriptionDetail.lastname }}</span>
                     {{ memberStore.subscriptionDetail.firstname }}

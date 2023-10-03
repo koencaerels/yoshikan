@@ -17,6 +17,8 @@ class DashboardNumbersReadmodel implements \JsonSerializable
         protected int $activeMembers = 0,
         protected float $duePayments = 0,
         protected float $totalAmount = 0,
+        protected int $numberOfWebSubscriptions = 0,
+        protected int $numberOfDuePayments = 0
     ) {
     }
 
@@ -33,6 +35,12 @@ class DashboardNumbersReadmodel implements \JsonSerializable
         $this->locationReports[] = $locationReport;
     }
 
+    public function setNumbers($numberOfWebSubscriptions, $numberOfDuePayments): void
+    {
+        $this->numberOfWebSubscriptions = $numberOfWebSubscriptions;
+        $this->numberOfDuePayments = $numberOfDuePayments;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // What to render as json
     // —————————————————————————————————————————————————————————————————————————
@@ -46,6 +54,8 @@ class DashboardNumbersReadmodel implements \JsonSerializable
         $json->activeMembers = $this->getActiveMembers();
         $json->duePayments = $this->getDuePayments();
         $json->totalAmount = $this->getTotalAmount();
+        $json->numberOfWebSubscriptions = $this->getNumberOfWebSubscriptions();
+        $json->numberOfDuePayments = $this->getNumberOfDuePayments();
 
         return $json;
     }
@@ -82,5 +92,15 @@ class DashboardNumbersReadmodel implements \JsonSerializable
     public function getActivePeriod(): PeriodReadModel
     {
         return $this->activePeriod;
+    }
+
+    public function getNumberOfWebSubscriptions(): int
+    {
+        return $this->numberOfWebSubscriptions;
+    }
+
+    public function getNumberOfDuePayments(): int
+    {
+        return $this->numberOfDuePayments;
     }
 }

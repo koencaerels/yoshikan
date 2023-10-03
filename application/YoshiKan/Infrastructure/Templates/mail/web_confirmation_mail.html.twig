@@ -3,53 +3,46 @@
 {% block title %}{{ subject }}{% endblock %}
 
 {% block body %}
-    <p>Dag {{ subscription.contactFirstname }},</p>
+
+    {# judoka  ------------------------------------------------------------------------------------------------------ #}
+    <p>Beste {{ subscription.contactLastname }} {{ subscription.contactFirstname }},</p>
     <p>
-        Bedankt voor je {% if(subscription.isNewMember) %}{% else %}(her){% endif %}inschrijving van
-        <strong>{{ subscription.firstname }} {{ subscription.lastname }}</strong>
-        (° {{ subscription.dateOfBirth | date('d/m/Y') }}
-        {% if(subscription.isNewMember) %}- {{ subscription.gender.value }}{% endif %})
-        {% if(subscription.isNewMember) %}
-            als nieuw lid.
-        {% else %}
-            .
-        {% endif %}
+        Bedankt voor je inschrijving van
+        <strong>{{ subscription.lastname | upper }} {{ subscription.firstname }}</strong>
+        (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        als nieuw lid.
     </p>
     {# extra paragraph for a new member ----------------------------------------------------------------------------- #}
-    {% if(subscription.isNewMember) %}
-        <p>
-            <strong>Contact</strong>
-            <br>{{ subscription.contactFirstname }} {{ subscription.contactLastname }}
-            <br>{{ subscription.addressStreet }} {{ subscription.addressNumber }}
-            {% if(subscription.addressBox) != '' %} bus {{ subscription.adressBox }}{% endif %}
-            <br>{{ subscription.addressZip }} {{ subscription.addressCity }}
-        </p>
-    {% endif %}
+    <p>
+        <strong>Contact</strong>
+        <br>{{ subscription.contactLastname }} {{ subscription.contactFirstname }}
+        <br>{{ subscription.addressStreet }} {{ subscription.addressNumber }}
+        {% if(subscription.addressBox) != '' %} bus {{ subscription.adressBox }}{% endif %}
+        <br>{{ subscription.addressZip }} {{ subscription.addressCity }}
+    </p>
+
     {# summary ------------------------------------------------------------------------------------------------------ #}
     <p>
         <strong>Referentie: YKS-{{ subscription.id }}</strong>
-        <br><br><strong>{{ subscription.period.name }}</strong>
         <br>- Locatie: {{ subscription.location.name }}
-        <br>- Type: {{ subscription.type.value }},
-        {% if(subscription.numberOfTraining == 1) %}
-            1 training per week
+        <br>- Lidmaatschap:
+        {% if(subscription.memberSubscriptionIsHalfYear == 1) %}
+            Halfjaarlijks
         {% else %}
-            2 trainingen per week
+            Jaarlijks
         {% endif %}
-        {% if(subscription.isExtraTraining) %}
-            <br>- Extra supplement 3 tot 5 trainingen per week.
+        {% if(subscription.numberOfTraining == 1) %}
+            <br>- 1 training per week
+        {% elseif(subscription.numberOfTraining == 2) %}
+            <br>- 2 trainingen per week
+        {% else %}
+            <br>- 3 tot 5 trainingen per week.
         {% endif %}
-        {% if(subscription.isNewMember) %}
-            <br>- Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak voor judopak.
-        {% endif %}
-        {% if(subscription.isJudogiBelt) %}
-            <br>- Judopak + gordel
-        {% endif %}
+        <br>- Inschrijvingspakket: judogids, judopaspoort, leskaart + sportzak voor judopak.
         {% if(subscription.isReductionFamily) %}
             <br>- 10% Korting als 2e en 3e kind van éénzelfde familie.
         {% endif %}
     </p>
-    <p>&nbsp;</p>
     <p>
         We kijken alles nog eens na. Van zodra alles in orde is,
         krijg je van ons een definitieve bevestiging en de betalingsinstructies via email.
@@ -58,7 +51,7 @@
         Tot binnenkort.
     </p>
     <p>
-        Met vriendelijke groeten,
+        Met sportieve groeten,
         <br>Team Yoshi-Kan.
     </p>
 {% endblock %}

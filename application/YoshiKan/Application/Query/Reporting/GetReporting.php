@@ -39,6 +39,11 @@ class GetReporting
 
         $report = new DashboardNumbersReadmodel(PeriodReadModel::hydrateFromModel($period));
 
+        // set numbers about subscriptions
+        $webSubscriptions = $this->subscriptionRepository->getByStatus(SubscriptionStatus::NEW);
+        $duePaymentSubscriptions = $this->subscriptionRepository->getByStatus(SubscriptionStatus::AWAITING_PAYMENT);
+        $report->setNumbers(count($webSubscriptions), count($duePaymentSubscriptions));
+
         /** @var Federation $federation */
         foreach ($federations as $federation) {
             $federationRM = FederationReadModel::hydrateFromModel($federation);

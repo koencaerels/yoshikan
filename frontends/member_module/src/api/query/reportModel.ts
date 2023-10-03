@@ -16,6 +16,8 @@ export interface DashboardNumbers {
     activeMembers: number;
     duePayments: number;
     totalAmount: number;
+    numberOfWebSubscriptions: number;
+    numberOfDuePayments: number;
 }
 
 export interface FederationReport {

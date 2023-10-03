@@ -1,41 +1,83 @@
 <template>
     <div v-if="step === 0">
-        Loading settings...
-    </div>
-    <div id="appInschrijving" v-if="step === 1" class="border-2 border-slate-400 rounded-xl p-2">
-
-        <div class="bg-gray-200 pt-0.5 pb-3 rounded-t-lg">
-            <div class="flex flex-row mt-4 mb-4">
-                <div class="basis-1/4 mr-4 text-right">
-                    <span class="text-xl"><strong>Periode&nbsp;&nbsp;</strong></span>
-                    <i class="mdi mdi-calendar text-2xl"></i>
-                </div>
-                <div class="basis-3/4 text-xl">
-                    <strong>{{ settings.activePeriod.name }}</strong>
-                </div>
-            </div>
-            <div class="url-field-wrapper">
-                <o-input id="ti_url"
-                         v-model="subscription.honeyPot"
-                         type="text"/>
-            </div>
-            <!-- nieuw lid ------------------------------------------ -->
-            <div class="flex flex-row">
-                <div class="basis-1/4 text-right mr-4 text-lg">Nieuw lid?</div>
-                <div class="basis-3/4">
-                    <o-radio id="radio_new_member_yes" name="newMember" :native-value="true" size-class="large"
-                             v-model="subscription.newMember" variant="info">
-                        <span class="text-lg">Ja</span>
-                    </o-radio>
-                    <o-radio id="radio_new_member_no" name="newMember" :native-value="false" size-class="large"
-                             v-model="subscription.newMember" variant="info">
-                        <span class="text-lg">Nee</span>
-                        <span class="text-sm"> ( = herinschrijving)</span>
-                    </o-radio>
-                </div>
+        <br><br>
+        <div class="text-center">
+            <center>
+                <svg class="mt-4" width="105" height="105" viewBox="0 0 105 105" xmlns="http://www.w3.org/2000/svg"
+                     fill="#ccc">
+                    <circle cx="12.5" cy="12.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="0s" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5">
+                        <animate attributeName="fill-opacity"
+                                 begin="100ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="52.5" cy="12.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="300ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="52.5" cy="52.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="600ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="92.5" cy="12.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="800ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="92.5" cy="52.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="400ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="12.5" cy="92.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="700ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="52.5" cy="92.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="500ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="92.5" cy="92.5" r="12.5">
+                        <animate attributeName="fill-opacity"
+                                 begin="200ms" dur="1s"
+                                 values="1;.2;1" calcMode="linear"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </center>
+            <div class="mt-4">
+                Even geduld...
             </div>
         </div>
-
+    </div>
+    <div id="appInschrijving" v-if="step === 1" class="border-2 border-slate-400 rounded-xl p-2">
+        <div>
+            <div class="url-field-wrapper">
+                <o-field class="w-full"
+                         label="Url *"
+                         label-for="ti_url">
+                    <o-input id="ti_url"
+                             v-model="subscription.honeyPot"
+                             type="text"/>
+                </o-field>
+            </div>
+        </div>
         <!-- -- contact ----------------------------------------- -->
         <div class="md:flex md:flex-row mt-2 mb-4">
             <div class="basis-1/4 mr-4 text-right">
@@ -78,7 +120,7 @@
                 </div>
 
                 <!-- -- adres -------------------------------------- -->
-                <div v-if="subscription.newMember"><!--  -->
+                <div>
                     <div class="md:flex md:flex-row mt-2">
                         <div class="basis-3/5">
                             <o-field class="w-full" :variant="addressStreetVariant" label="Straat *"
@@ -116,8 +158,8 @@
 
             </div>
         </div>
-        <hr>
-        <div class="md:flex md:flex-row mt-2 mb-4">
+
+        <div class="md:flex md:flex-row mt-2 mb-4 bg-slate-300 p-2 rounded-lg">
             <div class="basis-1/4 mr-4 text-right">
                 <span><strong>Judoka&nbsp;&nbsp;</strong></span>
                 <i class="mdi mdi-account-circle text-2xl"></i>
@@ -141,7 +183,7 @@
                 </div>
 
                 <!-- -- rijksregisternummer ----------------------- -->
-                <div class="flex flex-row mt-4" v-if="subscription.newMember"> <!--   -->
+                <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4 text-sm mt-2">
                         Rijksregisternummer*
                     </div>
@@ -189,16 +231,19 @@
                 </div>
 
                 <!-- gender --------------------------------------- -->
-                <div class="flex flex-row mt-4" v-if="subscription.newMember"> <!-- -->
+                <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4 text-sm">Geslacht*</div>
                     <div class="basis-3/4">
-                        <o-radio id="radio_gender_m" name="gender" native-value="M" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_m" name="gender" native-value="M" v-model="subscription.gender"
+                                 variant="info">
                             M
                         </o-radio>
-                        <o-radio id="radio_gender_v" name="gender" native-value="V" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_v" name="gender" native-value="V" v-model="subscription.gender"
+                                 variant="info">
                             V
                         </o-radio>
-                        <o-radio id="radio_gender_x" name="gender" native-value="X" v-model="subscription.gender" variant="info">
+                        <o-radio id="radio_gender_x" name="gender" native-value="X" v-model="subscription.gender"
+                                 variant="info">
                             X
                         </o-radio>
                     </div>
@@ -207,7 +252,6 @@
             </div>
         </div>
 
-        <hr>
         <div class="flex flex-row mt-4 mb-4">
             <div class="basis-1/4 mr-4 text-right">&nbsp;</div>
             <div class="basis-3/4">
@@ -215,27 +259,27 @@
                 <div class="flex flex-row mt-4">
                     <div class="basis-1/4 text-right mr-4">Locatie</div>
                     <div class="basis-3/4">
-                        <span v-for="location in settings.locations">
+                        <div v-for="location in settings.locations" class="mb-1">
                             <o-radio :id="'radio_location_'+location.name"
-                                    name="location"
+                                     name="location"
                                      :native-value="location.id"
-                                     v-model="subscription.location"
+                                     v-model="subscription.locationId"
                                      variant="info">
                                 {{ location.name }}
                             </o-radio>
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <!-- duur ------------------------------------------ -->
                 <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right mr-4">Type</div>
+                    <div class="basis-1/4 text-right mr-4">&nbsp;</div>
                     <div class="basis-3/4">
-                        <o-radio id="radio_type_full_year" name="type" native-value="full"
-                                 v-model="subscription.type" variant="info">
+                        <o-radio id="radio_type_full_year" name="type" :native-value="false"
+                                 v-model="subscription.memberSubscriptionIsHalfYear" variant="info">
                             Volledig jaar
                         </o-radio>
-                        <o-radio id="radio_type_half_year" name="type" native-value="half"
-                                 v-model="subscription.type" variant="info">
+                        <o-radio id="radio_type_half_year" name="type" :native-value="true"
+                                 v-model="subscription.memberSubscriptionIsHalfYear" variant="info">
                             Half jaar
                         </o-radio>
                     </div>
@@ -265,20 +309,23 @@
                     </div>
                 </div>
 
+                <!-- locatie --------------------------------------- -->
+                <div class="flex flex-row mt-4">
+                    <div class="basis-1/4 text-right mr-4">Vergunning</div>
+                    <div class="basis-3/4">
+                        <div v-for="federation in settings.federations" class="mb-1">
+                            <o-radio :id="'radio_federation_'+federation.publicLabel"
+                                     name="location"
+                                     :native-value="federation.id"
+                                     v-model="subscription.federationId"
+                                     variant="info">
+                                {{ federation.publicLabel }}
+                            </o-radio>
+                        </div>
+                    </div>
+                </div>
                 <div class="mt-2">
                     <hr>
-                </div>
-
-                <!-- kledij -------------------------------------- -->
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right mr-4">Judopak</div>
-                    <div class="basis-3/4">
-                        <o-field>
-                            <o-switch id="radio_judogi_belt" v-model="subscription.judogiBelt" variant="info" size="small">
-                                Judopak + gordel
-                            </o-switch>
-                        </o-field>
-                    </div>
                 </div>
 
                 <!-- korting -------------------------------------- -->
@@ -286,7 +333,8 @@
                     <div class="basis-1/4 text-right mr-4">Korting</div>
                     <div class="basis-3/4">
                         <o-field>
-                            <o-switch id="radio_reduction" v-model="subscription.reductionFamily" variant="info" size="small">
+                            <o-switch id="radio_reduction" v-model="subscription.reductionFamily" variant="info"
+                                      size="small">
                                 2e en/of 3e kind van éénzelfde familie
                             </o-switch>
                         </o-field>
@@ -334,9 +382,67 @@
             </div>
         </div>
     </div>
-
-    <div v-if="step === 2">
-        <div style="height: 250px">
+    <div v-if="step === 2" class="text-center">
+        <center>
+            <svg class="mt-4" width="105" height="105" viewBox="0 0 105 105" xmlns="http://www.w3.org/2000/svg"
+                 fill="#ccc">
+                <circle cx="12.5" cy="12.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="0s" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5">
+                    <animate attributeName="fill-opacity"
+                             begin="100ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="52.5" cy="12.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="300ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="52.5" cy="52.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="600ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="92.5" cy="12.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="800ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="92.5" cy="52.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="400ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="12.5" cy="92.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="700ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="52.5" cy="92.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="500ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+                <circle cx="92.5" cy="92.5" r="12.5">
+                    <animate attributeName="fill-opacity"
+                             begin="200ms" dur="1s"
+                             values="1;.2;1" calcMode="linear"
+                             repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </center>
+        <div class="mt-4">
             Inschrijven...
         </div>
     </div>
@@ -346,7 +452,7 @@
             <div class="bg-gray-200 p-4 rounded-lg" style="height:250px">
                 <p>
                     We hebben je inschrijving goed ontvangen.
-                    <br>We hebben ook een email als bevestiging verzonden naar <strong>{{
+                    <br>We hebben ook een bevestiging verzonden naar <strong>{{
                         subscription.contactEmail
                     }}</strong>.
                     <br>Dit is je referentie
@@ -372,36 +478,39 @@ import axios from "axios";
 const step = ref(0);
 const isSaving = ref(false);
 const settings = ref({});
+
 const subscription = ref({
-    periodId: 0,
+    type: 'nieuwe-inschrijving',
+    federationId: 2,
+    locationId: 1,
     contactFirstname: '',
     contactLastname: '',
     contactEmail: '',
     contactPhone: '',
-    firstname: '',
-    lastname: '',
-    dateOfBirthDD: '',
-    dateOfBirthMM: '',
-    dateOfBirthYYYY: '',
-    dateOfBirth: new Date(),
-    location: 1,
-    type: 'full',
-    numberOfTraining: 1,
-    extraTraining: false,
-    reductionFamily: false,
-    judogiBelt: false,
-    remarks: '',
-    honeyPot: '',
-    // extra fields for a subscription (only for new members)
-    newMember: true,
-    gender: 'X',
-    nationalRegisterNumber: '',
     addressStreet: '',
     addressNumber: '',
     addressBox: '',
     addressZip: '',
-    addressCity: ''
+    addressCity: '',
+    firstname: '',
+    lastname: '',
+    nationalRegisterNumber: '',
+    dateOfBirthDD: '',
+    dateOfBirthMM: '',
+    dateOfBirthYYYY: '',
+    dateOfBirth: new Date(),
+    gender: 'X',
+    memberSubscriptionIsHalfYear: false,
+    numberOfTraining: 1,
+    isExtraTraining: false,
+    isNewMember: true,
+    isReductionFamily: false,
+    total: 0,
+    remarks: '',
+    isJudogiBelt: false,
+    honeyPot: '',
 });
+
 const subscriptionResult = ref({});
 const options = {
     postProcess: val => {
@@ -447,8 +556,8 @@ function loadSettings() {
 function loadSettingsHandler(data) {
     settings.value = data;
     step.value = 1;
-    subscription.value.periodId = settings.value.activePeriod.id;
-    subscription.value.location = settings.value.locations[0].id;
+    subscription.value.locationId = settings.value.locations[0].id;
+    subscription.value.federationId = settings.value.federations[0].id;
 }
 
 function subscribe() {
@@ -477,22 +586,19 @@ function resetSubscription() {
     subscription.value.dateOfBirthMM = '';
     subscription.value.dateOfBirthYYYY = '';
     subscription.value.dateOfBirth = new Date();
-    subscription.value.gender = 'M';
+    subscription.value.gender = 'X';
     subscription.value.newMember = true;
-    subscription.value.type = 'full';
     subscription.value.numberOfTraining = 1;
     subscription.value.extraTraining = false;
     subscription.value.reductionFamily = false;
     subscription.value.judogiBelt = false;
     subscription.value.remarks = '';
-    // reset the extra fields
     subscription.value.nationalRegisterNumber = '';
     subscription.value.addressStreet = '';
     subscription.value.addressNumber = '';
     subscription.value.addressBox = '';
     subscription.value.addressZip = '';
     subscription.value.addressCity = '';
-
     step.value = 1;
 }
 
@@ -522,12 +628,7 @@ const dateValidator = function (value) {
 };
 
 const nationalRegisterNumberValidator = function (value) {
-    if (!subscription.value.newMember) return true;
     return (subscription.value.nationalRegisterNumber.length === 15);
-}
-
-function isNewMember() {
-    return subscription.value.newMember;
 }
 
 const rules = {
@@ -538,13 +639,14 @@ const rules = {
     lastname: {required},
     dateOfBirthDD: {required, numeric, maxValueValue: maxValue(31), minValueValue: minValue(1), dateValidator},
     dateOfBirthMM: {required, numeric, maxValueValue: maxValue(12), minValueValue: minValue(1), dateValidator},
-    dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2200), dateValidator},
-    location: {minValueValue: minValue(1)},
-    nationalRegisterNumber: {requiredNewMember: requiredIf(isNewMember), nationalRegisterNumberValidator},
-    addressStreet: {requiredNewMember: requiredIf(isNewMember)},
-    addressNumber: {requiredNewMember: requiredIf(isNewMember)},
-    addressZip: {requiredNewMember: requiredIf(isNewMember)},
-    addressCity: {requiredNewMember: requiredIf(isNewMember)},
+    dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2400), dateValidator},
+    nationalRegisterNumber: {nationalRegisterNumberValidator},
+    addressStreet: {required},
+    addressNumber: {required},
+    addressZip: {required},
+    addressCity: {required},
+    locationId: {minValueValue: minValue(1)},
+    federationId: {minValueValue: minValue(1)},
 };
 
 const v$ = useVuelidate(rules, subscription);
