@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail;
 
+use App\YoshiKan\Application\Settings;
+
 trait member_extend_subscription_mail
 {
     public function sendMemberExtendSubscriptionMail(int $subscriptionId): bool
@@ -21,8 +23,8 @@ trait member_extend_subscription_mail
 
         $command = new MemberExtendSubscriptionMail(
             $subscriptionId,
-            'Yoshi-Kan',
-            'no-reply@yoshi-kan.be'
+            Settings::FROM_NAME->value,
+            Settings::FROM_EMAIL->value
         );
 
         $handler = new MemberExtendSubscriptionMailHandler(

@@ -14,6 +14,7 @@ export interface ChangeFederationCommand {
     code: string;
     name: string;
     yearlySubscriptionFee: string;
+    publicLabel: string;
 }
 
 export async function changeFederation(command: ChangeFederationCommand) {

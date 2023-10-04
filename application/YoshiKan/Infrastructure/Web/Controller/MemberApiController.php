@@ -40,6 +40,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\message_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Reporting\reporting_routes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,6 +71,7 @@ class MemberApiController extends AbstractController
     use member_image_routes;
     use federation_routes;
     use message_routes;
+    use reporting_routes;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Attributes

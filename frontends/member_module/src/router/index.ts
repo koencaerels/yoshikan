@@ -25,12 +25,12 @@ const router = createRouter({
                 {
                     path: 'web',
                     name: 'web',
-                    component: () => import('../views/subscription/SubscriptionNew.vue')
+                    component: () => import('../views/subscription/SubscriptionNewView.vue')
                 },
                 {
                     path: 'te-betalen',
                     name: 'te-betalen',
-                    component: () => import('../views/subscription/SubscriptionDuePayment.vue')
+                    component: () => import('../views/subscription/SubscriptionDuePaymentView.vue')
                 },
                 {
                     path: 'export',

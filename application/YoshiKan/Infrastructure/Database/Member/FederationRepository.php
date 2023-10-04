@@ -84,7 +84,7 @@ final class FederationRepository extends ServiceEntityRepository implements \App
     public function getAll(): array
     {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        $q->addOrderBy('t.id', 'DESC');
+        $q->addOrderBy('t.sequence', 'ASC');
 
         return $q->getQuery()->getResult();
     }

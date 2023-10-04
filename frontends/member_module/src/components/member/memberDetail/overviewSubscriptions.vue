@@ -15,26 +15,26 @@
                     <subscription-type :subscription="subscription" class="mt-0.5"/>
                 </div>
                 <div class="flex-none w-16 font-bold text-right">
-                    {{subscription.total}} €
+                    {{ subscription.total }} €
                 </div>
                 <div class="grow">
                     <div class="line-clamp-1 text-xs mt-0.5">
                         <span v-if="subscription.memberSubscriptionIsPartSubscription">
                             Lid van
-                            {{moment(subscription.memberSubscriptionStart).format("MM/YYYY")}}
+                            {{ moment(subscription.memberSubscriptionStart).format("MM/YYYY") }}
                             tot
-                            <strong>{{moment(subscription.memberSubscriptionEnd).format("MM/YYYY")}}</strong>
+                            <strong>{{ moment(subscription.memberSubscriptionEnd).format("MM/YYYY") }}</strong>
                         </span>
                         <span v-if="subscription.licenseIsPartSubscription">
                             Vergunning van
-                            {{moment(subscription.licenseStart).format("MM/YYYY")}}
+                            {{ moment(subscription.licenseStart).format("MM/YYYY") }}
                             tot
-                            <strong>{{moment(subscription.licenseEnd).format("MM/YYYY")}}</strong>
+                            <strong>{{ moment(subscription.licenseEnd).format("MM/YYYY") }}</strong>
                         </span>
                     </div>
                 </div>
                 <div class="flex-none w-8 text-right mr-2">
-                    <div v-if="memberStore.isLoading && subscriptionToLoad === subscription.id">
+                    <div class="text-xs mt-0.5" v-if="memberStore.isLoading && subscriptionToLoad === subscription.id">
                         <i class="pi pi-spin pi-spinner"></i>
                     </div>
                 </div>
@@ -45,11 +45,9 @@
     <!-- subscription detail  -->
     <Dialog v-model:visible="showSubscriptionDetail"
             v-if="memberStore.subscriptionDetail"
-            position="top"
             :header="'Detail van de inschrijving: YKS-'+memberStore.subscriptionDetail.id"
             :modal="true">
-        <!-- // todo listen to events -->
-        <subscription-detail/>
+        <subscription-detail v-on:paid="hideSubscriptionDetailFn" v-on:canceled="hideSubscriptionDetailFn"/>
     </Dialog>
 
 </template>
@@ -59,10 +57,10 @@ import {useMemberStore} from "@/store/member";
 import {ref} from "vue";
 import type {Subscription} from "@/api/query/model";
 import moment from "moment";
-import SubscriptionBadge from "@/components/subscription/common/SubscriptionBadge.vue";
-import SubscriptionStatus from "@/components/subscription/common/SubscriptionStatus.vue";
-import SubscriptionType from "@/components/subscription/common/SubscriptionType.vue";
-import SubscriptionDetail from "@/components/subscription/detail/SubscriptionDetail.vue";
+import SubscriptionBadge from "@/components/subscription/common/subscriptionBadge.vue";
+import SubscriptionStatus from "@/components/subscription/common/subscriptionStatus.vue";
+import SubscriptionType from "@/components/subscription/common/subscriptionType.vue";
+import SubscriptionDetail from "@/components/subscription/detail/subscriptionDetail.vue";
 
 const memberStore = useMemberStore();
 const showSubscriptionDetail = ref<boolean>(false);
@@ -72,6 +70,10 @@ async function showSubscriptionDetailFn(subscription: Subscription) {
     subscriptionToLoad.value = subscription.id;
     await memberStore.loadSubscriptionDetail(subscription.id);
     showSubscriptionDetail.value = true;
+}
+
+function hideSubscriptionDetailFn() {
+    showSubscriptionDetail.value = false;
 }
 
 </script>

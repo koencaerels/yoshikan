@@ -22,6 +22,7 @@ class ChangeFederation
         protected string $code,
         protected string $name,
         protected int $yearlySubscriptionFee,
+        protected string $publicLabel,
     ) {
     }
 
@@ -36,6 +37,7 @@ class ChangeFederation
             trim($json->code),
             trim($json->name),
             intval($json->yearlySubscriptionFee),
+            trim($json->publicLabel)
         );
     }
 
@@ -61,5 +63,10 @@ class ChangeFederation
     public function getYearlySubscriptionFee(): int
     {
         return $this->yearlySubscriptionFee;
+    }
+
+    public function getPublicLabel(): string
+    {
+        return $this->publicLabel;
     }
 }

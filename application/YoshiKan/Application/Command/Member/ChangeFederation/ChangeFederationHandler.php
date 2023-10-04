@@ -28,13 +28,14 @@ class ChangeFederationHandler
     // Handler
     // —————————————————————————————————————————————————————————————————————————
 
-    public function Change(ChangeFederation $command): bool
+    public function go(ChangeFederation $command): bool
     {
         $model = $this->federationRepo->getById($command->getId());
         $model->change(
             $command->getCode(),
             $command->getName(),
-            $command->getYearlySubscriptionFee()
+            $command->getYearlySubscriptionFee(),
+            $command->getPublicLabel()
         );
         $this->federationRepo->save($model);
 

@@ -10,7 +10,7 @@ class OrderFederationHandler
     // Constructor
     // ———————————————————————————————————————————————————————————————
 
-    public function __construct(protected FederationRepository $repo)
+    public function __construct(protected FederationRepository $federationRepository)
     {
     }
 
@@ -22,9 +22,9 @@ class OrderFederationHandler
     {
         $sequence = 0;
         foreach ($command->getSequence() as $sequenceId) {
-            $model = $this->repo->getById($sequenceId);
+            $model = $this->federationRepository->getById($sequenceId);
             $model->setSequence($sequence);
-            $this->repo->save($model);
+            $this->federationRepository->save($model);
             ++$sequence;
         }
 

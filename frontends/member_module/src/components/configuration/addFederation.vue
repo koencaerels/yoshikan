@@ -28,6 +28,13 @@
         </td>
         <td v-if="!isView" class="pl-2">
             <span class="p-input-icon-right">
+                <InputText class="p-inputtext-sm w-full" placeholder="name" v-model="command.publicLabel" />
+                <i v-if="!add$.publicLabel.$invalid" class="pi pi-check text-green-600"/>
+                <i v-if="add$.publicLabel.$invalid" class="pi pi-times text-red-600"/>
+            </span>
+        </td>
+        <td v-if="!isView" class="pl-2">
+            <span class="p-input-icon-right">
                 <InputText class="p-inputtext-sm w-full" placeholder="prijs vergunning" v-model="command.yearlySubscriptionFee" />
                 <i v-if="!add$.yearlySubscriptionFee.$invalid" class="pi pi-check text-green-600"/>
                 <i v-if="add$.yearlySubscriptionFee.$invalid" class="pi pi-times text-red-600"/>
@@ -75,12 +82,14 @@ const command = ref<AddFederationCommand>({
     code: '',
     name: '',
     yearlySubscriptionFee: '0',
+    publicLabel: ''
 });
 
 const rules = {
     name: {required},
     code: {required},
-    yearlySubscriptionFee: {required}
+    yearlySubscriptionFee: {required},
+    publicLabel: {required}
 };
 
 const add$ = useVuelidate(rules, command);

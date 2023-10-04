@@ -628,9 +628,9 @@ class Subscription
         return $this->licenseIsPayed;
     }
 
-    public function getMessages(): ?Collection
+    public function getMessages(): array
     {
-        return $this->messages;
+        return $this->messages->getValues();
     }
 
     /**
@@ -647,26 +647,59 @@ class Subscription
 
     public function getSubscriptionFee(bool $withReduction = true): float
     {
-        $fee = 0;
+        $memberShipFee = 0;
         if ($this->memberSubscriptionIsHalfYear) {
             if (1 === $this->numberOfTraining) {
-                $fee = floatval($this->settings['halfYearlyFee1Training']);
+                $memberShipFee = floatval($this->settings['halfYearlyFee1Training']);
             } else {
-                $fee = floatval($this->settings['halfYearlyFee2Training']);
+                $memberShipFee = floatval($this->settings['halfYearlyFee2Training']);
             }
         } else {
             if (1 === $this->numberOfTraining) {
-                $fee = floatval($this->settings['yearlyFee1Training']);
+                $memberShipFee = floatval($this->settings['yearlyFee1Training']);
             } else {
-                $fee = floatval($this->settings['yearlyFee2Training']);
+                $memberShipFee = floatval($this->settings['yearlyFee2Training']);
             }
         }
-
         if ($this->isReductionFamily && $withReduction) {
-            $reduction = floatval($this->settings['familyDiscount']) * $fee / 100;
-            $fee = ceil($fee - $reduction);
+            $reduction = floatval($this->settings['familyDiscount']) * $memberShipFee / 100;
+            $memberShipFee = ceil($memberShipFee - $reduction);
         }
 
-        return $fee;
+        return $memberShipFee;
+    }
+
+    public function calculate(): float
+    {
+        $memberShipFee = $this->getSubscriptionFee(false);
+
+        if ($this->isExtraTraining) {
+            $memberShipFee += floatval($this->settings['extraTrainingFee']);
+        }
+        if ($this->isReductionFamily) {
+            $reduction = floatval($this->settings['familyDiscount']) * $memberShipFee / 100;
+            $memberShipFee = ceil($memberShipFee - $reduction);
+        }
+        if ($this->isNewMember) {
+            $memberShipFee += floatval($this->settings['newMemberSubscriptionFee']);
+        }
+
+        // -- set some total counts ------------------------------------------------------------------------------------
+
+        if ($this->isMemberSubscriptionIsPartSubscription()) {
+            $this->memberSubscriptionTotal = $memberShipFee;
+        } else {
+            $this->memberSubscriptionTotal = 0;
+        }
+
+        if ($this->licenseIsPartSubscription()) {
+            $this->licenseTotal = $this->federation->getYearlySubscriptionFee();
+        } else {
+            $this->licenseTotal = 0;
+        }
+
+        $this->total = $this->memberSubscriptionTotal + $this->licenseTotal;
+
+        return $this->total;
     }
 }

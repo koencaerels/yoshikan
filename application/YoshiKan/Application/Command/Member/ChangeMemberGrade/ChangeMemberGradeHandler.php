@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application\Command\Member\ChangeMemberGrade;
 
 use App\YoshiKan\Domain\Model\Member\GradeLog;
+use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
-use App\YoshiKan\Infrastructure\Database\Member\GradeLogRepository;
 
 class ChangeMemberGradeHandler
 {

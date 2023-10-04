@@ -6,6 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 export interface Configuration {
     grades: Grade[];
     locations: Location[];
@@ -80,6 +81,7 @@ export interface Federation {
     code: string;
     name: string;
     yearlySubscriptionFee: number;
+    publicLabel: string;
 }
 
 export interface Subscription {
@@ -88,6 +90,8 @@ export interface Subscription {
     uuid: string;
     status: string;
     type: string;
+    memberId: number;
+    messageId: number;
     contactFirstname: string;
     contactLastname: string;
     contactEmail: string;

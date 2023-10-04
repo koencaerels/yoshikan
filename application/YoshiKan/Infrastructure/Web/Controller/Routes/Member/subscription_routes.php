@@ -30,16 +30,47 @@ trait subscription_routes
     }
 
     /**
+     * @throws \Exception
+     */
+    #[Route('/mm/api/subscription/{id}/mark-as-paid', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function markSubscriptionAsPayed(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('command'));
+        $response = $this->commandBus->markSubscriptionAsPayed($jsonCommand);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route('/mm/api/subscription/{id}/cancel', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function markSubscriptionAsCanceled(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('command'));
+        $response = $this->commandBus->markSubscriptionAsCanceled($jsonCommand);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/subscription/{status}', methods: ['GET'])]
+    public function getAllSubscriptions(string $status, Request $request): JsonResponse
+    {
+        $response = $this->queryBus->getSubscriptionsByStatus($status);
+
+        return new JsonResponse($response->getCollection(), 200, $this->apiAccess);
+    }
+
+    /**
      * @throws Exception
      */
     #[Route('/mm/api/subscriptions/export', methods: ['GET'])]
     public function exportSubscriptions(Request $request): void
     {
         $listIds = $request->query->get('ids');
-        $arListIds = explode(',', $listIds);
-        $spreadsheet = $this->queryBus->exportSubscriptions($arListIds);
+        $spreadsheet = $this->queryBus->exportSubscriptions($this->convertToArrayOfIds($listIds));
         $now = new \DateTimeImmutable();
-        $fileName = $now->format('Ymd').'_yoshi-kan_inschrijvingen.xlsx';
+        $fileName = $now->format('Ymd').'_yoshi-kan-inschrijvingen.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         ob_end_clean();
@@ -47,6 +78,25 @@ trait subscription_routes
         header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
         $writer->save('php://output');
         exit;
+    }
+
+    #[Route('/mm/api/subscriptions/print', methods: ['GET'])]
+    public function printSubscriptions(Request $request): void
+    {
+        $listIds = $request->query->get('ids');
+        $document = $this->queryBus->printSubscriptions($this->convertToArrayOfIds($listIds));
+
+        exit;
+    }
+
+    private function convertToArrayOfIds(string $ids): array
+    {
+        $arListIdsInt = [];
+        foreach (explode(',', $ids) as $id) {
+            $arListIdsInt[] = intval($id);
+        }
+
+        return $arListIdsInt;
     }
 
     //    #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]

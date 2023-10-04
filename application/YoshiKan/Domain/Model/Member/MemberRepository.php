@@ -41,4 +41,6 @@ interface MemberRepository
     ): array;
 
     public function listActiveMembers(): array;
+
+    public function getActiveMembersByFederationAndLocation(Federation $federation, Location $location): array;
 }

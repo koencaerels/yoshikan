@@ -417,6 +417,7 @@ import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
 import {newMemberSubscription} from "@/api/command/subscription/newMemberSubscription";
 import NewMemberFormOverview from "@/components/member/subscription/newMemberFormOverview.vue";
+import {SubscriptionTypeEnum} from "@/api/query/enum";
 
 const emit = defineEmits(["submitted"]);
 const appStore = useAppStore();
@@ -429,7 +430,7 @@ const selectButtonOptions = ref([
 // -- command ----------------------------------------------------------------------------------------------------------
 
 const command = ref<NewMemberSubscriptionCommand>({
-    type: 'nieuwe_inschrijving',
+    type: SubscriptionTypeEnum.NEW_SUBSCRIPTION,
     federationId: appStore.configuration?.federations[0].id ?? 0,
     locationId: appStore.configuration?.locations[0].id ?? 0,
     firstname: '',

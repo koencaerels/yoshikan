@@ -18,7 +18,8 @@ class WebConfigurationReadModel implements \JsonSerializable
     public function __construct(
         protected LocationReadModelCollection $locations,
         protected PeriodReadModel $activePeriod,
-        protected SettingsReadModel $settings
+        protected SettingsReadModel $settings,
+        protected FederationReadModelCollection $federations
     ) {
     }
 
@@ -32,6 +33,7 @@ class WebConfigurationReadModel implements \JsonSerializable
         $json->locations = $this->getLocations()->getCollection();
         $json->activePeriod = $this->getActivePeriod();
         $json->settings = $this->getSettings();
+        $json->federations = $this->getFederations()->getCollection();
 
         return $json;
     }
@@ -53,5 +55,10 @@ class WebConfigurationReadModel implements \JsonSerializable
     public function getSettings(): SettingsReadModel
     {
         return $this->settings;
+    }
+
+    public function getFederations(): FederationReadModelCollection
+    {
+        return $this->federations;
     }
 }

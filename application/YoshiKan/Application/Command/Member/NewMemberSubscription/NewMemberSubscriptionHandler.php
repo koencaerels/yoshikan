@@ -71,6 +71,11 @@ class NewMemberSubscriptionHandler
 
         // -- make a subscription --------------------------------------------------------------------------------------
 
+        $extraTraining = false;
+        if (3 === $command->getNumberOfTraining()) {
+            $extraTraining = true;
+        }
+
         $subscription = Subscription::make(
             $this->subscriptionRepository->nextIdentity(),
             $command->getContactFirstname(),
@@ -83,7 +88,7 @@ class NewMemberSubscriptionHandler
             Gender::from($command->getGender()),
             SubscriptionType::from($command->getType()),
             $command->getNumberOfTraining(),
-            $command->isExtraTraining(),
+            $extraTraining,
             $command->isNewMember(),
             $command->isReductionFamily(),
             $command->isJudogiBelt(),
@@ -114,6 +119,7 @@ class NewMemberSubscriptionHandler
         );
 
         // -- flush the subscription and get the database id via the uuid
+        $subscription->calculate();
         $this->subscriptionRepository->save($subscription);
         $this->entityManager->flush();
 

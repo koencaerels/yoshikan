@@ -53,6 +53,7 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import InputNumber from 'primevue/inputnumber';
+import Chart from 'primevue/chart';
 
 // ----------------------------------------------------------------------------------- services
 import ToastService from "primevue/toastservice";
@@ -111,6 +112,7 @@ app.component("ColumnGroup", ColumnGroup);
 app.component("Row", Row);
 app.component("TriStateCheckbox", TriStateCheckbox);
 app.component("InputNumber", InputNumber);
+app.component("Chart", Chart);
 
 app.directive('tooltip', Tooltip);
 
@@ -121,7 +123,7 @@ import VueProgressBar from '@aacassandra/vue3-progressbar';
 const options = {
     color: "#324bed",
     failedColor: "#ff0000",
-    thickness: "2px",
+    thickness: "10px",
     transition: {
         speed: "0.2s",
         opacity: "0.6s",
@@ -165,7 +167,7 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 // ---------------------------------------------------------------------------------------
 app.use(router)
 app.use(createPinia())
-app.use(PrimeVue, {ripple: true});
+app.use(PrimeVue, { ripple: true, inputStyle: "filled" , unstyled: false});
 app.use(ConfirmationService);
 app.use(ToastService);
 

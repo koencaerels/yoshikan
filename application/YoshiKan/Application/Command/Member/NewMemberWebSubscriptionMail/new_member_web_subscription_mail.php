@@ -13,6 +13,24 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail;
 
+use App\YoshiKan\Application\Settings;
+
 trait new_member_web_subscription_mail
 {
+    /**
+     * @throws \Exception
+     */
+    public function newMemberWebSubscriptionMail(int $subscriptionId): bool
+    {
+        $command = new NewMemberWebSubscriptionMail(
+            $subscriptionId,
+            Settings::FROM_NAME->value,
+            Settings::FROM_EMAIL->value,
+            Settings::CONTACT_EMAIL->value,
+        );
+
+        $handler = new NewMemberWebSubscriptionMailHandler($this->subscriptionRepository, $this->twig, $this->mailer);
+
+        return $handler->go($command);
+    }
 }

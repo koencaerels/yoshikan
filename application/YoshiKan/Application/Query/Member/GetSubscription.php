@@ -17,6 +17,7 @@ use App\YoshiKan\Application\Query\Member\Readmodel\SubscriptionReadModel;
 use App\YoshiKan\Application\Query\Member\Readmodel\SubscriptionReadModelCollection;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 
 class GetSubscription
 {
@@ -43,11 +44,14 @@ class GetSubscription
         return $collection;
     }
 
-    public function getByStatus(string $status): SubscriptionReadModelCollection
+    public function getByStatus(SubscriptionStatus $status): SubscriptionReadModelCollection
     {
         $collection = new SubscriptionReadModelCollection();
-
-        // todo
+        $subscriptions = $this->subscriptionRepository->getByStatus($status);
+        $collection = new SubscriptionReadModelCollection();
+        foreach ($subscriptions as $subscription) {
+            $collection->addItem(SubscriptionReadModel::hydrateFromModel($subscription));
+        }
 
         return $collection;
     }

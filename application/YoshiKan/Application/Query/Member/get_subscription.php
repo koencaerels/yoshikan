@@ -15,6 +15,8 @@ namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Application\Query\Member\Readmodel\SubscriptionReadModel;
 use App\YoshiKan\Application\Query\Member\Readmodel\SubscriptionReadModelCollection;
+use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 trait get_subscription
 {
@@ -40,5 +42,45 @@ trait get_subscription
         );
 
         return $query->getByMemberId($memberId);
+    }
+
+    public function getSubscriptionsByStatus(string $status): SubscriptionReadModelCollection
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $status = SubscriptionStatus::from($status);
+        $query = new GetSubscription(
+            $this->subscriptionRepository,
+            $this->memberRepository
+        );
+
+        return $query->getByStatus($status);
+    }
+
+    public function exportSubscriptions(array $listIds): Spreadsheet
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $exporter = new ExportSubscriptions($this->subscriptionRepository, $this->periodRepository);
+
+        return $exporter->exportSubscriptions($listIds);
+    }
+
+    public function printSubscriptions(array $listIds): bool
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $document = new PrintSubscriptions(
+            $this->locationRepository,
+            $this->federationRepository,
+            $this->subscriptionRepository,
+            $this->twig,
+            $this->uploadFolder,
+            $this->entityManager,
+        );
+
+        $document->printOverview($listIds);
+
+        return true;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="px-2 rounded-full text-xs text-center border-[1px]" :class="statusColor">
+    <div class="px-2 rounded-full text-xs text-center border-[1px] text-gray-900 w-[9rem]" :class="statusColor">
         {{subscription.status}}
     </div>
 </template>
@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import type {Subscription} from "@/api/query/model";
 import {computed} from "vue";
+import {SubscriptionStatusEnum} from "@/api/query/enum";
 
 const props = defineProps<{
     subscription: Subscription,
@@ -15,17 +16,17 @@ const props = defineProps<{
 const statusColor = computed((): string => {
     let _color = 'bg-yellow-300';
     switch (props.subscription.status) {
-        case 'wachtend op betaling':
+        case SubscriptionStatusEnum.AWAITING_PAYMENT:
             _color = 'border-orange-300';
             break;
-        case 'betaald':
+        case SubscriptionStatusEnum.PAYED:
             _color = 'border-green-200';
             break;
-        case 'afgewerkt':
+        case SubscriptionStatusEnum.COMPLETE:
             _color = 'border-green-400';
             break;
-        case 'canceled':
-            _color = 'border-red-300 text-white';
+        case SubscriptionStatusEnum.CANCELED:
+            _color = 'border-red-300 text-red-400';
             break;
         default:
             _color = 'border-yellow-300';

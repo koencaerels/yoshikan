@@ -4,10 +4,11 @@
             <thead>
             <tr class="border-b-[1px]">
                 <th width="5%">&nbsp;</th>
-                <th width="30%">Code</th>
-                <th width="30%">Naam</th>
-                <th width="30%">Vergunning</th>
-                <th width="30%">&nbsp;</th>
+                <th width="20%">Code</th>
+                <th width="20%">Naam</th>
+                <th width="20%">Label</th>
+                <th width="20%">Vergunning</th>
+                <th width="20%">&nbsp;</th>
             </tr>
             </thead>
             <Draggable v-if="appStore.configuration"

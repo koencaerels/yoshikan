@@ -13,6 +13,7 @@ export interface AddFederationCommand {
     code: string;
     name: string;
     yearlySubscriptionFee: string;
+    publicLabel: string;
 }
 
 export async function addFederation(command: AddFederationCommand) {

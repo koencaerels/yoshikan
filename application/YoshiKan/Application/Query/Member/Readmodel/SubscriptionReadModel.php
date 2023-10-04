@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
 use App\YoshiKan\Domain\Model\Member\Subscription;
+use App\YoshiKan\Domain\Model\Message\Message;
 
 class SubscriptionReadModel implements \JsonSerializable
 {
@@ -54,6 +55,7 @@ class SubscriptionReadModel implements \JsonSerializable
         protected FederationReadModel $federation,
         protected array $subscriptionitems,
         protected ?int $memberId,
+        protected ?int $messageId,
     ) {
     }
 
@@ -69,13 +71,14 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->status = $this->getStatus();
         $json->type = $this->getType();
         $json->memberId = $this->getMemberId();
+        $json->messageId = $this->getMessageId();
         $json->contactFirstname = $this->getContactFirstname();
         $json->contactLastname = $this->getContactLastname();
         $json->contactEmail = $this->getContactEmail();
         $json->contactPhone = $this->getContactPhone();
         $json->firstname = $this->getFirstname();
         $json->lastname = $this->getLastname();
-        $json->dateOfBirth = $this->getDateOfBirth();
+        $json->dateOfBirth = $this->getDateOfBirth()->format(\DateTimeInterface::ATOM);
         $json->gender = $this->getGender();
         $json->numberOfTraining = $this->getNumberOfTraining();
         $json->isExtraTraining = $this->isExtraTraining();
@@ -125,6 +128,16 @@ class SubscriptionReadModel implements \JsonSerializable
             $memberId = $model->getMember()->getId();
         }
 
+        $messageId = null;
+        $messages = $model->getMessages();
+        if (count($messages) > 0) {
+            /** @var Message $message */
+            foreach ($messages as $message) {
+                $messageId = $message->getId();
+                break;
+            }
+        }
+
         return new self(
             $model->getId(),
             $model->getUuid()->toRfc4122(),
@@ -166,7 +179,8 @@ class SubscriptionReadModel implements \JsonSerializable
             LocationReadModel::hydrateFromModel($model->getLocation()),
             FederationReadModel::hydrateFromModel($model->getFederation()),
             $itemCollection->getCollection(),
-            $memberId
+            $memberId,
+            $messageId
         );
     }
 
@@ -377,5 +391,10 @@ class SubscriptionReadModel implements \JsonSerializable
     public function getMemberId(): ?int
     {
         return $this->memberId;
+    }
+
+    public function getMessageId(): ?int
+    {
+        return $this->messageId;
     }
 }

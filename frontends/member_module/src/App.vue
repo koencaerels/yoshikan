@@ -25,6 +25,12 @@
             </KeepAlive>
         </RouterView>
     </div>
+    <div v-else>
+        <div class="mx-auto my-auto text-gray-400" style="width:50px;">
+            <br><br><br>
+            <ProgressSpinner />
+        </div>
+    </div>
 
     <!-- -- toaster -------------------------------------------- -->
     <Toast position="bottom-right"/>
