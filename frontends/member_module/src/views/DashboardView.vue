@@ -25,12 +25,14 @@
 
                 <div class="mt-8">
                     <div v-if="appStore.dashboardNumbers.numberOfWebSubscriptions != 0">
-                        <router-link to="/inschrijvingen/web" class="px-4 py-2 bg-yellow-300 w-full rounded-lg hover:bg-yellow-400">
+                        <router-link to="/inschrijvingen/web"
+                                     class="text-xs px-4 py-2 bg-yellow-300 w-full rounded-lg hover:bg-yellow-400">
                             {{appStore.dashboardNumbers.numberOfWebSubscriptions}} web inschrijvingen
                         </router-link>
                     </div>
                     <div class="mt-8" v-if="appStore.dashboardNumbers.numberOfDuePayments != 0">
-                        <router-link to="/inschrijvingen/te-betalen" class="px-4 py-2 bg-orange-300 w-full rounded-lg hover:bg-orange-400">
+                        <router-link to="/inschrijvingen/te-betalen"
+                                     class="text-xs px-4 py-2 bg-orange-300 w-full rounded-lg hover:bg-orange-400">
                         {{appStore.dashboardNumbers.numberOfDuePayments}} inschrijvingen nog te betalen
                         </router-link>
                     </div>

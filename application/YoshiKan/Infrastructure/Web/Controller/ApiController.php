@@ -62,7 +62,7 @@ class ApiController extends AbstractController
             $isolationMode = true;
         }
 
-        $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
+        $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
         $this->setTwigLoader($this->appKernel);
 
         $this->queryBus = new QueryBus(
@@ -107,7 +107,7 @@ class ApiController extends AbstractController
         $twigLoaders = $twigLoaders instanceof ChainLoader ?
             $twigLoaders->getLoaders() :
             [$twigLoaders];
-        $path = $appKernel->getProjectDir().'/application/YoshiKan/Infrastructure/Templates/';
+        $path = $appKernel->getProjectDir() . '/application/YoshiKan/Infrastructure/Templates/';
         foreach ($twigLoaders as $twigLoader) {
             if ($twigLoader instanceof FilesystemLoader) {
                 $twigLoader->prependPath($path, '__main__');

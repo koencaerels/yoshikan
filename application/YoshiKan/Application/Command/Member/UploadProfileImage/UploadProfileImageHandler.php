@@ -34,21 +34,21 @@ class UploadProfileImageHandler
 
         $member = $this->memberRepository->getById($command->getId());
 
-        $uploadFolder = 'YK-'.$member->getId().'/';
-        if (!file_exists($command->getUploadsFolder().$uploadFolder)) {
-            mkdir($command->getUploadsFolder().$uploadFolder, 0777, true);
+        $uploadFolder = 'YK-' . $member->getId() . '/';
+        if (!file_exists($command->getUploadsFolder() . $uploadFolder)) {
+            mkdir($command->getUploadsFolder() . $uploadFolder, 0777, true);
         }
 
         $uploadFile = $image->getClientOriginalName();
         try {
-            $image->move($command->getUploadsFolder().$uploadFolder, $uploadFile);
+            $image->move($command->getUploadsFolder() . $uploadFolder, $uploadFile);
         } catch (FileException $e) {
             throw new \Exception('Could not copy the uploaded file');
 
             return false;
         }
 
-        $member->setProfileImage($uploadFolder.$uploadFile);
+        $member->setProfileImage($uploadFolder . $uploadFile);
         $this->memberRepository->save($member);
 
         return true;

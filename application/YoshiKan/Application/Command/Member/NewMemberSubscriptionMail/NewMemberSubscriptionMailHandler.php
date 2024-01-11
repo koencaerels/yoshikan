@@ -55,14 +55,14 @@ class NewMemberSubscriptionMailHandler
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
         $items = $this->subscriptionItemRepository->getBySubscription($subscription);
-        $subject = 'JC Yoshi-Kan: Nieuwe inschrijving voor '.$subscription->getFirstname().' '.$subscription->getLastname();
+        $subject = 'JC Yoshi-Kan: Nieuwe inschrijving voor ' . $subscription->getFirstname() . ' ' . $subscription->getLastname();
         $mailTemplate = $this->twig->render(
             'mail/member_newMemberSubscription_mail.html.twig',
             [
                 'subject' => $subject,
                 'subscription' => $subscription,
                 'items' => $items,
-                'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
+                'url' => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
             ]
         );
 
@@ -71,7 +71,7 @@ class NewMemberSubscriptionMailHandler
         $message = (new Email())
             ->subject($subject)
             ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
+            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname()))
             ->html($mailTemplate);
 
         $this->mailer->send($message);
@@ -83,7 +83,7 @@ class NewMemberSubscriptionMailHandler
             new \DateTimeImmutable(),
             $command->getFromName(),
             $command->getFromEmail(),
-            $subscription->getContactFirstname().' '.$subscription->getContactLastname(),
+            $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname(),
             $subscription->getContactEmail(),
             $subject,
             $mailTemplate,

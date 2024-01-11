@@ -97,8 +97,8 @@ class CreateDummyMembers extends Command
             }
 
             $startPeriodDate = $faker->dateTimeThisDecade('now');
-            $startPeriod = $startPeriodDate->format('Y-m').'-01';
-            $endPeriod = (intval($startPeriodDate->format('Y')) + 1).'-'.$startPeriodDate->format('m').'-01';
+            $startPeriod = $startPeriodDate->format('Y-m') . '-01';
+            $endPeriod = (intval($startPeriodDate->format('Y')) + 1) . '-' . $startPeriodDate->format('m') . '-01';
             $member->setSubscriptionDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod), false);
             $member->setLicenseDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod));
 
