@@ -31,7 +31,7 @@
                 naar onze bankrekening op het volgende nummer:
                 <span class="font-bold">BE37 7330 0101 8328</span>
                 met vermelding van volgende referentie
-                <span class="font-bold"> "YKS-xxx
+                <span class="font-bold"> "YKS-{{props.command.subscriptionId}}
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
                 Zo kunnen we je betaling snel identificeren.
                 Wanneer we je betaling hebben ontvangen, zullen we je officieel inschrijven
@@ -107,10 +107,10 @@ import {useAppStore} from "@/store/app";
 import {computed} from "vue";
 import moment from "moment/moment";
 import OverviewFooter from "@/components/member/subscription/overviewFooter.vue";
-import type {NewMemberSubscriptionCommand} from "@/api/command/subscription/newMemberSubscription";
+import type {NewMemberWebSubscriptionCommand} from "@/api/command/subscription/newMemberWebSubscription";
 
 const props = defineProps<{
-    command: NewMemberSubscriptionCommand
+    command: NewMemberWebSubscriptionCommand
 }>();
 
 const appStore = useAppStore();

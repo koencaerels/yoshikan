@@ -48,7 +48,7 @@ class PrintSubscriptions
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        $fileName = $renderList->generatedOn->format('YmdHis') . '_yoshikan_inschrijvingen.pdf';
+        $fileName = $renderList->generatedOn->format('YmdHis').'_yoshikan_inschrijvingen.pdf';
 
         /** @var Subscription $subscription */
         foreach ($subscriptions as $subscription) {

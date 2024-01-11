@@ -14,7 +14,7 @@ class DeleteMemberImageHandler
     public function go(DeleteMemberImage $command): bool
     {
         $memberImage = $this->memberImageRepository->getById($command->getId());
-        $file = $command->getUploadFolder() . $memberImage->getPath();
+        $file = $command->getUploadFolder().$memberImage->getPath();
         if (file_exists($file)) {
             unlink($file);
         }

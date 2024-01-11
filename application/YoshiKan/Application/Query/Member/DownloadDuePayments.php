@@ -59,7 +59,7 @@ class DownloadDuePayments
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
 
-        $fileName = $renderList->generatedOn->format('YmdHis') . '_yoshikan_due_payments.pdf';
+        $fileName = $renderList->generatedOn->format('YmdHis').'_yoshikan_due_payments.pdf';
 
         $dompdf->stream($fileName, ['Attachment' => false]);
 

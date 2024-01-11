@@ -76,7 +76,7 @@ class NewMemberWebSubscriptionHandler
                 ) {
                     $addAmount = 7;
                 }
-                $membershipEnd = $membershipStart->modify('+' . $addAmount . ' months');
+                $membershipEnd = $membershipStart->modify('+'.$addAmount.' months');
             }
             $licenseStart = $currentDate->modify('first day of this month');
             $licenseEnd = $licenseStart->modify('+1 year');
@@ -140,7 +140,7 @@ class NewMemberWebSubscriptionHandler
             // -- compile a result class -------------------------------------------------------------------------------
             $result = new \stdClass();
             $result->id = $subscriptionId;
-            $result->reference = 'YKS-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
+            $result->reference = 'YKS-'.$subscriptionId.': '.$command->getFirstName().' '.$command->getLastName();
         } else {
             // -- the honey-pot field was not empty
             $result = new \stdClass();

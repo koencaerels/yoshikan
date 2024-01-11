@@ -30,8 +30,8 @@ class SubscriptionItemsFactory
         if ($subscription->isMemberSubscriptionIsPartSubscription()) {
             ++$sequence;
             $itemName = 'Lidmaatschap van '
-                . $this->_format($subscription->getMemberSubscriptionStart()) . ' tot '
-                . $this->_format($subscription->getMemberSubscriptionEnd()) . ': ';
+                .$this->_format($subscription->getMemberSubscriptionStart()).' tot '
+                .$this->_format($subscription->getMemberSubscriptionEnd()).': ';
 
             if (1 === $subscription->getNumberOfTraining()) {
                 $itemName .= '1 training per week.';
@@ -68,7 +68,7 @@ class SubscriptionItemsFactory
 
             if ($subscription->isReductionFamily()) {
                 ++$sequence;
-                $itemName = 'Gezinskorting lidmaatschap: ' . $settings->getFamilyDiscount() . '%.';
+                $itemName = 'Gezinskorting lidmaatschap: '.$settings->getFamilyDiscount().'%.';
                 $reduction = -floatval($settings->getFamilyDiscount()) * $fee / 100;
                 $subscriptionItemReduction = SubscriptionItem::make(
                     $this->subscriptionItemRepository->nextIdentity(),
@@ -83,8 +83,8 @@ class SubscriptionItemsFactory
         } else {
             ++$sequence;
             $itemName = 'Lopend lidmaatschap van '
-                . $this->_format($subscription->getMemberSubscriptionStart()) . ' tot '
-                . $this->_format($subscription->getMemberSubscriptionEnd()) . ' (betaald).';
+                .$this->_format($subscription->getMemberSubscriptionStart()).' tot '
+                .$this->_format($subscription->getMemberSubscriptionEnd()).' (betaald).';
             $subscriptionItemMembership = SubscriptionItem::make(
                 $this->subscriptionItemRepository->nextIdentity(),
                 SubscriptionItemType::MEMBERSHIP,
@@ -116,9 +116,9 @@ class SubscriptionItemsFactory
 
         if ($subscription->isLicenseIsPartSubscription()) {
             ++$sequence;
-            $itemName = 'Vergunning ' . mb_strtoupper($federation->getName()) . ' van '
-                . $this->_format($subscription->getLicenseStart()) . ' tot '
-                . $this->_format($subscription->getLicenseEnd()) . '.';
+            $itemName = 'Vergunning '.mb_strtoupper($federation->getName()).' van '
+                .$this->_format($subscription->getLicenseStart()).' tot '
+                .$this->_format($subscription->getLicenseEnd()).'.';
 
             $subscriptionItemLicense = SubscriptionItem::make(
                 $this->subscriptionItemRepository->nextIdentity(),
@@ -131,9 +131,9 @@ class SubscriptionItemsFactory
             $this->subscriptionItemRepository->save($subscriptionItemLicense);
         } else {
             ++$sequence;
-            $itemName = 'Lopende vergunning ' . mb_strtoupper($federation->getName()) . ' van '
-                . $this->_format($subscription->getLicenseStart()) . ' tot '
-                . $this->_format($subscription->getLicenseEnd()) . ' (betaald).';
+            $itemName = 'Lopende vergunning '.mb_strtoupper($federation->getName()).' van '
+                .$this->_format($subscription->getLicenseStart()).' tot '
+                .$this->_format($subscription->getLicenseEnd()).' (betaald).';
             $subscriptionItemLicense = SubscriptionItem::make(
                 $this->subscriptionItemRepository->nextIdentity(),
                 SubscriptionItemType::LICENSE,

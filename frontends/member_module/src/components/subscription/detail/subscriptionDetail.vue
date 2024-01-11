@@ -136,9 +136,40 @@
             </div>
         </div>
 
+        <!-- actions for websubscriptions -------------------------------------------------------------------------- -->
+
+        <div class="flex gap-2 mt-4"
+             v-if="!memberStore.subscriptionDetail.memberId
+             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.NEW">
+
+            <div class="flex-none w-48 text-right text-xs text-gray-600">
+                Acties
+            </div>
+            <div class="grow">
+                <Button @click="reviewSubscription"
+                        icon="pi pi-times-circle"
+                        class="p-button-success w-full"
+                        label="Inschrijving confirmeren"></Button>
+            </div>
+            <div class="flex-none w-64">
+                <Button v-if="!isLoading"
+                        @click="confirmCancelSubscription($event)"
+                        icon="pi pi-times-circle"
+                        class="p-button-warning w-full"
+                        label="Inschrijving annuleren"></Button>
+                <Button v-else
+                        disabled
+                        icon="pi pi-spin pi-spinner"
+                        class="p-button-warning w-full"
+                        label="Inschrijving annuleren"></Button>
+            </div>
+        </div>
+
+        <!-- actions for connected subscriptions ------------------------------------------------------------------- -->
         <div class="flex gap-2 mt-4"
              v-if="memberStore.subscriptionDetail.memberId !== 0
              && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.AWAITING_PAYMENT">
+
             <div class="flex-none w-48 text-right text-xs text-gray-600">
                 Acties
             </div>
@@ -156,7 +187,7 @@
             </div>
             <div class="flex-none w-64">
                 <Button v-if="!isLoading"
-                        @click="markAsCanceled"
+                        @click="confirmCancelSubscription($event)"
                         icon="pi pi-times-circle"
                         class="p-button-warning w-full"
                         label="Inschrijving annuleren"></Button>
@@ -169,7 +200,9 @@
         </div>
     </div>
 
-    <!-- -- detail ------------------------------------------------------------------------------------------------- -->
+    <ConfirmPopup/>
+
+    <!-- -- message detail ----------------------------------------------------------------------------------------- -->
     <Dialog v-model:visible="showMessageDetail"
             v-if="memberStore.messageDetail"
             :header="memberStore.messageDetail.subject"
@@ -177,6 +210,13 @@
         <message-detail/>
     </Dialog>
 
+    <!-- -- review member ------------------------------------------------------------------------------------------ -->
+    <Dialog v-model:visible="showReviewSubscription"
+            position="topleft"
+            :header="'Inschrijving confirmeren voor '+memberStore.subscriptionDetail.firstname+' '+memberStore.subscriptionDetail.lastname"
+            :modal="true">
+       <review-new-member-form @submitted="subscriptionReviewed"/>
+    </Dialog>
 
 </template>
 
@@ -195,13 +235,33 @@ import type {MarkSubscriptionAsCanceledCommand} from "@/api/command/subscription
 import {markSubscriptionAsCanceled} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {SubscriptionStatusEnum} from "@/api/query/enum";
 import MessageDetail from "@/components/message/messageDetail.vue";
+import {useConfirm} from "primevue/useconfirm";
+import ReviewNewMemberForm from "@/components/subscription/reviewNewMember/reviewNewMemberForm.vue";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
 const toaster = useToast();
 const appStore = useAppStore();
+const confirm = useConfirm();
+
 const showMessageDetail = ref<boolean>(false);
 const apiUrl = import.meta.env.VITE_API_URL as string;
+const emit = defineEmits(["paid", "canceled", "subscription-reviewed"]);
+
+// -- review subscription functions ------------------------------------------------------------------------------------
+
+const showReviewSubscription = ref<boolean>(false);
+
+function reviewSubscription() {
+    showReviewSubscription.value = true;
+}
+
+function subscriptionReviewed() {
+    showReviewSubscription.value = false;
+    emit('subscription-reviewed');
+}
+
+// -- subscription detail functions ------------------------------------------------------------------------------------
 
 async function showMessageDetailFn(messageId:number) {
     await memberStore.loadMessageDetail(messageId);
@@ -214,8 +274,6 @@ function printSubscription() {
 }
 
 // -- pay and cancel functions -----------------------------------------------------------------------------------------
-
-const emit = defineEmits(["paid", "canceled"]);
 
 const commandPay = ref<MarkSubscriptionAsPayedCommand>({
     id: memberStore.subscriptionDetail?.id ?? 0,
@@ -240,6 +298,27 @@ async function markAsPaid() {
         memberStore.increaseCounter();
         isLoading.value = false;
         emit('paid');
+    }
+}
+
+function confirmCancelSubscription(event: MouseEvent) {
+    const target = event.currentTarget;
+    if (target instanceof HTMLElement) {
+        confirm.require({
+            target: target,
+            message: "Ben je zeker om deze inschrijving te annuleren ? Dit kan niet ongedaan gemaakt worden.",
+            icon: "pi pi-exclamation-triangle",
+            acceptLabel: "Ja",
+            rejectLabel: "Nee",
+            acceptIcon: "pi pi-check",
+            rejectIcon: "pi pi-times",
+            accept: () => {
+                void markAsCanceled();
+            },
+            reject: () => {
+                // callback to execute when user rejects the action
+            },
+        });
     }
 }
 

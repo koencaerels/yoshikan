@@ -70,12 +70,12 @@ trait subscription_routes
         $listIds = $request->query->get('ids');
         $spreadsheet = $this->queryBus->exportSubscriptions($this->convertToArrayOfIds($listIds));
         $now = new \DateTimeImmutable();
-        $fileName = $now->format('Ymd') . '_yoshi-kan-inschrijvingen.xlsx';
+        $fileName = $now->format('Ymd').'_yoshi-kan-inschrijvingen.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
         $writer->save('php://output');
         exit;
     }

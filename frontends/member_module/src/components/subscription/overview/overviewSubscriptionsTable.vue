@@ -245,15 +245,18 @@
         </DataTable>
     </div>
 
-
-    <!-- subscription detail  -->
+    <!-- subscription detail --------------------------------------------------------------------------------------- -->
     <Dialog v-model:visible="showSubscriptionDetail"
             v-if="memberStore.subscriptionDetail"
             :header="'Detail van de inschrijving: YKS-'+memberStore.subscriptionDetail.id"
             :modal="true">
-        <subscription-detail v-on:paid="hideSubscriptionDetailFn" v-on:canceled="hideSubscriptionDetailFn"/>
+        <subscription-detail
+            v-on:paid="hideSubscriptionDetailFn"
+            v-on:subscription-reviewed="hideSubscriptionDetailFn"
+            v-on:canceled="hideSubscriptionDetailFn"/>
     </Dialog>
 
+    <!-- member detail --------------------------------------------------------------------------------------------- -->
     <Dialog v-model:visible="showDialogFullDetail"
             v-if="memberStore.memberDetail"
             position="top"

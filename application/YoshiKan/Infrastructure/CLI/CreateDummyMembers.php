@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\YoshiKan\Infrastructure\CLI;
 
 use App\YoshiKan\Domain\Model\Member\Federation;
@@ -97,8 +106,8 @@ class CreateDummyMembers extends Command
             }
 
             $startPeriodDate = $faker->dateTimeThisDecade('now');
-            $startPeriod = $startPeriodDate->format('Y-m') . '-01';
-            $endPeriod = (intval($startPeriodDate->format('Y')) + 1) . '-' . $startPeriodDate->format('m') . '-01';
+            $startPeriod = $startPeriodDate->format('Y-m').'-01';
+            $endPeriod = (intval($startPeriodDate->format('Y')) + 1).'-'.$startPeriodDate->format('m').'-01';
             $member->setSubscriptionDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod), false);
             $member->setLicenseDates(new \DateTimeImmutable($startPeriod), new \DateTimeImmutable($endPeriod));
 

@@ -145,7 +145,7 @@ class MemberExtendSubscriptionHandler
 
         $result = new \stdClass();
         $result->id = $subscriptionId;
-        $result->reference = 'YKS-' . $subscriptionId . ': ' . $command->getFirstName() . ' ' . $command->getLastName();
+        $result->reference = 'YKS-'.$subscriptionId.': '.$command->getFirstName().' '.$command->getLastName();
 
         return $result;
     }

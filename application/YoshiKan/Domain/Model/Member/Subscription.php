@@ -366,13 +366,75 @@ class Subscription
         string $addressBox,
         string $addressZip,
         string $addressCity
-    ) {
+    ): void {
         $this->nationalRegisterNumber = $nationalRegisterNumber;
         $this->addressStreet = $addressStreet;
         $this->addressNumber = $addressNumber;
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+    }
+
+    public function fullChange(
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
+        \DateTimeImmutable $dateOfBirth,
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Location $location,
+        Federation $federation,
+        \DateTimeImmutable $memberSubscriptionStart,
+        \DateTimeImmutable $memberSubscriptionEnd,
+        float $memberSubscriptionTotal,
+        bool $memberSubscriptionIsPartSubscription,
+        bool $memberSubscriptionIsHalfYear,
+        bool $memberSubscriptionIsPayed,
+        \DateTimeImmutable $licenseStart,
+        \DateTimeImmutable $licenseEnd,
+        float $licenseTotal,
+        bool $licenseIsPartSubscription,
+        bool $licenseIsPayed,
+    ): void {
+        $this->contactFirstname = $contactFirstname;
+        $this->contactLastname = $contactLastname;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->dateOfBirth = $dateOfBirth;
+        $this->gender = $gender->value;
+        $this->type = $type->value;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->isExtraTraining = $isExtraTraining;
+        $this->isNewMember = $isNewMember;
+        $this->isReductionFamily = $isReductionFamily;
+        $this->isJudogiBelt = $isJudogiBelt;
+        $this->remarks = $remarks;
+        $this->location = $location;
+        $this->federation = $federation;
+        $this->memberSubscriptionStart = $memberSubscriptionStart;
+        $this->memberSubscriptionEnd = $memberSubscriptionEnd;
+        $this->memberSubscriptionTotal = $memberSubscriptionTotal;
+        $this->memberSubscriptionIsPartSubscription = $memberSubscriptionIsPartSubscription;
+        $this->memberSubscriptionIsHalfYear = $memberSubscriptionIsHalfYear;
+        $this->memberSubscriptionIsPayed = $memberSubscriptionIsPayed;
+        $this->licenseStart = $licenseStart;
+        $this->licenseEnd = $licenseEnd;
+        $this->licenseTotal = $licenseTotal;
+        $this->licenseIsPartSubscription = $licenseIsPartSubscription;
+        $this->licenseIsPayed = $licenseIsPayed;
+        $this->total = ceil($this->memberSubscriptionTotal + $this->licenseTotal);
+        $this->items = new ArrayCollection();
     }
 
     public function changeStatus(SubscriptionStatus $status): void

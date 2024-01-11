@@ -49,13 +49,13 @@ class MemberExtendSubscriptionMailHandler
 
         switch ($subscription->getType()) {
             case SubscriptionType::RENEWAL_LICENSE:
-                $subject = 'JC Yoshi-Kan: Vernieuwing vergunning voor ' . $subscription->getFirstname() . ' ' . $subscription->getLastname();
+                $subject = 'JC Yoshi-Kan: Vernieuwing vergunning voor '.$subscription->getFirstname().' '.$subscription->getLastname();
                 break;
             case SubscriptionType::RENEWAL_MEMBERSHIP:
-                $subject = 'JC Yoshi-Kan: Vernieuwing lidmaatschap voor ' . $subscription->getFirstname() . ' ' . $subscription->getLastname();
+                $subject = 'JC Yoshi-Kan: Vernieuwing lidmaatschap voor '.$subscription->getFirstname().' '.$subscription->getLastname();
                 break;
             case SubscriptionType::RENEWAL_FULL:
-                $subject = 'JC Yoshi-Kan: Vernieuwing lidmaatschap + vergunning voor ' . $subscription->getFirstname() . ' ' . $subscription->getLastname();
+                $subject = 'JC Yoshi-Kan: Vernieuwing lidmaatschap + vergunning voor '.$subscription->getFirstname().' '.$subscription->getLastname();
                 break;
             default:
                 $subject = 'JC Yoshi-Kan';
@@ -68,7 +68,7 @@ class MemberExtendSubscriptionMailHandler
                 'subject' => $subject,
                 'subscription' => $subscription,
                 'items' => $items,
-                'url' => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
+                'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
             ]
         );
 
@@ -77,7 +77,7 @@ class MemberExtendSubscriptionMailHandler
         $message = (new Email())
             ->subject($subject)
             ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname()))
+            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
             ->html($mailTemplate);
 
         $this->mailer->send($message);
@@ -89,7 +89,7 @@ class MemberExtendSubscriptionMailHandler
             new \DateTimeImmutable(),
             $command->getFromName(),
             $command->getFromEmail(),
-            $subscription->getContactFirstname() . ' ' . $subscription->getContactLastname(),
+            $subscription->getContactFirstname().' '.$subscription->getContactLastname(),
             $subscription->getContactEmail(),
             $subject,
             $mailTemplate,
