@@ -10,6 +10,11 @@
 {% extends '@bolt/_base/layout.html.twig' %}
 {% block title %}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link id="theme-link" rel="stylesheet" href="/themes/nano/theme.css"> #}
+{% endblock %}
+
 {% block main %}
     <div id="mm_module" style="position: fixed;right:0;left:67px">Loading...</div>
     {{ vite_build_script_tags('mm_module','src/main.ts') }}
