@@ -1,0 +1,33 @@
+<!-- Footer -->
+<footer>
+
+    <div class="footer-wrapper mt-4 border-t-[1px]">
+        <div class="footer-navigation-wrapper pt-4 text-gray-500">
+            <div class="md:flex">
+                {# logo ------------------------------------------------------------------ #}
+                <div class="ml-4 w-48 sm:max-md:mx-auto">
+                    <a href="/">
+                        <img src="{{ asset('theme/YoshiKan2023/img/logo_yoshi_kan.jpg') }}" alt="Logo Yoshi Kan" width="140" border="0"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-wrapper border-t-[1px] p-2 mt-4 text-xs text-gray-400">
+            <div class="flex">
+                <div>© {{ "now"|date("Y") }} Judoschool Yoshi-Kan vzw</div>
+                <div class="ml-4">
+                    Foto's door Pieter Peeters
+                </div>
+                <div class="ml-4">
+                    <a href="/privacy">Privacy Verklaring</a>
+                </div>
+                <div class="ml-4">
+                    {{ __('general.phrase.built-with-bolt') }}
+                    En met ❤ .
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</footer>

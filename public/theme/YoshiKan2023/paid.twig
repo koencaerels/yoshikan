@@ -1,0 +1,30 @@
+{% extends 'partials/_master_stripped.twig' %}
+
+{% block main %}
+
+    {# banner ----------------------------------------------------------- #}
+    <div>
+        <img src="{{ asset('theme/YoshiKan2023/img/banner_2.jpg') }}"
+             class="w-full" alt="Yoshi Kan, judoschool voor jong en oud."
+             border="0"/>
+    </div>
+
+    {# content ----------------------------------------------------------- #}
+    <div class="content-wrapper">
+        <div id="paid-feedback">
+            <div class="p-8 text-sm flex gap-4">
+                <div>
+                    <img src="{{ asset('theme/YoshiKan2023/img/ok.png') }}"
+                         width="100" height="10
+                         border="0"/>
+                </div>
+                <div>
+                    We hebben je betaling voor YKS-{{ subscription.id}}
+                    ({{ subscription.lastname | upper }} {{ subscription.firstname }})
+                    goed ontvangen. Bedankt voor je inschrijving!
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}

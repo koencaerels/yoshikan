@@ -29,6 +29,7 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Bolt\Controller\TwigAwareController;
 use Doctrine\ORM\EntityManagerInterface;
@@ -99,6 +100,13 @@ class MemberModuleController
             $this->entityManager->getRepository(Federation::class),
         );
 
+        $mollieConfig = MollieConfig::make(
+            apiKey: '',
+            partnerId: '',
+            profileId: '',
+            redirectBaseUrl: '',
+        );
+
         $commandBus = new MemberCommandBus(
             $this->security,
             $this->entityManager,
@@ -119,6 +127,7 @@ class MemberModuleController
             $this->entityManager->getRepository(Federation::class),
             $this->entityManager->getRepository(Message::class),
             $this->entityManager->getRepository(Judogi::class),
+            $mollieConfig,
         );
 
         $configuration = $queryBus->getConfiguration();

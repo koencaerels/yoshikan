@@ -99,5 +99,4 @@ trait subscription_routes
 
         return $arListIdsInt;
     }
-
 }

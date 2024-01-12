@@ -161,16 +161,11 @@ class ApiController extends AbstractController
         $response = $this->commandBus->markSubscriptionAsPayedFromMollie($paymentId);
         if ($response->subscriptionId > 0) {
             $response_mail = $this->commandBus->sendPaymentReceivedConfirmationMail($response->subscriptionId);
+
             return $this->redirectToRoute('mollie_payment_confirmation_feedback', ['paymentId' => $paymentId]);
         } else {
             return new JsonResponse('No subscription linked to this ID.', 200, $this->apiAccess);
         }
-    }
-
-    #[Route('/mm/lidgeld/betaling/{paymentId}/ok', name: 'mollie_payment_confirmation_feedback', methods: ['GET', 'POST', 'PUT'])]
-    public function molliePaymentConfirmationFeedback(Request $request, string $paymentId): JsonResponse
-    {
-        return new JsonResponse('Payment confirmed.', 200, $this->apiAccess);
     }
 
     #[Route('/mm/lidgeld/betaling/{paymentId}/webhook', name: 'mollie_webhook', methods: ['GET', 'POST', 'PUT'])]
