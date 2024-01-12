@@ -27,6 +27,8 @@ interface SubscriptionRepository
 
     public function getByUuid(Uuid $uuid): Subscription;
 
+    public function findByPaymentId(string $paymentId): ?Subscription;
+
     public function getAll(): array;
 
     public function getByListId(array $list): array;

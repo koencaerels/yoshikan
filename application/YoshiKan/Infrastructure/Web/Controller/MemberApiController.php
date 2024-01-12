@@ -28,6 +28,7 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\federation_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
@@ -103,45 +104,53 @@ class MemberApiController extends AbstractController
         $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
         $this->setTwigLoader($this->appKernel);
 
+        $mollieConfig = MollieConfig::make(
+            apiKey: $_SERVER['MOLLIE_API_KEY'],
+            partnerId: $_SERVER['MOLLIE_PARTNER_ID'],
+            profileId: $_SERVER['MOLLIE_PROFILE_ID'],
+            redirectBaseUrl: $_SERVER['MOLLIE_REDIRECT_BASE_URL'],
+        );
+
         $this->queryBus = new MemberQueryBus(
-            $this->security,
-            $this->entityManager,
-            $isolationMode,
-            $this->twig,
-            $this->uploadFolder,
-            $this->entityManager->getRepository(Grade::class),
-            $this->entityManager->getRepository(Group::class),
-            $this->entityManager->getRepository(Location::class),
-            $this->entityManager->getRepository(Member::class),
-            $this->entityManager->getRepository(Period::class),
-            $this->entityManager->getRepository(Settings::class),
-            $this->entityManager->getRepository(Subscription::class),
-            $this->entityManager->getRepository(MemberImage::class),
-            $this->entityManager->getRepository(Federation::class),
-            $this->entityManager->getRepository(Message::class),
-            $this->entityManager->getRepository(Judogi::class),
+            security: $this->security,
+            entityManager: $this->entityManager,
+            isolationMode: $isolationMode,
+            twig: $this->twig,
+            uploadFolder: $this->uploadFolder,
+            gradeRepository: $this->entityManager->getRepository(Grade::class),
+            groupRepository: $this->entityManager->getRepository(Group::class),
+            locationRepository: $this->entityManager->getRepository(Location::class),
+            memberRepository: $this->entityManager->getRepository(Member::class),
+            periodRepository: $this->entityManager->getRepository(Period::class),
+            settingsRepository: $this->entityManager->getRepository(Settings::class),
+            subscriptionRepository: $this->entityManager->getRepository(Subscription::class),
+            memberImageRepository: $this->entityManager->getRepository(MemberImage::class),
+            federationRepository: $this->entityManager->getRepository(Federation::class),
+            messageRepository: $this->entityManager->getRepository(Message::class),
+            judogiRepository: $this->entityManager->getRepository(Judogi::class),
         );
 
         $this->commandBus = new MemberCommandBus(
-            $this->security,
-            $this->entityManager,
-            $isolationMode,
-            $this->twig,
-            $this->mailer,
-            $this->uploadFolder,
-            $this->entityManager->getRepository(Grade::class),
-            $this->entityManager->getRepository(Group::class),
-            $this->entityManager->getRepository(Location::class),
-            $this->entityManager->getRepository(Member::class),
-            $this->entityManager->getRepository(Period::class),
-            $this->entityManager->getRepository(Settings::class),
-            $this->entityManager->getRepository(Subscription::class),
-            $this->entityManager->getRepository(SubscriptionItem::class),
-            $this->entityManager->getRepository(GradeLog::class),
-            $this->entityManager->getRepository(MemberImage::class),
-            $this->entityManager->getRepository(Federation::class),
-            $this->entityManager->getRepository(Message::class),
-            $this->entityManager->getRepository(Judogi::class),
+            security: $this->security,
+            entityManager: $this->entityManager,
+            isolationMode: $isolationMode,
+            twig: $this->twig,
+            mailer: $this->mailer,
+            uploadFolder: $this->uploadFolder,
+            gradeRepository: $this->entityManager->getRepository(Grade::class),
+            groupRepository: $this->entityManager->getRepository(Group::class),
+            locationRepository: $this->entityManager->getRepository(Location::class),
+            memberRepository: $this->entityManager->getRepository(Member::class),
+            periodRepository: $this->entityManager->getRepository(Period::class),
+            settingsRepository: $this->entityManager->getRepository(Settings::class),
+            subscriptionRepository: $this->entityManager->getRepository(Subscription::class),
+            subscriptionItemRepository: $this->entityManager->getRepository(SubscriptionItem::class),
+            gradeLogRepository: $this->entityManager->getRepository(GradeLog::class),
+            memberImageRepository: $this->entityManager->getRepository(MemberImage::class),
+            federationRepository: $this->entityManager->getRepository(Federation::class),
+            messageRepository: $this->entityManager->getRepository(Message::class),
+            judogiRepository: $this->entityManager->getRepository(Judogi::class),
+            mollieConfig: $mollieConfig,
         );
     }
 

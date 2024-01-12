@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed;
+namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayedFromMollie;
 
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\MarkSubscriptionAsCanceled;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\MarkSubscriptionAsCanceledHandler;
@@ -20,7 +20,7 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionPaymentType;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 
-class MarkSubscriptionAsPayedHandler
+class MarkSubscriptionAsPayedFromMollieHandler
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -36,19 +36,22 @@ class MarkSubscriptionAsPayedHandler
     // Handler
     // —————————————————————————————————————————————————————————————————————————
 
-    public function go(MarkSubscriptionAsPayed $command): bool
+    public function go(MarkSubscriptionAsPayedFromMollie $command): int
     {
         $result = false;
-        $subscription = $this->subscriptionRepository->getById($command->getId());
+        $subscription = $this->subscriptionRepository->findByPaymentId($command->getPaymentId());
+        if (true === is_null($subscription)) {
+            return 0;
+        }
 
         if (SubscriptionStatus::AWAITING_PAYMENT === $subscription->getStatus()) {
             $subscription->changeStatus(SubscriptionStatus::PAYED);
-            $subscription->setPaymentTypeInfo(SubscriptionPaymentType::TRANSFER);
+            $subscription->setPaymentTypeInfo(SubscriptionPaymentType::MOLLIE);
             $this->subscriptionRepository->save($subscription);
             $result = true;
         }
 
-        // mark the subscription and license as paid on the actual member
+        // -- mark the subscription and license as paid on the actual member ------------
         if ($result && !is_null($subscription->getMember())) {
             $member = $subscription->getMember();
             if ($subscription->isMemberSubscriptionIsPartSubscription()) {
@@ -60,18 +63,18 @@ class MarkSubscriptionAsPayedHandler
             $this->memberRepository->save($member);
         }
 
-        // cancel all other pending subscriptions for this member
+        // -- cancel all other pending subscriptions for this member --------------------
         if ($result && !is_null($subscription->getMember())) {
             $cancelHandler = new MarkSubscriptionAsCanceledHandler($this->subscriptionRepository);
             $subscriptions = $this->subscriptionRepository->getByMember($subscription->getMember());
-            foreach ($subscriptions as $subscription) {
-                if ($subscription->getId() !== $command->getId()) {
+            foreach ($subscriptions as $subscriptionEntity) {
+                if ($subscriptionEntity->getId() !== $subscription->getId()) {
                     $cancelCommand = MarkSubscriptionAsCanceled::make($subscription->getId());
                     $cancelHandler->go($cancelCommand);
                 }
             }
         }
 
-        return $result;
+        return $subscription->getId();
     }
 }

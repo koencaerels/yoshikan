@@ -138,7 +138,8 @@ trait member_routes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->memberExtendSubscription($command);
 
-        $result = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+        $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -171,7 +172,8 @@ trait member_routes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->memberNewSubscription($command);
 
-        $result = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -185,7 +187,8 @@ trait member_routes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->confirmMemberWebSubscription($command);
 
-        $result = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

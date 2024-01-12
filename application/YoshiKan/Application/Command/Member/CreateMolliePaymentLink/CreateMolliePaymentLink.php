@@ -11,36 +11,37 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished;
+namespace App\YoshiKan\Application\Command\Member\CreateMolliePaymentLink;
 
-use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
-use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
-
-class MarkSubscriptionAsFinishedHandler
+class CreateMolliePaymentLink
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(
-        protected SubscriptionRepository $subscriptionRepository
+    private function __construct(
+        protected int $subscriptionId,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // Handler
+    // Maker
     // —————————————————————————————————————————————————————————————————————————
-    public function go(MarkSubscriptionAsFinished $command): bool
+
+    public static function make(
+        int $subscriptionId,
+    ): self {
+        return new self(
+            $subscriptionId,
+        );
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Getters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getSubscriptionId(): int
     {
-        $result = false;
-        $subscription = $this->subscriptionRepository->getById($command->getId());
-
-        if (SubscriptionStatus::PAYED === $subscription->getStatus()) {
-            $subscription->changeStatus(SubscriptionStatus::COMPLETE);
-            $this->subscriptionRepository->save($subscription);
-            $result = true;
-        }
-
-        return $result;
+        return $this->subscriptionId;
     }
 }

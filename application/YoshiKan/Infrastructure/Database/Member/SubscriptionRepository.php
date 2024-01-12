@@ -89,6 +89,15 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         return $model;
     }
 
+    public function findByPaymentId(string $paymentId): ?Subscription
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.paymentId = :payment_id')
+            ->setParameter('payment_id', $paymentId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function getMaxId(): int
     {
         $model = $this->createQueryBuilder('t')

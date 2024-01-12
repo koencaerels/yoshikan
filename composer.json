@@ -19,6 +19,7 @@
         "dompdf/dompdf": "^2.0",
         "fakerphp/faker": "^1.23",
         "jeschek/dragsort": "^1.0",
+        "mollie/mollie-api-php": "^2.64",
         "nelmio/security-bundle": "^2.12",
         "phpoffice/phpspreadsheet": "^1.26",
         "stof/doctrine-extensions-bundle": "^1.7",

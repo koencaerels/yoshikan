@@ -37,6 +37,7 @@ trait subscription_routes
     {
         $jsonCommand = json_decode($request->request->get('command'));
         $response = $this->commandBus->markSubscriptionAsPayed($jsonCommand);
+        $response_mail = $this->commandBus->sendPaymentReceivedConfirmationMail($id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -99,90 +100,4 @@ trait subscription_routes
         return $arListIdsInt;
     }
 
-    //    #[Route('/mm/api/subscribe', name: 'backend_subscribe', methods: ['POST', 'PUT'])]
-    //    public function backendSubscribeAction(Request $request): JsonResponse
-    //    {
-    //        $jsonCommand = json_decode($request->request->get('subscription'));
-    //        $response = $this->commandBus->WebSubscriptionAction($jsonCommand);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/todo', name: 'get_todo_subscriptions', methods: ['GET'])]
-    //    public function getTodoSubscriptions(): JsonResponse
-    //    {
-    //        // $response = $this->queryBus->getTodoSubscription();
-    //        // todo replace this with correct list
-    //        $response = [];
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/active-period', methods: ['GET'])]
-    //    public function getSubscriptionsByActivePeriod(): JsonResponse
-    //    {
-    //        $response = $this->queryBus->getSubscriptionsByActivePeriod();
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/all', methods: ['GET'])]
-    //    public function getAllSubscriptions(): JsonResponse
-    //    {
-    //        $response = $this->queryBus->getAllSubscriptions();
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/mark-as-finished', methods: ['POST', 'PUT'])]
-    //    public function markSubscriptionsAsFinished(Request $request): JsonResponse
-    //    {
-    //        $jsonCommand = json_decode($request->request->get('list-ids'));
-    //        $response = $this->commandBus->markSubscriptionAsFinished($jsonCommand);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/{id}', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
-    //    public function changeSubscription(int $id, Request $request): JsonResponse
-    //    {
-    //        $jsonCommand = json_decode($request->request->get('subscription'));
-    //        $response = $this->commandBus->changeSubscription($jsonCommand);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/{id}/change-status', methods: ['POST', 'PUT'])]
-    //    public function changeSubscriptionStatus(int $id, Request $request): JsonResponse
-    //    {
-    //        $jsonCommand = json_decode($request->request->get('change-status'));
-    //        $response = $this->commandBus->changeSubscriptionStatus($jsonCommand);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/{id}/mail-payment-information', methods: ['POST', 'PUT'])]
-    //    public function sendPaymentOverviewMail(int $id, Request $request): JsonResponse
-    //    {
-    //        $response = $this->commandBus->sendPaymentOverviewMail($id);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/{id}/connect-member', methods: ['POST', 'PUT'])]
-    //    public function connectMemberToSubscription(int $id, Request $request): JsonResponse
-    //    {
-    //        $jsonCommand = json_decode($request->request->get('connect-member'));
-    //        $response = $this->commandBus->connectSubscriptionToMember($jsonCommand);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
-    //
-    //    #[Route('/mm/api/subscription/{id}/create-member', methods: ['POST', 'PUT'])]
-    //    public function createMemberFromSubscription(int $id, Request $request): JsonResponse
-    //    {
-    //        $response = $this->commandBus->createMemberFromSubscription($id);
-    //
-    //        return new JsonResponse($response, 200, $this->apiAccess);
-    //    }
 }

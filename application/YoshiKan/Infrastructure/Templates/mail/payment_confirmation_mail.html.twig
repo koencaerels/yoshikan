@@ -1,0 +1,21 @@
+{% extends 'mail/base_mail.html.twig' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block body %}
+
+    <p>Beste {{ subscription.contactLastname }} {{ subscription.contactFirstname }},</p>
+    <p>
+        We hebben de betaling van het lidgeld (YKS-{{ subscription.id }}) van
+        <strong>{{ subscription.lastname | upper }} {{ subscription.firstname }}</strong>
+        goed ontvangen. Bedankt hiervoor!
+    </p>
+    <p>
+        Tot binnenkort.
+    </p>
+    <p>
+        Met sportieve groeten,
+        <br>Team Yoshi-Kan.
+    </p>
+
+{% endblock %}

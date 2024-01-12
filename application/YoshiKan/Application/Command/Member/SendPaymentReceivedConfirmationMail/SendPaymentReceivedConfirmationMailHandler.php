@@ -11,30 +11,34 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail;
+namespace App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail;
 
+use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Message\Message;
+use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Twig\Environment;
 
-class NewMemberWebSubscriptionMailHandler
+class SendPaymentReceivedConfirmationMailHandler
 {
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
+        protected MemberRepository $memberRepository,
+        protected MessageRepository $messageRepository,
         protected Environment $twig,
         protected MailerInterface $mailer
     ) {
     }
 
-    public function go(NewMemberWebSubscriptionMail $command): bool
+    public function send(SendPaymentReceivedConfirmationMail $command): bool
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
-        $subject = 'JC Yoshi-Kan: bevestiging inschrijving '.$subscription->getFirstname().' '.$subscription->getLastname();
-
+        $subject = 'JC Yoshi-Kan: betaling goed ontvangen: YKS-'.$subscription->getId();
         $mailTemplate = $this->twig->render(
-            'mail/web_confirmation_mail.html.twig',
+            'mail/payment_confirmation_mail.html.twig',
             [
                 'subject' => $subject,
                 'subscription' => $subscription,
@@ -42,14 +46,31 @@ class NewMemberWebSubscriptionMailHandler
             ]
         );
 
+        // -- send email ------------------------------------------------
+
         $message = (new Email())
             ->subject($subject)
             ->from(new Address($command->getFromEmail(), $command->getFromName()))
             ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
-            ->bcc(new Address($command->getContactEmail(), $command->getFromName()))
             ->html($mailTemplate);
 
         $this->mailer->send($message);
+
+        // -- record message --------------------------------------------
+
+        $message = Message::make(
+            $this->messageRepository->nextIdentity(),
+            new \DateTimeImmutable(),
+            $command->getFromName(),
+            $command->getFromEmail(),
+            $subscription->getContactFirstname().' '.$subscription->getContactLastname(),
+            $subscription->getContactEmail(),
+            $subject,
+            $mailTemplate,
+        );
+        $message->setMember($subscription->getMember());
+        $message->setSubscription($subscription);
+        $this->messageRepository->save($message);
 
         return true;
     }

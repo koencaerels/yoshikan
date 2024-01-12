@@ -11,32 +11,37 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed;
+namespace App\YoshiKan\Infrastructure\Mollie;
 
-class MarkSubscriptionAsPayed
+class MollieConfig
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected int $id,
+        protected string $apiKey,
+        protected string $partnerId,
+        protected string $profileId,
+        protected string $redirectBaseUrl,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // Hydrate from a json command
+    // Maker
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function make(int $subscriptionId): self
-    {
-        return new self($subscriptionId);
-    }
-
-    public static function hydrateFromJson($json): self
-    {
+    public static function make(
+        string $apiKey,
+        string $partnerId,
+        string $profileId,
+        string $redirectBaseUrl,
+    ): self {
         return new self(
-            $json->id,
+            $apiKey,
+            $partnerId,
+            $profileId,
+            $redirectBaseUrl,
         );
     }
 
@@ -44,8 +49,23 @@ class MarkSubscriptionAsPayed
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getId(): int
+    public function getApiKey(): string
     {
-        return $this->id;
+        return $this->apiKey;
+    }
+
+    public function getPartnerId(): string
+    {
+        return $this->partnerId;
+    }
+
+    public function getProfileId(): string
+    {
+        return $this->profileId;
+    }
+
+    public function getRedirectBaseUrl(): string
+    {
+        return $this->redirectBaseUrl;
     }
 }

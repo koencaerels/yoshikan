@@ -27,6 +27,7 @@ use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grad
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
 use App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription\confirm_member_web_subscription;
+use App\YoshiKan\Application\Command\Member\CreateMolliePaymentLink\CreateMolliePaymentLinkTrait;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\mark_subscription_as_canceled;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\mark_subscription_as_finished;
@@ -41,6 +42,7 @@ use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
 use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
 use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
 use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
+use App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail\SendPaymentReceivedConfirmationMailTrait;
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
 use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
 use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
@@ -62,6 +64,7 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
+use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -102,6 +105,8 @@ class MemberCommandBus
     use mark_subscription_as_finished;
     use mark_subscription_as_canceled;
     use confirm_member_web_subscription;
+    use CreateMolliePaymentLinkTrait;
+    use SendPaymentReceivedConfirmationMailTrait;
 
     // -- member images ---------------------------------------------------------
     use upload_member_image;
@@ -143,6 +148,7 @@ class MemberCommandBus
         protected FederationRepository $federationRepository,
         protected MessageRepository $messageRepository,
         protected JudogiRepository $judogiRepository,
+        protected MollieConfig $mollieConfig,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

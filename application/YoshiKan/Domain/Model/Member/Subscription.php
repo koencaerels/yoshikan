@@ -150,7 +150,21 @@ class Subscription
     #[ORM\Column(length: 191, nullable: true)]
     private ?string $addressCity = null;
 
-    // ------------------------------------------------------------ associations
+    // -- payment fields --------------------------------------------------------
+
+    #[ORM\Column(length: 191)]
+    private string $paymentLink = '';
+
+    #[ORM\Column(length: 191)]
+    private string $paymentLinkId = '';
+
+    #[ORM\Column(length: 191)]
+    private string $paymentId = '';
+
+    #[ORM\Column(length: 36)]
+    private string $paymentType = SubscriptionPaymentType::TRANSFER->value;
+
+    // -- associations ----------------------------------------------------------
     #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY', inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Member $member;
@@ -458,6 +472,25 @@ class Subscription
     }
 
     // —————————————————————————————————————————————————————————————————————————
+    // Payment information setters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function setMolliePaymentInfo(
+        string $paymentId,
+        string $paymentLink,
+        string $paymentLinkId,
+    ): void {
+        $this->paymentId = $paymentId;
+        $this->paymentLink = $paymentLink;
+        $this->paymentLinkId = $paymentLinkId;
+    }
+
+    public function setPaymentTypeInfo(SubscriptionPaymentType $type): void
+    {
+        $this->paymentType = $type->value;
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
@@ -701,6 +734,30 @@ class Subscription
     public function getItems(): array
     {
         return $this->items->getValues();
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Payment information fields
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getPaymentLink(): string
+    {
+        return $this->paymentLink;
+    }
+
+    public function getPaymentLinkId(): string
+    {
+        return $this->paymentLinkId;
+    }
+
+    public function getPaymentId(): string
+    {
+        return $this->paymentId;
+    }
+
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
     }
 
     // —————————————————————————————————————————————————————————————————————————

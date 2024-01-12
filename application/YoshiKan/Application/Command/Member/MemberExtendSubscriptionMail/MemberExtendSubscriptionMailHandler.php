@@ -72,7 +72,7 @@ class MemberExtendSubscriptionMailHandler
             ]
         );
 
-        // -- send email -----------------------------------------------------------------------------------------------
+        // -- send email -------------------------------------------------
 
         $message = (new Email())
             ->subject($subject)
@@ -82,7 +82,7 @@ class MemberExtendSubscriptionMailHandler
 
         $this->mailer->send($message);
 
-        // -- record message and flag as send --------------------------------------------------------------------------
+        // -- record message and flag as send ----------------------------
 
         $message = Message::make(
             $this->messageRepository->nextIdentity(),

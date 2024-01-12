@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription;
 
+use App\YoshiKan\Application\Command\Common\SubscriptionItemsFactory;
 use App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription\CreateMemberFromSubscription;
 use App\YoshiKan\Application\Command\Member\CreateMemberFromSubscription\CreateMemberFromSubscriptionHandler;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
@@ -156,6 +157,17 @@ class ConfirmMemberWebSubscriptionHandler
             $subscription->setMember($member);
             $this->subscriptionRepository->save($subscription);
         }
+
+        // -- make some subscription lines ---------------------------------
+        $subscriptionItemFactory = new SubscriptionItemsFactory(
+            $this->subscriptionRepository,
+            $this->subscriptionItemRepository
+        );
+        $resultItems = $subscriptionItemFactory->saveItemsFromSubscription(
+            $subscription,
+            $federation,
+            $settings
+        );
 
         // -- set correct status for the subscription ----------------------
         $this->entityManager->flush();

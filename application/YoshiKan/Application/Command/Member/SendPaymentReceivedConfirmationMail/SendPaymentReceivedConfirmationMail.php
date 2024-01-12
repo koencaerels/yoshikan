@@ -11,36 +11,36 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished;
+namespace App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail;
 
-use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
-use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
-
-class MarkSubscriptionAsFinishedHandler
+class SendPaymentReceivedConfirmationMail
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
-
     public function __construct(
-        protected SubscriptionRepository $subscriptionRepository
+        protected int $subscriptionId,
+        protected string $fromName,
+        protected string $fromEmail,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // Handler
+    // Getters
     // —————————————————————————————————————————————————————————————————————————
-    public function go(MarkSubscriptionAsFinished $command): bool
+
+    public function getSubscriptionId(): int
     {
-        $result = false;
-        $subscription = $this->subscriptionRepository->getById($command->getId());
+        return $this->subscriptionId;
+    }
 
-        if (SubscriptionStatus::PAYED === $subscription->getStatus()) {
-            $subscription->changeStatus(SubscriptionStatus::COMPLETE);
-            $this->subscriptionRepository->save($subscription);
-            $result = true;
-        }
+    public function getFromName(): string
+    {
+        return $this->fromName;
+    }
 
-        return $result;
+    public function getFromEmail(): string
+    {
+        return $this->fromEmail;
     }
 }

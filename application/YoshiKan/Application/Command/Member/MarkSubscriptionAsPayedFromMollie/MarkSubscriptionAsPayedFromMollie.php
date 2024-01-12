@@ -11,36 +11,41 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished;
+namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayedFromMollie;
 
-use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
-use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
-
-class MarkSubscriptionAsFinishedHandler
+class MarkSubscriptionAsPayedFromMollie
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(
-        protected SubscriptionRepository $subscriptionRepository
+    private function __construct(
+        protected string $paymentId,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // Handler
+    // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
-    public function go(MarkSubscriptionAsFinished $command): bool
+
+    public static function make(string $paymentId): self
     {
-        $result = false;
-        $subscription = $this->subscriptionRepository->getById($command->getId());
+        return new self(trim($paymentId));
+    }
 
-        if (SubscriptionStatus::PAYED === $subscription->getStatus()) {
-            $subscription->changeStatus(SubscriptionStatus::COMPLETE);
-            $this->subscriptionRepository->save($subscription);
-            $result = true;
-        }
+    public static function hydrateFromJson($json): self
+    {
+        return new self(
+            $json->paymentId,
+        );
+    }
 
-        return $result;
+    // —————————————————————————————————————————————————————————————————————————
+    // Getters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getPaymentId(): string
+    {
+        return $this->paymentId;
     }
 }
