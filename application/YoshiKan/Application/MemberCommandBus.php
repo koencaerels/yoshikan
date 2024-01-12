@@ -50,6 +50,8 @@ use App\YoshiKan\Application\Command\Message\ResendMessage\resend_message;
 use App\YoshiKan\Application\Command\Product\AddJudogi\add_judogi;
 use App\YoshiKan\Application\Command\Product\ChangeJudogi\change_judogi;
 use App\YoshiKan\Application\Command\Product\OrderJudogi\order_judogi;
+use App\YoshiKan\Application\Command\TwoFactor\GenerateAndSendMemberAccessCode\GenerateAndSendMemberAccessCodeTrait;
+use App\YoshiKan\Application\Command\TwoFactor\ValidateMemberAccessCode\ValidateMemberAccessCodeTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\GradeLogRepository;
@@ -64,7 +66,9 @@ use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCodeRepository;
 use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
+use Bolt\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -121,6 +125,10 @@ class MemberCommandBus
     use change_judogi;
     use order_judogi;
 
+    // -- two factor -----------------------------------------------------------
+    use GenerateAndSendMemberAccessCodeTrait;
+    use ValidateMemberAccessCodeTrait;
+
     // -- permission service ----------------------------------------------------
     protected BasePermissionService $permission;
 
@@ -148,6 +156,8 @@ class MemberCommandBus
         protected FederationRepository $federationRepository,
         protected MessageRepository $messageRepository,
         protected JudogiRepository $judogiRepository,
+        protected UserRepository $userRepository,
+        protected MemberAccessCodeRepository $memberAccessCodeRepository,
         protected MollieConfig $mollieConfig,
     ) {
         $this->permission = new BasePermissionService(

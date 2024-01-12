@@ -28,6 +28,7 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
 use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\federation_routes;
@@ -42,6 +43,8 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\message_routes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Reporting\reporting_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\TwoFactor\TwoFactorRoutes;
+use Bolt\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -73,6 +76,7 @@ class MemberApiController extends AbstractController
     use federation_routes;
     use message_routes;
     use reporting_routes;
+    use TwoFactorRoutes;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Attributes
@@ -150,6 +154,8 @@ class MemberApiController extends AbstractController
             federationRepository: $this->entityManager->getRepository(Federation::class),
             messageRepository: $this->entityManager->getRepository(Message::class),
             judogiRepository: $this->entityManager->getRepository(Judogi::class),
+            userRepository: $this->entityManager->getRepository(User::class),
+            memberAccessCodeRepository: $this->entityManager->getRepository(MemberAccessCode::class),
             mollieConfig: $mollieConfig,
         );
     }
