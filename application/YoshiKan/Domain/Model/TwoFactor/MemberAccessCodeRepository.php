@@ -33,5 +33,5 @@ interface MemberAccessCodeRepository
     /**
      * @return MemberAccessCode[]
      */
-    public function getByUser(User $user): array;
+    public function getByActiveUser(User $user): array;
 }

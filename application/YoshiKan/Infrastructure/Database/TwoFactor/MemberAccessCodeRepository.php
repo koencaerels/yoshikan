@@ -103,11 +103,12 @@ final class MemberAccessCodeRepository extends ServiceEntityRepository implement
     /**
      * @return MemberAccessCode[]
      */
-    public function getByUser(User $user): array
+    public function getByActiveUser(User $user): array
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.user = :user_id')
             ->setParameter('user_id', $user->getId())
+            ->andWhere('t.isActive = 1')
             ->getQuery()
             ->getResult();
     }

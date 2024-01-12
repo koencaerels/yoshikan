@@ -49,7 +49,7 @@ class ValidateMemberAccessCodeHandler
         $this->memberAccessCodeRepository->save($memberAccessCode);
 
         // -- invalidate all other codes for that user
-        $memberAccessCodes = $this->memberAccessCodeRepository->getByUser($user);
+        $memberAccessCodes = $this->memberAccessCodeRepository->getByActiveUser($user);
         foreach ($memberAccessCodes as $memberAccessCodeEntity) {
             $memberAccessCodeEntity->invalidate();
             $this->memberAccessCodeRepository->save($memberAccessCodeEntity);
