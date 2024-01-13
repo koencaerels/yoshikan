@@ -29,9 +29,11 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
 use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Bolt\Controller\TwigAwareController;
+use Bolt\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -127,6 +129,8 @@ class MemberModuleController
             $this->entityManager->getRepository(Federation::class),
             $this->entityManager->getRepository(Message::class),
             $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(User::class),
+            $this->entityManager->getRepository(MemberAccessCode::class),
             $mollieConfig,
         );
 
