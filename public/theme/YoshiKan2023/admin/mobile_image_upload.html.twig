@@ -106,7 +106,10 @@
                     </div>
                 {% endif %}
             </div>
-            <form enctype="multipart/form-data"
+
+            {# form upload ------------------------------------------------------------------------------------------ #}
+            <form id="uploadForm"
+                  enctype="multipart/form-data"
                   method="post"
                   action="?keyword={{ keyword }}&group={{ groupId }}&location={{ locationId }}&member={{ member.id }}">
 
@@ -118,11 +121,18 @@
                            accept="image/*"
                            capture="camera">
                 </div>
+
+                <div id="loadingDiv" class="mt-2 p-2 bg-yellow-400 text-gray-900 text-center hidden">
+                    UPLOADING...
+                </div>
+
                 <div class="mt-2">
-                    <input class="w-full bg-green-600 p-4 rounded-lg"
+                    <input id="submitButton"
+                           class="w-full bg-green-600 p-4 rounded-lg"
                            type="submit" name="btnSubmit" value="UPLOAD">
                 </div>
             </form>
+            {# form upload ------------------------------------------------------------------------------------------ #}
         </div>
     {% endif %}
 
