@@ -14,7 +14,21 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'home',
+            name: 'login',
+            component: () => import('../views/LoginView.vue')
+        },
+        {
+            path: '/login/:code',
+            name: 'magicLink',
+            component: () => import('../views/MagicLinkView.vue'),
+            props: (route) => {
+                const code = castIdParameter(route.params.code.toString());
+                return {code};
+            },
+        },
+        {
+            path: '/dashboard',
+            name: 'dashboard',
             component: () => import('../views/DashboardView.vue')
         },
         {
@@ -108,7 +122,6 @@ const router = createRouter({
         },
     ]
 })
-
 function castIdParameter(routeParamsId: string) {
     const id = Number.parseInt(routeParamsId, 10);
     if (Number.isNaN(id)) {
@@ -116,5 +129,4 @@ function castIdParameter(routeParamsId: string) {
     }
     return id;
 }
-
 export default router

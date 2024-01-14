@@ -18,8 +18,6 @@ use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCodeRepository;
 use Bolt\Entity\User;
 use Bolt\Repository\UserRepository;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Twig\Environment;
 
 class GenerateAndSendMemberAccessCodeHandler
@@ -52,7 +50,7 @@ class GenerateAndSendMemberAccessCodeHandler
         $this->memberAccessCodeRepository->save($memberAccessCode);
 
         // -- make template ---------------------------------------------
-
+        $magicLink = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/beheer/leden#/login/'.$verificationCode;
         $mailTemplate = $this->twig->render(
             'mail/member_access_code_mail.html.twig',
             [
@@ -60,18 +58,19 @@ class GenerateAndSendMemberAccessCodeHandler
                 'user' => $user,
                 'code' => $verificationCode,
                 'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
+                'magicLink' => $magicLink,
             ]
         );
 
-        // -- send email ------------------------------------------------
+        // -- send email via resend  ---------------------------------------
 
-        $message = (new Email())
-            ->subject($subject)
-            ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($user->getEmail(), $user->getDisplayName()))
-            ->html($mailTemplate);
-
-        $this->mailer->send($message);
+        $resend = \Resend::client($_SERVER['RESEND_API_KEY']);
+        $resend->emails->send([
+            'from' => $command->getFromName().' <'.$command->getFromEmail().'>',
+            'to' => [$user->getEmail()],
+            'subject' => $subject,
+            'html' => $mailTemplate,
+        ]);
 
         return true;
     }

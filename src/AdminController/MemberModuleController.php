@@ -65,7 +65,7 @@ class MemberModuleController
     // Member module route
     // ——————————————————————————————————————————————————————————————————————————
     /**
-     * @Route("/members/", name="app_member_module")
+     * @Route("/leden/", name="app_member_module")
      */
     public function member_module(): Response
     {

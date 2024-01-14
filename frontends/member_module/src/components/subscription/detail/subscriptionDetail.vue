@@ -165,25 +165,19 @@
             </div>
         </div>
 
-        <!-- actions for connected subscriptions ------------------------------------------------------------------- -->
+        <!-- actions for finishing a subscription ------------------------------------------------------------------ -->
         <div class="flex gap-2 mt-4"
-             v-if="memberStore.subscriptionDetail.memberId !== 0
-             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.AWAITING_PAYMENT">
+             v-if="!memberStore.subscriptionDetail.memberId
+             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.NEW">
 
             <div class="flex-none w-48 text-right text-xs text-gray-600">
                 Acties
             </div>
             <div class="grow">
-                <Button v-if="!isLoading"
-                        @click="markAsPaid"
-                        icon="pi pi-money-bill"
+                <Button @click="reviewSubscription"
+                        icon="pi pi-times-circle"
                         class="p-button-success w-full"
-                        label="Betaling ontvangen"></Button>
-                <Button v-else
-                        disabled
-                        icon="pi pi-spin pi-spinner"
-                        class="p-button-success w-full"
-                        label="Betaling ontvangen"></Button>
+                        label="Inschrijving confirmeren"></Button>
             </div>
             <div class="flex-none w-64">
                 <Button v-if="!isLoading"
@@ -196,6 +190,31 @@
                         icon="pi pi-spin pi-spinner"
                         class="p-button-warning w-full"
                         label="Inschrijving annuleren"></Button>
+            </div>
+        </div>
+
+        <!-- actions for connected subscriptions ------------------------------------------------------------------- -->
+        <div class="flex gap-2 mt-4"
+             v-if="memberStore.subscriptionDetail.memberId !== 0
+             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.PAYED">
+
+            <div class="flex-none w-48 text-right text-xs text-gray-600">
+                Acties
+            </div>
+            <div class="grow">
+                <Button v-if="!isLoading"
+                        @click="markAsFinished"
+                        icon="pi pi-money-bill"
+                        class="p-button-success w-full"
+                        label="Inschrijving afwerken"></Button>
+                <Button v-else
+                        disabled
+                        icon="pi pi-spin pi-spinner"
+                        class="p-button-success w-full"
+                        label="Inschrijving afwerken"></Button>
+            </div>
+            <div class="flex-none w-64">
+                &nbsp;
             </div>
         </div>
     </div>
@@ -237,6 +256,10 @@ import {SubscriptionStatusEnum} from "@/api/query/enum";
 import MessageDetail from "@/components/message/messageDetail.vue";
 import {useConfirm} from "primevue/useconfirm";
 import ReviewNewMemberForm from "@/components/subscription/reviewNewMember/reviewNewMemberForm.vue";
+import {
+    markSubscriptionAsFinished,
+    type MarkSubscriptionAsFinishedCommand
+} from "@/api/command/subscription/markSubscriptionAsFinished";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
@@ -246,7 +269,7 @@ const confirm = useConfirm();
 
 const showMessageDetail = ref<boolean>(false);
 const apiUrl = import.meta.env.VITE_API_URL as string;
-const emit = defineEmits(["paid", "canceled", "subscription-reviewed"]);
+const emit = defineEmits(["paid", "canceled", "subscription-reviewed","finished"]);
 
 // -- review subscription functions ------------------------------------------------------------------------------------
 
@@ -273,13 +296,9 @@ function printSubscription() {
     window.open(url, '_blank');
 }
 
-// -- pay and cancel functions -----------------------------------------------------------------------------------------
+// -- payed function ---------------------------------------------
 
 const commandPay = ref<MarkSubscriptionAsPayedCommand>({
-    id: memberStore.subscriptionDetail?.id ?? 0,
-});
-
-const commandCancel = ref<MarkSubscriptionAsCanceledCommand>({
     id: memberStore.subscriptionDetail?.id ?? 0,
 });
 
@@ -301,12 +320,42 @@ async function markAsPaid() {
     }
 }
 
+// -- finish function ---------------------------------------------
+
+const commandFinish = ref<MarkSubscriptionAsFinishedCommand>({
+    id: memberStore.subscriptionDetail?.id ?? 0,
+});
+
+async function markAsFinished() {
+    if (commandFinish.value.id !== 0) {
+        isLoading.value = true;
+        let result = await markSubscriptionAsFinished(commandFinish.value);
+        toaster.add({
+            severity: "success",
+            summary: "Inschrijving is afgewerkt.",
+            detail: "",
+            life: appStore.toastLifeTime,
+        });
+        await memberStore.reloadSubscriptionDetail();
+        await memberStore.reloadMemberDetail();
+        memberStore.increaseCounter();
+        isLoading.value = false;
+        emit('finished');
+    }
+}
+
+// -- cancel function ---------------------------------------------
+
+const commandCancel = ref<MarkSubscriptionAsCanceledCommand>({
+    id: memberStore.subscriptionDetail?.id ?? 0,
+});
+
 function confirmCancelSubscription(event: MouseEvent) {
     const target = event.currentTarget;
     if (target instanceof HTMLElement) {
         confirm.require({
             target: target,
-            message: "Ben je zeker om deze inschrijving te annuleren ? Dit kan niet ongedaan gemaakt worden.",
+            message: "Ben je zeker om deze inschrijving te annuleren ?",
             icon: "pi pi-exclamation-triangle",
             acceptLabel: "Ja",
             rejectLabel: "Nee",

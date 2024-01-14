@@ -33,7 +33,7 @@ class UploadMemberImageHandler
             return false;
         }
         $filesize = filesize($image->getRealPath());
-        if ($filesize > 3000000) {
+        if ($filesize > 30000000000) {
             throw new \Exception('Could not save the uploaded file');
 
             return false;

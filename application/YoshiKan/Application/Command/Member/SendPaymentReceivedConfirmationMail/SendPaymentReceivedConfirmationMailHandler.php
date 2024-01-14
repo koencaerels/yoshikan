@@ -59,14 +59,14 @@ class SendPaymentReceivedConfirmationMailHandler
         // -- record message --------------------------------------------
 
         $message = Message::make(
-            $this->messageRepository->nextIdentity(),
-            new \DateTimeImmutable(),
-            $command->getFromName(),
-            $command->getFromEmail(),
-            $subscription->getContactFirstname().' '.$subscription->getContactLastname(),
-            $subscription->getContactEmail(),
-            $subject,
-            $mailTemplate,
+            uuid: $this->messageRepository->nextIdentity(),
+            sendOn: new \DateTimeImmutable(),
+            fromName: $command->getFromName(),
+            fromEmail: $command->getFromEmail(),
+            toName: $subscription->getContactFirstname().' '.$subscription->getContactLastname(),
+            toEmail: $subscription->getContactEmail(),
+            subject: $subject,
+            message: $mailTemplate,
         );
         $message->setMember($subscription->getMember());
         $message->setSubscription($subscription);

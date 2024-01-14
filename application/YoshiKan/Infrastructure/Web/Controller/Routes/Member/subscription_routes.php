@@ -45,6 +45,18 @@ trait subscription_routes
     /**
      * @throws \Exception
      */
+    #[Route('/mm/api/subscription/{id}/mark-as-finished', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function markSubscriptionAsFinished(int $id, Request $request): JsonResponse
+    {
+        $jsonCommand = json_decode($request->request->get('command'));
+        $response = $this->commandBus->markSubscriptionAsFinished($jsonCommand);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    /**
+     * @throws \Exception
+     */
     #[Route('/mm/api/subscription/{id}/cancel', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
     public function markSubscriptionAsCanceled(int $id, Request $request): JsonResponse
     {

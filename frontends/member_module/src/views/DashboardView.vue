@@ -30,11 +30,20 @@
                             {{appStore.dashboardNumbers.numberOfWebSubscriptions}} web inschrijvingen
                         </router-link>
                     </div>
-                    <div class="mt-8" v-if="appStore.dashboardNumbers.numberOfDuePayments != 0">
+                    <div class="mt-4" v-if="appStore.dashboardNumbers.numberOfDuePayments != 0">
                         <router-link to="/inschrijvingen/te-betalen"
                                      class="text-xs px-4 py-2 bg-orange-300 w-full rounded-lg hover:bg-orange-400">
                         {{appStore.dashboardNumbers.numberOfDuePayments}} inschrijvingen nog te betalen
                         </router-link>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <div class="rounded-xl p-2 bg-blue-100">
+                        <a href="https://my.mollie.com/dashboard/" target="_blank">
+                            <div class="text-center"><img src="../assets/euro.png" width="100" class="mx-auto"></div>
+                            <div class="text-center">Mollie Dashboard</div>
+                        </a>
                     </div>
                 </div>
 

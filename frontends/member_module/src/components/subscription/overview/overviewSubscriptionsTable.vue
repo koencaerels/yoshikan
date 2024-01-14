@@ -252,6 +252,7 @@
             :modal="true">
         <subscription-detail
             v-on:paid="hideSubscriptionDetailFn"
+            v-on:finished="hideSubscriptionDetailFn"
             v-on:subscription-reviewed="hideSubscriptionDetailFn"
             v-on:canceled="hideSubscriptionDetailFn"/>
     </Dialog>
@@ -273,7 +274,6 @@
             </Splitter>
         </div>
     </Dialog>
-
 
 </template>
 
