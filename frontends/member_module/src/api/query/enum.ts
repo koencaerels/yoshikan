@@ -12,6 +12,7 @@ export const SubscriptionStatusEnum: SubscriptionStatus = {
     PAYED: 'betaald',
     COMPLETE: 'afgewerkt',
     CANCELED: 'canceled',
+    ARCHIVED: 'archived',
 };
 
 type SubscriptionItemType = {

@@ -111,7 +111,7 @@
                     </div>
                     <div v-else>
                         <subscription-badge @click="showSubscriptionDetailFn(data)"
-                                            :subscription="data" class="w-[4rem] cursor-pointer"/>
+                                            :subscription="data" class="w-[5rem] cursor-pointer"/>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">
@@ -138,7 +138,6 @@
                     </div>
                 </template>
             </Column>
-
 
             <Column field="memberId" sortable header="Lidnr." class="text-xs" style="border-left:1px solid black;">
                 <template #body="{data}">

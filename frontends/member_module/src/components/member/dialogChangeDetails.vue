@@ -157,11 +157,7 @@
                     </div>
                     <div class="basis-1/5 ml-2">
                         <div class="mb-1"><label class="text-xs">Nummer *</label></div>
-                        <span class="p-input-icon-right w-full">
-                            <InputText class="w-full p-inputtext-sm" v-model="command.addressNumber"/>
-                            <i v-if="!change$.addressNumber.$invalid" class="pi pi-check text-green-600"/>
-                            <i v-if="change$.addressNumber.$invalid" class="pi pi-times text-red-600"/>
-                        </span>
+                        <InputText class="w-full p-inputtext-sm" v-model="command.addressNumber"/>
                     </div>
                     <div class="basis-1/5 ml-2">
                         <div class="mb-1"><label class="text-xs">Bus</label></div>
@@ -316,7 +312,6 @@ const rules = {
     locationId: {minValueValue: minValue(1)},
     email: {required},
     addressStreet: {required},
-    addressNumber: {required},
     addressZip: {required},
     addressCity: {required},
     contactFirstname: {required},

@@ -29,6 +29,16 @@ interface SubscriptionRepository
 
     public function findByPaymentId(string $paymentId): ?Subscription;
 
+    public function findByMemberAndDatesAndAmounts(
+        Member             $member,
+        \DateTimeImmutable $memberStartDate,
+        \DateTimeImmutable $memberEndDate,
+        \DateTimeImmutable $licenseStartDate,
+        \DateTimeImmutable $licenseEndDate,
+        float              $memberShipAmount,
+        float              $licenseAmount,
+    ): ?Subscription;
+
     public function getAll(): array;
 
     public function getByListId(array $list): array;

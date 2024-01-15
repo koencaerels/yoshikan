@@ -98,6 +98,35 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
             ->getOneOrNullResult();
     }
 
+    public function findByMemberAndDatesAndAmounts(
+        Member             $member,
+        \DateTimeImmutable $memberStartDate,
+        \DateTimeImmutable $memberEndDate,
+        \DateTimeImmutable $licenseStartDate,
+        \DateTimeImmutable $licenseEndDate,
+        float              $memberShipAmount,
+        float              $licenseAmount,
+    ): ?Subscription
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.member = :memberId')
+            ->setParameter('memberId', $member->getId())
+            ->andWhere('t.memberSubscriptionStart = :memberShipStart')
+            ->setParameter('memberShipStart', $memberStartDate)
+            ->andWhere('t.memberSubscriptionEnd = :memberShipEnd')
+            ->setParameter('memberShipEnd', $memberEndDate)
+            ->andWhere('t.licenseStart = :licenseShipStart')
+            ->setParameter('licenseShipStart', $licenseStartDate)
+            ->andWhere('t.licenseEnd = :licenseShipEnd')
+            ->setParameter('licenseShipEnd', $licenseEndDate)
+            ->andWhere('t.memberSubscriptionTotal = :memberShipAmount')
+            ->setParameter('memberShipAmount', $memberShipAmount)
+            ->andWhere('t.licenseTotal = :licenseAmount')
+            ->setParameter('licenseAmount', $licenseAmount)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function getMaxId(): int
     {
         $model = $this->createQueryBuilder('t')

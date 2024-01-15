@@ -130,7 +130,7 @@
                 <th>Voornaam</th>
                 <th>Groep</th>
                 <th colspan="4">Lidgeld</th>
-                <th colspan="4">Vergunning</th>
+                <th colspan="5">Vergunning</th>
                 <th>Totaal</th>
             </tr>
             <tr>
@@ -139,6 +139,7 @@
                 <th>tot</th>
                 <th>bedrag</th>
                 <th>betaald</th>
+                <th>fed.</th>
                 <th>van</th>
                 <th>tot</th>
                 <th>bedrag</th>
@@ -154,19 +155,20 @@
                     <td>{{ subscription.firstname }}</td>
                     <td></td>
                     <td>{{ subscription.memberSubscriptionStart | date('m/Y')}}</td>
-                    <td>{{ subscription.memberSubscriptionEnd | date('m/Y')}}</td>
+                    <td><strong>{{ subscription.memberSubscriptionEnd | date('m/Y')}}</strong></td>
                     <td>
                         {% if subscription.memberSubscriptionTotal != 0 %}
                             {{ subscription.memberSubscriptionTotal }} €
                         {% endif %}
                     </td>
                     <td align="center">
-                        {% if subscription.memberSubscriptionIsPayed or subscription.memberSubscriptionTotal == 0 %}
+                        {% if subscription.isMemberSubscriptionIsPayed or subscription.memberSubscriptionTotal == 0 %}
                             x
                         {% endif %}
                     </td>
+                    <td>{{ subscription.federation.code }}</td>
                     <td>{{ subscription.licenseStart | date('m/Y')}}</td>
-                    <td>{{ subscription.licenseEnd | date('m/Y')}}</td>
+                    <td><strong>{{ subscription.licenseEnd | date('m/Y')}}</strong></td>
                     <td>
                         {% if subscription.licenseTotal != 0 %}
                             {{ subscription.licenseTotal }} €

@@ -1,6 +1,6 @@
 <template>
     <div class="px-2 rounded-full text-xs text-center border-[1px] text-gray-900 w-[9rem]" :class="statusColor">
-        {{subscription.status}}
+        {{ subscription.status }}
     </div>
 </template>
 
@@ -27,6 +27,9 @@ const statusColor = computed((): string => {
             break;
         case SubscriptionStatusEnum.CANCELED:
             _color = 'border-red-300 text-red-400';
+            break;
+        case SubscriptionStatusEnum.ARCHIVED:
+            _color = 'border-yellow-300 text-gray-800';
             break;
         default:
             _color = 'border-yellow-300';

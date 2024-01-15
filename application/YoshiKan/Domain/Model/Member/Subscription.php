@@ -471,6 +471,16 @@ class Subscription
         $this->isPrinted = true;
     }
 
+    public function setTotal(float $total): void
+    {
+        $this->total = $total;
+    }
+
+    public function updateSettings(array $settings): void
+    {
+        $this->settings = $settings;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Payment information setters
     // —————————————————————————————————————————————————————————————————————————
