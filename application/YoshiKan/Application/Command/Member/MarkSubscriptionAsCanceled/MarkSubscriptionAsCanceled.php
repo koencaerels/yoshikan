@@ -21,6 +21,7 @@ class MarkSubscriptionAsCanceled
 
     private function __construct(
         protected int $id,
+        protected bool $cancelMember = true,
     ) {
     }
 
@@ -28,9 +29,11 @@ class MarkSubscriptionAsCanceled
     // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function make(int $subscriptionId): self
-    {
-        return new self($subscriptionId);
+    public static function make(
+        int $subscriptionId,
+        bool $cancelMember = true,
+    ): self {
+        return new self($subscriptionId, $cancelMember);
     }
 
     public static function hydrateFromJson($json): self
@@ -47,5 +50,10 @@ class MarkSubscriptionAsCanceled
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function isCancelMember(): bool
+    {
+        return $this->cancelMember;
     }
 }
