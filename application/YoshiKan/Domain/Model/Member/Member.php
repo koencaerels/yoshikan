@@ -365,6 +365,16 @@ class Member
         $this->federation = $federation;
     }
 
+    public function syncFromSubscription(
+        Federation $federation,
+        int $numberOfTraining,
+        bool $isHalfYearSubscription,
+    ): void {
+        $this->federation = $federation;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->memberSubscriptionIsHalfYear = $isHalfYearSubscription;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————

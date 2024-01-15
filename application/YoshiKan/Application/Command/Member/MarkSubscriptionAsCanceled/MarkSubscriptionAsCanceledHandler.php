@@ -45,7 +45,7 @@ class MarkSubscriptionAsCanceledHandler
             $result = true;
 
             $member = $subscription->getMember();
-            if(false === is_null($member)) {
+            if (false === is_null($member)) {
                 $member->deactivate();
                 $this->memberRepository->save($member);
             }

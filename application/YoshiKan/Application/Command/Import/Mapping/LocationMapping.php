@@ -15,7 +15,6 @@ namespace App\YoshiKan\Application\Command\Import\Mapping;
 
 class LocationMapping
 {
-
     public static function getLocationId(string $srcLocation): int
     {
         switch ($srcLocation) {

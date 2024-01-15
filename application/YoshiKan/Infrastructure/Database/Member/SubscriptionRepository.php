@@ -99,15 +99,14 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
     }
 
     public function findByMemberAndDatesAndAmounts(
-        Member             $member,
+        Member $member,
         \DateTimeImmutable $memberStartDate,
         \DateTimeImmutable $memberEndDate,
         \DateTimeImmutable $licenseStartDate,
         \DateTimeImmutable $licenseEndDate,
-        float              $memberShipAmount,
-        float              $licenseAmount,
-    ): ?Subscription
-    {
+        float $memberShipAmount,
+        float $licenseAmount,
+    ): ?Subscription {
         return $this->createQueryBuilder('t')
             ->andWhere('t.member = :memberId')
             ->setParameter('memberId', $member->getId())

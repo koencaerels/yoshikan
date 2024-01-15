@@ -33,7 +33,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ImportController extends AbstractController
 {
-
     private string $importFolder;
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -42,10 +41,9 @@ class ImportController extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected KernelInterface        $appKernel,
-    )
-    {
-        $this->importFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/_import/';
+        protected KernelInterface $appKernel,
+    ) {
+        $this->importFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/_import/';
     }
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -56,7 +54,7 @@ class ImportController extends AbstractController
     #[Route('/mm/fWXCq7sBpYQngXil/import/active', name: 'import_active_members', methods: ['GET'])]
     public function importActiveMembers(Request $request): Response
     {
-        $dataFile = $this->importFolder . 'Gegevens.xlsx';
+        $dataFile = $this->importFolder.'Gegevens.xlsx';
         $importHandler = new ImportActiveMembersHandler(
             $dataFile,
             $this->entityManager,
@@ -72,6 +70,7 @@ class ImportController extends AbstractController
         $result = $importHandler->import();
 
         $response = 'Imported!';
+
         return new JsonResponse($response, 200, []);
     }
 
@@ -79,7 +78,7 @@ class ImportController extends AbstractController
     #[Route('/mm/fWXCq7sBpYQngXil/import/archive', name: 'import_archive_members', methods: ['GET'])]
     public function importArchiveMembers(Request $request): Response
     {
-        $dataFile = $this->importFolder . 'Logging.xlsx';
+        $dataFile = $this->importFolder.'Logging.xlsx';
         $importHandler = new ImportSubscriptionArchiveHandler(
             $dataFile,
             $this->entityManager,
@@ -93,6 +92,7 @@ class ImportController extends AbstractController
         $result = $importHandler->import();
 
         $response = 'Imported!';
+
         return new JsonResponse($response, 200, []);
     }
 
@@ -100,7 +100,7 @@ class ImportController extends AbstractController
     #[Route('/mm/fWXCq7sBpYQngXil/import/archive/grades', name: 'import_archive_members_grades', methods: ['GET'])]
     public function importArchiveMembersGrades(Request $request): Response
     {
-        $dataFile = $this->importFolder . 'Logging.xlsx';
+        $dataFile = $this->importFolder.'Logging.xlsx';
         $importHandler = new ImportSubscriptionArchiveHandler(
             $dataFile,
             $this->entityManager,
@@ -114,6 +114,7 @@ class ImportController extends AbstractController
         $result = $importHandler->importGrades();
 
         $response = 'Imported!';
+
         return new JsonResponse($response, 200, []);
     }
 }

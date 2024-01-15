@@ -37,25 +37,23 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ImportActiveMembersHandler
 {
-
     public function __construct(
-        protected string                     $srcFile,
-        protected EntityManagerInterface     $entityManager,
-        protected MemberRepository           $memberRepository,
-        protected SubscriptionRepository     $subscriptionRepository,
-        protected FederationRepository       $federationRepository,
-        protected LocationRepository         $locationRepository,
-        protected GradeRepository            $gradeRepository,
-        protected SettingsRepository         $settingsRepository,
+        protected string $srcFile,
+        protected EntityManagerInterface $entityManager,
+        protected MemberRepository $memberRepository,
+        protected SubscriptionRepository $subscriptionRepository,
+        protected FederationRepository $federationRepository,
+        protected LocationRepository $locationRepository,
+        protected GradeRepository $gradeRepository,
+        protected SettingsRepository $settingsRepository,
         protected SubscriptionItemRepository $subscriptionItemRepository,
-    )
-    {
+    ) {
     }
 
     public function import(): bool
     {
         $reader = new Xlsx();
-        $reader->setLoadSheetsOnly(["Gegevens"]);
+        $reader->setLoadSheetsOnly(['Gegevens']);
         $spreadsheet = $reader->load($this->srcFile);
 
         $worksheet = $spreadsheet->getActiveSheet();
@@ -64,50 +62,49 @@ class ImportActiveMembersHandler
         $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 
         for ($row = 2; $row <= $highestRow; ++$row) {
-
             $isNewMember = false;
 
             $dto = new \stdClass();
-            $dto->firstName = (string)$worksheet->getCellByColumnAndRow(2, $row)->getValue();
+            $dto->firstName = (string) $worksheet->getCellByColumnAndRow(2, $row)->getValue();
             $dto->lastName = strtoupper($worksheet->getCellByColumnAndRow(1, $row)->getValue());
             $dto->dateOfBirth = Date::excelToDateTimeObject($worksheet->getCellByColumnAndRow(4, $row)->getValue())->format(\DateTimeInterface::ATOM);
-            $dto->nationalNumber = (string)$worksheet->getCellByColumnAndRow(5, $row)->getValue();
-            $dto->street = (string)$worksheet->getCellByColumnAndRow(3, $row)->getValue();
+            $dto->nationalNumber = (string) $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+            $dto->street = (string) $worksheet->getCellByColumnAndRow(3, $row)->getValue();
             $dto->city = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-            $dto->postalCode = (string)$worksheet->getCellByColumnAndRow(7, $row)->getValue();
-            $dto->contactPhone = (string)$worksheet->getCellByColumnAndRow(8, $row)->getValue();
-            $dto->contactEmail = (string)$worksheet->getCellByColumnAndRow(9, $row)->getValue();
+            $dto->postalCode = (string) $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+            $dto->contactPhone = (string) $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+            $dto->contactEmail = (string) $worksheet->getCellByColumnAndRow(9, $row)->getValue();
             $dto->gender = Gender::X;
             $dto->location = $this->locationRepository->getById(LocationMapping::getLocationId($worksheet->getCellByColumnAndRow(26, $row)->getValue()));
             $dto->grade = $this->gradeRepository->getById(GradeMapping::getGradeId($worksheet->getCellByColumnAndRow(25, $row)->getValue()));
-            $dto->sporta = (bool)$worksheet->getCellByColumnAndRow(23, $row)->getValue();
-            $dto->jv = (bool)$worksheet->getCellByColumnAndRow(24, $row)->getValue();
+            $dto->sporta = (bool) $worksheet->getCellByColumnAndRow(23, $row)->getValue();
+            $dto->jv = (bool) $worksheet->getCellByColumnAndRow(24, $row)->getValue();
             if ($dto->sporta) {
                 $dto->federation = $this->federationRepository->getById(2);
             } else {
                 $dto->federation = $this->federationRepository->getById(1);
             }
 
-            $dto->memberShipStartMM = (int)$worksheet->getCellByColumnAndRow(10, $row)->getValue();
-            $dto->memberShipStartYY = (int)$worksheet->getCellByColumnAndRow(11, $row)->getValue();
-            $dto->memberShipEndMM = (int)$worksheet->getCellByColumnAndRow(12, $row)->getValue();
-            $dto->memberShipEndYY = (int)$worksheet->getCellByColumnAndRow(13, $row)->getValue();
-            $dto->memberShipAmount = (float)$worksheet->getCellByColumnAndRow(14, $row)->getValue();
-            $dto->memberShipIsPayed = (bool)$worksheet->getCellByColumnAndRow(15, $row)->getValue();
+            $dto->memberShipStartMM = (int) $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+            $dto->memberShipStartYY = (int) $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+            $dto->memberShipEndMM = (int) $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+            $dto->memberShipEndYY = (int) $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+            $dto->memberShipAmount = (float) $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+            $dto->memberShipIsPayed = (bool) $worksheet->getCellByColumnAndRow(15, $row)->getValue();
 
             $dto->memberShipStart = new \DateTimeImmutable(sprintf('%s-%s-01', $dto->memberShipStartYY, $dto->memberShipStartMM));
             $dto->memberShipEnd = new \DateTimeImmutable(sprintf('%s-%s-01', $dto->memberShipEndYY, $dto->memberShipEndMM));
 
-            $dto->licenseStartMM = (int)$worksheet->getCellByColumnAndRow(16, $row)->getValue();
-            $dto->licenseStartYY = (int)$worksheet->getCellByColumnAndRow(17, $row)->getValue();
-            $dto->licenseEndMM = (int)$worksheet->getCellByColumnAndRow(18, $row)->getValue();
-            $dto->licenseEndYY = (int)$worksheet->getCellByColumnAndRow(19, $row)->getValue();
-            $dto->licenseAmount = (float)$worksheet->getCellByColumnAndRow(20, $row)->getValue();
-            $dto->licenseIsPayed = (bool)$worksheet->getCellByColumnAndRow(21, $row)->getValue();
+            $dto->licenseStartMM = (int) $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+            $dto->licenseStartYY = (int) $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+            $dto->licenseEndMM = (int) $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+            $dto->licenseEndYY = (int) $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+            $dto->licenseAmount = (float) $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+            $dto->licenseIsPayed = (bool) $worksheet->getCellByColumnAndRow(21, $row)->getValue();
             $dto->licenseShipStart = new \DateTimeImmutable(sprintf('%s-%s-01', $dto->licenseStartYY, $dto->licenseStartMM));
             $dto->licenseShipEnd = new \DateTimeImmutable(sprintf('%s-%s-01', $dto->licenseEndYY, $dto->licenseEndMM));
 
-            //-- determine subscription type -----------------------------------
+            // -- determine subscription type -----------------------------------
 
             $subscriptionType = SubscriptionType::RENEWAL_FULL;
             $dto->newMemberShipAmount = $dto->memberShipAmount;
@@ -142,13 +139,12 @@ class ImportActiveMembersHandler
                 $dto->numberOfTrainingSessions = 1;
             }
 
-            echo '<br>' . $dto->firstName . ' ' . $dto->lastName;
+            echo '<br>'.$dto->firstName.' '.$dto->lastName;
 
             // -- search for existing member -----------------------------------
 
             $member = $this->memberRepository->findByNameAndDateOfBirth($dto->firstName, $dto->lastName, new \DateTimeImmutable($dto->dateOfBirth));
             if (true === is_null($member)) {
-
                 $isNewMember = true;
                 $member = Member::make(
                     uuid: $this->memberRepository->nextIdentity(),
@@ -164,13 +160,13 @@ class ImportActiveMembersHandler
                     addressStreet: $dto->street,
                     addressNumber: '',
                     addressBox: '',
-                    addressZip: (string)$dto->postalCode,
+                    addressZip: (string) $dto->postalCode,
                     addressCity: $dto->city,
                     numberOfTraining: $dto->numberOfTrainingSessions,
                 );
             }
 
-            //-- change member details
+            // -- change member details
             $member->changeFederation($dto->federation);
             $member->changeGrade($dto->grade);
             $member->setContactInformation(
@@ -198,7 +194,7 @@ class ImportActiveMembersHandler
             $this->memberRepository->save($member);
             $this->entityManager->flush();
 
-            echo '-> member created / saved ->' . $member->getUuidAsString();
+            echo '-> member created / saved ->'.$member->getUuidAsString();
 
             $subscription = $this->subscriptionRepository->findByMemberAndDatesAndAmounts(
                 member: $member,
@@ -259,7 +255,7 @@ class ImportActiveMembersHandler
                     gender: $dto->gender,
                     type: $subscriptionType,
                     numberOfTraining: $dto->numberOfTrainingSessions,
-                    isExtraTraining: ($dto->numberOfTrainingSessions === 3),
+                    isExtraTraining: (3 === $dto->numberOfTrainingSessions),
                     isNewMember: false,
                     isReductionFamily: false,
                     isJudogiBelt: false,
@@ -304,12 +300,13 @@ class ImportActiveMembersHandler
             );
 
             $this->entityManager->flush();
-            echo '<strong>-> subscription saved / updated </strong> ->' . $subscription->getUuidAsString();
+            echo '<strong>-> subscription saved / updated </strong> ->'.$subscription->getUuidAsString();
             ob_flush();
             flush();
         }
 
-        exit();
+        exit;
+
         return true;
     }
 }

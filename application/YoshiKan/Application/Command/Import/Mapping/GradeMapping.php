@@ -15,10 +15,9 @@ namespace App\YoshiKan\Application\Command\Import\Mapping;
 
 class GradeMapping
 {
-
     public static function getGradeId(?string $srcGrade): int
     {
-        if(true === is_null($srcGrade)) {
+        if (true === is_null($srcGrade)) {
             return 1;
         }
 

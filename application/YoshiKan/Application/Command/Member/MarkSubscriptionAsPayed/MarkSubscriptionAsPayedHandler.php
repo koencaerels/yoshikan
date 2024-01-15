@@ -57,6 +57,13 @@ class MarkSubscriptionAsPayedHandler
             if ($subscription->isLicenseIsPartSubscription()) {
                 $member->markLicenseAsPayed();
             }
+            // -- sync the federation from the subscription to the member
+            $member->syncFromSubscription(
+                $subscription->getFederation(),
+                (int) $subscription->getNumberOfTraining(),
+                $subscription->isMemberSubscriptionIsHalfYear(),
+            );
+
             $this->memberRepository->save($member);
         }
 
