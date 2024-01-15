@@ -80,7 +80,9 @@ class MemberExtendSubscriptionMailHandler
             ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
             ->html($mailTemplate);
 
-        $this->mailer->send($message);
+        if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+            $this->mailer->send($message);
+        }
 
         // -- record message and flag as send ----------------------------
 

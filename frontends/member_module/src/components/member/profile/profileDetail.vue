@@ -88,15 +88,12 @@
         </div>
         <div class="flex flex-row">
             <div class="basis-1/2 p-2">
-                <div class="rounded-lg bg-slate-600 text-white p-2">
+                <div class="rounded-lg bg-slate-200 p-2">
                     <div class="font-bold">
                         <span class="uppercase">{{ memberStore.memberDetail.lastname }}</span>
                         {{ memberStore.memberDetail.firstname }}
                     </div>
-                    <div class="text-xs mt-1">
-                        &mdash; {{ memberStore.memberDetail.nationalRegisterNumber }}
-                    </div>
-                    <div class="mt-2">
+                    <div class="mt-4">
                         ° {{ moment(memberStore.memberDetail.dateOfBirth).format("DD/MM/YYYY") }}
                         - {{ memberStore.memberDetail.gender }}
                     </div>
@@ -120,8 +117,8 @@
             </div>
 
             <div class="basis-1/2 text-sm p-2">
-                <div class="rounded-lg bg-slate-200 p-2">
-                    <div>Contactpersoon:</div>
+                <div class="rounded-lg bg-orange-100 p-2">
+                    <div>Contactpersoon (ouders):</div>
                     <div class="font-bold mt-4">
                         <span class="uppercase">{{ memberStore.memberDetail.contactLastname }}</span>
                         {{ memberStore.memberDetail.contactFirstname }}

@@ -1,8 +1,8 @@
 <template>
     <!-- header -->
     <div id="memberOverviewHeader" class="p-1 bg-gradient-to-r text-white" :class="headerColor">
-        <div class="flex flex-row py-1">
-            <div class="basis-1/2">
+        <div class="flex gap-2 py-1">
+            <div class="">
                 <div class="flex gap-2 ml-1">
                     <div v-if="(type === 'duePayment')">
                         <Button label="Afdrukken" @click="printSubscriptions"
@@ -18,7 +18,27 @@
                     </div>
                 </div>
             </div>
-            <div class="basis-1/2 text-right">
+
+            <div class="w-12"></div>
+
+            <div class="flex-grow mt-0.5">
+                <div class="p-input-icon-left w-full">
+                    <i class="pi pi-search" />
+                    <InputText v-model="filters['global'].value"
+                               class="p-inputtext-sm w-full"
+                               placeholder="zoek op trefwoord" />
+                </div>
+            </div>
+            <div class="mt-0.5">
+                <Button type="button" icon="pi pi-filter-slash"
+                        class="p-button-sm p-button-secondary"
+                        label="Verwijder alle filters"
+                        @click="clearFilter()" />
+            </div>
+
+            <div class="flex-grow"></div>
+
+            <div class="text-right">
                 <Button @click="downloadListDuePayments" v-if="(type === 'duePayment')"
                         label="Download overzicht te betalen"
                         icon="pi pi-download"
@@ -48,8 +68,10 @@
                 <div class="p-2"><i class="pi pi-spin pi-spinner"></i></div>
             </template>
             <template #paginatorstart>
-                <Button type="button" icon="pi pi-refresh" text
-                        @click="subscriptionsOverviewStore.loadSubscriptions()"/>
+                <div>
+                    <Button type="button" icon="pi pi-refresh" class="p-button-lg"
+                            @click="subscriptionsOverviewStore.loadSubscriptions()"/>
+                </div>
             </template>
 
             <Column selectionMode="multiple" headerStyle="width: 3rem" class="text-center"></Column>
@@ -281,7 +303,7 @@
 import type {Subscription} from "@/api/query/model";
 import {useAppStore} from "@/store/app";
 import {useSubscriptionOverviewStore} from "@/store/subscriptionOverview";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {FilterMatchMode} from "primevue/api";
 import SubscriptionBadge from "@/components/subscription/common/subscriptionBadge.vue";
 import SubscriptionStatus from "@/components/subscription/common/subscriptionStatus.vue";
@@ -306,17 +328,32 @@ const memberStore = useMemberStore();
 
 const selectedSubscriptions = ref<Array<Subscription>>([]);
 
-const filters = ref({
-    id: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    firstname: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    lastname: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    'location.name': {value: null, matchMode: FilterMatchMode.EQUALS},
-    memberSubscriptionEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    'federation.code': {value: null, matchMode: FilterMatchMode.EQUALS},
-    licenseEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    isPrinted: {value: null, matchMode: FilterMatchMode.EQUALS},
-    isPaymentOverviewSend: {value: null, matchMode: FilterMatchMode.EQUALS},
+onMounted((): void => {
+    initFilters();
 });
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const initFilters = () => {
+    filters.value = {
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        id: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        firstname: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        lastname: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'location.name': {value: null, matchMode: FilterMatchMode.EQUALS},
+        memberSubscriptionEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'federation.code': {value: null, matchMode: FilterMatchMode.EQUALS},
+        licenseEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        isPrinted: {value: null, matchMode: FilterMatchMode.EQUALS},
+        isPaymentOverviewSend: {value: null, matchMode: FilterMatchMode.EQUALS},
+    };
+};
+
+function clearFilter() {
+    initFilters();
+}
 
 // -- button actions ---------------------------------------------------------------------------------------------------
 

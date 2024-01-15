@@ -40,19 +40,9 @@
                 </div>
 
                 <!-- -- member ------------------------------------------------------------------------------------- -->
-                <div class="bg-slate-600 rounded-t-lg px-4 py-2 text-white">
+                <div class="bg-slate-200 rounded-t-lg px-4 py-2">
                     <div class="flex flex-row">
                         <div class="basis-1/2">
-                            <div class="mb-1 font-bold">Naam *</div>
-                            <span class="p-input-icon-right w-full">
-                                <InputText
-                                    placeholder="achternaam"
-                                    class="w-full p-inputtext-sm" v-model="command.lastname"/>
-                                <i v-if="!new$.lastname.$invalid" class="pi pi-check text-green-600"/>
-                                <i v-if="new$.lastname.$invalid" class="pi pi-times text-red-600"/>
-                            </span>
-                        </div>
-                        <div class="basis-1/2 ml-4">
                             <div class="mb-1 font-bold">Voornaam *</div>
                             <span class="p-input-icon-right w-full">
                                 <InputText
@@ -60,6 +50,16 @@
                                     class="w-full p-inputtext-sm" v-model="command.firstname"/>
                                 <i v-if="!new$.firstname.$invalid" class="pi pi-check text-green-600"/>
                                 <i v-if="new$.firstname.$invalid" class="pi pi-times text-red-600"/>
+                            </span>
+                        </div>
+                        <div class="basis-1/2 ml-4">
+                            <div class="mb-1 font-bold">Naam *</div>
+                            <span class="p-input-icon-right w-full">
+                                <InputText
+                                    placeholder="achternaam"
+                                    class="w-full p-inputtext-sm" v-model="command.lastname"/>
+                                <i v-if="!new$.lastname.$invalid" class="pi pi-check text-green-600"/>
+                                <i v-if="new$.lastname.$invalid" class="pi pi-times text-red-600"/>
                             </span>
                         </div>
                     </div>
@@ -83,22 +83,9 @@
                     <!-- -- rijksregisternummer -------------------------------------------------------------------- -->
                     <div class="flex flex-row mt-6">
                         <div class="basis-1/3 text-right text-xs font-bold mr-4">
-                            Rijksregisternummer *
+                            Geboorte datum *
                         </div>
                         <div class="basis-2/3 flex gap-2 ml-2">
-                            <div class="w-48">
-                                <span class="p-input-icon-right w-full">
-                                    <InputText class="w-full p-inputtext-sm"
-                                               placeholder="xx.xx.xx-xxx.xx"
-                                               maxlength="15"
-                                               v-maska
-                                               data-maska="#0.#0.#0-#00.#0"
-                                               data-maska-tokens="0:[0-9]:req"
-                                               v-model="command.nationalRegisterNumber"/>
-                                    <i v-if="!new$.nationalRegisterNumber.$invalid" class="pi pi-check text-green-600"/>
-                                    <i v-if="new$.nationalRegisterNumber.$invalid" class="pi pi-times text-red-600"/>
-                                </span>
-                            </div>
                             <div class="text-sm">
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <span>
@@ -116,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-row mt-2 mb-2">
+                    <div class="flex flex-row mt-6 mb-2">
                         <div class="basis-1/3 text-right text-xs mr-4 font-bold">
                             Geboortedatum *
                         </div>
@@ -154,7 +141,8 @@
                 </div>
 
                 <!-- -- contact------------------------------------------------------------------------------------- -->
-                <div class="bg-gray-200 rounded-b-lg px-4 py-4">
+                <div class="bg-orange-100 rounded-b-lg px-4 py-4">
+                    <div class="text-xl">Adres</div>
                     <div class="flex flex-row">
                         <div class="basis-3/5">
                             <div class="mb-1"><label class="text-xs">Straat *</label></div>
@@ -196,6 +184,7 @@
                         </div>
                     </div>
 
+                    <div class="text-xl mt-4">Contact (ouders)</div>
                     <div class="flex flex-row mt-1">
                         <div class="basis-1/2">
                             <div class="mb-1"><label class="text-xs">Contact Naam *</label></div>
@@ -276,7 +265,7 @@
 
                 </div>
                 <!-- -- federation --------------------------------------------------------------------------------- -->
-                <div class="flex flex-row border-t-[1px] border-b-[1px] border-gray-400 my-4 py-4">
+                <div class="flex flex-row border-t-[1px] border-b-[1px] border-gray-400 my-8 py-4">
                     <div class="basis-1/4 text-right">
                         Type vergunning *
                     </div>
@@ -380,7 +369,7 @@
                         Opmerkingen
                     </div>
                     <div class="basis-3/4">
-                        <Textarea v-model="command.remarks" :autoResize="true" rows="3" cols="30" class="w-full"/>
+                        <Textarea v-model="command.remarks" :autoResize="true" rows="6" cols="30" class="w-full"/>
                     </div>
                 </div>
                 <div class="mt-4">

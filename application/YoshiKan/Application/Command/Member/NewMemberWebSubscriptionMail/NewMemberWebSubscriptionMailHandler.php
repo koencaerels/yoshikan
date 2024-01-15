@@ -49,7 +49,9 @@ class NewMemberWebSubscriptionMailHandler
             ->bcc(new Address($command->getContactEmail(), $command->getFromName()))
             ->html($mailTemplate);
 
-        $this->mailer->send($message);
+        if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+            $this->mailer->send($message);
+        }
 
         return true;
     }

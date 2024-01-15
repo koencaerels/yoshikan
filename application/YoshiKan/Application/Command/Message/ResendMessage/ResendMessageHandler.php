@@ -33,7 +33,9 @@ class ResendMessageHandler
             ->to(new Address($command->getToEmail(), $originalMessage->getToName()))
             ->html($originalMessage->getMessage());
 
-        $this->mailer->send($message);
+        if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+            $this->mailer->send($message);
+        }
 
         return true;
     }

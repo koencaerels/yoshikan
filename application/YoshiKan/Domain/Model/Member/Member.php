@@ -350,6 +350,16 @@ class Member
         $this->profileImage = $profileImage;
     }
 
+    public function activate(): void
+    {
+        $this->status = MemberStatus::ACTIVE->value;
+    }
+
+    public function deactivate(): void
+    {
+        $this->status = MemberStatus::NON_ACTIVE->value;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————

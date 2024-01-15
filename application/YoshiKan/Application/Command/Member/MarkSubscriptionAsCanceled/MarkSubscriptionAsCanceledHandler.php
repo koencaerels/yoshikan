@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled;
 
+use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionStatus;
 
@@ -23,7 +24,8 @@ class MarkSubscriptionAsCanceledHandler
     // —————————————————————————————————————————————————————————————————————————
 
     public function __construct(
-        protected SubscriptionRepository $subscriptionRepository
+        protected SubscriptionRepository $subscriptionRepository,
+        protected MemberRepository $memberRepository,
     ) {
     }
 
@@ -41,6 +43,12 @@ class MarkSubscriptionAsCanceledHandler
             $subscription->changeStatus(SubscriptionStatus::CANCELED);
             $this->subscriptionRepository->save($subscription);
             $result = true;
+
+            $member = $subscription->getMember();
+            if(false === is_null($member)) {
+                $member->deactivate();
+                $this->memberRepository->save($member);
+            }
         }
 
         return $result;

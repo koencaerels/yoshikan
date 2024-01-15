@@ -12,8 +12,8 @@
 <template>
     <!-- header -->
     <div id="memberOverviewHeader" class="p-1 bg-gradient-to-r from-slate-600 to-slate-400 text-white">
-        <div class="flex flex-row">
-            <div class="basis-1/2">
+        <div class="flex gap-2">
+            <div>
                 <div class="flex gap-2 mt-1 ml-1">
                     <Button label="Lid aanmaken"
                             @click="showNewMemberFormFn"
@@ -21,7 +21,27 @@
                             class="p-button-sm"/>
                 </div>
             </div>
-            <div class="basis-1/2 text-right">
+            <div class="w-48">
+                &nbsp;
+            </div>
+            <div class="flex-grow mt-0.5">
+                <div class="p-input-icon-left w-full">
+                    <i class="pi pi-search" />
+                    <InputText v-model="filters['global'].value"
+                               class="p-inputtext-sm w-full"
+                               placeholder="zoek op trefwoord" />
+                </div>
+            </div>
+            <div class="mt-0.5">
+                <Button type="button" icon="pi pi-filter-slash"
+                        class="p-button-sm p-button-secondary"
+                        label="Verwijder alle filters"
+                        @click="clearFilter()" />
+            </div>
+            <div class="flex-grow">
+                &nbsp;
+            </div>
+            <div>
                 <div class="flex gap-2 float-right mt-0.5">
                     <div class="flex mt-1.5">
                         <div class="ml-2">
@@ -56,7 +76,9 @@
                 <div class="p-2"><i class="pi pi-spin pi-spinner"></i></div>
             </template>
             <template #paginatorstart>
-                <Button type="button" icon="pi pi-refresh" text @click="loadActiveMembers"/>
+                <div>
+                    <Button type="button" icon="pi pi-refresh" class="p-button-lg" @click="loadActiveMembers"/>
+                </div>
             </template>
 
             <!-- --------------------------------------------------------------------------------------------------- -->
@@ -366,24 +388,37 @@ const members = computed((): Array<Member> => {
 
 // -- datatable functions
 
-const filters = ref({
-    firstname: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    lastname: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    dateOfBirth: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    'grade.name': {value: null, matchMode: FilterMatchMode.CONTAINS},
-    'location.name': {value: null, matchMode: FilterMatchMode.EQUALS},
-    memberSubscriptionStart: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    memberSubscriptionEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    'federation.code': {value: null, matchMode: FilterMatchMode.EQUALS},
-    licenseStart: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    licenseEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
-    memberSubscriptionIsPayed: {value: null, matchMode: FilterMatchMode.EQUALS},
-    licenseIsPayed: {value: null, matchMode: FilterMatchMode.EQUALS}
-});
-
 onMounted((): void => {
     loadActiveMembers();
+    initFilters();
 });
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const initFilters = () => {
+    filters.value = {
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        firstname: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        lastname: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        dateOfBirth: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'grade.name': {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'location.name': {value: null, matchMode: FilterMatchMode.EQUALS},
+        memberSubscriptionStart: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        memberSubscriptionEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'federation.code': {value: null, matchMode: FilterMatchMode.EQUALS},
+        licenseStart: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        licenseEnd: {value: null, matchMode: FilterMatchMode.CONTAINS},
+        memberSubscriptionIsPayed: {value: null, matchMode: FilterMatchMode.EQUALS},
+        licenseIsPayed: {value: null, matchMode: FilterMatchMode.EQUALS}
+    };
+};
+
+function clearFilter() {
+    initFilters();
+    filterMemberList.value = false;
+}
 
 const subscriptionCounter = computed((): number => memberStore.refreshCounter);
 

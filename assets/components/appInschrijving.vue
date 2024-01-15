@@ -182,28 +182,9 @@
                     </div>
                 </div>
 
-                <!-- -- rijksregisternummer ----------------------- -->
-                <div class="flex flex-row mt-4">
-                    <div class="basis-1/4 text-right mr-4 text-sm mt-2">
-                        Rijksregisternummer*
-                    </div>
-                    <div class="basis-3/4">
-                        <o-field class="w-full" :variant="nationalRegisterNumberVariant">
-                            <o-input id="ti_national_register_number"
-                                     v-on:input="onChangeNationalNumber"
-                                     v-maska
-                                     v-model="subscription.nationalRegisterNumber"
-                                     maxlength="15"
-                                     data-maska="#0.#0.#0-#00.#0"
-                                     data-maska-tokens="0:[0-9]:req"
-                                     type="text"/>
-                        </o-field>
-                    </div>
-                </div>
-
                 <!-- -- geboorte datum ---------------------------------- -->
                 <div class="md:flex md:flex-row mt-2">
-                    <div class="basis-1/4 text-right mr-4 text-sm">
+                    <div class="basis-1/4 text-right mr-4 text-sm mt-8">
                         Geboortedatum*
                     </div>
                     <div class="basis-2/12">
@@ -524,30 +505,6 @@ onMounted(() => {
     loadSettings();
 });
 
-function onChangeNationalNumber() {
-    if (subscription.value.nationalRegisterNumber.length === 2) {
-        let _year = subscription.value.nationalRegisterNumber;
-        if (_year > 50) {
-            subscription.value.dateOfBirthYYYY = '19' + _year;
-        } else {
-            subscription.value.dateOfBirthYYYY = '20' + _year;
-        }
-    } else if (subscription.value.nationalRegisterNumber.length === 5) {
-        let _month = subscription.value.nationalRegisterNumber.split('.')[1];
-        subscription.value.dateOfBirthMM = _month;
-    } else if (subscription.value.nationalRegisterNumber.length === 8) {
-        let _day = subscription.value.nationalRegisterNumber.split('.')[2];
-        subscription.value.dateOfBirthDD = _day;
-    } else if (subscription.value.nationalRegisterNumber.length === 12) {
-        let _dayNumber = subscription.value.nationalRegisterNumber.split('-')[1];
-        let _dayNumberMod = parseInt(_dayNumber) % 2;
-        if (_dayNumberMod === 0) {
-            subscription.value.gender = 'V';
-        } else {
-            subscription.value.gender = 'M';
-        }
-    }
-}
 
 function loadSettings() {
     axios.get('/inschrijving/api/configuration').then(response => (loadSettingsHandler(response.data)));
@@ -627,10 +584,6 @@ const dateValidator = function (value) {
     return true;
 };
 
-const nationalRegisterNumberValidator = function (value) {
-    return (subscription.value.nationalRegisterNumber.length === 15);
-}
-
 const rules = {
     contactFirstname: {required},
     contactLastname: {required},
@@ -640,7 +593,6 @@ const rules = {
     dateOfBirthDD: {required, numeric, maxValueValue: maxValue(31), minValueValue: minValue(1), dateValidator},
     dateOfBirthMM: {required, numeric, maxValueValue: maxValue(12), minValueValue: minValue(1), dateValidator},
     dateOfBirthYYYY: {required, numeric, minValueValue: minValue(1900), maxValueValue: maxValue(2400), dateValidator},
-    nationalRegisterNumber: {nationalRegisterNumberValidator},
     addressStreet: {required},
     addressNumber: {required},
     addressZip: {required},
@@ -659,7 +611,6 @@ const lastnameVariant = computed(() => v$.value.lastname.$invalid === false ? 's
 const dateOfBirthDDVariant = computed(() => v$.value.dateOfBirthDD.$invalid === false ? 'success' : 'danger');
 const dateOfBirthMMVariant = computed(() => v$.value.dateOfBirthMM.$invalid === false ? 'success' : 'danger');
 const dateOfBirthYYYVariant = computed(() => v$.value.dateOfBirthYYYY.$invalid === false ? 'success' : 'danger');
-const nationalRegisterNumberVariant = computed(() => v$.value.nationalRegisterNumber.$invalid === false ? 'success' : 'danger');
 const addressStreetVariant = computed(() => v$.value.addressStreet.$invalid === false ? 'success' : 'danger');
 const addressNumberVariant = computed(() => v$.value.addressNumber.$invalid === false ? 'success' : 'danger');
 const addressZipVariant = computed(() => v$.value.addressZip.$invalid === false ? 'success' : 'danger');

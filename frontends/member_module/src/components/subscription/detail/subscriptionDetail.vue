@@ -3,23 +3,24 @@
 
         <div class="flex gap-2 border-b-[1px] border-gray-400 pb-2">
 
-            <div class="flex-none w-48 flex gap-8">
-                <div>
+            <div class="flex-none w-48 flex gap-4">
+                <div class="mt-0.5">
                     <i class="pi pi-times-circle cursor-pointer"
                        title="Sluit de inschrijving"
                        @click="emit('canceled')"></i>
                 </div>
                 <div class="grow">&nbsp;</div>
-                <div v-if="memberStore.subscriptionDetail.isPrinted">
-                    <i class="pi pi-print cursor-pointer"
-                       title="Inschrijving afdrukken"
-                       @click="printSubscription"></i>
+                <div class="flex-none">
+                    <Button icon="pi pi-print cursor-pointer"
+                            title="Inschrijving afdrukken" class="p-button-sm"
+                            @click="printSubscription"></Button>
                 </div>
-                <div class="grow">&nbsp;</div>
-                <div v-if="memberStore.subscriptionDetail.isPaymentOverviewSend && memberStore.subscriptionDetail.messageId">
-                    <i class="pi pi-send cursor-pointer"
-                       title="Bekijk bericht van de inschrijving"
-                       @click="showMessageDetailFn(memberStore.subscriptionDetail.messageId)"></i>
+                <div class="flex-none"
+                    v-if="memberStore.subscriptionDetail.isPaymentOverviewSend && memberStore.subscriptionDetail.messageId">
+                    <Button icon="pi pi-send cursor-pointer"
+                            title="Bekijk bericht van de inschrijving"
+                            class="p-button-sm"
+                            @click="showMessageDetailFn(memberStore.subscriptionDetail.messageId)"></Button>
                 </div>
                 <div class="grow">&nbsp;</div>
             </div>
@@ -165,19 +166,25 @@
             </div>
         </div>
 
-        <!-- actions for finishing a subscription ------------------------------------------------------------------ -->
+        <!-- actions for connected subscriptions ------------------------------------------------------------------- -->
         <div class="flex gap-2 mt-4"
-             v-if="!memberStore.subscriptionDetail.memberId
-             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.NEW">
+             v-if="memberStore.subscriptionDetail.memberId !== 0
+             && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.AWAITING_PAYMENT">
 
             <div class="flex-none w-48 text-right text-xs text-gray-600">
                 Acties
             </div>
             <div class="grow">
-                <Button @click="reviewSubscription"
-                        icon="pi pi-times-circle"
+                <Button v-if="!isLoading"
+                        @click="markAsPaid"
+                        icon="pi pi-money-bill"
                         class="p-button-success w-full"
-                        label="Inschrijving confirmeren"></Button>
+                        label="Betaling ontvangen"></Button>
+                <Button v-else
+                        disabled
+                        icon="pi pi-spin pi-spinner"
+                        class="p-button-success w-full"
+                        label="Betaling ontvangen"></Button>
             </div>
             <div class="flex-none w-64">
                 <Button v-if="!isLoading"
@@ -234,7 +241,7 @@
             position="topleft"
             :header="'Inschrijving confirmeren voor '+memberStore.subscriptionDetail.firstname+' '+memberStore.subscriptionDetail.lastname"
             :modal="true">
-       <review-new-member-form @submitted="subscriptionReviewed"/>
+        <review-new-member-form @submitted="subscriptionReviewed"/>
     </Dialog>
 
 </template>
@@ -269,7 +276,7 @@ const confirm = useConfirm();
 
 const showMessageDetail = ref<boolean>(false);
 const apiUrl = import.meta.env.VITE_API_URL as string;
-const emit = defineEmits(["paid", "canceled", "subscription-reviewed","finished"]);
+const emit = defineEmits(["paid", "canceled", "subscription-reviewed", "finished"]);
 
 // -- review subscription functions ------------------------------------------------------------------------------------
 
@@ -286,7 +293,7 @@ function subscriptionReviewed() {
 
 // -- subscription detail functions ------------------------------------------------------------------------------------
 
-async function showMessageDetailFn(messageId:number) {
+async function showMessageDetailFn(messageId: number) {
     await memberStore.loadMessageDetail(messageId);
     showMessageDetail.value = true;
 }

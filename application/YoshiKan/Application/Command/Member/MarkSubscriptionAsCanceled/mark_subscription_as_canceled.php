@@ -24,7 +24,10 @@ trait mark_subscription_as_canceled
 
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $handler = new MarkSubscriptionAsCanceledHandler($this->subscriptionRepository);
+        $handler = new MarkSubscriptionAsCanceledHandler(
+            subscriptionRepository: $this->subscriptionRepository,
+            memberRepository: $this->memberRepository,
+        );
         $result = $handler->go($command);
         $this->entityManager->flush();
 
