@@ -270,6 +270,7 @@ class ImportSubscriptionArchiveHandler
             flush();
         }
 
+        echo '<br>Done';
         exit;
 
         return true;
@@ -321,6 +322,7 @@ class ImportSubscriptionArchiveHandler
             }
         }
 
+        echo '<br>Done';
         exit;
 
         return true;

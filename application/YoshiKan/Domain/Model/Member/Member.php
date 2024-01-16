@@ -360,11 +360,6 @@ class Member
         $this->status = MemberStatus::NON_ACTIVE->value;
     }
 
-    public function changeFederation(Federation $federation): void
-    {
-        $this->federation = $federation;
-    }
-
     public function syncFromSubscription(
         Federation $federation,
         int $numberOfTraining,

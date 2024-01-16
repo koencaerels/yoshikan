@@ -116,9 +116,14 @@
             </Column>
             <Column field="dateOfBirth" sortable header="Geboortedatum" class="text-xs">
                 <template #body="{ data }">
-                    <div class="text-xs" @click="showDetailDialogFullFn(data.id)">
-                        ° {{ moment(data.dateOfBirth).format("DD/MM/YYYY") }}
-                        - {{ data.gender }}
+                    <div class="flex gap-2" @click="showDetailDialogFullFn(data.id)">
+                        <div v-if="(data.status == 'actief')">
+                            <img src="../../../assets/active.png" width="18" class="mx-auto">
+                        </div>
+                        <div class="text-xs">
+                            ° {{ moment(data.dateOfBirth).format("DD/MM/YYYY") }}
+                            - {{ data.gender }}
+                        </div>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">

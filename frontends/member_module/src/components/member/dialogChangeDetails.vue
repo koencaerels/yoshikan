@@ -24,12 +24,17 @@
             <div class="flex flex-row mt-6">
                 <div class="basis-1/5">
                     <!--  status -->
-                    <div class="flex bg-slate-300 p-4 rounded-xl">
-                        <div class="ml-2">
-                            Actief?
+                    <div class="bg-slate-300 p-4 rounded-xl">
+                        <div class="flex">
+                            <div class="ml-2">
+                                Actief?
+                            </div>
+                            <div class="ml-4 mt-0.5">
+                                <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
+                            </div>
                         </div>
-                        <div class="ml-4 mt-0.5">
-                            <InputSwitch true-value="actief" false-value="niet actief" v-model="command.status"/>
+                        <div v-if="command.status == 'actief'" class="mt-2">
+                            <img src="../../assets/active.png" width="64" class="mx-auto">
                         </div>
                     </div>
                 </div>

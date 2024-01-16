@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail;
 
+use App\YoshiKan\Application\Command\Common\EmailValidator;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use App\YoshiKan\Domain\Model\Message\Message;
@@ -48,14 +49,16 @@ class SendPaymentReceivedConfirmationMailHandler
 
         // -- send email ------------------------------------------------
 
-        $message = (new Email())
-            ->subject($subject)
-            ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
-            ->html($mailTemplate);
+        if (EmailValidator::isValid($subscription->getContactEmail())) {
+            $message = (new Email())
+                ->subject($subject)
+                ->from(new Address($command->getFromEmail(), $command->getFromName()))
+                ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
+                ->html($mailTemplate);
 
-        if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
-            $this->mailer->send($message);
+            if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+                $this->mailer->send($message);
+            }
         }
 
         // -- record message --------------------------------------------

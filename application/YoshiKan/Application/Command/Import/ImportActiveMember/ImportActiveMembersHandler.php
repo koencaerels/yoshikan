@@ -166,8 +166,14 @@ class ImportActiveMembersHandler
                 );
             }
 
-            // -- change member details
-            $member->changeFederation($dto->federation);
+            // -- sync member subscription details ----------------------------
+
+            $member->syncFromSubscription(
+                federation: $dto->federation,
+                numberOfTraining: $dto->numberOfTrainingSessions,
+                isHalfYearSubscription: $dto->memberSubscriptionIsHalfYear,
+            );
+
             $member->changeGrade($dto->grade);
             $member->setContactInformation(
                 contactFirstname: ucfirst(strtolower($dto->firstName)),
@@ -305,6 +311,7 @@ class ImportActiveMembersHandler
             flush();
         }
 
+        echo '<br>Done';
         exit;
 
         return true;

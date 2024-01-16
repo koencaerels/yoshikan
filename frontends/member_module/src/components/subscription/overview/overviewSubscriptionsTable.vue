@@ -181,9 +181,11 @@
 
             <Column field="dateOfBirth" sortable header="Geboorted." class="text-xs">
                 <template #body="{ data }">
-                    <div class="text-xs cursor-pointer" @click="showDetailDialogFullFn(data.memberId)">
-                        ° {{ moment(data.dateOfBirth).format("DD/MM/YYYY") }}
-                        - {{ data.gender }}
+                    <div class="flex gap-2" @click="showDetailDialogFullFn(data.memberId)">
+                        <div class="text-xs">
+                            ° {{ moment(data.dateOfBirth).format("DD/MM/YYYY") }}
+                            - {{ data.gender }}
+                        </div>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">

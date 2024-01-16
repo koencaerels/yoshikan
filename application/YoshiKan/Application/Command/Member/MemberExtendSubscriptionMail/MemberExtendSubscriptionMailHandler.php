@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail;
 
+use App\YoshiKan\Application\Command\Common\EmailValidator;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
 use App\YoshiKan\Domain\Model\Member\MemberRepository;
@@ -74,14 +75,16 @@ class MemberExtendSubscriptionMailHandler
 
         // -- send email -------------------------------------------------
 
-        $message = (new Email())
-            ->subject($subject)
-            ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
-            ->html($mailTemplate);
+        if (EmailValidator::isValid($subscription->getContactEmail())) {
+            $message = (new Email())
+                ->subject($subject)
+                ->from(new Address($command->getFromEmail(), $command->getFromName()))
+                ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
+                ->html($mailTemplate);
 
-        if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
-            $this->mailer->send($message);
+            if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+                $this->mailer->send($message);
+            }
         }
 
         // -- record message and flag as send ----------------------------
@@ -100,8 +103,10 @@ class MemberExtendSubscriptionMailHandler
         $message->setSubscription($subscription);
         $this->messageRepository->save($message);
 
-        $subscription->flagPaymentOverviewMailSend();
-        $this->subscriptionRepository->save($subscription);
+        if (EmailValidator::isValid($subscription->getContactEmail())) {
+            $subscription->flagPaymentOverviewMailSend();
+            $this->subscriptionRepository->save($subscription);
+        }
 
         return true;
     }
