@@ -26,6 +26,8 @@ jobs:
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.test', '.env');"
+      
+      ## —— Composer ———————————————————————————————————————————————————————————
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
@@ -41,6 +43,8 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+      
+      ## —— Database & cache ——————————————————————————————————————————————————
 
       - name: Create Database
         run: |          
@@ -81,6 +85,14 @@ jobs:
         
       - name: Yarn build
         run: yarn run encore production
+        
+      ## —— Frontend MemberModule ——————————————————————————————————————————
+
+      - name: Build Member Module Application
+        run: |
+          cd frontends/member_module/
+          npm install
+          npm run build-only
 
 ## —— Testing ————————————————————————————————————————————————————————————
 #      - name: Execute tests (Unit & Integration Tests) via PestPHP
