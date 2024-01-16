@@ -40,7 +40,6 @@ class ResendMessageHandler
         $originalMessage = $this->messageRepository->getById($command->getMessageId());
 
         if (EmailValidator::isValid($subscription->getContactEmail())) {
-
             $message = (new Email())
                 ->subject($originalMessage->getSubject())
                 ->from(new Address($command->getFromEmail(), $command->getFromName()))
@@ -52,11 +51,8 @@ class ResendMessageHandler
             }
 
             return true;
-
         } else {
-
             return false;
-
         }
     }
 }

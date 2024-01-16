@@ -30,19 +30,19 @@ use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
 use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
 use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\configuration_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\federation_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\grade_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\group_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\judogi_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\location_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_image_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\member_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\period_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\settings_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\subscription_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\message_routes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Reporting\reporting_routes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\ConfigurationRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\FederationRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\GradeRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\GroupRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\JudogiRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\LocationRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\MemberImageRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\MemberRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\PeriodRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\SettingsRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\SubscriptionRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\MessageRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Reporting\ReportingRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\TwoFactor\TwoFactorRoutes;
 use Bolt\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -63,19 +63,19 @@ class MemberApiController extends AbstractController
     // Routes
     // ——————————————————————————————————————————————————————————————————————————
 
-    use grade_routes;
-    use group_routes;
-    use period_routes;
-    use location_routes;
-    use judogi_routes;
-    use settings_routes;
-    use configuration_routes;
-    use subscription_routes;
-    use member_routes;
-    use member_image_routes;
-    use federation_routes;
-    use message_routes;
-    use reporting_routes;
+    use GradeRoutes;
+    use GroupRoutes;
+    use PeriodRoutes;
+    use LocationRoutes;
+    use JudogiRoutes;
+    use SettingsRoutes;
+    use ConfigurationRoutes;
+    use SubscriptionRoutes;
+    use MemberRoutes;
+    use MemberImageRoutes;
+    use FederationRoutes;
+    use MessageRoutes;
+    use ReportingRoutes;
     use TwoFactorRoutes;
 
     // ——————————————————————————————————————————————————————————————————————————

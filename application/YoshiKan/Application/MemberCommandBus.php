@@ -13,43 +13,43 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
-use App\YoshiKan\Application\Command\Member\AddFederation\add_federation;
-use App\YoshiKan\Application\Command\Member\AddGrade\add_grade;
-use App\YoshiKan\Application\Command\Member\AddGroup\add_group;
-use App\YoshiKan\Application\Command\Member\AddLocation\add_location;
-use App\YoshiKan\Application\Command\Member\AddPeriod\add_period;
-use App\YoshiKan\Application\Command\Member\ChangeFederation\change_federation;
-use App\YoshiKan\Application\Command\Member\ChangeGrade\change_grade;
-use App\YoshiKan\Application\Command\Member\ChangeGroup\change_group;
-use App\YoshiKan\Application\Command\Member\ChangeLocation\change_location;
-use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\change_member_details;
-use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\change_member_grade;
-use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\change_member_remarks;
-use App\YoshiKan\Application\Command\Member\ChangePeriod\change_period;
-use App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription\confirm_member_web_subscription;
+use App\YoshiKan\Application\Command\Member\AddFederation\AddFederationTrait;
+use App\YoshiKan\Application\Command\Member\AddGrade\AddGradeTrait;
+use App\YoshiKan\Application\Command\Member\AddGroup\AddGroupTrait;
+use App\YoshiKan\Application\Command\Member\AddLocation\AddLocationTrait;
+use App\YoshiKan\Application\Command\Member\AddPeriod\AddPeriodTrait;
+use App\YoshiKan\Application\Command\Member\ChangeFederation\ChangeFederationTrait;
+use App\YoshiKan\Application\Command\Member\ChangeGrade\ChangeGradeTrait;
+use App\YoshiKan\Application\Command\Member\ChangeGroup\ChangeGroupTrait;
+use App\YoshiKan\Application\Command\Member\ChangeLocation\ChangeLocationTrait;
+use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\ChangeMemberDetailsTrait;
+use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\ChangeMemberGradeTrait;
+use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\ChangeMemberRemarksTrait;
+use App\YoshiKan\Application\Command\Member\ChangePeriod\ChangePeriodTrait;
+use App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription\ConfirmMemberWebSubscriptionTrait;
 use App\YoshiKan\Application\Command\Member\CreateMolliePaymentLink\CreateMolliePaymentLinkTrait;
-use App\YoshiKan\Application\Command\Member\DeleteMemberImage\delete_member_image;
-use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\mark_subscription_as_canceled;
-use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\mark_subscription_as_finished;
-use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\mark_subscription_as_paid;
-use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\member_extend_subscription;
-use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\member_extend_subscription_mail;
-use App\YoshiKan\Application\Command\Member\NewMemberSubscription\new_member_subscription;
-use App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail\new_member_subscription_mail;
-use App\YoshiKan\Application\Command\Member\OrderFederation\order_federation;
-use App\YoshiKan\Application\Command\Member\OrderGrade\order_grade;
-use App\YoshiKan\Application\Command\Member\OrderGroup\order_group;
-use App\YoshiKan\Application\Command\Member\OrderLocation\order_location;
-use App\YoshiKan\Application\Command\Member\OrderPeriod\order_period;
-use App\YoshiKan\Application\Command\Member\SaveSettings\save_settings;
+use App\YoshiKan\Application\Command\Member\DeleteMemberImage\DeleteMemberImageTrait;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\MarkSubscriptionAsCanceledTrait;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\MarkSubscriptionAsFinishedTrait;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\MarkSubscriptionAsPaidTrait;
+use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\MemberExtendSubscriptionTrait;
+use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\MemberExtendSubscriptionMailTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberSubscription\NewMemberSubscriptionTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\NewMemberWebSubscriptionMailTrait;
+use App\YoshiKan\Application\Command\Member\OrderFederation\OrderFederationTrait;
+use App\YoshiKan\Application\Command\Member\OrderGrade\OrderGradeTrait;
+use App\YoshiKan\Application\Command\Member\OrderGroup\OrderGroupTrait;
+use App\YoshiKan\Application\Command\Member\OrderLocation\OrderLocationTrait;
+use App\YoshiKan\Application\Command\Member\OrderPeriod\OrderPeriodTrait;
+use App\YoshiKan\Application\Command\Member\SaveSettings\SaveSettingsTrait;
 use App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail\SendPaymentReceivedConfirmationMailTrait;
-use App\YoshiKan\Application\Command\Member\SetupConfiguration\setup_configuration;
-use App\YoshiKan\Application\Command\Member\UploadMemberImage\upload_member_image;
-use App\YoshiKan\Application\Command\Member\UploadProfileImage\upload_profile_image;
-use App\YoshiKan\Application\Command\Message\ResendMessage\resend_message;
-use App\YoshiKan\Application\Command\Product\AddJudogi\add_judogi;
-use App\YoshiKan\Application\Command\Product\ChangeJudogi\change_judogi;
-use App\YoshiKan\Application\Command\Product\OrderJudogi\order_judogi;
+use App\YoshiKan\Application\Command\Member\SetupConfiguration\SetupConfigurationTrait;
+use App\YoshiKan\Application\Command\Member\UploadMemberImage\UploadMemberImageTrait;
+use App\YoshiKan\Application\Command\Member\UploadProfileImage\UploadProfileImageTrait;
+use App\YoshiKan\Application\Command\Message\ResendMessage\ResendMessageTrait;
+use App\YoshiKan\Application\Command\Product\AddJudogi\AddJudogiTrait;
+use App\YoshiKan\Application\Command\Product\ChangeJudogi\ChangeJudogiTrait;
+use App\YoshiKan\Application\Command\Product\OrderJudogi\OrderJudogiTrait;
 use App\YoshiKan\Application\Command\TwoFactor\GenerateAndSendMemberAccessCode\GenerateAndSendMemberAccessCodeTrait;
 use App\YoshiKan\Application\Command\TwoFactor\ValidateMemberAccessCode\ValidateMemberAccessCodeTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
@@ -77,53 +77,53 @@ use Twig\Environment;
 class MemberCommandBus
 {
     // -- configuration --------------------------------------------------------
-    use add_grade;
-    use change_grade;
-    use order_grade;
-    use add_group;
-    use change_group;
-    use order_group;
-    use add_period;
-    use change_period;
-    use order_period;
-    use add_location;
-    use change_location;
-    use order_location;
-    use save_settings;
-    use setup_configuration;
-    use add_federation;
-    use change_federation;
-    use order_federation;
+    use AddGradeTrait;
+    use ChangeGradeTrait;
+    use OrderGradeTrait;
+    use AddGroupTrait;
+    use ChangeGroupTrait;
+    use OrderGroupTrait;
+    use AddPeriodTrait;
+    use ChangePeriodTrait;
+    use OrderPeriodTrait;
+    use AddLocationTrait;
+    use ChangeLocationTrait;
+    use OrderLocationTrait;
+    use SaveSettingsTrait;
+    use SetupConfigurationTrait;
+    use AddFederationTrait;
+    use ChangeFederationTrait;
+    use OrderFederationTrait;
 
     // -- members --------------------------------------------------------------
-    use change_member_details;
-    use change_member_grade;
-    use change_member_remarks;
+    use ChangeMemberDetailsTrait;
+    use ChangeMemberGradeTrait;
+    use ChangeMemberRemarksTrait;
 
     // -- subscription ----------------------------------------------------------
-    use member_extend_subscription;
-    use member_extend_subscription_mail;
-    use new_member_subscription;
-    use new_member_subscription_mail;
-    use mark_subscription_as_paid;
-    use mark_subscription_as_finished;
-    use mark_subscription_as_canceled;
-    use confirm_member_web_subscription;
+    use MemberExtendSubscriptionTrait;
+    use MemberExtendSubscriptionMailTrait;
+    use NewMemberSubscriptionTrait;
+    use NewMemberWebSubscriptionMailTrait;
+    use MarkSubscriptionAsPaidTrait;
+    use MarkSubscriptionAsFinishedTrait;
+    use MarkSubscriptionAsCanceledTrait;
+    use ConfirmMemberWebSubscriptionTrait;
     use CreateMolliePaymentLinkTrait;
     use SendPaymentReceivedConfirmationMailTrait;
 
     // -- member images ---------------------------------------------------------
-    use upload_member_image;
-    use upload_profile_image;
-    use delete_member_image;
+    use UploadProfileImageTrait;
+    use UploadMemberImageTrait;
+    use DeleteMemberImageTrait;
 
     // -- message --------------------------------------------------------------
-    use resend_message;
+    use ResendMessageTrait;
 
     // -- product --------------------------------------------------------------
-    use add_judogi;
-    use change_judogi;
-    use order_judogi;
+    use AddJudogiTrait;
+    use ChangeJudogiTrait;
+    use OrderJudogiTrait;
 
     // -- two factor -----------------------------------------------------------
     use GenerateAndSendMemberAccessCodeTrait;

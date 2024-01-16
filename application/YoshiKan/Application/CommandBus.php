@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayedFromMollie\MarkSubscriptionAsPayedFromMollieTrait;
-use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\new_member_web_subscription;
-use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\new_member_web_subscription_mail;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\NewMemberWebSubscriptionTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\NewMemberWebSubscriptionMailTrait;
 use App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail\SendPaymentReceivedConfirmationMailTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
@@ -38,8 +38,8 @@ class CommandBus
     // —— Traits
     // ——————————————————————————————————————————————————————————————————————————
 
-    use new_member_web_subscription;
-    use new_member_web_subscription_mail;
+    use NewMemberWebSubscriptionTrait;
+    use NewMemberWebSubscriptionMailTrait;
     use MarkSubscriptionAsPayedFromMollieTrait;
     use SendPaymentReceivedConfirmationMailTrait;
 
