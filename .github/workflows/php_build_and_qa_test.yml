@@ -53,11 +53,13 @@ jobs:
           chmod 777 var/cache
           ./bin/console cache:clear
           
+      ## —— PHP QA ———————————————————————————————————————————————————————————
+          
       - name: QA CS
         run: ./vendor/bin/php-cs-fixer check
         
       - name: QA STAN
-        run: ./vendor/bin/phpstan --memory-limit=1G analyse -c phpstan.neon application
+        run: ./vendor/bin/phpstan analyse -c phpstan.neon application
         
       - name: QA Lint Container
         run: ./bin/console lint:container
@@ -67,6 +69,19 @@ jobs:
         
       - name: QA PSALM
         run: ./vendor/bin/psalm
+          
+      ## —— Yarn ————————————————————————————————————————————————————————————
+      
+      - name: Nodejs install
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'
+          
+      - run: yarn install
+        
+      - name: Yarn build
+        run: yarn run encore production
 
+## —— Testing ————————————————————————————————————————————————————————————
 #      - name: Execute tests (Unit & Integration Tests) via PestPHP
 #        run: ./vendor/bin/pest
