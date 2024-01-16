@@ -100,7 +100,7 @@ services:
 #    working_dir: /app
 #    volumes:
 #      - .:/app
-#    command: bash -c "cd frontends/member_module/ && npm install && npm run build"
+#    command: bash -c "cd frontends/member_module/ && npm install && npm run build-only"
     
 #  docs-builder:
 #    image: node:latest

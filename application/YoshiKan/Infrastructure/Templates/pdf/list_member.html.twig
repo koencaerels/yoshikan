@@ -1,0 +1,179 @@
+{# #}
+{# This file is part of the Yoshi-Kan software. #}
+{# #}
+{# (c) Koen Caerels #}
+{# #}
+{# For the full copyright and license information, please view the LICENSE #}
+{# file that was distributed with this source code. #}
+{# #}
+
+<html>
+<head>
+    <style type="text/css">
+
+        body {
+            font-family: Helvetica;
+        }
+
+        @page {
+            margin: 20mm;
+        }
+
+        pre {
+            background-color: #eeeeee;
+            padding: 3mm;
+            border-radius: 3mm;
+            white-space: pre-wrap; /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+            font-size: .8em;
+        }
+
+        blockquote {
+            margin-left: 3mm;
+            padding-left: 3mm;
+            border-left: 2px solid silver;
+        }
+
+        blockquote p {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        header {
+            position: fixed;
+            top: -55px;
+            left: 0px;
+            right: 0px;
+            height: 15px;
+            border-bottom: 1px solid silver;
+            font-size: 12px;
+            padding-bottom: 2px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+            border-top: 1px solid silver;
+            font-size: 10px;
+            padding-top: 6px;
+        }
+
+        .element-code {
+            margin-left: -55px;
+            font-size: 10px;
+            margin-top: -30px;
+        }
+
+        .content ul li p {
+            padding: 0;
+            margin: 0;
+        }
+
+        h2, h3, h4, h5 {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        .page_break {
+            page-break-before: always;
+        }
+
+        .table {
+            font-size: .7em;
+            margin-bottom: 1em;
+            margin: auto;
+            min-width: 50%;
+        }
+
+        .table thead tr th {
+            border-bottom: 2px solid #666;
+        }
+
+        .table tbody tr td {
+            border-bottom: 1px solid #666;
+        }
+
+        .table td, .table th {
+            margin: 0px;
+            padding: 3px 8px 3px 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+<header>
+    Leden lijst Yoshi-Kan vzw - {{ locationName }}
+</header>
+<footer>
+    Leden lijst Yoshi-Kan vzw - {{ locationName }} - generated on {{ generatedOn |date('d/m/Y H:i:s') }}
+</footer>
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+<div class="location">
+    <p>{{ locationName }}:  {{ members | length }} leden</p>
+    <table class="table" width="100%">
+        <thead>
+        <tr>
+            <th>Ref.</th>
+            <th>Naam</th>
+            <th>Voornaam</th>
+            <th>Geslacht</th>
+            <th>Geboortedatum</th>
+            <th>Leeftijd</th>
+            <th>Adres</th>
+            <th>Postcode</th>
+            <th>Gemeente</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+
+            {% set dateDiff = generatedOn|date("U") - member.dateOfBirth|date("U") %}
+            {% set dateDiffYears = dateDiff / (60 * 60 * 24 * 365.25) %}
+
+            <tr>
+                <td>YK-{{ member.id }}</td>
+                <td>{{ member.lastname }}</td>
+                <td>{{ member.firstname }}</td>
+                <td align="center">{{ member.gender.value }}</td>
+                <td>{{ member.dateOfBirth | date('d / m / Y') }}</td>
+                <td align="center">
+                    {% if dateDiffYears > 18 %}
+                        <i>{{ dateDiffYears | number_format(0) }} </i>
+                    {% else %}
+                        {{ dateDiffYears | number_format(0) }}
+                    {% endif %}
+                </td>
+                <td>{{ member.addressStreet }} {{ member.addressNumber }} {{ member.addressBox }}</td>
+                <td>{{ member.addressZip }}</td>
+                <td>{{ member.addressCity }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+<script type="text/php">
+    if ( isset($pdf) ) {
+        $x = 755;
+        $yBottom = 795;
+        $yTop = 15;
+        $text = "{PAGE_NUM} van {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("helvetica", "bold");
+        $size = 8;
+        $pdf->page_text($x, $yTop, $text, $font, $size);
+        $pdf->page_text($x, $yBottom, $text, $font, $size);
+    }
+</script>
+</body>
+</html>

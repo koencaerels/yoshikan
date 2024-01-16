@@ -46,7 +46,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
             <div class="basis-1/6 text-sm">
                 <div v-for="locationReport in appStore.dashboardNumbers.locationReports" class="mb-2">
@@ -54,13 +53,17 @@
                     <p>Actieve leden: {{ locationReport.activeMembers }}</p>
                     <p>Nog te betalen: {{ locationReport.duePayments }} €</p>
                     <p>Total: {{ locationReport.totalAmount }} €</p>
-
-<!--                    <div class="mt-2">-->
-<!--                        <Button label="Download overzicht actieve leden"-->
-<!--                                icon="pi pi-download"-->
-<!--                                class="p-button-sm p-button-secondary"/>-->
-<!--                    </div>-->
-<!--                    <hr class="mt-2">-->
+                    <div class="mt-2">
+                        <Button @click="downloadMemberList(locationReport.location.id)"
+                                label="Download overzicht actieve leden"
+                                icon="pi pi-download"
+                                class="p-button-sm p-button-secondary"/>
+                    </div>
+                    <div @click="downloadMemberListAsExcel(locationReport.location.id)"
+                        class="text-xs mt-2 text-blue-400 underline underline-offset-2 cursor-pointer">
+                        (download als excel)
+                    </div>
+                    <hr class="mt-2">
                 </div>
             </div>
             <div class="basis-1/6">
@@ -104,6 +107,17 @@ function downloadListDuePayments() {
     let url = apiUrl + '/member/overview-due-payments';
     window.open(url, '_blank');
 }
+
+function downloadMemberList(locationId) {
+    let url = apiUrl + '/member/list/location/'+locationId;
+    window.open(url, '_blank');
+}
+
+function downloadMemberListAsExcel(locationId) {
+    let url = apiUrl + '/member/list/location/'+locationId+'/excel';
+    window.open(url, '_blank');
+}
+
 
 const subscriptionCounter = computed((): number => memberStore.refreshCounter);
 watch(subscriptionCounter, (): void => {

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace App\YoshiKan\Application;
 
 use App\YoshiKan\Application\Query\Member\DownloadDuePaymentsTrait;
+use App\YoshiKan\Application\Query\Member\ExportSubscriptionsTrait;
 use App\YoshiKan\Application\Query\Member\GetConfigurationTrait;
 use App\YoshiKan\Application\Query\Member\GetMemberImageTrait;
 use App\YoshiKan\Application\Query\Member\GetMemberTrait;
@@ -49,6 +50,7 @@ class MemberQueryBus
     use GetSubscriptionTrait;
     use DownloadDuePaymentsTrait;
     use GetReportingTrait;
+    use ExportSubscriptionsTrait;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security

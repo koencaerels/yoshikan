@@ -39,9 +39,9 @@ class GetMessage
     {
         $member = $this->memberRepository->getById($memberId);
         $messages = $this->messageRepository->getByMember($member);
-        $messageCollection = new MessageReadmodelCollection([]);
+        $messageCollection = new MessageReadModelCollection([]);
         foreach ($messages as $message) {
-            $messageCollection->addItem(MessageReadmodel::hydrateFromModel($message));
+            $messageCollection->addItem(MessageReadModel::hydrateFromModel($message));
         }
 
         return $messageCollection;

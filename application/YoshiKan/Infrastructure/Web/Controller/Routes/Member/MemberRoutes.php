@@ -15,6 +15,7 @@ namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
 
 use App\YoshiKan\Application\Command\Member\UploadMemberImage\UploadMemberImage;
 use App\YoshiKan\Application\Command\Member\UploadProfileImage\UploadProfileImage;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -173,7 +174,7 @@ trait MemberRoutes
         $response = $this->commandBus->memberNewSubscription($command);
 
         $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        $result_mail = $this->commandBus->newMemberWebSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -188,7 +189,7 @@ trait MemberRoutes
         $response = $this->commandBus->confirmMemberWebSubscription($command);
 
         $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        $result_mail = $this->commandBus->newMemberWebSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -199,5 +200,28 @@ trait MemberRoutes
         $response = $this->queryBus->downloadDuePayments();
 
         return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/list/location/{locationId}', requirements: ['locationId' => '\d+'], methods: ['GET'])]
+    public function downloadMemberList(Request $request, int $locationId): JsonResponse
+    {
+        $response = $this->queryBus->downloadMemberOverviewForLocation($locationId);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/list/location/{locationId}/excel', requirements: ['locationId' => '\d+'], methods: ['GET'])]
+    public function downloadMemberListAsExcel(Request $request, int $locationId): void
+    {
+        $spreadsheet = $this->queryBus->downloadMemberOverviewForLocationAsExcel($locationId);
+        $now = new \DateTimeImmutable();
+        $fileName = $now->format('Ymd').'_yoshi-kan-leden-'.$locationId.'.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'.urlencode($fileName).'"');
+        $writer->save('php://output');
+        exit;
     }
 }
