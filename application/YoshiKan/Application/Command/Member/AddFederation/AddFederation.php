@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Command\Member\AddFederation;
 
 class AddFederation
@@ -29,7 +31,7 @@ class AddFederation
     // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function hydrateFromJson($json): self
+    public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
             trim($json->code),

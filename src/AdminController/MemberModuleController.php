@@ -29,8 +29,11 @@ use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
 use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
+use App\YoshiKan\Infrastructure\Mollie\MollieConfig;
 use Bolt\Controller\Backend\BackendZoneInterface;
 use Bolt\Controller\TwigAwareController;
+use Bolt\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,9 +42,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class MemberModuleController
-    extends TwigAwareController
-    implements BackendZoneInterface
+class MemberModuleController extends TwigAwareController implements BackendZoneInterface
 {
     protected string $uploadFolder;
 
@@ -51,18 +52,18 @@ class MemberModuleController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected MailerInterface        $mailer,
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected MailerInterface $mailer,
     ) {
-        $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
+        $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
     }
 
     // ——————————————————————————————————————————————————————————————————————————
     // Member module route
     // ——————————————————————————————————————————————————————————————————————————
     /**
-     * @Route("/members/", name="app_member_module")
+     * @Route("/leden/", name="app_member_module")
      */
     public function member_module(): Response
     {
@@ -70,7 +71,7 @@ class MemberModuleController
         // that needs to be located in the `templates`
         // folder in the root of your project.
         return $this->render('admin/admin_member_module.html.twig', [
-            'title' => 'Member module'
+            'title' => 'Member module',
         ]);
     }
 
@@ -99,6 +100,13 @@ class MemberModuleController
             $this->entityManager->getRepository(Federation::class),
         );
 
+        $mollieConfig = MollieConfig::make(
+            apiKey: '',
+            partnerId: '',
+            profileId: '',
+            redirectBaseUrl: '',
+        );
+
         $commandBus = new MemberCommandBus(
             $this->security,
             $this->entityManager,
@@ -119,6 +127,9 @@ class MemberModuleController
             $this->entityManager->getRepository(Federation::class),
             $this->entityManager->getRepository(Message::class),
             $this->entityManager->getRepository(Judogi::class),
+            $this->entityManager->getRepository(User::class),
+            $this->entityManager->getRepository(MemberAccessCode::class),
+            $mollieConfig,
         );
 
         $configuration = $queryBus->getConfiguration();
@@ -149,7 +160,7 @@ class MemberModuleController
             $memberId = intval($request->get('memberId'));
         }
 
-        if ($memberId === 0) {
+        if (0 === $memberId) {
             $searchModel = new \stdClass();
             $searchModel->keyword = $keyword;
             $searchModel->group = new \stdClass();
@@ -185,7 +196,7 @@ class MemberModuleController
             'members' => $members,
             'memberId' => $memberId,
             'member' => $member,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 }

@@ -119,6 +119,7 @@ export interface Subscription {
     memberSubscriptionEnd: Date;
     memberSubscriptionTotal: number;
     memberSubscriptionIsPartSubscription: boolean;
+    memberSubscriptionIsHalfYear: boolean;
     licenseStart: Date;
     licenseEnd: Date;
     licenseTotal: number;

@@ -105,11 +105,15 @@ class MemberReadModel implements \JsonSerializable
         if (!is_null($this->getRemarks())) {
             $json->remarks = $this->getRemarks();
         }
-        if (!is_null($this->getGradeLogs())) {
-            $json->gradeLogs = $this->getGradeLogs()->getCollection();
+
+        $gradeLogs = $this->getGradeLogs();
+        if (!is_null($gradeLogs)) {
+            $json->gradeLogs = $gradeLogs->getCollection();
         }
-        if (!is_null($this->getImages())) {
-            $json->images = $this->getImages()->getCollection();
+
+        $images = $this->getImages();
+        if (!is_null($images)) {
+            $json->images = $images->getCollection();
         }
 
         return $json;

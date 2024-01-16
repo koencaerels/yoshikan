@@ -26,6 +26,9 @@
                     <div class="mt-2 text-right">
                         <group-renderer :member="member"/>
                     </div>
+                    <div v-if="member.status == 'actief'" class="mt-4">
+                        <img src="../../assets/active.png" width="64" class="mx-auto">
+                    </div>
                 </div>
                 <div class="text-xl mt-2 font-bold">
                     <span class="uppercase">{{ member.lastname }}</span> {{ member.firstname }}

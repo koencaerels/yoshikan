@@ -107,6 +107,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         return $model;
     }
 
+    /**
+     * @return Member[]
+     */
     public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array
     {
         $q = $this->createQueryBuilder('t')
@@ -122,6 +125,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         return $q->getQuery()->getResult();
     }
 
+    /**
+     * @return Member[]
+     */
     public function search(
         string $keyword = '',
         int $yearOfBirth = 0,
@@ -129,9 +135,10 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         Grade $grade = null,
         int $minYearOfBirth = 0,
         int $maxYearOfBirth = 0,
+        bool $isActive = null,
     ): array {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        if (!is_null($keyword) && 0 != mb_strlen(trim($keyword))) {
+        if (0 != mb_strlen(trim($keyword))) {
             $q->andWhere('LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id')
                 ->setParameter('keyword', '%'.mb_strtolower($keyword).'%')
                 ->setParameter('id', intval($keyword));
@@ -153,11 +160,19 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
                 ->setParameter('minYearOfBirth', $minYearOfBirth)
                 ->setParameter('maxYearOfBirth', $maxYearOfBirth);
         }
+        if (false === is_null($isActive)) {
+            $q->andWhere('t.status = :status')
+                ->setParameter('status', $isActive ? MemberStatus::ACTIVE->value : MemberStatus::NON_ACTIVE->value);
+        }
+
         $q->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();
     }
 
+    /**
+     * @return Member[]
+     */
     public function listActiveMembers(): array
     {
         $q = $this->createQueryBuilder('t')
@@ -168,6 +183,9 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         return $q->getQuery()->getResult();
     }
 
+    /**
+     * @return Member[]
+     */
     public function getActiveMembersByFederationAndLocation(Federation $federation, Location $location): array
     {
         $q = $this->createQueryBuilder('t')
@@ -177,6 +195,21 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
             ->setParameter('locationId', $location->getId())
             ->andWhere('t.federation = :federationId')
             ->setParameter('federationId', $federation->getId())
+            ->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
+
+    /**
+     * @return Member[]
+     */
+    public function getActiveMembersByLocation(Location $location): array
+    {
+        $q = $this->createQueryBuilder('t')
+            ->where('t.status = :status')
+            ->setParameter('status', MemberStatus::ACTIVE->value)
+            ->andWhere('t.location = :locationId')
+            ->setParameter('locationId', $location->getId())
             ->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();

@@ -35,7 +35,11 @@ class DashboardNumbersReadmodel implements \JsonSerializable
         $this->locationReports[] = $locationReport;
     }
 
-    public function setNumbers($numberOfWebSubscriptions, $numberOfDuePayments): void
+    /**
+     * @psalm-param int<0, max> $numberOfWebSubscriptions
+     * @psalm-param int<0, max> $numberOfDuePayments
+     */
+    public function setNumbers(int $numberOfWebSubscriptions, int $numberOfDuePayments): void
     {
         $this->numberOfWebSubscriptions = $numberOfWebSubscriptions;
         $this->numberOfDuePayments = $numberOfDuePayments;

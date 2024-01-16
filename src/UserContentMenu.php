@@ -34,22 +34,22 @@ class UserContentMenu implements ExtensionBackendMenuInterface
             'extras' => [
                 'name' => 'Leden beheer',
                 'type' => 'separator',
-            ]
+            ],
         ]);
 
         // This adds the link
         $menu->addChild('Leden', [
             'uri' => $this->urlGenerator->generate('app_member_module'),
             'extras' => [
-                'icon' => 'fa-user-circle'
-            ]
+                'icon' => 'fa-user-circle',
+            ],
         ]);
 
         $menu->addChild('Profiel foto app', [
             'uri' => $this->urlGenerator->generate('app_member_image_upload'),
             'extras' => [
-                'icon' => 'fa-camera'
-            ]
+                'icon' => 'fa-camera',
+            ],
         ]);
     }
 }

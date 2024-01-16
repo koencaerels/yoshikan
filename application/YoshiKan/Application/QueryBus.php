@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
-use App\YoshiKan\Application\Query\Member\get_configuration;
-use App\YoshiKan\Application\Query\Member\get_member;
+use App\YoshiKan\Application\Query\Member\GetConfigurationTrait;
+use App\YoshiKan\Application\Query\Member\GetMemberTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
@@ -31,8 +31,8 @@ use Twig\Environment;
 
 class QueryBus
 {
-    use get_configuration;
-    use get_member;
+    use GetConfigurationTrait;
+    use GetMemberTrait;
 
     protected BasePermissionService $permission;
     private const ADMIN = 1;

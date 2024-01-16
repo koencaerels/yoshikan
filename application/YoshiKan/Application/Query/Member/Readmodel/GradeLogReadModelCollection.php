@@ -34,7 +34,7 @@ class GradeLogReadModelCollection
         return $json;
     }
 
-    public function addItem(GradeLogReadModel $readModel)
+    public function addItem(GradeLogReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

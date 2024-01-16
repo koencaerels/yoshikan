@@ -24,11 +24,13 @@ use App\YoshiKan\Domain\Model\Member\Period;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
+use App\YoshiKan\Domain\Model\Message\Message;
 use App\YoshiKan\Domain\Model\Product\Judogi;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -96,7 +98,8 @@ class ApiController extends AbstractController
             $this->entityManager->getRepository(Judogi::class),
             $this->entityManager->getRepository(Settings::class),
             $this->entityManager->getRepository(Member::class),
-            $this->entityManager->getRepository(Federation::class)
+            $this->entityManager->getRepository(Federation::class),
+            $this->entityManager->getRepository(Message::class),
         );
     }
 
@@ -146,5 +149,28 @@ class ApiController extends AbstractController
         $result = $this->commandBus->newMemberWebSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    // ———————————————————————————————————————————————————————————————————————————
+    // Mollie redirect and webhooks
+    // ———————————————————————————————————————————————————————————————————————————
+
+    #[Route('/mm/lidgeld/betaling/{paymentId}', name: 'mollie_payment_confirmation', methods: ['GET', 'POST', 'PUT'])]
+    public function molliePaymentConfirmation(Request $request, string $paymentId): Response
+    {
+        $response = $this->commandBus->markSubscriptionAsPayedFromMollie($paymentId);
+        if ($response->subscriptionId > 0) {
+            $response_mail = $this->commandBus->sendPaymentReceivedConfirmationMail($response->subscriptionId);
+
+            return $this->redirectToRoute('mollie_payment_confirmation_feedback', ['paymentId' => $paymentId]);
+        } else {
+            return new JsonResponse('No subscription linked to this ID.', 200, $this->apiAccess);
+        }
+    }
+
+    #[Route('/mm/lidgeld/betaling/{paymentId}/webhook', name: 'mollie_webhook', methods: ['GET', 'POST', 'PUT'])]
+    public function mollieWebHook(Request $request, string $paymentId): JsonResponse
+    {
+        return new JsonResponse(true, 200, $this->apiAccess);
     }
 }

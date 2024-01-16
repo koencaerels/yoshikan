@@ -36,7 +36,7 @@ class JudogiReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(JudogiReadModel $readModel)
+    public function addItem(JudogiReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

@@ -35,7 +35,7 @@ class PeriodReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(PeriodReadModel $readModel)
+    public function addItem(PeriodReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

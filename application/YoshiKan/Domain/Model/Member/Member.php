@@ -350,6 +350,26 @@ class Member
         $this->profileImage = $profileImage;
     }
 
+    public function activate(): void
+    {
+        $this->status = MemberStatus::ACTIVE->value;
+    }
+
+    public function deactivate(): void
+    {
+        $this->status = MemberStatus::NON_ACTIVE->value;
+    }
+
+    public function syncFromSubscription(
+        Federation $federation,
+        int $numberOfTraining,
+        bool $isHalfYearSubscription,
+    ): void {
+        $this->federation = $federation;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->memberSubscriptionIsHalfYear = $isHalfYearSubscription;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
@@ -486,12 +506,12 @@ class Member
 
     public function getGradeLogs(): array
     {
-        return $this->gradeLogs->getValues();
+        return null !== $this->gradeLogs ? $this->gradeLogs->getValues() : [];
     }
 
     public function getMemberImages(): array
     {
-        return $this->memberImages->getValues();
+        return null !== $this->memberImages ? $this->memberImages->getValues() : [];
     }
 
     public function getFederation(): Federation
@@ -526,6 +546,6 @@ class Member
 
     public function getMessages(): array
     {
-        return $this->messages->getValues();
+        return null !== $this->messages ? $this->messages->getValues() : [];
     }
 }

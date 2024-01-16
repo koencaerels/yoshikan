@@ -43,7 +43,11 @@
             met vermelding van de referentie
             <span class="font-bold"> "YKS-xxx
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
-            <br>Als {{ props.command.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje.
+
+            <br><br>Of betaal online via deze Mollie-link:
+            <a href="#" class="text-blue-500">https://paymentlink.mollie.com/payment/xxxxx/</a>.
+
+            <br><br>Als {{ props.command.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje.
             Alvast bedankt.
         </div>
 

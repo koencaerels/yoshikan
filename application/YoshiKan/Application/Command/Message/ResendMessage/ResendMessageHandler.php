@@ -1,7 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace App\YoshiKan\Application\Command\Message\ResendMessage;
 
+use App\YoshiKan\Application\Command\Common\EmailValidator;
 use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -27,14 +39,20 @@ class ResendMessageHandler
     {
         $originalMessage = $this->messageRepository->getById($command->getMessageId());
 
-        $message = (new Email())
-            ->subject($originalMessage->getSubject())
-            ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($command->getToEmail(), $originalMessage->getToName()))
-            ->html($originalMessage->getMessage());
+        if (EmailValidator::isValid($command->getToEmail())) {
+            $message = (new Email())
+                ->subject($originalMessage->getSubject())
+                ->from(new Address($command->getFromEmail(), $command->getFromName()))
+                ->to(new Address($command->getToEmail(), $originalMessage->getToName()))
+                ->html($originalMessage->getMessage());
 
-        $this->mailer->send($message);
+            if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+                $this->mailer->send($message);
+            }
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

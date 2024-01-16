@@ -89,6 +89,43 @@ final class SubscriptionRepository extends ServiceEntityRepository implements \A
         return $model;
     }
 
+    public function findByPaymentId(string $paymentId): ?Subscription
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.paymentId = :payment_id')
+            ->setParameter('payment_id', $paymentId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByMemberAndDatesAndAmounts(
+        Member $member,
+        \DateTimeImmutable $memberStartDate,
+        \DateTimeImmutable $memberEndDate,
+        \DateTimeImmutable $licenseStartDate,
+        \DateTimeImmutable $licenseEndDate,
+        float $memberShipAmount,
+        float $licenseAmount,
+    ): ?Subscription {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.member = :memberId')
+            ->setParameter('memberId', $member->getId())
+            ->andWhere('t.memberSubscriptionStart = :memberShipStart')
+            ->setParameter('memberShipStart', $memberStartDate, 'datetime_immutable')
+            ->andWhere('t.memberSubscriptionEnd = :memberShipEnd')
+            ->setParameter('memberShipEnd', $memberEndDate, 'datetime_immutable')
+            ->andWhere('t.licenseStart = :licenseShipStart')
+            ->setParameter('licenseShipStart', $licenseStartDate, 'datetime_immutable')
+            ->andWhere('t.licenseEnd = :licenseShipEnd')
+            ->setParameter('licenseShipEnd', $licenseEndDate, 'datetime_immutable')
+            ->andWhere('t.memberSubscriptionTotal = :memberShipAmount')
+            ->setParameter('memberShipAmount', $memberShipAmount)
+            ->andWhere('t.licenseTotal = :licenseAmount')
+            ->setParameter('licenseAmount', $licenseAmount)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function getMaxId(): int
     {
         $model = $this->createQueryBuilder('t')

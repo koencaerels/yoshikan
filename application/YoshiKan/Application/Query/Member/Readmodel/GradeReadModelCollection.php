@@ -35,7 +35,7 @@ class GradeReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(GradeReadModel $readModel)
+    public function addItem(GradeReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

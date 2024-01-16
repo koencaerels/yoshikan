@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
-use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\new_member_web_subscription;
-use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\new_member_web_subscription_mail;
+use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayedFromMollie\MarkSubscriptionAsPayedFromMollieTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\NewMemberWebSubscriptionTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\NewMemberWebSubscriptionMailTrait;
+use App\YoshiKan\Application\Command\Member\SendPaymentReceivedConfirmationMail\SendPaymentReceivedConfirmationMailTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
@@ -23,6 +25,7 @@ use App\YoshiKan\Domain\Model\Member\PeriodRepository;
 use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
+use App\YoshiKan\Domain\Model\Message\MessageRepository;
 use App\YoshiKan\Domain\Model\Product\JudogiRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -35,8 +38,10 @@ class CommandBus
     // —— Traits
     // ——————————————————————————————————————————————————————————————————————————
 
-    use new_member_web_subscription;
-    use new_member_web_subscription_mail;
+    use NewMemberWebSubscriptionTrait;
+    use NewMemberWebSubscriptionMailTrait;
+    use MarkSubscriptionAsPayedFromMollieTrait;
+    use SendPaymentReceivedConfirmationMailTrait;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security
@@ -62,7 +67,8 @@ class CommandBus
         protected JudogiRepository $judogiRepository,
         protected SettingsRepository $settingsRepository,
         protected MemberRepository $memberRepository,
-        protected FederationRepository $federationRepository
+        protected FederationRepository $federationRepository,
+        protected MessageRepository $messageRepository,
     ) {
         $this->permission = new BasePermissionService(
             $security->getUser(),

@@ -57,10 +57,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set('sets', ['clean-code', 'common', 'php70', 'php71', 'php81', 'psr12', 'symfony', 'symfony-risky']);
 
     $parameters->set('paths', [
-        __DIR__ . '/application',
-        __DIR__ . '/tests',
-        __DIR__ . '/src',
-        __DIR__ . '/ecs.php',
+        __DIR__.'/application',
+        __DIR__.'/tests',
+        __DIR__.'/src',
+        __DIR__.'/ecs.php',
     ]);
 
     $parameters->set('cache_directory', 'var/cache/ecs');

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail;
 
+use App\YoshiKan\Application\Command\Common\EmailValidator;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -31,7 +32,7 @@ class NewMemberWebSubscriptionMailHandler
     public function go(NewMemberWebSubscriptionMail $command): bool
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
-        $subject = 'Yoshi-Kan: bevestiging inschrijving '.$subscription->getFirstname().' '.$subscription->getLastname();
+        $subject = 'JC Yoshi-Kan: bevestiging inschrijving '.$subscription->getFirstname().' '.$subscription->getLastname();
 
         $mailTemplate = $this->twig->render(
             'mail/web_confirmation_mail.html.twig',
@@ -42,14 +43,18 @@ class NewMemberWebSubscriptionMailHandler
             ]
         );
 
-        $message = (new Email())
-            ->subject($subject)
-            ->from(new Address($command->getFromEmail(), $command->getFromName()))
-            ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
-            ->bcc(new Address($command->getContactEmail(), $command->getFromName()))
-            ->html($mailTemplate);
+        if (EmailValidator::isValid($subscription->getContactEmail())) {
+            $message = (new Email())
+                ->subject($subject)
+                ->from(new Address($command->getFromEmail(), $command->getFromName()))
+                ->to(new Address($subscription->getContactEmail(), $subscription->getContactFirstname().' '.$subscription->getContactLastname()))
+                ->bcc(new Address('judo.yoshikan@gmail.com', $command->getFromName()))
+                ->html($mailTemplate);
 
-        $this->mailer->send($message);
+            if ('true' === $_SERVER['ENABLE_SENDING_EMAILS']) {
+                $this->mailer->send($message);
+            }
+        }
 
         return true;
     }

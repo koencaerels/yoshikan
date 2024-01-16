@@ -158,11 +158,14 @@
                         YK-{{ member.id }}
                     </div>
                 </div>
-                <div class="w-auto grow">
+                <div class="w-auto grow flex gap-1">
                     <div class="font-bold text-sm line-clamp-1">
                         <span class="uppercase">{{ member.lastname }}</span>
                         {{ member.firstname }}
                     </div>
+                </div>
+                <div v-if="member.status == 'actief'">
+                    <img src="../../assets/active.png" width="18" class="mx-auto">
                 </div>
                 <div class="flex-none w-[6rem] text-sm">
                     <div class="text-xs">

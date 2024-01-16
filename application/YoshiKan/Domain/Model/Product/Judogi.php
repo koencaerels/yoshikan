@@ -128,6 +128,6 @@ class Judogi
 
     public function getSubscriptions(): array
     {
-        return $this->subscriptions->getValues();
+        return null !== $this->subscriptions ? $this->subscriptions->getValues() : [];
     }
 }

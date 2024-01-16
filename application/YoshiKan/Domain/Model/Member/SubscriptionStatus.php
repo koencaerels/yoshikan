@@ -18,4 +18,5 @@ enum SubscriptionStatus: string
     case PAYED = 'betaald';
     case COMPLETE = 'afgewerkt';
     case CANCELED = 'canceled';
+    case ARCHIVED = 'archived';
 }

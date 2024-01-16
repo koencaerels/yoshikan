@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
-use App\YoshiKan\Application\Query\Member\download_due_payments;
-use App\YoshiKan\Application\Query\Member\get_configuration;
-use App\YoshiKan\Application\Query\Member\get_member;
-use App\YoshiKan\Application\Query\Member\get_member_image;
-use App\YoshiKan\Application\Query\Member\get_subscription;
-use App\YoshiKan\Application\Query\Message\get_message;
-use App\YoshiKan\Application\Query\Reporting\get_reporting;
+use App\YoshiKan\Application\Query\Member\DownloadDuePaymentsTrait;
+use App\YoshiKan\Application\Query\Member\ExportSubscriptionsTrait;
+use App\YoshiKan\Application\Query\Member\GetConfigurationTrait;
+use App\YoshiKan\Application\Query\Member\GetMemberImageTrait;
+use App\YoshiKan\Application\Query\Member\GetMemberTrait;
+use App\YoshiKan\Application\Query\Member\GetSubscriptionTrait;
+use App\YoshiKan\Application\Query\Message\GetMessageTrait;
+use App\YoshiKan\Application\Query\Reporting\GetReportingTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\GradeRepository;
@@ -42,13 +43,14 @@ class MemberQueryBus
     // —— Traits
     // ——————————————————————————————————————————————————————————————————————————
 
-    use get_configuration;
-    use get_member;
-    use get_member_image;
-    use get_message;
-    use get_subscription;
-    use download_due_payments;
-    use get_reporting;
+    use GetConfigurationTrait;
+    use GetMemberTrait;
+    use GetMemberImageTrait;
+    use GetMessageTrait;
+    use GetSubscriptionTrait;
+    use DownloadDuePaymentsTrait;
+    use GetReportingTrait;
+    use ExportSubscriptionsTrait;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security

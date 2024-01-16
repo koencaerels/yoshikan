@@ -15,7 +15,7 @@
     <vue-progress-bar/>
 
     <!-- -- navigation ----------------------------------------- -->
-    <navigation/>
+    <navigation v-if="twoFactorStore.isCodeValid" />
 
     <!-- -- router view ---------------------------------------- -->
     <div v-if="appStore.isConfigurationLoaded">
@@ -26,9 +26,11 @@
         </RouterView>
     </div>
     <div v-else>
-        <div class="mx-auto my-auto text-gray-400" style="width:50px;">
-            <br><br><br>
-            <ProgressSpinner />
+        <div id="background">
+            <div class="mx-auto my-auto text-gray-400" style="width:50px;">
+                <br><br><br>
+                <ProgressSpinner/>
+            </div>
         </div>
     </div>
 
@@ -44,12 +46,14 @@ import {useToast} from "primevue/usetoast";
 import {useRouter} from "vue-router";
 import Navigation from "@/components/Navigation.vue";
 import {useAppStore} from "@/store/app";
+import {useTwoFactorStore} from "@/store/twoFactor";
 
 const toaster = useToast();
 const app = getCurrentInstance();
 const progress = app?.appContext.config.globalProperties.$Progress ?? '';
 const router = useRouter();
 const appStore = useAppStore();
+const twoFactorStore = useTwoFactorStore();
 
 /* eslint-disable no-unused-vars */
 router.beforeEach((to, from, next) => {
@@ -95,3 +99,16 @@ async function loadConfiguration() {
 }
 
 </script>
+
+<style scoped>
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 67px;
+    right: 0;
+    bottom: 0;
+    background-color: #A6B7C8;
+}
+
+</style>

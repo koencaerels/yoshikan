@@ -23,7 +23,7 @@ const items = computed(() => {
         {
             label: 'Dashboard',
             icon: 'pi pi-chart-bar',
-            to: '/'
+            to: '/dashboard'
         },
         {
             label: 'Actieve leden',

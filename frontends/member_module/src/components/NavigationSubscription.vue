@@ -31,7 +31,7 @@ const items = computed(() => {
             to: '/inschrijvingen/te-betalen'
         },
         {
-            label: 'Archief',
+            label: 'Betaald & Afgewerkt',
             icon: 'pi pi-bars',
             to: '/inschrijvingen/archief'
         },

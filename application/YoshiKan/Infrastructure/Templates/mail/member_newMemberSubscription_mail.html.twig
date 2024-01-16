@@ -13,15 +13,24 @@
         Welkom {{ subscription.firstname }} {{ subscription.lastname }}, bij Yoshi-Kan,
         de plek waar judo-liefhebbers samenkomen om hun passie voor
         deze prachtige sport te delen. We zijn verheugd dat je ervoor hebt gekozen
-        om deel uit te maken van onze judo familie!
+        om deel uit te maken van onze judo-familie!
     </p>
     <p>
         Om de inschrijving definitief te maken en ervoor te zorgen dat je volop kunt genieten
         van onze judolessen, verzoeken wij je vriendelijk om een bedrag van <strong>{{ subscription.total }} €</strong>
         over te maken naar onze bankrekening op het volgende nummer: <strong>BE37 7330 0101 8328</strong> met vermelding
         van volgende referentie
-        "<strong>"YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}"</strong>".
-        Zo kunnen we je betaling snel identificeren. Wanneer we je betaling hebben ontvangen, zullen we je officieel
+        "<strong>YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}</strong>".
+        Zo kunnen we je betaling snel identificeren.
+    </p>
+    {% if (subscription.paymentLink is not empty) %}
+    <p>
+        Of betaal online via deze Mollie-link:
+        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.
+    </p>
+    {% endif %}
+    <p>
+        Wanneer we je betaling hebben ontvangen, zullen we je officieel
         inschrijven en krijg je toegang tot al onze trainingen en evenementen.
         We staan te popelen om je te verwelkomen op de mat.
     </p>

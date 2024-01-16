@@ -1,0 +1,25 @@
+{% extends 'mail/base_mail.html.twig' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block body %}
+
+    <p>Dag {{ user.displayName }},</p>
+    <p>
+        Dit is je code om in te loggen op het ledenbeheer:
+    </p>
+    <p style="font-size: 25px;">
+        <strong>{{ code }}</strong>
+    </p>
+    <p>
+        Of gebruik deze link: <a href="{{ magicLink}}">{{ magicLink }}</a>
+    </p>
+    <p>
+        Als je dit niet hebt aangevraagd, kan je deze e-mail negeren.
+    </p>
+    <p>
+        Met sportieve groeten,
+        <br>Team Yoshi-Kan.
+    </p>
+
+{% endblock %}

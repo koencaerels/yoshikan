@@ -29,8 +29,14 @@ interface MemberRepository
 
     public function findByNameAndDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): ?Member;
 
+    /**
+     * @return Member[]
+     */
     public function findByNameOrDateOfBirth(string $firstname, string $lastname, \DateTimeImmutable $dateOfBirth): array;
 
+    /**
+     * @return Member[]
+     */
     public function search(
         string $keyword = '',
         int $yearOfBirth = 0,
@@ -38,9 +44,21 @@ interface MemberRepository
         Grade $grade = null,
         int $minYearOfBirth = 0,
         int $maxYearOfBirth = 0,
+        bool $isActive = null,
     ): array;
 
+    /**
+     * @return Member[]
+     */
     public function listActiveMembers(): array;
 
+    /**
+     * @return Member[]
+     */
     public function getActiveMembersByFederationAndLocation(Federation $federation, Location $location): array;
+
+    /**
+     * @return Member[]
+     */
+    public function getActiveMembersByLocation(Location $location): array;
 }

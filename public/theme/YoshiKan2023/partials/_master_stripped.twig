@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ htmllang() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {%- if record|default and record.title -%}
+            {{- record.title ~ ' - ' -}}
+        {%- endif -%}
+        {{- config.get('general/sitename') -}}
+        {%- if config.has('general/payoff') -%}
+            {{- ' - ' ~ config.get('general/payoff') -}}
+        {%- endif -%}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('tailwind', null, 'frontend') }}
+        {{ encore_entry_link_tags('app', null, 'frontend') }}
+        {{ encore_entry_link_tags('menu', null, 'frontend') }}
+        <link rel="stylesheet" href="{{ asset('theme/YoshiKan2023/css/materialdesignicons.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+{{ include('partials/_header.twig') }}
+<main>
+    {% block body %}
+        {{ widgets('main_top') }}
+        {% block main %}
+        {% endblock main %}
+        {{ widgets('main_bottom') }}
+    {% endblock body %}
+</main>
+{% block aside %}
+{% endblock aside %}
+{{ include('partials/_footer_stripped.twig') }}
+{% block javascripts %}
+    {{ encore_entry_script_tags('tailwind', null, 'frontend') }}
+    {{ encore_entry_script_tags('app', null, 'frontend') }}
+    {{ encore_entry_script_tags('menu', null, 'frontend') }}
+{% endblock %}
+</body>
+</html>

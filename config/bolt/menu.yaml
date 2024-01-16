@@ -25,6 +25,9 @@ top:
                     -   label: Heist op den Berg
                         link: locatie/124
                         class: heistopdenberg
+                    -   label: Herselt
+                        link: locatie/138
+                        class: heistopdenberg
     -   label: Praktische info
         class: mdi mdi-information
         submenu:
@@ -80,7 +83,9 @@ footer_c1:
             -   label: Heist op den Berg
                 link: locatie/124
                 class: footer_heistopdenberg
-
+            -   label: Herselt
+                link: locatie/138
+                class: footer_herselt
 footer_c2:
     -   label: Over ons
         link: trainers

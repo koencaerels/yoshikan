@@ -150,7 +150,21 @@ class Subscription
     #[ORM\Column(length: 191, nullable: true)]
     private ?string $addressCity = null;
 
-    // ------------------------------------------------------------ associations
+    // -- payment fields --------------------------------------------------------
+
+    #[ORM\Column(length: 191)]
+    private string $paymentLink = '';
+
+    #[ORM\Column(length: 191)]
+    private string $paymentLinkId = '';
+
+    #[ORM\Column(length: 191)]
+    private string $paymentId = '';
+
+    #[ORM\Column(length: 36)]
+    private string $paymentType = SubscriptionPaymentType::TRANSFER->value;
+
+    // -- associations ----------------------------------------------------------
     #[ORM\ManyToOne(targetEntity: "App\YoshiKan\Domain\Model\Member\Member", fetch: 'EXTRA_LAZY', inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Member $member;
@@ -366,13 +380,75 @@ class Subscription
         string $addressBox,
         string $addressZip,
         string $addressCity
-    ) {
+    ): void {
         $this->nationalRegisterNumber = $nationalRegisterNumber;
         $this->addressStreet = $addressStreet;
         $this->addressNumber = $addressNumber;
         $this->addressBox = $addressBox;
         $this->addressZip = $addressZip;
         $this->addressCity = $addressCity;
+    }
+
+    public function fullChange(
+        string $contactFirstname,
+        string $contactLastname,
+        string $contactEmail,
+        string $contactPhone,
+        string $firstname,
+        string $lastname,
+        \DateTimeImmutable $dateOfBirth,
+        Gender $gender,
+        SubscriptionType $type,
+        int $numberOfTraining,
+        bool $isExtraTraining,
+        bool $isNewMember,
+        bool $isReductionFamily,
+        bool $isJudogiBelt,
+        string $remarks,
+        Location $location,
+        Federation $federation,
+        \DateTimeImmutable $memberSubscriptionStart,
+        \DateTimeImmutable $memberSubscriptionEnd,
+        float $memberSubscriptionTotal,
+        bool $memberSubscriptionIsPartSubscription,
+        bool $memberSubscriptionIsHalfYear,
+        bool $memberSubscriptionIsPayed,
+        \DateTimeImmutable $licenseStart,
+        \DateTimeImmutable $licenseEnd,
+        float $licenseTotal,
+        bool $licenseIsPartSubscription,
+        bool $licenseIsPayed,
+    ): void {
+        $this->contactFirstname = $contactFirstname;
+        $this->contactLastname = $contactLastname;
+        $this->contactEmail = $contactEmail;
+        $this->contactPhone = $contactPhone;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->dateOfBirth = $dateOfBirth;
+        $this->gender = $gender->value;
+        $this->type = $type->value;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->isExtraTraining = $isExtraTraining;
+        $this->isNewMember = $isNewMember;
+        $this->isReductionFamily = $isReductionFamily;
+        $this->isJudogiBelt = $isJudogiBelt;
+        $this->remarks = $remarks;
+        $this->location = $location;
+        $this->federation = $federation;
+        $this->memberSubscriptionStart = $memberSubscriptionStart;
+        $this->memberSubscriptionEnd = $memberSubscriptionEnd;
+        $this->memberSubscriptionTotal = $memberSubscriptionTotal;
+        $this->memberSubscriptionIsPartSubscription = $memberSubscriptionIsPartSubscription;
+        $this->memberSubscriptionIsHalfYear = $memberSubscriptionIsHalfYear;
+        $this->memberSubscriptionIsPayed = $memberSubscriptionIsPayed;
+        $this->licenseStart = $licenseStart;
+        $this->licenseEnd = $licenseEnd;
+        $this->licenseTotal = $licenseTotal;
+        $this->licenseIsPartSubscription = $licenseIsPartSubscription;
+        $this->licenseIsPayed = $licenseIsPayed;
+        $this->total = ceil($this->memberSubscriptionTotal + $this->licenseTotal);
+        $this->items = new ArrayCollection();
     }
 
     public function changeStatus(SubscriptionStatus $status): void
@@ -393,6 +469,35 @@ class Subscription
     public function flagSubscriptionIsPrinted(): void
     {
         $this->isPrinted = true;
+    }
+
+    public function setTotal(float $total): void
+    {
+        $this->total = $total;
+    }
+
+    public function updateSettings(array $settings): void
+    {
+        $this->settings = $settings;
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Payment information setters
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function setMolliePaymentInfo(
+        string $paymentId,
+        string $paymentLink,
+        string $paymentLinkId,
+    ): void {
+        $this->paymentId = $paymentId;
+        $this->paymentLink = $paymentLink;
+        $this->paymentLinkId = $paymentLinkId;
+    }
+
+    public function setPaymentTypeInfo(SubscriptionPaymentType $type): void
+    {
+        $this->paymentType = $type->value;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -630,7 +735,7 @@ class Subscription
 
     public function getMessages(): array
     {
-        return $this->messages->getValues();
+        return null !== $this->messages ? $this->messages->getValues() : [];
     }
 
     /**
@@ -639,6 +744,30 @@ class Subscription
     public function getItems(): array
     {
         return $this->items->getValues();
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Payment information fields
+    // —————————————————————————————————————————————————————————————————————————
+
+    public function getPaymentLink(): string
+    {
+        return $this->paymentLink;
+    }
+
+    public function getPaymentLinkId(): string
+    {
+        return $this->paymentLinkId;
+    }
+
+    public function getPaymentId(): string
+    {
+        return $this->paymentId;
+    }
+
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
     }
 
     // —————————————————————————————————————————————————————————————————————————
@@ -693,7 +822,12 @@ class Subscription
         }
 
         if ($this->licenseIsPartSubscription()) {
-            $this->licenseTotal = $this->federation->getYearlySubscriptionFee();
+            $federationFee = $this->federation->getYearlySubscriptionFee();
+            if (false === is_null($federationFee)) {
+                $this->licenseTotal = $federationFee;
+            } else {
+                $this->licenseTotal = 0;
+            }
         } else {
             $this->licenseTotal = 0;
         }
