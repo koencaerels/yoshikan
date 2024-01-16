@@ -35,6 +35,7 @@ use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\MarkSubscrip
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscription\MemberExtendSubscriptionTrait;
 use App\YoshiKan\Application\Command\Member\MemberExtendSubscriptionMail\MemberExtendSubscriptionMailTrait;
 use App\YoshiKan\Application\Command\Member\NewMemberSubscription\NewMemberSubscriptionTrait;
+use App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail\NewMemberSubscriptionMailTrait;
 use App\YoshiKan\Application\Command\Member\NewMemberWebSubscriptionMail\NewMemberWebSubscriptionMailTrait;
 use App\YoshiKan\Application\Command\Member\OrderFederation\OrderFederationTrait;
 use App\YoshiKan\Application\Command\Member\OrderGrade\OrderGradeTrait;
@@ -111,6 +112,7 @@ class MemberCommandBus
     use ConfirmMemberWebSubscriptionTrait;
     use CreateMolliePaymentLinkTrait;
     use SendPaymentReceivedConfirmationMailTrait;
+    use NewMemberSubscriptionMailTrait;
 
     // -- member images ---------------------------------------------------------
     use UploadProfileImageTrait;

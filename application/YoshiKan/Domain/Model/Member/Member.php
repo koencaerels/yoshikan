@@ -506,12 +506,12 @@ class Member
 
     public function getGradeLogs(): array
     {
-        return $this->gradeLogs->getValues();
+        return null !== $this->gradeLogs ? $this->gradeLogs->getValues() : [];
     }
 
     public function getMemberImages(): array
     {
-        return $this->memberImages->getValues();
+        return null !== $this->memberImages ? $this->memberImages->getValues() : [];
     }
 
     public function getFederation(): Federation
@@ -546,6 +546,6 @@ class Member
 
     public function getMessages(): array
     {
-        return $this->messages->getValues();
+        return null !== $this->messages ? $this->messages->getValues() : [];
     }
 }

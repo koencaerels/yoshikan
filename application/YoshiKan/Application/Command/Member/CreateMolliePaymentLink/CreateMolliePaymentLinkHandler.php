@@ -30,12 +30,9 @@ class CreateMolliePaymentLinkHandler
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
 
         // -- link already created
-        if (!(null === $subscription->getPaymentId() || 0 === mb_strlen($subscription->getPaymentId()))) {
+        if (!(0 === mb_strlen($subscription->getPaymentId()))) {
             return false;
         }
-
-        $mollie = new \Mollie\Api\MollieApiClient();
-        $mollie->setApiKey($this->mollieConfig->getApiKey());
 
         $paymentId = hash('SHA256', $subscription->getUuidAsString().'*'.$_SERVER['APP_SECRET']);
         $redirectUrl = $this->mollieConfig->getRedirectBaseUrl().'lidgeld/betaling/'.$paymentId;
@@ -55,6 +52,8 @@ class CreateMolliePaymentLinkHandler
             }
         }
 
+        // -- create payment link -----------------------------------------------
+
         if ($hasLicense && $hasMembership) {
             $description .= 'Lidgeld (tot '.$subscription->getMemberSubscriptionEnd()->format('m/Y')
                 .') en vergunning (tot '.$subscription->getLicenseEnd()->format('m/Y').') ';
@@ -67,23 +66,27 @@ class CreateMolliePaymentLinkHandler
         }
         $description .= 'voor '.mb_strtoupper($subscription->getLastname()).' '.$subscription->getFirstname();
 
-        // -- create payment link -----------------------------------------------
-        $formattedAmount = (string) number_format($subscription->getTotal(), 2, '.', '');
-        $paymentLink = $mollie->paymentLinks->create([
-            'amount' => [
-                'currency' => 'EUR',
-                'value' => $formattedAmount,
-            ],
-            'description' => $description,
-            'redirectUrl' => $redirectUrl,
-            'webhookUrl' => $webhookUrl,
-        ]);
+        $formattedAmount = number_format($subscription->getTotal(), 2, '.', '');
 
-        $subscription->setMolliePaymentInfo(
-            paymentId: $paymentId,
-            paymentLink: $paymentLink->getCheckoutUrl(),
-            paymentLinkId: $paymentLink->id,
-        );
+        if (0 !== strlen($this->mollieConfig->getApiKey())) {
+            $mollie = new \Mollie\Api\MollieApiClient();
+            $mollie->setApiKey($this->mollieConfig->getApiKey());
+            $paymentLink = $mollie->paymentLinks->create([
+                'amount' => [
+                    'currency' => 'EUR',
+                    'value' => $formattedAmount,
+                ],
+                'description' => $description,
+                'redirectUrl' => $redirectUrl,
+                'webhookUrl' => $webhookUrl,
+            ]);
+            $subscription->setMolliePaymentInfo(
+                paymentId: $paymentId,
+                paymentLink: $paymentLink->getCheckoutUrl(),
+                paymentLinkId: $paymentLink->id,
+            );
+        }
+
         $this->subscriptionRepository->save($subscription);
 
         return true;

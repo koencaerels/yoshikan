@@ -49,8 +49,8 @@ class MarkSubscriptionAsPayedHandler
         }
 
         // mark the subscription and license as paid on the actual member
-        if ($result && !is_null($subscription->getMember())) {
-            $member = $subscription->getMember();
+        $member = $subscription->getMember();
+        if ($result && !is_null($member)) {
             if ($subscription->isMemberSubscriptionIsPartSubscription()) {
                 $member->markSubscriptionAsPayed();
             }

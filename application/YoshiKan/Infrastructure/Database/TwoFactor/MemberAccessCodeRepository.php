@@ -65,7 +65,6 @@ final class MemberAccessCodeRepository extends ServiceEntityRepository implement
 
     public function getById(int $id): MemberAccessCode
     {
-        /** @var MemberAccessCode $model */
         $model = $this->find($id);
         if (is_null($model)) {
             throw new EntityNotFoundException(self::NO_ENTITY_FOUND);

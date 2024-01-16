@@ -90,7 +90,7 @@ class ImportSubscriptionArchiveHandler
             $dto->memberShipAmount = (float) $worksheet->getCellByColumnAndRow(14, $row)->getValue();
             $dto->memberShipIsPayed = (bool) $worksheet->getCellByColumnAndRow(15, $row)->getValue();
 
-            if (0 === $dto->memberShipStartMM || is_null($dto->memberShipStartMM)) {
+            if (0 === $dto->memberShipStartMM) {
                 $dto->memberShipStart = new \DateTimeImmutable('2000-01-01');
                 $dto->memberShipEnd = new \DateTimeImmutable('2001-01-01');
             } else {
@@ -110,7 +110,7 @@ class ImportSubscriptionArchiveHandler
             $dto->licenseAmount = (float) $worksheet->getCellByColumnAndRow(20, $row)->getValue();
             $dto->licenseIsPayed = (bool) $worksheet->getCellByColumnAndRow(21, $row)->getValue();
 
-            if (0 === $dto->licenseStartMM || is_null($dto->licenseStartMM)) {
+            if (0 === $dto->licenseStartMM) {
                 $dto->licenseShipStart = new \DateTimeImmutable('2000-01-01');
                 $dto->licenseShipEnd = new \DateTimeImmutable('2001-01-01');
             } else {

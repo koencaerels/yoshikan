@@ -735,7 +735,7 @@ class Subscription
 
     public function getMessages(): array
     {
-        return $this->messages->getValues();
+        return null !== $this->messages ? $this->messages->getValues() : [];
     }
 
     /**
@@ -822,7 +822,12 @@ class Subscription
         }
 
         if ($this->licenseIsPartSubscription()) {
-            $this->licenseTotal = $this->federation->getYearlySubscriptionFee();
+            $federationFee = $this->federation->getYearlySubscriptionFee();
+            if (false === is_null($federationFee)) {
+                $this->licenseTotal = $federationFee;
+            } else {
+                $this->licenseTotal = 0;
+            }
         } else {
             $this->licenseTotal = 0;
         }

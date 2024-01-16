@@ -138,7 +138,7 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
         bool $isActive = null,
     ): array {
         $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
-        if (!is_null($keyword) && 0 != mb_strlen(trim($keyword))) {
+        if (0 != mb_strlen(trim($keyword))) {
             $q->andWhere('LOWER(t.firstname) LIKE :keyword OR LOWER(t.lastname) LIKE :keyword OR t.id = :id')
                 ->setParameter('keyword', '%'.mb_strtolower($keyword).'%')
                 ->setParameter('id', intval($keyword));

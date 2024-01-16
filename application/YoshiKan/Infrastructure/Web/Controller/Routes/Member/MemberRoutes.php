@@ -174,7 +174,7 @@ trait MemberRoutes
         $response = $this->commandBus->memberNewSubscription($command);
 
         $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->newMemberWebSubscriptionMail($response->id);
+        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -189,7 +189,7 @@ trait MemberRoutes
         $response = $this->commandBus->confirmMemberWebSubscription($command);
 
         $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->newMemberWebSubscriptionMail($response->id);
+        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

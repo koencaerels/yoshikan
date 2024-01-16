@@ -133,8 +133,9 @@ class SubscriptionReadModel implements \JsonSerializable
         }
 
         $memberId = null;
-        if ($model->getMember()) {
-            $memberId = $model->getMember()->getId();
+        $member = $model->getMember();
+        if (false === is_null($member)) {
+            $memberId = $member->getId();
         }
 
         $messageId = null;

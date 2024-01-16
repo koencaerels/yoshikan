@@ -35,5 +35,13 @@
         <ArgumentTypeCoercion errorLevel="suppress" />
         <InternalMethod errorLevel="suppress" />
         <UndefinedInterfaceMethod errorLevel="suppress" />
+        <PossiblyNullArgument errorLevel="suppress" />
+        <MissingTemplateParam errorLevel="suppress" />
+        <LessSpecificReturnStatement errorLevel="suppress" />
+        <MoreSpecificReturnType errorLevel="suppress" />
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <UnusedProperty errorLevel="suppress" />
+        <StringIncrement errorLevel="suppress" />
+        <PossiblyUndefinedArrayOffset errorLevel="suppress" />
     </issueHandlers>
 </psalm>

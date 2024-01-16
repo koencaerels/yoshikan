@@ -160,7 +160,7 @@ class ImportActiveMembersHandler
                     addressStreet: $dto->street,
                     addressNumber: '',
                     addressBox: '',
-                    addressZip: (string) $dto->postalCode,
+                    addressZip: $dto->postalCode,
                     addressCity: $dto->city,
                     numberOfTraining: $dto->numberOfTrainingSessions,
                 );
