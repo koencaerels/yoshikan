@@ -154,8 +154,12 @@
                     <td><strong>{{ subscription.lastname | upper }}</strong></td>
                     <td>{{ subscription.firstname }}</td>
                     <td></td>
-                    <td>{{ subscription.memberSubscriptionStart | date('m/Y')}}</td>
-                    <td><strong>{{ subscription.memberSubscriptionEnd | date('m/Y')}}</strong></td>
+
+                    {% set memberSubscriptionStart = subscription.memberSubscriptionStart|date_modify('+2 hours') %}
+                    {% set memberSubscriptionEnd = subscription.memberSubscriptionEnd|date_modify('+2 hours') %}
+
+                    <td>{{ memberSubscriptionStart | date('m/Y')}}</td>
+                    <td><strong>{{ memberSubscriptionEnd | date('m/Y')}}</strong></td>
                     <td>
                         {% if subscription.memberSubscriptionTotal != 0 %}
                             {{ subscription.memberSubscriptionTotal }} €
@@ -166,9 +170,13 @@
                             x
                         {% endif %}
                     </td>
+
+                    {% set licenseStart = subscription.licenseStart|date_modify('+2 hours') %}
+                    {% set licenseEnd = subscription.licenseEnd|date_modify('+2 hours') %}
+
                     <td>{{ subscription.federation.code }}</td>
-                    <td>{{ subscription.licenseStart | date('m/Y')}}</td>
-                    <td><strong>{{ subscription.licenseEnd | date('m/Y')}}</strong></td>
+                    <td>{{ licenseStart | date('m/Y')}}</td>
+                    <td><strong>{{ licenseEnd | date('m/Y')}}</strong></td>
                     <td>
                         {% if subscription.licenseTotal != 0 %}
                             {{ subscription.licenseTotal }} €
