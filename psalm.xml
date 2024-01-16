@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="2"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+>
+    <projectFiles>
+        <directory name="src" />
+        <directory name="application" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+    <fileExtensions>
+        <extension name=".php"/>
+    </fileExtensions>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>var/cache/dev/App_KernelDevDebugContainer.xml</containerXml>
+        </pluginClass>
+        <pluginClass xmlns="https://getpsalm.org/schema/config" class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
+    </plugins>
+    <issueHandlers>
+        <PossiblyUnusedProperty errorLevel="suppress" />
+        <UnusedVariable errorLevel="suppress" />
+        <DeprecatedMethod errorLevel="suppress" />
+        <UnevaluatedCode errorLevel="suppress" />
+        <PossiblyUnusedReturnValue errorLevel="suppress" />
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <UnusedParam errorLevel="suppress" />
+        <ArgumentTypeCoercion errorLevel="suppress" />
+        <InternalMethod errorLevel="suppress" />
+        <UndefinedInterfaceMethod errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

@@ -36,7 +36,7 @@ class MarkSubscriptionAsCanceled
         return new self($subscriptionId, $cancelMember);
     }
 
-    public static function hydrateFromJson($json): self
+    public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
             $json->id,

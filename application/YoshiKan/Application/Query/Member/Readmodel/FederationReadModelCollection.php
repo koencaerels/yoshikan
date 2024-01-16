@@ -35,7 +35,7 @@ class FederationReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(FederationReadModel $readModel)
+    public function addItem(FederationReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

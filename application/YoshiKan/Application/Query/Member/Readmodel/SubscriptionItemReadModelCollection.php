@@ -35,7 +35,7 @@ class SubscriptionItemReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(SubscriptionItemReadModel $readModel)
+    public function addItem(SubscriptionItemReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

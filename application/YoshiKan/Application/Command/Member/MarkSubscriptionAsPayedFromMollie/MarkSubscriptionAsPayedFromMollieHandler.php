@@ -36,7 +36,7 @@ class MarkSubscriptionAsPayedFromMollieHandler
     // Handler
     // —————————————————————————————————————————————————————————————————————————
 
-    public function go(MarkSubscriptionAsPayedFromMollie $command): int
+    public function go(MarkSubscriptionAsPayedFromMollie $command): int|null
     {
         $result = false;
         $subscription = $this->subscriptionRepository->findByPaymentId($command->getPaymentId());

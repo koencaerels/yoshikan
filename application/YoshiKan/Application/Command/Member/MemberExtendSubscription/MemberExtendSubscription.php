@@ -66,7 +66,7 @@ class MemberExtendSubscription
     /**
      * @throws \Exception
      */
-    public static function hydrateFromJson($json): self
+    public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
             intval($json->memberId),

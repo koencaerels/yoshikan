@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 trait ConfigurationRoutes
 {
     #[Route('/mm/api/member/configuration', methods: ['GET'])]
-    public function getConfiguration(Request $request)
+    public function getConfiguration(Request $request): JsonResponse
     {
         $response = $this->queryBus->getConfiguration();
 
@@ -28,7 +28,7 @@ trait ConfigurationRoutes
     }
 
     #[Route('/mm/api/member/configuration/setup', methods: ['GET'])]
-    public function setupConfiguration(Request $request)
+    public function setupConfiguration(Request $request): JsonResponse
     {
         $response = $this->commandBus->setupConfiguration();
 

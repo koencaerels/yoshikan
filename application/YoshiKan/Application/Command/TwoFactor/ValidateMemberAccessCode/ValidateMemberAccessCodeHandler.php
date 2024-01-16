@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Command\TwoFactor\ValidateMemberAccessCode;
 
-use App\YoshiKan\Infrastructure\Database\TwoFactor\MemberAccessCodeRepository;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCodeRepository;
 use Bolt\Repository\UserRepository;
 
 class ValidateMemberAccessCodeHandler

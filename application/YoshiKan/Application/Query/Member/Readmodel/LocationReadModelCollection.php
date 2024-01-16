@@ -35,7 +35,7 @@ class LocationReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(LocationReadModel $readModel)
+    public function addItem(LocationReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

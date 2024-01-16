@@ -42,9 +42,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class MemberModuleController
-    extends TwigAwareController
-    implements BackendZoneInterface
+class MemberModuleController extends TwigAwareController implements BackendZoneInterface
 {
     protected string $uploadFolder;
 
@@ -54,11 +52,11 @@ class MemberModuleController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Security               $security,
-        protected KernelInterface        $appKernel,
-        protected MailerInterface        $mailer,
+        protected Security $security,
+        protected KernelInterface $appKernel,
+        protected MailerInterface $mailer,
     ) {
-        $this->uploadFolder = $appKernel->getProjectDir() . '/' . $_SERVER['UPLOAD_FOLDER'] . '/';
+        $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
     }
 
     // ——————————————————————————————————————————————————————————————————————————
@@ -73,7 +71,7 @@ class MemberModuleController
         // that needs to be located in the `templates`
         // folder in the root of your project.
         return $this->render('admin/admin_member_module.html.twig', [
-            'title' => 'Member module'
+            'title' => 'Member module',
         ]);
     }
 
@@ -162,7 +160,7 @@ class MemberModuleController
             $memberId = intval($request->get('memberId'));
         }
 
-        if ($memberId === 0) {
+        if (0 === $memberId) {
             $searchModel = new \stdClass();
             $searchModel->keyword = $keyword;
             $searchModel->group = new \stdClass();
@@ -198,7 +196,7 @@ class MemberModuleController
             'members' => $members,
             'memberId' => $memberId,
             'member' => $member,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 }

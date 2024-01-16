@@ -35,7 +35,7 @@ class GroupReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(GroupReadModel $readModel)
+    public function addItem(GroupReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }

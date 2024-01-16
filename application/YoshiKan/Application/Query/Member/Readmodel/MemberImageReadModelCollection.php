@@ -36,7 +36,7 @@ class MemberImageReadModelCollection implements \JsonSerializable
         return $json;
     }
 
-    public function addItem(MemberImageReadModel $readModel)
+    public function addItem(MemberImageReadModel $readModel): void
     {
         $this->collection[] = $readModel;
     }
