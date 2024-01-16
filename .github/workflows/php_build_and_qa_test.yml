@@ -55,6 +55,9 @@ jobs:
 #      - name: QA PSALM
 #        run: ./vendor/bin/psalm
 
+      - name: Set access rights for bin console
+        run: chmod 777 ./bin/console
+
       - name: QA Lint Container
         run: ./bin/console lint:container
 
