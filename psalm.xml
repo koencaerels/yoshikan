@@ -13,6 +13,7 @@
         <directory name="application" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="var" />
         </ignoreFiles>
     </projectFiles>
     <fileExtensions>
