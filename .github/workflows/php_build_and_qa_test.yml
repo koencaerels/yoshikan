@@ -46,6 +46,13 @@ jobs:
         run: |          
           touch var/data.db
 
+      - name: Create cache directory
+        run: |
+          chmod 777 ./bin/console
+          mkdir -p var/cache
+          chmod 777 var/cache
+          ./bin/console cache:clear
+          
       - name: QA CS
         run: ./vendor/bin/php-cs-fixer check
         
@@ -54,9 +61,6 @@ jobs:
         
       - name: QA PSALM
         run: ./vendor/bin/psalm
-
-#      - name: Set access rights for bin console
-#        run: chmod 777 ./bin/console
 
 #      - name: QA Lint Container
 #        run: ./bin/console lint:container
