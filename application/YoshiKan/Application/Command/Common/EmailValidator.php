@@ -20,7 +20,7 @@ class EmailValidator
 {
     public static function isValid(string $email): bool
     {
-        if (0 == strlen(trim($email))) {
+        if (0 == mb_strlen(trim($email))) {
             return false;
         }
         $validator = Validation::createValidator();

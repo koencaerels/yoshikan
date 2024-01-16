@@ -30,7 +30,7 @@ class CreateMolliePaymentLinkHandler
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
 
         // -- link already created
-        if (!(null === $subscription->getPaymentId() || 0 === strlen($subscription->getPaymentId()))) {
+        if (!(null === $subscription->getPaymentId() || 0 === mb_strlen($subscription->getPaymentId()))) {
             return false;
         }
 
@@ -65,7 +65,7 @@ class CreateMolliePaymentLinkHandler
         } else {
             $description .= 'Lidgeld ';
         }
-        $description .= 'voor '.strtoupper($subscription->getLastname()).' '.$subscription->getFirstname();
+        $description .= 'voor '.mb_strtoupper($subscription->getLastname()).' '.$subscription->getFirstname();
 
         // -- create payment link -----------------------------------------------
         $formattedAmount = (string) number_format($subscription->getTotal(), 2, '.', '');

@@ -39,7 +39,7 @@ class ResendMessageHandler
     {
         $originalMessage = $this->messageRepository->getById($command->getMessageId());
 
-        if (EmailValidator::isValid($subscription->getContactEmail())) {
+        if (EmailValidator::isValid($command->getToEmail())) {
             $message = (new Email())
                 ->subject($originalMessage->getSubject())
                 ->from(new Address($command->getFromEmail(), $command->getFromName()))

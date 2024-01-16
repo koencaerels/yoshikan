@@ -64,7 +64,7 @@ class ImportSubscriptionArchiveHandler
         for ($row = $startRow; $row <= $highestRow; ++$row) {
             $dto = new \stdClass();
             $dto->firstName = (string) $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-            $dto->lastName = strtoupper((string) $worksheet->getCellByColumnAndRow(1, $row)->getValue());
+            $dto->lastName = mb_strtoupper((string) $worksheet->getCellByColumnAndRow(1, $row)->getValue());
             $dto->dateOfBirth = Date::excelToDateTimeObject($worksheet->getCellByColumnAndRow(3, $row)->getValue())->format(\DateTimeInterface::ATOM);
 
             $dto->street = (string) $worksheet->getCellByColumnAndRow(5, $row)->getValue();
@@ -151,8 +151,8 @@ class ImportSubscriptionArchiveHandler
             if (true === is_null($member)) {
                 $member = Member::make(
                     uuid: $this->memberRepository->nextIdentity(),
-                    firstname: ucfirst(strtolower($dto->firstName)),
-                    lastname: strtoupper($dto->lastName),
+                    firstname: ucfirst(mb_strtolower($dto->firstName)),
+                    lastname: mb_strtoupper($dto->lastName),
                     dateOfBirth: new \DateTimeImmutable($dto->dateOfBirth),
                     gender: $dto->gender,
                     grade: $dto->grade,
@@ -169,8 +169,8 @@ class ImportSubscriptionArchiveHandler
                 );
             } else {
                 $member->changeDetails(
-                    firstname: ucfirst(strtolower($dto->firstName)),
-                    lastname: strtoupper($dto->lastName),
+                    firstname: ucfirst(mb_strtolower($dto->firstName)),
+                    lastname: mb_strtoupper($dto->lastName),
                     gender: $dto->gender,
                     dateOfBirth: new \DateTimeImmutable($dto->dateOfBirth),
                     status: MemberStatus::ACTIVE,
@@ -182,8 +182,8 @@ class ImportSubscriptionArchiveHandler
                     addressBox: '',
                     addressZip: $dto->postalCode,
                     addressCity: $dto->city,
-                    contactFirstname: ucfirst(strtolower($dto->firstName)),
-                    contactLastname: strtoupper($dto->lastName),
+                    contactFirstname: ucfirst(mb_strtolower($dto->firstName)),
+                    contactLastname: mb_strtoupper($dto->lastName),
                     contactEmail: $dto->contactEmail,
                     contactPhone: $dto->contactPhone,
                 );
@@ -192,8 +192,8 @@ class ImportSubscriptionArchiveHandler
 
             $member->changeGrade($dto->grade);
             $member->setContactInformation(
-                contactFirstname: ucfirst(strtolower($dto->firstName)),
-                contactLastname: strtoupper($dto->lastName),
+                contactFirstname: ucfirst(mb_strtolower($dto->firstName)),
+                contactLastname: mb_strtoupper($dto->lastName),
                 contactEmail: $dto->contactEmail,
                 contactPhone: $dto->contactPhone,
             );
@@ -228,12 +228,12 @@ class ImportSubscriptionArchiveHandler
             if (true === is_null($subscription)) {
                 $subscription = Subscription::make(
                     uuid: $this->subscriptionRepository->nextIdentity(),
-                    contactFirstname: ucfirst(strtolower($dto->firstName)),
-                    contactLastname: strtoupper($dto->lastName),
+                    contactFirstname: ucfirst(mb_strtolower($dto->firstName)),
+                    contactLastname: mb_strtoupper($dto->lastName),
                     contactEmail: $dto->contactEmail,
                     contactPhone: $dto->contactPhone,
-                    firstname: ucfirst(strtolower($dto->firstName)),
-                    lastname: strtoupper($dto->lastName),
+                    firstname: ucfirst(mb_strtolower($dto->firstName)),
+                    lastname: mb_strtoupper($dto->lastName),
                     dateOfBirth: new \DateTimeImmutable($dto->dateOfBirth),
                     gender: $dto->gender,
                     type: SubscriptionType::RENEWAL_FULL,
@@ -295,7 +295,7 @@ class ImportSubscriptionArchiveHandler
         for ($row = $startRow; $row <= $highestRow; ++$row) {
             $dto = new \stdClass();
             $dto->firstName = (string) $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-            $dto->lastName = strtoupper((string) $worksheet->getCellByColumnAndRow(1, $row)->getValue());
+            $dto->lastName = mb_strtoupper((string) $worksheet->getCellByColumnAndRow(1, $row)->getValue());
             $dto->dateOfBirth = Date::excelToDateTimeObject($worksheet->getCellByColumnAndRow(3, $row)->getValue())->format(\DateTimeInterface::ATOM);
             $dto->grade = $this->gradeRepository->getById(GradeMapping::getGradeId((string) $worksheet->getCellByColumnAndRow(25, $row)->getValue()));
 

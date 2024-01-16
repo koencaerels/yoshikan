@@ -26,7 +26,7 @@ trait TwoFactorRoutes
         if (true === is_null($user)) {
             return new JsonResponse(false, 200, $this->apiAccess);
         }
-        $result = $this->commandBus->generateAndSendMemberAccessCode($user->getId());
+        $result = $this->commandBus->generateAndSendMemberAccessCode($user->getId()); /* @phpstan-ignore-line */
 
         return new JsonResponse($result, 200, $this->apiAccess);
     }
@@ -38,7 +38,7 @@ trait TwoFactorRoutes
         if (true === is_null($user)) {
             return new JsonResponse(false, 200, $this->apiAccess);
         }
-        $result = $this->commandBus->validateMemberAccessCode($verificationCode, $user->getId());
+        $result = $this->commandBus->validateMemberAccessCode($verificationCode, $user->getId()); /* @phpstan-ignore-line */
 
         return new JsonResponse($result, 200, $this->apiAccess);
     }

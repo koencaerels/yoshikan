@@ -61,7 +61,14 @@ trait GetSubscriptionTrait
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $exporter = new ExportSubscriptions($this->subscriptionRepository, $this->periodRepository);
+        $exporter = new ExportSubscriptions(
+            subscriptionRepository: $this->subscriptionRepository,
+            periodRepository: $this->periodRepository,
+            memberRepository: $this->memberRepository,
+            locationRepository: $this->locationRepository,
+            twig: $this->twig,
+            uploadFolder: $this->uploadFolder,
+        );
 
         return $exporter->exportSubscriptions($listIds);
     }

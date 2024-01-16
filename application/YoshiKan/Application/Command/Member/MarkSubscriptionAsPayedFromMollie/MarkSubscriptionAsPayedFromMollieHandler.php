@@ -65,11 +65,14 @@ class MarkSubscriptionAsPayedFromMollieHandler
 
         // -- cancel all other pending subscriptions for this member --------------------
         if ($result && !is_null($subscription->getMember())) {
-            $cancelHandler = new MarkSubscriptionAsCanceledHandler($this->subscriptionRepository);
+            $cancelHandler = new MarkSubscriptionAsCanceledHandler(
+                subscriptionRepository: $this->subscriptionRepository,
+                memberRepository: $this->memberRepository
+            );
             $subscriptions = $this->subscriptionRepository->getByMember($subscription->getMember());
             foreach ($subscriptions as $subscriptionEntity) {
                 if ($subscriptionEntity->getId() !== $subscription->getId()) {
-                    $cancelCommand = MarkSubscriptionAsCanceled::make($subscription->getId());
+                    $cancelCommand = MarkSubscriptionAsCanceled::make($subscription->getId(), false);
                     $cancelHandler->go($cancelCommand);
                 }
             }
