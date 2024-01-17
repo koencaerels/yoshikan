@@ -22,7 +22,9 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "build-admin": "rm -rf public/mm_module/assets/ && cd frontends/member_module && npm run build-only",
+    "build-all": "yarn build && yarn build-admin"
   },
   "dependencies": {
     "@oruga-ui/oruga-next": "^0.5.9",
