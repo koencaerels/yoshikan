@@ -1,6 +1,19 @@
 Yoshi-Kan Website + Ledenbeheer
 ===============================
 
+---
+
+<p style="padding-top:9px;"> 
+<img src="https://img.shields.io/github/license/koencaerels/yoshikan?style=flat" alt="GitHub license">  
+<img src="https://github.com/koencaerels/yoshikan/actions/workflows/php_build_and_qa_test.yml/badge.svg">
+</p>
+
+---
+
+## Requirements
+
+...
+
 ## Getting Started
 
 ### 1. Make a valid .env file
@@ -16,10 +29,10 @@ so no modifications needed.
 The docker scripts include automatic download and installation for following
 parts of the project:
 * composer install for the php libraries (vendor folder)
-* webpack: symfony webpack encore installation & production build
-* vuePress: installation & production build (docs)
+* webpack: symfony webpack encore installation & production build* 
 * vue 3: **member_module** installation & production build   
-(disabled for now due to some permission problem when running it in dev mode)
+  * (disabled for now due to some permission problem when running it in dev mode)
+* vuePress: installation & production build (docs)
 
 #### These are available services:
 * Website: http://localhost:8080
@@ -40,7 +53,7 @@ php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
 ```
 
-## Futher reference
+## Further reference
 
 You can consult documentation site for extended information  
 http://localhost:8081
