@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\integration;
+namespace App\Tests\Feature;
 
 use Doctrine\ORM\EntityManagerInterface;
 

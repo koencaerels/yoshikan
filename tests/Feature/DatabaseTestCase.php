@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\integration;
+namespace App\Tests\Feature;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

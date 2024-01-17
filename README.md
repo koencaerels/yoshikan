@@ -3,7 +3,7 @@ Yoshi-Kan Website + Ledenbeheer
 
 ---
 
-<p style="padding-top:9px;"> 
+<p> 
 <img src="https://img.shields.io/github/license/koencaerels/yoshikan?style=flat" alt="GitHub license">  
 <img src="https://github.com/koencaerels/yoshikan/actions/workflows/php_build_and_qa_test.yml/badge.svg">
 </p>
@@ -12,7 +12,21 @@ Yoshi-Kan Website + Ledenbeheer
 
 ## Requirements
 
-...
+* A webserver (Apache, NGINX, ...) with PHP 8.2 or higher.
+* [Symfony](https://symfony.com/): PHP 8.2 or higher and these PHP extensions (which are installed and enabled by default in most PHP 8 installations): 
+Ctype, iconv, PCRE, Session, SimpleXML, and Tokenizer.
+* [Composer](https://getcomposer.org/download/), which is used to install PHP packages.
+* A database server (MySQL, PostgreSQL, SQLite, ... ) that is compatible with [Doctrine](https://www.doctrine-project.org/).
+* Node.js,Yarn & NPM for the frontends build process.
+
+### Third party services
+
+* https://www.resend.com/ for sending emails concerning the two factor authentication
+* https://www.brevo.com/ for sending the transactional emails
+* https://www.mollie.com/ for the online payment services
+* https://www.sentry.io/ for error logging and monitoring
+
+You can configure these services in the `.env` file.
 
 ## Getting Started
 
