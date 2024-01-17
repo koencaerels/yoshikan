@@ -137,7 +137,8 @@
         <tbody>
         {% for member in members %}
 
-            {% set dateDiff = generatedOn|date("U") - member.dateOfBirth|date("U") %}
+            {% set dateOfBirth = member.dateOfBirth|date_modify('+2 hours') %}
+            {% set dateDiff = generatedOn|date("U") - dateOfBirth|date("U") %}
             {% set dateDiffYears = dateDiff / (60 * 60 * 24 * 365.25) %}
 
             <tr>
@@ -145,7 +146,7 @@
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.firstname }}</td>
                 <td align="center">{{ member.gender.value }}</td>
-                <td>{{ member.dateOfBirth | date('d / m / Y') }}</td>
+                <td>{{ dateOfBirth | date('d / m / Y') }}</td>
                 <td align="center">
                     {% if dateDiffYears > 18 %}
                         <i>{{ dateDiffYears | number_format(0) }} </i>
