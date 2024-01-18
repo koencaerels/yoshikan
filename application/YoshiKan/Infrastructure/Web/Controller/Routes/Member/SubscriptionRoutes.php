@@ -102,6 +102,14 @@ trait SubscriptionRoutes
         exit;
     }
 
+    #[Route('/mm/api/subscriptions/print/empty', methods: ['GET'])]
+    public function printEmptySubscriptionsForm(Request $request): void
+    {
+        $document = $this->queryBus->printEmptySubscriptionForm();
+
+        exit;
+    }
+
     private function convertToArrayOfIds(string $ids): array
     {
         $arListIdsInt = [];

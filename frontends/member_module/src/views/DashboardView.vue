@@ -2,6 +2,14 @@
     <div class="p-4">
         <div class="flex flex-row gap-4">
             <div class="basis-1/6">
+
+                <div class="py-2">
+                    <Button @click="appStore.loadConfiguration"
+                            label="Refresh INFO"
+                            icon="pi pi-refresh"
+                            class="p-button-sm w-full"/>
+                </div>
+
                 <p class="font-bold">Algemeen</p>
                 <p class="font-bold mt-2">{{appStore.dashboardNumbers.activePeriod.name}}</p>
 
@@ -71,12 +79,13 @@
                     <Button @click="downloadListDuePayments"
                             label="Print overzicht te betalen"
                             icon="pi pi-print"
-                            class="p-button-sm p-button-secondary w-full"/>
+                            class="p-button-sm p-button-primary w-full"/>
                 </div>
                 <div class="mt-4">
-<!--                    <Button label="Print leeg inschrijfformulier"-->
-<!--                            icon="pi pi-print"-->
-<!--                            class="p-button-sm p-button-secondary w-full"/>-->
+                    <Button @click="downloadEmptySubscriptionForm"
+                            label="Print leeg inschrijfformulier"
+                            icon="pi pi-print"
+                            class="p-button-sm p-button-primary w-full"/>
                 </div>
             </div>
         </div>
@@ -118,6 +127,10 @@ function downloadMemberListAsExcel(locationId) {
     window.open(url, '_blank');
 }
 
+function downloadEmptySubscriptionForm() {
+    let url = apiUrl + '/subscriptions/print/empty';
+    window.open(url, '_blank');
+}
 
 const subscriptionCounter = computed((): number => memberStore.refreshCounter);
 watch(subscriptionCounter, (): void => {

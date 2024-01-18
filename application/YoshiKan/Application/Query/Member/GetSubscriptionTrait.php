@@ -81,12 +81,32 @@ trait GetSubscriptionTrait
             $this->locationRepository,
             $this->federationRepository,
             $this->subscriptionRepository,
+            $this->settingsRepository,
             $this->twig,
             $this->uploadFolder,
             $this->entityManager,
         );
 
         $document->printOverview($listIds);
+
+        return true;
+    }
+
+    public function printEmptySubscriptionForm(): bool
+    {
+        $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+
+        $document = new PrintSubscriptions(
+            $this->locationRepository,
+            $this->federationRepository,
+            $this->subscriptionRepository,
+            $this->settingsRepository,
+            $this->twig,
+            $this->uploadFolder,
+            $this->entityManager,
+        );
+
+        $document->printEmptySubscriptionForm();
 
         return true;
     }

@@ -15,6 +15,8 @@ namespace App\YoshiKan\Application\Query\Member;
 
 use App\YoshiKan\Domain\Model\Member\FederationRepository;
 use App\YoshiKan\Domain\Model\Member\LocationRepository;
+use App\YoshiKan\Domain\Model\Member\SettingsCode;
+use App\YoshiKan\Domain\Model\Member\SettingsRepository;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +34,7 @@ class PrintSubscriptions
         protected LocationRepository $locationRepository,
         protected FederationRepository $federationRepository,
         protected SubscriptionRepository $subscriptionRepository,
+        protected SettingsRepository $settingsRepository,
         protected Environment $twig,
         protected string $uploadFolder,
         protected EntityManagerInterface $entityManager,
@@ -68,6 +71,34 @@ class PrintSubscriptions
         }
         $this->entityManager->flush();
 
+        $dompdf->stream($fileName, ['Attachment' => false]);
+
+        exit;
+    }
+
+    public function printEmptySubscriptionForm(): void
+    {
+        $settings = $this->settingsRepository->findByCode(SettingsCode::ACTIVE->value);
+        $federations = $this->federationRepository->getAll();
+        $locations = $this->locationRepository->getAll();
+
+        $data = new \stdClass();
+        $data->generatedOn = new \DateTimeImmutable();
+        $data->settings = $settings;
+        $data->federations = $federations;
+        $data->locations = $locations;
+
+        $pdfHtml = $this->twig->render('pdf/empty_subscription_form.html.twig', ['data' => $data]);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($pdfHtml);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        $fileName = $data->generatedOn->format('YmdHis').'_yoshikan_inschrijving_formulier.pdf';
         $dompdf->stream($fileName, ['Attachment' => false]);
 
         exit;
