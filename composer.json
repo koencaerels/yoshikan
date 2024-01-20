@@ -3,6 +3,7 @@
     "type": "project",
     "description": "Yoshi Kan, judoschool voor jong en oud.",
     "license": "MIT",
+    "version": "0.0.2",
     "require": {
         "php": "^8.2",
         "beberlei/doctrineextensions": "^1.3",
