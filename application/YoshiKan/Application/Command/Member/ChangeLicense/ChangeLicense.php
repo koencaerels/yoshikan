@@ -11,59 +11,29 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Member\Readmodel;
+namespace App\YoshiKan\Application\Command\Member\ChangeLicense;
 
-class MemberSearchModel
+class ChangeLicense
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string $keyword,
-        protected int $locationId,
-        protected int $gradeId,
-        protected int $yearOfBirth,
-        protected int $groupId,
-        protected ?bool $isActive = null,
+        protected int $memberId,
+        protected int $federationId,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // Hydrate from json
+    // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
     public static function hydrateFromJson(\stdClass $json): self
     {
-        $keyword = $json->keyword;
-        $locationId = 0;
-        $gradeId = 0;
-        $yearOfBirth = 0;
-        $groupId = 0;
-        $isActive = null;
-        if (isset($json->locationId)) {
-            $locationId = intval($json->locationId);
-        }
-        if (isset($json->grade)) {
-            $gradeId = intval($json->grade->id);
-        }
-        if (isset($json->yearOfBirth)) {
-            $yearOfBirth = intval($json->yearOfBirth);
-        }
-        if (isset($json->group)) {
-            $groupId = intval($json->group->id);
-        }
-        if (isset($json->isActive)) {
-            $isActive = boolval($json->isActive);
-        }
-
         return new self(
-            $keyword,
-            $locationId,
-            $gradeId,
-            $yearOfBirth,
-            $groupId,
-            $isActive,
+            $json->memberId,
+            $json->federationId,
         );
     }
 
@@ -71,33 +41,13 @@ class MemberSearchModel
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getKeyword(): string
+    public function getMemberId(): int
     {
-        return $this->keyword;
+        return $this->memberId;
     }
 
-    public function getLocationId(): int
+    public function getFederationId(): int
     {
-        return $this->locationId;
-    }
-
-    public function getGradeId(): int
-    {
-        return $this->gradeId;
-    }
-
-    public function getYearOfBirth(): int
-    {
-        return $this->yearOfBirth;
-    }
-
-    public function getGroupId(): int
-    {
-        return $this->groupId;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->isActive;
+        return $this->federationId;
     }
 }

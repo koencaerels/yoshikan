@@ -63,7 +63,8 @@ class GetMember
             $location,
             $grade,
             $minYearOfBirth,
-            $maxYearOfBirth
+            $maxYearOfBirth,
+            $searchModel->isActive(),
         );
 
         // -- covert to readmodel collection ------------------------------------------

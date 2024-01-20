@@ -21,6 +21,7 @@ use App\YoshiKan\Application\Command\Member\AddPeriod\AddPeriodTrait;
 use App\YoshiKan\Application\Command\Member\ChangeFederation\ChangeFederationTrait;
 use App\YoshiKan\Application\Command\Member\ChangeGrade\ChangeGradeTrait;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\ChangeGroupTrait;
+use App\YoshiKan\Application\Command\Member\ChangeLicense\ChangeLicenseTrait;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\ChangeLocationTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\ChangeMemberDetailsTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\ChangeMemberGradeTrait;
@@ -115,6 +116,7 @@ class MemberCommandBus
     use SendPaymentReceivedConfirmationMailTrait;
     use NewMemberSubscriptionMailTrait;
     use ChangeSubscriptionDetailsTrait;
+    use ChangeLicenseTrait;
 
     // -- member images ---------------------------------------------------------
     use UploadProfileImageTrait;

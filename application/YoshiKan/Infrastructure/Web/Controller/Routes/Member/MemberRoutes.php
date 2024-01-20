@@ -145,6 +145,18 @@ trait MemberRoutes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/member/{id}/change-license', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberLicense(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeLicense($command);
+
+        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+        $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
     /**
      * @throws \Exception
      */
