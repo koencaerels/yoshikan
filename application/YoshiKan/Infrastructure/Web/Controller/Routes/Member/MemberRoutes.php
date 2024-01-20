@@ -194,6 +194,19 @@ trait MemberRoutes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    /**
+     * @throws \Exception
+     */
+    #[Route('/mm/api/member/change-subscription-details', methods: ['POST', 'PUT'])]
+    public function changeSubscriptionDetails(Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeSubscriptionDetails($command);
+        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id, true);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
     #[Route('/mm/api/member/overview-due-payments', methods: ['GET'])]
     public function downloadOverviewDuePayments(Request $request): JsonResponse
     {

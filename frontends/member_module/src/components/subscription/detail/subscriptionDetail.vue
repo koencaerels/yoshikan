@@ -172,7 +172,7 @@
              && memberStore.subscriptionDetail.status === SubscriptionStatusEnum.AWAITING_PAYMENT">
 
             <div class="flex-none w-48 text-right text-xs text-gray-600">
-                Acties
+                Acties &nbsp;
             </div>
             <div class="grow">
                 <Button v-if="!isLoading"
@@ -186,7 +186,13 @@
                         class="p-button-success w-full"
                         label="Betaling ontvangen"></Button>
             </div>
-            <div class="flex-none w-64">
+            <div class="grow">
+                <Button icon="pi pi-send"
+                        @click="changeSubscription"
+                        class=" w-full"
+                        label="Wijzigen"></Button>
+            </div>
+            <div class="grow">
                 <Button v-if="!isLoading"
                         @click="confirmCancelSubscription($event)"
                         icon="pi pi-times-circle"
@@ -244,6 +250,14 @@
         <review-new-member-form @submitted="subscriptionReviewed"/>
     </Dialog>
 
+    <!-- -- change subscription ------------------------------------------------------------------------------------ -->
+    <Dialog v-model:visible="showChangeSubscription"
+            position="topleft"
+            :header="'Inschrijving wijzigen '+memberStore.subscriptionDetail.firstname+' '+memberStore.subscriptionDetail.lastname"
+            :modal="true">
+        <change-subscription-form @submitted="subscriptionChanged"/>
+    </Dialog>
+
 </template>
 
 <script setup lang="ts">
@@ -267,6 +281,7 @@ import {
     markSubscriptionAsFinished,
     type MarkSubscriptionAsFinishedCommand
 } from "@/api/command/subscription/markSubscriptionAsFinished";
+import ChangeSubscriptionForm from "@/components/subscription/changeSubscription/changeSubscriptionForm.vue";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
@@ -276,7 +291,7 @@ const confirm = useConfirm();
 
 const showMessageDetail = ref<boolean>(false);
 const apiUrl = import.meta.env.VITE_API_URL as string;
-const emit = defineEmits(["paid", "canceled", "subscription-reviewed", "finished"]);
+const emit = defineEmits(["paid", "canceled", "subscription-reviewed", "finished", "subscription-changed"]);
 
 // -- review subscription functions ------------------------------------------------------------------------------------
 
@@ -289,6 +304,19 @@ function reviewSubscription() {
 function subscriptionReviewed() {
     showReviewSubscription.value = false;
     emit('subscription-reviewed');
+}
+
+// -- change subscription functions ------------------------------------------------------------------------------------
+
+const showChangeSubscription = ref<boolean>(false);
+
+function changeSubscription() {
+    showChangeSubscription.value = true;
+}
+
+function subscriptionChanged() {
+    showChangeSubscription.value = false;
+    emit('subscription-changed');
 }
 
 // -- subscription detail functions ------------------------------------------------------------------------------------

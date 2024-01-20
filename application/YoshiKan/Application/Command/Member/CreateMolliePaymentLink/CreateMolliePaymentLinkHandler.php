@@ -25,12 +25,13 @@ class CreateMolliePaymentLinkHandler
     ) {
     }
 
-    public function create(CreateMolliePaymentLink $command): bool
+    public function create(CreateMolliePaymentLink $command, bool $force = false): bool
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
 
         // -- link already created
-        if (!(0 === mb_strlen($subscription->getPaymentId()))) {
+
+        if (!$force && !(0 === mb_strlen($subscription->getPaymentId()))) {
             return false;
         }
 

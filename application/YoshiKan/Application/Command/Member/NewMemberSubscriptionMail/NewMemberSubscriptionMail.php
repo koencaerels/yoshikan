@@ -23,6 +23,7 @@ class NewMemberSubscriptionMail
         protected int $subscriptionId,
         protected string $fromName,
         protected string $fromEmail,
+        protected bool $isChange = false,
     ) {
     }
 
@@ -43,5 +44,10 @@ class NewMemberSubscriptionMail
     public function getFromEmail(): string
     {
         return $this->fromEmail;
+    }
+
+    public function isChange(): bool
+    {
+        return $this->isChange;
     }
 }

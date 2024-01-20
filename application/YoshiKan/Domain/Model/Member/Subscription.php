@@ -481,6 +481,11 @@ class Subscription
         $this->settings = $settings;
     }
 
+    public function clearItems(): void
+    {
+        $this->items = new ArrayCollection();
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Payment information setters
     // —————————————————————————————————————————————————————————————————————————
