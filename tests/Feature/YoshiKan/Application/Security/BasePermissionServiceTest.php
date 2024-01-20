@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\integration\application\Application\Security;
+namespace App\Tests\Feature\YoshiKan\Application\Security;
 
-use App\Tests\integration\DatabaseTestCase;
+use App\Tests\Feature\DatabaseTestCase;
 use App\YoshiKan\Domain\Model\Member\Member;
 
 class BasePermissionServiceTest extends DatabaseTestCase

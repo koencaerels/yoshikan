@@ -21,11 +21,13 @@ use App\YoshiKan\Application\Command\Member\AddPeriod\AddPeriodTrait;
 use App\YoshiKan\Application\Command\Member\ChangeFederation\ChangeFederationTrait;
 use App\YoshiKan\Application\Command\Member\ChangeGrade\ChangeGradeTrait;
 use App\YoshiKan\Application\Command\Member\ChangeGroup\ChangeGroupTrait;
+use App\YoshiKan\Application\Command\Member\ChangeLicense\ChangeLicenseTrait;
 use App\YoshiKan\Application\Command\Member\ChangeLocation\ChangeLocationTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\ChangeMemberDetailsTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\ChangeMemberGradeTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\ChangeMemberRemarksTrait;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\ChangePeriodTrait;
+use App\YoshiKan\Application\Command\Member\ChangeSubscriptionDetails\ChangeSubscriptionDetailsTrait;
 use App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription\ConfirmMemberWebSubscriptionTrait;
 use App\YoshiKan\Application\Command\Member\CreateMolliePaymentLink\CreateMolliePaymentLinkTrait;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\DeleteMemberImageTrait;
@@ -113,6 +115,8 @@ class MemberCommandBus
     use CreateMolliePaymentLinkTrait;
     use SendPaymentReceivedConfirmationMailTrait;
     use NewMemberSubscriptionMailTrait;
+    use ChangeSubscriptionDetailsTrait;
+    use ChangeLicenseTrait;
 
     // -- member images ---------------------------------------------------------
     use UploadProfileImageTrait;

@@ -20,23 +20,11 @@
 
             <div class="basis-1/2">
 
-                <!-- -- suggest members ---------------------------------------------------------------------------- -->
-                <div v-if="suggestedMembers.length === 0" class="mb-2">
-                    Aanmaak nieuw lid:
+                <div v-if="connectedMember" class="mb-4">
+                    <member-badge :member="connectedMember"/>
                 </div>
-                <div v-else-if="suggestedMembers.length === 1" class="mb-2">
-                    <member-badge :member="suggestedMembers[0]"/>
-                </div>
-                <div v-else class="flex gap-2 mb-2">
-                    <div>Koppel deze inschrijving aan:</div>
-                    <div class="flex-grow">
-                        <Dropdown v-model="command.memberId"
-                                  :options="suggestedMembersList"
-                                  optionLabel="label"
-                                  optionValue="value"
-                                  placeholder="Selecteer lid"
-                                  class="w-full p-inputtext-sm"/>
-                    </div>
+                <div v-else class="p-4">
+                    Loading...
                 </div>
 
                 <!-- -- member ------------------------------------------------------------------------------------- -->
@@ -80,7 +68,7 @@
                         </div>
                     </div>
 
-                    <!-- -- rijksregisternummer -------------------------------------------------------------------- -->
+                    <!-- -- geboorte datum en geslacht ------------------------------------------------------------- -->
                     <div class="flex flex-row mt-6">
                         <div class="basis-1/3 text-right text-xs font-bold mr-4">
                             Geboorte datum *
@@ -140,7 +128,7 @@
                     </div>
                 </div>
 
-                <!-- -- contact------------------------------------------------------------------------------------- -->
+                <!-- -- contact ------------------------------------------------------------------------------------ -->
                 <div class="bg-orange-100 rounded-b-lg px-4 py-4">
                     <div class="text-xl">Adres</div>
                     <div class="flex flex-row">
@@ -154,11 +142,7 @@
                         </div>
                         <div class="basis-1/5 ml-2">
                             <div class="mb-1"><label class="text-xs">Nummer *</label></div>
-                            <span class="p-input-icon-right w-full">
-                                <InputText class="w-full p-inputtext-sm" v-model="command.addressNumber"/>
-                                <i v-if="!new$.addressNumber.$invalid" class="pi pi-check text-green-600"/>
-                                <i v-if="new$.addressNumber.$invalid" class="pi pi-times text-red-600"/>
-                            </span>
+                            <InputText class="w-full p-inputtext-sm" v-model="command.addressNumber"/>
                         </div>
                         <div class="basis-1/5 ml-2">
                             <div class="mb-1"><label class="text-xs">Bus</label></div>
@@ -237,7 +221,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="basis-2/5 ml-4">
+                    <div class="basis-2/5 ml-4" v-if="command.type !== SubscriptionTypeEnum.RENEWAL_LICENSE">
                         <div class="basis-1/4">
                             <strong>Aantal trainingen</strong>
                         </div>
@@ -265,7 +249,8 @@
 
                 </div>
                 <!-- -- federation --------------------------------------------------------------------------------- -->
-                <div class="flex flex-row border-t-[1px] border-b-[1px] border-gray-400 my-8 py-4">
+                <div v-if="command.type !== SubscriptionTypeEnum.RENEWAL_MEMBERSHIP"
+                     class="flex flex-row border-t-[1px] border-b-[1px] border-gray-400 my-8 py-4">
                     <div class="basis-1/4 text-right">
                         Type vergunning *
                     </div>
@@ -281,8 +266,8 @@
                     </div>
                 </div>
                 <!-- -- timing ------------------------------------------------------------------------------------- -->
-                <div class="flex flex-row">
-                    <div class="basis-1/2 text-center">
+                <div class="flex flex-row mt-6">
+                    <div class="basis-1/2 text-center" v-if="command.type !== SubscriptionTypeEnum.RENEWAL_LICENSE">
                         <SelectButton class="p-button-sm"
                                       v-model="command.memberSubscriptionIsHalfYear"
                                       :options="selectButtonOptions"
@@ -291,12 +276,48 @@
                                       aria-labelledby="basic"
                         />
                     </div>
-                    <div class="basis-1/2">
-                        <div class="flex gap-2">
-                            <div class="mt-1">
-                                Vanaf
+                    <div class="basis-1/2 ml-4">
+
+                        <!-- // renewal license  -------------------------------------------------- -->
+                        <div v-if="command.type === SubscriptionTypeEnum.RENEWAL_LICENSE">
+                            <div class="flex gap-2">
+                                <div class="mt-1">
+                                    Vanaf
+                                </div>
+                                <div>
+                                <span class="p-input-icon-right w-full">
+                                    <InputText
+                                        v-model="command.licenseStartMM"
+                                        class="p-inputtext-sm w-16"></InputText>
+                                    <i v-if="!new$.licenseStartMM.$invalid"
+                                       class="pi pi-check text-green-600"/>
+                                    <i v-if="new$.licenseStartMM.$invalid"
+                                       class="pi pi-times text-red-600"/>
+                                </span>
+                                </div>
+                                <div>
+                                    /
+                                </div>
+                                <div>
+                                <span class="p-input-icon-right w-full">
+                                    <InputText
+                                        v-model="command.licenseStartYY"
+                                        class="p-inputtext-sm w-24"></InputText>
+                                    <i v-if="!new$.licenseStartYY.$invalid"
+                                       class="pi pi-check text-green-600"/>
+                                    <i v-if="new$.licenseStartYY.$invalid"
+                                       class="pi pi-times text-red-600"/>
+                                </span>
+                                </div>
                             </div>
-                            <div>
+                        </div>
+                        <!-- // other renewals  -------------------------------------------------- -->
+                        <div v-else>
+                            <div class="flex gap-2">
+                                <div class="mt-1">
+                                    Vanaf
+                                </div>
+                                <div>
                                 <span class="p-input-icon-right w-full">
                                     <InputText
                                         v-model="command.memberSubscriptionStartMM"
@@ -306,11 +327,11 @@
                                     <i v-if="new$.memberSubscriptionStartMM.$invalid"
                                        class="pi pi-times text-red-600"/>
                                 </span>
-                            </div>
-                            <div>
-                                /
-                            </div>
-                            <div>
+                                </div>
+                                <div>
+                                    /
+                                </div>
+                                <div>
                                 <span class="p-input-icon-right w-full">
                                     <InputText
                                         v-model="command.memberSubscriptionStartYY"
@@ -320,28 +341,40 @@
                                     <i v-if="new$.memberSubscriptionStartYY.$invalid"
                                        class="pi pi-times text-red-600"/>
                                 </span>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
                 <!-- -- timing calculation ------------------------------------------------------------------------- -->
                 <div class="flex flex-row mt-4">
-                    <div class="basis-1/2 text-center">
+                    <div class="basis-1/2 text-center" v-if="command.type !== SubscriptionTypeEnum.RENEWAL_LICENSE">
                         Lid van {{ memberSubscriptionStartMM }}/ {{ memberSubscriptionStartYY }}
                         tot <strong>{{ memberSubscriptionEndMM }} / {{ memberSubscriptionEndYY }}</strong>
                     </div>
-                    <div class="basis-1/2 text-center">
-                        Vergunning van
-                        {{ licenseStartMM }} / {{ licenseStartYY }}
-                        tot <strong>{{ licenseEndMM }} / {{ licenseEndYY }}</strong>
+                    <div class="basis-1/2 text-center" v-if="command.type !== SubscriptionTypeEnum.RENEWAL_MEMBERSHIP">
+                        <div v-if="command.type === SubscriptionTypeEnum.RENEWAL_LICENSE">
+                            Vergunning van
+                            {{ command.licenseStartMM }} / {{ command.licenseStartYY }}
+                            tot <strong>{{ licenseEndMM }} / {{ licenseEndYY }}</strong>
+                        </div>
+                        <div v-else>
+                            Vergunning van
+                            {{ licenseStartMM }} / {{ licenseStartYY }}
+                            tot <strong>{{ licenseEndMM }} / {{ licenseEndYY }}</strong>
+                        </div>
                     </div>
                 </div>
 
                 <!-- berekening ---------------------------------------------------------------------------------------- -->
-                <div class="flex flex-row mt-3 bg-gray-500 py-1 px-4 text-white">
-                    <div class="basis-1/4 flex">
+                <div class="flex gap-2 mt-3 bg-gray-500 py-1 px-4 text-white">
+                    <div>
+                        <div v-if="connectedSubscription" class="mt-1">
+                            <subscription-type :subscription="connectedSubscription"/>
+                        </div>
+                    </div>
+                    <div class="flex" v-if="command.type !== SubscriptionTypeEnum.RENEWAL_LICENSE">
                         <div class="mr-2">
                             Gezinskorting?
                         </div>
@@ -349,16 +382,16 @@
                             <InputSwitch v-model="command.isReductionFamily"/>
                         </div>
                     </div>
-                    <div class="basis-1/6 text-right mr-4 text-xs mt-1">
+                    <div class="text-right flex-grow text-xs mt-1">
                         Totaal:
                     </div>
-                    <div class="basis-3/6">
+                    <div v-if="command.type !== SubscriptionTypeEnum.RENEWAL_LICENSE">
                         {{ command.memberSubscriptionTotal }} €
                     </div>
-                    <div class="basis-1/6">
+                    <div v-if="command.type !== SubscriptionTypeEnum.RENEWAL_MEMBERSHIP">
                         + {{ command.licenseTotal }} €
                     </div>
-                    <div class="basis-1/6 font-bold text-right">
+                    <div class="flex-grow font-bold text-right">
                         = {{ totalAmount }} €
                     </div>
                 </div>
@@ -395,7 +428,7 @@
                     label="Wijzig inschrijving" class="p-button-sm p-button-secondary"/>
             </div>
             <!-- subscription overview -->
-            <review-new-member-form-overview :command="command"/>
+            <change-subscription-form-overview :command="command"/>
             <!-- submit button -->
             <div class="mt-2">
                 <Button v-if="isSaving"
@@ -419,15 +452,18 @@ import {useAppStore} from "@/store/app";
 import {computed, onMounted, ref} from "vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import {vMaska} from "maska";
 import moment from "moment/moment";
 import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
-import {SubscriptionTypeEnum} from "@/api/query/enum";
-import ReviewNewMemberFormOverview from "@/components/subscription/reviewNewMember/reviewNewMemberFormOverview.vue";
-import {type MemberSuggestModel, suggestMember} from "@/api/query/suggestMember";
 import MemberBadge from "@/components/member/memberBadge.vue";
-import {newMemberWebSubscription} from "@/api/command/subscription/newMemberWebSubscription";
+import type {changeSubscriptionCommand} from "@/api/command/subscription/changeSubscription";
+import {changeSubscription} from "@/api/command/subscription/changeSubscription";
+import {getMemberById} from "@/api/query/getMemberById";
+import ChangeSubscriptionFormOverview
+    from "@/components/subscription/changeSubscription/changeSubscriptionFormOverview.vue";
+import {getSubscriptionById} from "@/api/query/getSubscriptionById";
+import {SubscriptionTypeEnum} from "@/api/query/enum";
+import SubscriptionType from "@/components/subscription/common/subscriptionType.vue";
 
 const emit = defineEmits(["submitted"]);
 const appStore = useAppStore();
@@ -438,49 +474,33 @@ const selectButtonOptions = ref([
     {name: 'Jaarlijks', value: false}
 ]);
 
-// -- suggest members -------------------------------------------------------------------------------------------------
+// -- get member detail ------------------------------------------------------------------------------------------------
 
-const suggestedMembers = ref([]);
+const connectedMember = ref(undefined);
+const connectedSubscription = ref(undefined);
 
-const suggestedMembersCommand = ref<MemberSuggestModel>({
-    firstname: memberStore.subscriptionDetail.firstname,
-    lastname: memberStore.subscriptionDetail.lastname,
-    dateOfBirth: memberStore.subscriptionDetail.dateOfBirth,
-});
-
-async function suggestMembers() {
-    suggestedMembers.value = await suggestMember(suggestedMembersCommand.value);
-    if (suggestedMembers.value.length === 1) {
-        command.value.memberId = suggestedMembers.value[0].id;
-    }
+async function getConnectedMemberAndSubscription() {
+    connectedMember.value = await getMemberById(memberStore.subscriptionDetail.memberId);
+    connectedSubscription.value = await getSubscriptionById(memberStore.subscriptionDetail.id);
+    // -- set the address ------------------------------------------------
+    command.value.addressStreet = connectedMember.value.addressStreet;
+    command.value.addressStreet = connectedMember.value.addressStreet;
+    command.value.addressNumber = connectedMember.value.addressNumber;
+    command.value.addressBox = connectedMember.value.addressBox;
+    command.value.addressZip = connectedMember.value.addressZip;
+    command.value.addressCity = connectedMember.value.addressCity;
 }
 
 onMounted(() => {
-    void suggestMembers();
-});
-
-const suggestedMembersList = computed(() => {
-    let _result = [];
-    _result.push({
-        label: "Nieuw lid",
-        value: 0
-    });
-    for (let i = 0; i < suggestedMembers.value.length; i++) {
-        _result.push({
-            label: suggestedMembers.value[i].firstname + " " + suggestedMembers.value[i].lastname + " (YK-" + suggestedMembers.value[i].id + ")",
-            value: suggestedMembers.value[i].id
-        });
-    }
-    return _result;
+    void getConnectedMemberAndSubscription();
 });
 
 // -- command ----------------------------------------------------------------------------------------------------------
 
-const command = ref<NewMemberWebSubscriptionCommand>({
+const command = ref<changeSubscriptionCommand>({
     subscriptionId: memberStore.subscriptionDetail.id,
-    memberId: 0,
-
-    type: SubscriptionTypeEnum.NEW_SUBSCRIPTION,
+    memberId: memberStore.subscriptionDetail.memberId,
+    type: memberStore.subscriptionDetail.type,
     federationId: memberStore.subscriptionDetail.federation.id,
     locationId: memberStore.subscriptionDetail.location.id,
     firstname: memberStore.subscriptionDetail.firstname,
@@ -570,7 +590,6 @@ const memberSubscriptionDateValidator = function (value: string) {
     return true;
 };
 
-
 const rules = {
     firstname: {required},
     lastname: {required},
@@ -581,7 +600,6 @@ const rules = {
     locationId: {minValueValue: minValue(1)},
     federationId: {minValueValue: minValue(1)},
     addressStreet: {required},
-    addressNumber: {required},
     addressZip: {required},
     addressCity: {required},
     contactFirstname: {required},
@@ -601,6 +619,20 @@ const rules = {
         maxValueValue: maxValue(2400),
         memberSubscriptionDateValidator
     },
+    licenseStartMM: {
+        required,
+        numeric,
+        maxValueValue: maxValue(12),
+        minValueValue: minValue(1),
+        memberSubscriptionDateValidator
+    },
+    licenseStartYY: {
+        required,
+        numeric,
+        minValueValue: minValue(1900),
+        maxValueValue: maxValue(2400),
+        memberSubscriptionDateValidator
+    },
 };
 
 const new$ = useVuelidate(rules, command);
@@ -610,11 +642,11 @@ const toaster = useToast();
 
 async function sendMemberSubscription() {
     isSaving.value = true;
-    let result = await newMemberWebSubscription(command.value);
+    let result = await changeSubscription(command.value);
     memberStore.increaseMemberCounter();
     toaster.add({
         severity: "success",
-        summary: "Nieuw lid aangemaakt, confirmatie bericht is verstuurd.",
+        summary: "Inschrijving aangepast, nieuwe bericht is verstuurd.",
         detail: "",
         life: appStore.toastLifeTime,
     });
@@ -703,6 +735,17 @@ const licenseEnd = computed((): Date => {
         0,
         0
     );
+    if (command.value.type === SubscriptionTypeEnum.RENEWAL_LICENSE) {
+        _startDate = new Date(
+            parseInt(command.value.licenseStartYY),
+            parseInt(command.value.licenseStartMM) - 1,
+            1,
+            8,
+            0,
+            0,
+            0
+        );
+    }
     let _startDateMoment = moment(_startDate);
     let _endDateMoment = _startDateMoment.add(1, 'years');
     command.value.licenseEnd = _endDateMoment.toDate();
@@ -756,8 +799,16 @@ const totalAmount = computed((): number => {
     }
     command.value.memberSubscriptionTotal = Math.ceil(_totalMemberSubscription);
     command.value.licenseTotal = _totalLicense;
-    command.value.total = Math.ceil(_totalMemberSubscription) + _totalLicense;
-    return Math.ceil(_totalMemberSubscription) + _totalLicense;
+
+    if (command.value.type === SubscriptionTypeEnum.RENEWAL_MEMBERSHIP) {
+        command.value.total = Math.ceil(_totalMemberSubscription);
+    } else if (command.value.type === SubscriptionTypeEnum.RENEWAL_LICENSE) {
+        command.value.total = _totalLicense;
+    } else {
+        command.value.total = Math.ceil(_totalMemberSubscription) + _totalLicense;
+    }
+    return command.value.total;
+
 });
 
 const formIsValid = computed((): boolean => {

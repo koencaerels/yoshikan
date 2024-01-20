@@ -81,6 +81,12 @@
                             class="p-button-sm p-button-secondary"
                             icon="pi pi-send"/>
                 </div>
+                <div v-else class="text-right">
+                    <Button @click="switchLicense()"
+                            label="Switch vergunning"
+                            class="p-button-sm p-button-secondary"
+                            icon="pi pi-send"/>
+                </div>
             </div>
         </div>
         <div class="mt-2 mb-2">
@@ -146,20 +152,54 @@
         <extension-form :member="memberStore.memberDetail" v-on:submitted="hideExtensionFormFn"/>
     </Dialog>
 
+    <Dialog v-model:visible="showSwitchLicenseForm"
+            v-if="memberStore.memberDetail"
+            position="top"
+            :header="'Wijzig vergunning voor '+memberStore.memberDetail.lastname.toUpperCase()+' '+memberStore.memberDetail.firstname"
+            :modal="true">
+        <div style="width:650px">
+            <div class="flex gap-4 p-4">
+                <div>naar</div>
+                <div>
+                    <div v-if="appStore.configuration">
+                        <span v-for="federation in appStore.configuration.federations" class="mr-4">
+                            <RadioButton name="federation" :value="federation.id"
+                                         v-model="switchLicenseCommand.federationId"
+                                         :input-id="federation.name"/>
+                            <label :for="federation.name" class="ml-2"> {{ federation.name.toUpperCase() }} </label>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <Button @click="switchLicenseAction()"
+                            label="Switch vergunning"
+                            :loading="isSwitching"
+                            class="p-button-sm p-button-secondary"
+                            icon="pi pi-send"/>
+                </div>
+            </div>
+        </div>
+    </Dialog>
+
 </template>
 
 <script setup lang="ts">
 import moment from "moment/moment";
-import GroupRenderer from "@/components/member/groupRenderer.vue";
 import {useMemberStore} from "@/store/member";
 import {memberStatusColor, showMemberSubscriptionExtendButton} from "@/functions/memberStatus";
 import {licenseStatusColor} from "@/functions/licenseStatus";
 import ExtensionForm from "@/components/member/subscription/extensionForm.vue";
 import {ref} from "vue";
 import {useMemberOverviewStore} from "@/store/memberOverview";
+import {useAppStore} from "@/store/app";
+import {useToast} from "primevue/usetoast";
+import {changeMemberLicense} from "@/api/command/changeMemberLicense";
 
 const memberStore = useMemberStore();
 const memberOverviewStore = useMemberOverviewStore();
+
+// -- switch extension form -------------------------------------
+
 const showExtensionForm = ref<boolean>(false);
 
 function showExtensionFormFn() {
@@ -171,6 +211,47 @@ function hideExtensionFormFn() {
     void memberStore.reloadMemberDetail();
     memberStore.increaseMemberCounter();
     showExtensionForm.value = false;
+}
+
+// -- switch license -------------------------------------------
+
+const appStore = useAppStore();
+const toaster = useToast();
+const showSwitchLicenseForm = ref<boolean>(false);
+const isSwitching = ref<boolean>(false);
+
+function switchLicense() {
+    showSwitchLicenseForm.value = true;
+}
+
+const switchLicenseCommand = ref<SwitchLicenseCommand>({
+    memberId: memberStore.memberDetail.id,
+    federationId: memberStore.memberDetail.federation.id
+});
+
+async function switchLicenseAction() {
+    isSwitching.value = true;
+    if (switchLicenseCommand.value.federationId == memberStore.memberDetail.federation.id) {
+        toaster.add({
+            severity: "error",
+            summary: "Fout",
+            detail: "Je kan niet switchen naar dezelfde federatie.",
+            life: appStore.toastLifeTime,
+        });
+        isSwitching.value = false;
+        return;
+    }
+    const result = await changeMemberLicense(switchLicenseCommand.value);
+    toaster.add({
+        severity: "success",
+        summary: "Wijziging federatie gelukt, bericht is verzonden.",
+        detail: "",
+        life: appStore.toastLifeTime,
+    });
+    await memberStore.reloadMemberDetail();
+    memberStore.increaseMemberCounter();
+    isSwitching.value = false;
+    showSwitchLicenseForm.value = false;
 }
 
 </script>

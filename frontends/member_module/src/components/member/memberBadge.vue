@@ -5,8 +5,8 @@
                  :style="'background-color: #'+member.grade.color">
                 <div v-if="member.profileImage !== ''"
                      class="text-right rounded-l-xl"
-                     style="width:160px;height:140px;float:right;">
-                    <Image style="width:140px;height:140px;"
+                     style="width:175px;height:160px;float:right;">
+                    <Image style="width:160px;height:160px;"
                            :src="apiUrl+'/member/'+member.id+'/profile-image?t=' + timestamp"
                            :alt="member.firstname+' '+member.lastname" preview/>
                 </div>

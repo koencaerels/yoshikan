@@ -1,0 +1,97 @@
+{% extends 'mail/base_mail.html.twig' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block body %}
+    <p align="right">
+        Heist op den Berg, {{ 'now' | date('d/m/Y') }}
+    </p>
+    <p>
+        Beste {{ subscription.contactFirstname }} {{ subscription.contactLastname }},
+    </p>
+    <p>
+        We hebben de inschrijving van {{ subscription.firstname }} {{ subscription.lastname }} aangepast.
+        Hieronder vind je een overzicht van de wijzigingen.
+    </p>
+    <p>
+        Om de inschrijving definitief te maken en ervoor te zorgen dat je volop kunt genieten
+        van onze judolessen, verzoeken wij je vriendelijk om een bedrag van <strong>{{ subscription.total }} €</strong>
+        over te maken naar onze bankrekening op het volgende nummer: <strong>BE37 7330 0101 8328</strong> met vermelding
+        van volgende referentie
+        "<strong>YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}</strong>".
+        Zo kunnen we je betaling snel identificeren.
+    </p>
+    {% if (subscription.paymentLink is not empty) %}
+    <p>
+        Of betaal online via deze Mollie-link:
+        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.
+    </p>
+    {% endif %}
+    <p>
+        Wanneer we je betaling hebben ontvangen, zullen we je officieel
+        inschrijven en krijg je toegang tot al onze trainingen en evenementen.
+        We staan te popelen om je te verwelkomen op de mat.
+    </p>
+    <p>
+        Mocht je nog vragen hebben of extra informatie nodig hebben, aarzel dan niet om contact
+        met ons op te nemen via <strong>judo.yoshikan@gmail.com</strong>.
+        Ons team staat altijd klaar om je te helpen.
+    </p>
+    <div style="border-top:1px solid gray;"></div>
+    <p>
+        <div>
+            {{ subscription.lastname | upper }} {{ subscription.firstname }}
+            (° {{ subscription.dateOfBirth | date('d/m/Y') }} - {{ subscription.gender.value }})
+        </div>
+        <div style="font-size: 12px;margin-top:10px;">
+            {{ subscription.member.addressStreet }}
+            {{ subscription.member.addressNumber }}
+            {% if(subscription.member.addressBox != '') %}
+                bus {{ subscription.member.addressBox }}
+            {% endif %}
+        </div>
+        <div style="font-size: 12px;margin-top:5px;">
+            {{ subscription.member.addressZip }}
+            {{ subscription.member.addressCity }}
+        </div>
+    </p>
+    <p>
+    <table width="100%" cellpadding="2" cellspacing="1" border="0">
+        {% for item in items %}
+            {% if(item.price == 0) %}
+                <tr>
+                    <td colspan="2" style="font-size: 12px;">{{ item.name }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td width="80%"> {{ item.name }}</td>
+                    <td align="right" width="20%"> {{ item.price }} €</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td align="right" width="80%"><strong>Totaal</strong></td>
+            <td align="right" width="20%" style="background-color: #E6E7E8;"><strong>{{ subscription.total }} €</strong>
+            </td>
+        </tr>
+    </table>
+    </p>
+    <p>&nbsp;</p>
+    {% if(subscription.remarks != '') %}
+        <div style="border-top:1px solid gray;">&nbsp;</div>
+        <p>
+            {{ subscription.remarks }}
+        </p>
+    {% endif %}
+    <p>
+        Met sportieve groeten,
+        <br>Team Yoshi-Kan.
+    </p>
+    <p>&nbsp;</p>
+    <p style="font-size: 12px;">
+        Door het uitvoeren van de betaling gaat U akkoord met ons reglement
+        en privacyverklaring, terug te vinden op onze website
+        <a href="https://www.yoshi-kan.be/privacyverklaring.pdf" target="_blank">www.yoshi-kan.be</a>
+    </p>
+
+{% endblock %}

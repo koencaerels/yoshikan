@@ -17,7 +17,7 @@ use App\YoshiKan\Application\Settings;
 
 trait NewMemberSubscriptionMailTrait
 {
-    public function sendMemberNewSubscriptionMail(int $subscriptionId): bool
+    public function sendMemberNewSubscriptionMail(int $subscriptionId, bool $isChange = false): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
@@ -36,7 +36,8 @@ trait NewMemberSubscriptionMailTrait
         $command = new NewMemberSubscriptionMail(
             $subscriptionId,
             Settings::FROM_NAME->value,
-            Settings::FROM_EMAIL->value
+            Settings::FROM_EMAIL->value,
+            $isChange,
         );
 
         $result = $handler->go($command);

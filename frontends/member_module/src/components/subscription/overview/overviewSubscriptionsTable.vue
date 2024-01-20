@@ -274,6 +274,7 @@
             :header="'Detail van de inschrijving: YKS-'+memberStore.subscriptionDetail.id"
             :modal="true">
         <subscription-detail
+            v-on:subscription-changed="hideSubscriptionDetailFn"
             v-on:paid="hideSubscriptionDetailFn"
             v-on:finished="hideSubscriptionDetailFn"
             v-on:subscription-reviewed="hideSubscriptionDetailFn"

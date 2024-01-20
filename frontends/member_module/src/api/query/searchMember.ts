@@ -15,6 +15,7 @@ export interface MemberSearchModel {
     grade?: Grade,
     yearOfBirth?: string,
     group?: Group,
+    isActive?: boolean,
 }
 
 export async function searchMembers(searchModel: MemberSearchModel) {

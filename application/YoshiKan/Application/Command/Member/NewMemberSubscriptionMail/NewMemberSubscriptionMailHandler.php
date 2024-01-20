@@ -56,16 +56,30 @@ class NewMemberSubscriptionMailHandler
     {
         $subscription = $this->subscriptionRepository->getById($command->getSubscriptionId());
         $items = $this->subscriptionItemRepository->getBySubscription($subscription);
-        $subject = 'JC Yoshi-Kan: Nieuwe inschrijving voor '.$subscription->getFirstname().' '.$subscription->getLastname();
-        $mailTemplate = $this->twig->render(
-            'mail/member_newMemberSubscription_mail.html.twig',
-            [
-                'subject' => $subject,
-                'subscription' => $subscription,
-                'items' => $items,
-                'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
-            ]
-        );
+
+        if ($command->isChange()) {
+            $subject = 'JC Yoshi-Kan: Wijziging inschrijving voor '.$subscription->getFirstname().' '.$subscription->getLastname();
+            $mailTemplate = $this->twig->render(
+                'mail/member_changed_subscription_mail.html.twig',
+                [
+                    'subject' => $subject,
+                    'subscription' => $subscription,
+                    'items' => $items,
+                    'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
+                ]
+            );
+        } else {
+            $subject = 'JC Yoshi-Kan: Nieuwe inschrijving voor '.$subscription->getFirstname().' '.$subscription->getLastname();
+            $mailTemplate = $this->twig->render(
+                'mail/member_newMemberSubscription_mail.html.twig',
+                [
+                    'subject' => $subject,
+                    'subscription' => $subscription,
+                    'items' => $items,
+                    'url' => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'],
+                ]
+            );
+        }
 
         // -- send email ----------------------------------------------------------
 

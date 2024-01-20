@@ -95,5 +95,5 @@ jobs:
           npm run build-only
 
 ## —— Testing ————————————————————————————————————————————————————————————
-#      - name: Execute tests (Unit & Integration Tests) via PestPHP
+#      - name: Execute tests (Unit & Feature Tests) via PestPHP
 #        run: ./vendor/bin/pest

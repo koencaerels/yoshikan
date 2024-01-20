@@ -166,6 +166,7 @@ class MemberModuleController extends TwigAwareController implements BackendZoneI
             $searchModel->group = new \stdClass();
             $searchModel->group->id = $groupId;
             $searchModel->locationId = $locationId;
+            $searchModel->isActive = true;
             $members = $queryBus->searchMembers($searchModel);
         } else {
             $members = new \stdClass();

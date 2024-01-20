@@ -11,43 +11,43 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail;
+namespace App\YoshiKan\Application\Command\Member\ChangeLicense;
 
-class NewMemberSubscriptionMail
+class ChangeLicense
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(
-        protected int $subscriptionId,
-        protected string $fromName,
-        protected string $fromEmail,
-        protected bool $isChange = false,
+    private function __construct(
+        protected int $memberId,
+        protected int $federationId,
     ) {
+    }
+
+    // —————————————————————————————————————————————————————————————————————————
+    // Hydrate from a json command
+    // —————————————————————————————————————————————————————————————————————————
+
+    public static function hydrateFromJson(\stdClass $json): self
+    {
+        return new self(
+            $json->memberId,
+            $json->federationId,
+        );
     }
 
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getSubscriptionId(): int
+    public function getMemberId(): int
     {
-        return $this->subscriptionId;
+        return $this->memberId;
     }
 
-    public function getFromName(): string
+    public function getFederationId(): int
     {
-        return $this->fromName;
-    }
-
-    public function getFromEmail(): string
-    {
-        return $this->fromEmail;
-    }
-
-    public function isChange(): bool
-    {
-        return $this->isChange;
+        return $this->federationId;
     }
 }

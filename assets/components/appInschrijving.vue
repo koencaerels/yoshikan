@@ -326,8 +326,13 @@
         </div>
         <hr>
         <div class="flex flex-row mt-4 mb-4">
-            <div class="basis-1/4 mr-4 text-right">Opmerkingen</div>
+            <div class="basis-1/4 mr-4 text-right">Opmerkingen: </div>
             <div class="basis-3/4">
+                <div class="mb-3">
+                    Wens je ook een judopak en gordel te bestellen?
+                    <br>Geef dan de maat van het judopak en de kleur van de gordel door in het veld hieronder.
+                    Dan zorgen wij dat dit klaar ligt bij de volgende training.
+                </div>
                 <o-field>
                     <o-input id="ta_remarks" v-model="subscription.remarks" maxlength="200" type="textarea"></o-input>
                 </o-field>

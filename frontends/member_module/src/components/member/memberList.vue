@@ -4,11 +4,22 @@
         <div class="p-2 bg-gray-200 text-sm">
             <form v-on:submit.prevent>
 
+                <!-- status -->
+                <div class="flex flex-row mt-2">
+                    <div class="basis-1/3 text-right mr-2 mt-1">Status</div>
+                    <div class="basis-2/3 text-xs">
+                        <SelectButton v-model="searchModel.isActive"
+                                      :options="statusOptions"
+                                      option-value="value"
+                                      optionLabel="name"/>
+                    </div>
+                </div>
+
                 <!-- keyword -->
                 <div class="flex flex-row mt-2">
                     <div class="basis-1/3 text-right mr-2 mt-1">Naam of lidnr.</div>
                     <div class="basis-2/3 text-xs">
-                        <InputText class="w-full p-inputtext-sm"
+                        <InputText class="w-full p-inputtext-lg"
                                    placeholder="keyword"
                                    v-model="searchModel.keyword"/>
                     </div>
@@ -135,7 +146,7 @@
         <!-- -- member result list ---------------------------------------------------------  -->
         <div class="flex font-bold border-b-[1px] border-black mt-1 text-sm pb-1 gap-2">
             <div class="flex-none w-8">&nbsp;</div>
-            <div class="flex-none w-16" >Lidnr.</div>
+            <div class="flex-none w-16">Lidnr.</div>
             <div class="line-clamp-1 grow">Naam</div>
             <div class="flex-none w-[6rem]" v-if="isCompactView">Geboortedatum</div>
             <div class="flex-none w-32 text-center" v-if="!isCompactView">Groep / Locatie</div>
@@ -143,7 +154,7 @@
             <div class="flex-none w-16  text-center">Graad</div>
         </div>
 
-        <list-wrapper :estate-height="350">
+        <list-wrapper :estate-height="390">
 
             <div v-for="member in members" v-if="isCompactView"
                  :class="selectedClass(member.id)"
@@ -231,8 +242,8 @@
 import {useAppStore} from "@/store/app";
 import {computed, onMounted, ref, watch} from "vue";
 import type {MemberSearchModel} from "@/api/query/searchMember";
-import type {Member} from "@/api/query/model";
 import {searchMembers} from "@/api/query/searchMember";
+import type {Member} from "@/api/query/model";
 import ListWrapper from "@/components/wrapper/listWrapper.vue";
 import moment from "moment";
 import EditButton from "@/components/common/editButton.vue";
@@ -248,6 +259,7 @@ const searchModel = ref<MemberSearchModel>({
     grade: undefined,
     yearOfBirth: undefined,
     group: undefined,
+    isActive: undefined,
 });
 const members = ref<Member[]>([]);
 const isSearching = ref<boolean>(false);
@@ -261,6 +273,12 @@ const counter = computed((): number => memberStore.memberCounter);
 watch(counter, (): void => {
     void searchMemberHandler();
 });
+
+const statusOptions = ref([
+    {name: 'niet van toepassing', value: undefined},
+    {name: 'Actief', value: true},
+    {name: 'Archief', value: false,}
+]);
 
 function selectedClass(id: number) {
     let style = '';
@@ -281,7 +299,9 @@ function resetSearch() {
         keyword: '',
         locationId: undefined,
         grade: undefined,
-        yearOfBirth: undefined
+        yearOfBirth: undefined,
+        group: undefined,
+        isActive: undefined,
     }
     searchMemberHandler();
 }

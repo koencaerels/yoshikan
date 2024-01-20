@@ -1,0 +1,322 @@
+{# #}
+{# This file is part of the Yoshi-Kan software. #}
+{# #}
+{# (c) Koen Caerels #}
+{# #}
+{# For the full copyright and license information, please view the LICENSE #}
+{# file that was distributed with this source code. #}
+{# #}
+
+<html>
+<head>
+    <style type="text/css">
+
+        body {
+            font-family: Helvetica, serif;
+        }
+
+        @page {
+            margin: 10mm;
+        }
+
+        h2, h3, h4, h5 {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        .page_break {
+            page-break-before: always;
+        }
+
+        .small {
+            font-size: 12px;
+        }
+
+        .smaller {
+            font-size: 10px;
+        }
+
+        .gray {
+            color: gray;
+        }
+
+        .fill {
+            line-height: 1.2em;
+        }
+
+    </style>
+</head>
+<body>
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+
+<table width="100%" style="margin-top:20px;" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="65%" valign="top">
+            <table width="100%" cellpadding="3" cellspacing="0" style="border-bottom: 1px solid black;"
+                   class="small">
+                <tr>
+                    <td width="50%">
+                        <span class="small gray">Datum</span>
+                        <p class="fill"> .......... / ........... / ..............</p>
+                    </td>
+                    <td width="50%">
+                        <span class="small gray">Plaats</span>&nbsp;
+                        <p class="fill">........................................................</p>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="3" cellspacing="0"
+                   style="font-size: 12px;margin-top: 10px;border-bottom: 1px solid black;">
+                <tr>
+                    <td><span class="small gray">Naam</span></td>
+                    <td>
+                        <p class="fill">
+                            ..............................................................................................</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="small gray">Voornaam</span></td>
+                    <td>
+                        <p class="fill">
+                            ...............................................................................................</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="small gray">Geb.datum</span></td>
+                    <td>
+                        <p class="fill">
+                            ........ / ........ / ..............
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            O &nbsp;&nbsp; <strong>M</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            O &nbsp;&nbsp; <strong>V</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            O &nbsp;&nbsp; <strong>X</strong>
+
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><span class="small gray"><br></br>Adres</span></td>
+                    <td>
+                        <p class="fill">Straat:
+                            ...................................................................................</p>
+                        <p class="fill">Postcode:
+                            .............................................................................</p>
+                        <p class="fill">Gemeente:
+                            ............................................................................</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><span class="small gray"><br>Contact (ouder)</span></td>
+                    <td>
+                        <p class="fill">Naam:
+                            ..................................................................................</p>
+                        <p class="fill">Email:
+                            ...................................................................................</p>
+                        <p class="fill">Telefoon:
+                            .............................................................................</p>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" cellpadding="3" cellspacing="0" style="margin-top: 10px;"
+                   class="small">
+                <tr>
+                    <td><span class="small gray">Locatie</span></td>
+                    <td>
+                        <p class="fill">
+                            {% for location in data.locations %}
+                                O &nbsp;
+                                {{ location.name }}
+                                &nbsp;&nbsp;
+                            {% endfor %}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="small gray">Vergunning</span></td>
+                    <td>
+                        <p class="fill">
+                            {% for federation in data.federations %}
+                                O &nbsp;&nbsp;
+                                <strong>{{ federation.name }}</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ federation.yearlySubscriptionFee }} €
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {% endfor %}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="small gray">Welkomspakket</span></td>
+                    <td>
+                        <p class="fill">
+                            O &nbsp;&nbsp;
+                            Judogids, judopaspoort, leskaart en sportzak
+                            &nbsp;&nbsp;&nbsp;{{ data.settings.newMemberSubscriptionFee }} €
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><span class="small gray">Frequentie</span></td>
+                    <td>
+                        <p class="fill smaller">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Halfjaarlijks
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;
+                            Jaarlijks
+                        </p>
+                        <p class="fill">
+                            O &nbsp;&nbsp;
+                            <strong>1 x per week</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ data.settings.halfYearlyFee1Training }} €
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ data.settings.yearlyFee1Training }} €
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="fill">
+                            O &nbsp;&nbsp;
+                            <strong>2 x per week</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ data.settings.halfYearlyFee2Training }} €
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ data.settings.yearlyFee2Training }} €
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="fill">
+                            O &nbsp;&nbsp;
+                            <strong>3-5 x per week</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            + {{ data.settings.extraTrainingFee }} €
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="small gray">Gezinskorting</span></td>
+                    <td>
+                        <p class="fill smaller">
+                            O &nbsp;&nbsp;
+
+                            2e en 3e kind van éénzelfde familie geniet {{ data.settings.familyDiscount }}% korting
+                            op lidgeld
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><span class="small gray">Opmerkingen</span></td>
+                    <td>
+                        <p class="fill">Judopak :
+                            ..................................................................................</p>
+                        <p class="fill">Gordel :
+                            .....................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                        <p class="fill">
+                            ...................................................................................................</p>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+
+        {# right side of the template -------------------------------------------- #}
+        <td width="35%" style="border-left: 1px solid black; padding-left:20px;" valign="top">
+
+            <img src="https://preview.yoshikan.be/theme/YoshiKan2023/img/logo_yoshi_kan.jpg" width="200">
+
+
+            <div style="padding:5px;" class="smaller fill">
+                <br>Inschrijven kan ook online via onze website:
+                <br><span style="color:blue;">https://www.yoshikan.be/inschrijven</span>
+                <br><br><br>
+                <div>
+                    <img src="https://preview.yoshikan.be/inschrijven.png" width="100">
+                </div>
+            </div>
+
+            <div style="font-size: 20px;margin-top: 20px;">
+                <strong>JC Yoshi-Kan v.z.w.</strong>
+            </div>
+            <div class="smaller">
+                <br>Secr: Spekstraat 80
+                <br>2220 Heist o/d Berg
+                <br>
+                <br>
+                G&nbsp;&nbsp;0474 51 13 98
+                <br>E&nbsp;&nbsp;judo.yoshikan@gmail.com
+            </div>
+            <div class="small">
+                <br>IBAN: BE37 7330 0101 8328
+                <br>BIC: KRED BE BB
+            </div>
+            <div style="margin-top: 20px;margin-bottom: 20px;margin-right: 20px;">
+                <div style="border: 1px solid black;padding:10px">
+                    <strong>
+                        Totaal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </strong>
+                    <p class="fill">....................... €</p>
+
+                </div>
+            </div>
+            <div class="small">
+                Handtekening ouder of voogd:
+                <br><br><br>&nbsp;
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div style="border-top: 1px solid black;">
+                <div style="padding:10px;">
+                    <div class="smaller">
+                        Door het ondertekenen of het uitvoeren van de betaling, gaat U akkoord met ons
+                        reglement en privacy verklaring, terug te vinden op onze website
+                        <span style="color:blue;">www.yoshikan.be</span>
+                    </div>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

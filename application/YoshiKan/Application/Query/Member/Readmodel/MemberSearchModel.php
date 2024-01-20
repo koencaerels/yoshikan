@@ -25,6 +25,7 @@ class MemberSearchModel
         protected int $gradeId,
         protected int $yearOfBirth,
         protected int $groupId,
+        protected ?bool $isActive = null,
     ) {
     }
 
@@ -39,6 +40,7 @@ class MemberSearchModel
         $gradeId = 0;
         $yearOfBirth = 0;
         $groupId = 0;
+        $isActive = null;
         if (isset($json->locationId)) {
             $locationId = intval($json->locationId);
         }
@@ -51,13 +53,17 @@ class MemberSearchModel
         if (isset($json->group)) {
             $groupId = intval($json->group->id);
         }
+        if (isset($json->isActive)) {
+            $isActive = boolval($json->isActive);
+        }
 
         return new self(
             $keyword,
             $locationId,
             $gradeId,
             $yearOfBirth,
-            $groupId
+            $groupId,
+            $isActive,
         );
     }
 
@@ -88,5 +94,10 @@ class MemberSearchModel
     public function getGroupId(): int
     {
         return $this->groupId;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
     }
 }

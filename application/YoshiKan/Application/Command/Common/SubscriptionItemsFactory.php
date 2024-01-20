@@ -29,6 +29,19 @@ class SubscriptionItemsFactory
     ) {
     }
 
+    public function resetItemsFromSubscription(Subscription $subscription): bool
+    {
+        $subscription = $this->subscriptionRepository->getById($subscription->getId());
+        $items = $this->subscriptionItemRepository->getBySubscription($subscription);
+        foreach ($items as $item) {
+            $this->subscriptionItemRepository->delete($item);
+        }
+        $subscription->clearItems();
+        $this->subscriptionRepository->save($subscription);
+
+        return true;
+    }
+
     public function saveItemsFromSubscription(
         Subscription $subscription,
         Federation $federation,
