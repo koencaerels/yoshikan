@@ -16,7 +16,7 @@
         }
 
         @page {
-            margin: 20mm;
+            margin: 10mm;
         }
 
         pre {
@@ -110,10 +110,10 @@
 
 {# ------------------------------------------------------------------------------------------------------------------ #}
 <header>
-    Leden lijst Yoshi-Kan vzw - {{ locationName }}
+    Leden lijst Yoshi-Kan - {{ locationName }}
 </header>
 <footer>
-    Leden lijst Yoshi-Kan vzw - {{ locationName }} - generated on {{ generatedOn |date('d/m/Y H:i:s') }}
+    Leden lijst Yoshi-Kan - {{ locationName }} - generated on {{ generatedOn |date('d/m/Y H:i:s') }}
 </footer>
 
 {# ------------------------------------------------------------------------------------------------------------------ #}
@@ -126,12 +126,17 @@
             <th>Ref.</th>
             <th>Naam</th>
             <th>Voornaam</th>
-            <th>Geslacht</th>
+            {% if locationCode !== 'HEIST-OP-DEN-BERG' %}
+                <th>Geslacht</th>
+            {% endif %}
             <th>Geboortedatum</th>
             <th>Leeftijd</th>
             <th>Adres</th>
             <th>Postcode</th>
             <th>Gemeente</th>
+            {% if locationCode === 'HEIST-OP-DEN-BERG' %}
+                <th>Telefoon</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -142,10 +147,15 @@
             {% set dateDiffYears = dateDiff / (60 * 60 * 24 * 365.25) %}
 
             <tr>
-                <td>YK-{{ member.id }}</td>
+                <td>
+                    {% if locationCode !== 'HEIST-OP-DEN-BERG' %}YK-{% endif %}
+                    {{ member.id }}
+                </td>
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.firstname }}</td>
-                <td align="center">{{ member.gender.value }}</td>
+                {% if locationCode !== 'HEIST-OP-DEN-BERG' %}
+                    <td align="center">{{ member.gender.value }}</td>
+                {% endif %}
                 <td>{{ dateOfBirth | date('d / m / Y') }}</td>
                 <td align="center">
                     {% if dateDiffYears > 18 %}
@@ -157,6 +167,9 @@
                 <td>{{ member.addressStreet }} {{ member.addressNumber }} {{ member.addressBox }}</td>
                 <td>{{ member.addressZip }}</td>
                 <td>{{ member.addressCity }}</td>
+                {% if locationCode === 'HEIST-OP-DEN-BERG' %}
+                    <td>{{ member.contactPhone }}</td>
+                {% endif %}
             </tr>
         {% endfor %}
 

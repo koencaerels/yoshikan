@@ -44,5 +44,6 @@
         <UnusedProperty errorLevel="suppress" />
         <StringIncrement errorLevel="suppress" />
         <PossiblyUndefinedArrayOffset errorLevel="suppress" />
+        <RiskyTruthyFalsyComparison errorLevel="suppress" />
     </issueHandlers>
 </psalm>
