@@ -65,6 +65,7 @@ export interface NewMemberWebSubscriptionCommand {
     remarks: string;
 
     isJudogiBelt: boolean;
+    newMemberFee: number;
 }
 
 export async function newMemberWebSubscription(command: NewMemberWebSubscriptionCommand) {

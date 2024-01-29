@@ -68,6 +68,14 @@ trait MemberRoutes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/member/{id}/forget', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function forgetMember(int $id, Request $request): JsonResponse
+    {
+        $response = $this->commandBus->forgetMember($id);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
     #[Route('/mm/api/member/{id}/change-grade', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
     public function changeMemberGrade(int $id, Request $request): JsonResponse
     {
@@ -82,6 +90,15 @@ trait MemberRoutes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeMemberRemarks($command);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/{id}/change-subscription', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberSubscription(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeMemberSubscription($command);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

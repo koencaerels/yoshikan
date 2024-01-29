@@ -26,11 +26,13 @@ use App\YoshiKan\Application\Command\Member\ChangeLocation\ChangeLocationTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\ChangeMemberDetailsTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberGrade\ChangeMemberGradeTrait;
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\ChangeMemberRemarksTrait;
+use App\YoshiKan\Application\Command\Member\ChangeMemberSubscription\ChangeMemberSubscriptionTrait;
 use App\YoshiKan\Application\Command\Member\ChangePeriod\ChangePeriodTrait;
 use App\YoshiKan\Application\Command\Member\ChangeSubscriptionDetails\ChangeSubscriptionDetailsTrait;
 use App\YoshiKan\Application\Command\Member\ConfirmMemberWebSubscription\ConfirmMemberWebSubscriptionTrait;
 use App\YoshiKan\Application\Command\Member\CreateMolliePaymentLink\CreateMolliePaymentLinkTrait;
 use App\YoshiKan\Application\Command\Member\DeleteMemberImage\DeleteMemberImageTrait;
+use App\YoshiKan\Application\Command\Member\ForgetMember\ForgetMemberTrait;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsCanceled\MarkSubscriptionAsCanceledTrait;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\MarkSubscriptionAsFinishedTrait;
 use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\MarkSubscriptionAsPaidTrait;
@@ -102,6 +104,8 @@ class MemberCommandBus
     use ChangeMemberDetailsTrait;
     use ChangeMemberGradeTrait;
     use ChangeMemberRemarksTrait;
+    use ChangeMemberSubscriptionTrait;
+    use ForgetMemberTrait;
 
     // -- subscription ----------------------------------------------------------
     use MemberExtendSubscriptionTrait;

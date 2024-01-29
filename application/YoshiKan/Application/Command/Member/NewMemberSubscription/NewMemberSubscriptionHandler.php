@@ -107,6 +107,7 @@ class NewMemberSubscriptionHandler
             $command->getLicenseTotal(),
             $command->isLicenseIsPartSubscription(),
             $command->isLicenseIsPayed(),
+            $command->getNewMemberFee(),
         );
 
         $subscription->setNewMemberFields(

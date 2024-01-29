@@ -56,6 +56,9 @@ class Settings
     private float $newMemberSubscriptionFee;
 
     #[ORM\Column]
+    private float $newMemberSubscriptionFeeWithoutGuide;
+
+    #[ORM\Column]
     private int $familyDiscount;
 
     // —————————————————————————————————————————————————————————————————————————
@@ -71,6 +74,7 @@ class Settings
         float $halfYearlyFee1Training,
         float $extraTrainingFee,
         float $newMemberSubscriptionFee,
+        float $newMemberSubscriptionFeeWithoutGuide,
         int $familyDiscount,
     ) {
         $this->uuid = $uuid;
@@ -81,6 +85,7 @@ class Settings
         $this->halfYearlyFee1Training = $halfYearlyFee1Training;
         $this->extraTrainingFee = $extraTrainingFee;
         $this->newMemberSubscriptionFee = $newMemberSubscriptionFee;
+        $this->newMemberSubscriptionFeeWithoutGuide = $newMemberSubscriptionFeeWithoutGuide;
         $this->familyDiscount = $familyDiscount;
     }
 
@@ -97,6 +102,7 @@ class Settings
         float $halfYearlyFee1Training,
         float $extraTrainingFee,
         float $newMemberSubscriptionFee,
+        float $newMemberSubscriptionFeeWithoutGuide,
         int $familyDiscount,
     ): self {
         return new self(
@@ -108,6 +114,7 @@ class Settings
             $halfYearlyFee1Training,
             $extraTrainingFee,
             $newMemberSubscriptionFee,
+            $newMemberSubscriptionFeeWithoutGuide,
             $familyDiscount,
         );
     }
@@ -119,6 +126,7 @@ class Settings
         float $halfYearlyFee1Training,
         float $extraTrainingFee,
         float $newMemberSubscriptionFee,
+        float $newMemberSubscriptionFeeWithoutGuide,
         int $familyDiscount,
     ): void {
         $this->yearlyFee2Training = $yearlyFee2Training;
@@ -127,6 +135,7 @@ class Settings
         $this->halfYearlyFee1Training = $halfYearlyFee1Training;
         $this->extraTrainingFee = $extraTrainingFee;
         $this->newMemberSubscriptionFee = $newMemberSubscriptionFee;
+        $this->newMemberSubscriptionFeeWithoutGuide = $newMemberSubscriptionFeeWithoutGuide;
         $this->familyDiscount = $familyDiscount;
     }
 
@@ -167,6 +176,11 @@ class Settings
     public function getNewMemberSubscriptionFee(): float
     {
         return $this->newMemberSubscriptionFee;
+    }
+
+    public function getNewMemberSubscriptionFeeWithoutGuide(): float
+    {
+        return $this->newMemberSubscriptionFeeWithoutGuide;
     }
 
     public function getFamilyDiscount(): int

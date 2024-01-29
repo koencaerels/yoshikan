@@ -109,6 +109,7 @@ class ChangeSubscriptionDetailsHandler
             licenseTotal: $command->getLicenseTotal(),
             licenseIsPartSubscription: $subscription->isLicenseIsPartSubscription(),
             licenseIsPayed: $subscription->isLicenseIsPayed(),
+            newMemberFee: $command->getNewMemberFee(),
         );
         $subscription->setNewMemberFields(
             nationalRegisterNumber: $command->getNationalRegisterNumber(),

@@ -120,20 +120,33 @@ class SubscriptionItemsFactory
             $this->subscriptionItemRepository->save($subscriptionItemMembership);
         }
 
-        //  -- new membership welcome package --------------------------------------------------------------------------
+        //  -- new membership and welcome package ----------------------------------------------------------------------
 
         if ($subscription->isNewMember()) {
             ++$sequence;
-            $itemName = 'Inschrijvingspakket (judogids, judopaspoort, leskaart en sportzak).';
-            $welcomeItem = SubscriptionItem::make(
-                $this->subscriptionItemRepository->nextIdentity(),
-                SubscriptionItemType::SUBSCRIPTION_WELCOME,
-                $itemName,
-                $settings->getNewMemberSubscriptionFee(),
-                $subscription
-            );
-            $welcomeItem->setSequence($sequence);
-            $this->subscriptionItemRepository->save($welcomeItem);
+            if ($subscription->getNewMemberFee() === $settings->getNewMemberSubscriptionFeeWithoutGuide()) {
+                $itemName = 'Inschrijvingspakket (judo-paspoort, leskaart en sportzak).';
+                $welcomeItem = SubscriptionItem::make(
+                    $this->subscriptionItemRepository->nextIdentity(),
+                    SubscriptionItemType::SUBSCRIPTION_WELCOME,
+                    $itemName,
+                    $settings->getNewMemberSubscriptionFeeWithoutGuide(),
+                    $subscription
+                );
+                $welcomeItem->setSequence($sequence);
+                $this->subscriptionItemRepository->save($welcomeItem);
+            } elseif ($subscription->getNewMemberFee() > 0) {
+                $itemName = 'Inschrijvingspakket (judo-gids, judo-paspoort, leskaart en sportzak).';
+                $welcomeItem = SubscriptionItem::make(
+                    $this->subscriptionItemRepository->nextIdentity(),
+                    SubscriptionItemType::SUBSCRIPTION_WELCOME,
+                    $itemName,
+                    $settings->getNewMemberSubscriptionFee(),
+                    $subscription
+                );
+                $welcomeItem->setSequence($sequence);
+                $this->subscriptionItemRepository->save($welcomeItem);
+            }
         }
 
         // -- license item ---------------------------------------------------------------------------------------------

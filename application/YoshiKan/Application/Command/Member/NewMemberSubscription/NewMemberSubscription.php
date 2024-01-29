@@ -68,6 +68,7 @@ class NewMemberSubscription
         protected string $remarks,
 
         protected bool $isJudogiBelt,
+        protected float $newMemberFee,
     ) {
     }
 
@@ -121,6 +122,7 @@ class NewMemberSubscription
             floatval($json->total),
             trim($json->remarks),
             boolval($json->isJudogiBelt),
+            floatval($json->newMemberFee),
         );
     }
 
@@ -326,5 +328,10 @@ class NewMemberSubscription
     public function isMemberSubscriptionIsPayed(): bool
     {
         return $this->memberSubscriptionIsPayed;
+    }
+
+    public function getNewMemberFee(): float
+    {
+        return $this->newMemberFee;
     }
 }

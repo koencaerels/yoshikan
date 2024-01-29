@@ -78,6 +78,9 @@ class Subscription
     private bool $isNewMember = false;
 
     #[ORM\Column(options: ['default' => 0])]
+    private float $newMemberFee = 0;
+
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isJudogiBelt = false;
 
     #[ORM\Column(options: ['default' => 0])]
@@ -222,6 +225,7 @@ class Subscription
         float $licenseTotal,
         bool $licenseIsPartSubscription,
         bool $licenseIsPayed,
+        float $newMemberFee = 0,
     ) {
         $this->uuid = $uuid;
         $this->status = SubscriptionStatus::NEW->value;
@@ -251,6 +255,7 @@ class Subscription
         $this->memberSubscriptionIsPartSubscription = $memberSubscriptionIsPartSubscription;
         $this->memberSubscriptionIsHalfYear = $memberSubscriptionIsHalfYear;
         $this->memberSubscriptionIsPayed = $memberSubscriptionIsPayed;
+        $this->newMemberFee = $newMemberFee;
         $this->licenseStart = $licenseStart;
         $this->licenseEnd = $licenseEnd;
         $this->licenseTotal = $licenseTotal;
@@ -300,6 +305,7 @@ class Subscription
         float $licenseTotal,
         bool $licenseIsPartSubscription,
         bool $licenseIsPayed,
+        float $newMemberFee = 0,
     ): self {
         return new self(
             $uuid,
@@ -331,7 +337,8 @@ class Subscription
             $licenseEnd,
             $licenseTotal,
             $licenseIsPartSubscription,
-            $licenseIsPayed
+            $licenseIsPayed,
+            $newMemberFee,
         );
     }
 
@@ -418,6 +425,7 @@ class Subscription
         float $licenseTotal,
         bool $licenseIsPartSubscription,
         bool $licenseIsPayed,
+        float $newMemberFee = 0,
     ): void {
         $this->contactFirstname = $contactFirstname;
         $this->contactLastname = $contactLastname;
@@ -448,6 +456,7 @@ class Subscription
         $this->licenseIsPartSubscription = $licenseIsPartSubscription;
         $this->licenseIsPayed = $licenseIsPayed;
         $this->total = ceil($this->memberSubscriptionTotal + $this->licenseTotal);
+        $this->newMemberFee = $newMemberFee;
         $this->items = new ArrayCollection();
     }
 
@@ -775,6 +784,11 @@ class Subscription
         return $this->paymentType;
     }
 
+    public function getNewMemberFee(): float
+    {
+        return $this->newMemberFee;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Subscription fee calculation function
     // —————————————————————————————————————————————————————————————————————————
@@ -795,6 +809,13 @@ class Subscription
                 $memberShipFee = floatval($this->settings['yearlyFee2Training']);
             }
         }
+
+        // -- type extra training -------------------------------------------
+        if ($this->isExtraTraining) {
+            $memberShipFee += floatval($this->settings['extraTrainingFee']);
+        }
+
+        // -- reduction -----------------------------------------------------
         if ($this->isReductionFamily && $withReduction) {
             $reduction = floatval($this->settings['familyDiscount']) * $memberShipFee / 100;
             $memberShipFee = ceil($memberShipFee - $reduction);
@@ -807,18 +828,15 @@ class Subscription
     {
         $memberShipFee = $this->getSubscriptionFee(false);
 
-        if ($this->isExtraTraining) {
-            $memberShipFee += floatval($this->settings['extraTrainingFee']);
-        }
+        // -- type welcome package ------------------------------------------
+        $memberShipFee += floatval($this->getNewMemberFee());
+
         if ($this->isReductionFamily) {
             $reduction = floatval($this->settings['familyDiscount']) * $memberShipFee / 100;
             $memberShipFee = ceil($memberShipFee - $reduction);
         }
-        if ($this->isNewMember) {
-            $memberShipFee += floatval($this->settings['newMemberSubscriptionFee']);
-        }
 
-        // -- set some total counts ------------------------------------------------------------------------------------
+        // -- set some total counts -----------------------------------------
 
         if ($this->isMemberSubscriptionIsPartSubscription()) {
             $this->memberSubscriptionTotal = $memberShipFee;

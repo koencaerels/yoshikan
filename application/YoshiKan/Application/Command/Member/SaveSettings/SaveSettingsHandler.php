@@ -43,6 +43,7 @@ class SaveSettingsHandler
                 $command->getHalfYearlyFee1Training(),
                 $command->getExtraTrainingFee(),
                 $command->getNewMemberSubscriptionFee(),
+                $command->getNewMemberSubscriptionFeeWithoutGuide(),
                 $command->getFamilyDiscount(),
             );
         } else {
@@ -53,6 +54,7 @@ class SaveSettingsHandler
                 $command->getHalfYearlyFee1Training(),
                 $command->getExtraTrainingFee(),
                 $command->getNewMemberSubscriptionFee(),
+                $command->getNewMemberSubscriptionFeeWithoutGuide(),
                 $command->getFamilyDiscount(),
             );
         }

@@ -104,6 +104,7 @@ class ConfirmMemberWebSubscriptionHandler
             licenseTotal: $command->getLicenseTotal(),
             licenseIsPartSubscription: $command->isLicenseIsPartSubscription(),
             licenseIsPayed: $command->isLicenseIsPayed(),
+            newMemberFee: $command->getNewMemberFee(),
         );
         $subscription->setNewMemberFields(
             nationalRegisterNumber: $command->getNationalRegisterNumber(),

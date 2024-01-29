@@ -264,8 +264,9 @@
                     </div>
 
                 </div>
+
                 <!-- -- federation --------------------------------------------------------------------------------- -->
-                <div class="flex flex-row border-t-[1px] border-b-[1px] border-gray-400 my-8 py-4">
+                <div class="flex flex-row border-t-[1px] border-gray-400 mt-4 py-4">
                     <div class="basis-1/4 text-right">
                         Type vergunning *
                     </div>
@@ -280,23 +281,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- -- timing ------------------------------------------------------------------------------------- -->
-                <div class="flex flex-row">
-                    <div class="basis-1/2 text-center">
-                        <SelectButton class="p-button-sm"
-                                      v-model="command.memberSubscriptionIsHalfYear"
-                                      :options="selectButtonOptions"
-                                      option-value="value"
-                                      optionLabel="name"
-                                      aria-labelledby="basic"
-                        />
-                    </div>
-                    <div class="basis-1/2">
-                        <div class="flex gap-2">
-                            <div class="mt-1">
-                                Vanaf
-                            </div>
-                            <div>
+
+                <!-- -- start date --------------------------------------------------------------------------------- -->
+                <div class="bg-blue-100 p-4">
+                    <div class="flex gap-2">
+                        <div class="mt-1 flex-none">
+                            Geef hier de startdatum van de inschrijving in
+                        </div>
+                        <div class="flex-grow">&nbsp;</div>
+                        <div class="flex-none">
                                 <span class="p-input-icon-right w-full">
                                     <InputText
                                         v-model="command.memberSubscriptionStartMM"
@@ -306,11 +299,11 @@
                                     <i v-if="new$.memberSubscriptionStartMM.$invalid"
                                        class="pi pi-times text-red-600"/>
                                 </span>
-                            </div>
-                            <div>
-                                /
-                            </div>
-                            <div>
+                        </div>
+                        <div>
+                            /
+                        </div>
+                        <div>
                                 <span class="p-input-icon-right w-full">
                                     <InputText
                                         v-model="command.memberSubscriptionStartYY"
@@ -320,9 +313,7 @@
                                     <i v-if="new$.memberSubscriptionStartYY.$invalid"
                                        class="pi pi-times text-red-600"/>
                                 </span>
-                            </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -336,6 +327,22 @@
                         Vergunning van
                         {{ licenseStartMM }} / {{ licenseStartYY }}
                         tot <strong>{{ licenseEndMM }} / {{ licenseEndYY }}</strong>
+                    </div>
+                </div>
+
+                <!-- -- timing ------------------------------------------------------------------------------------- -->
+                <div class="flex flex-row mt-4">
+                    <div class="basis-1/2 text-center">
+                        <SelectButton class="p-button-sm"
+                                      v-model="command.memberSubscriptionIsHalfYear"
+                                      :options="selectButtonOptions"
+                                      option-value="value"
+                                      optionLabel="name"
+                                      aria-labelledby="basic"
+                        />
+                    </div>
+                    <div class="basis-1/2">
+                        <new-member-fee v-model="command.newMemberFee"/>
                     </div>
                 </div>
 
@@ -419,7 +426,6 @@ import {useAppStore} from "@/store/app";
 import {computed, onMounted, ref} from "vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import {vMaska} from "maska";
 import moment from "moment/moment";
 import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
@@ -428,6 +434,7 @@ import ReviewNewMemberFormOverview from "@/components/subscription/reviewNewMemb
 import {type MemberSuggestModel, suggestMember} from "@/api/query/suggestMember";
 import MemberBadge from "@/components/member/memberBadge.vue";
 import {newMemberWebSubscription} from "@/api/command/subscription/newMemberWebSubscription";
+import NewMemberFee from "@/components/subscription/common/newMemberFee.vue";
 
 const emit = defineEmits(["submitted"]);
 const appStore = useAppStore();
@@ -452,6 +459,7 @@ async function suggestMembers() {
     suggestedMembers.value = await suggestMember(suggestedMembersCommand.value);
     if (suggestedMembers.value.length === 1) {
         command.value.memberId = suggestedMembers.value[0].id;
+        command.isNewMember = false;
     }
 }
 
@@ -522,6 +530,8 @@ const command = ref<NewMemberWebSubscriptionCommand>({
     total: memberStore.subscriptionDetail.total,
     remarks: memberStore.subscriptionDetail.remarks,
     isJudogiBelt: memberStore.subscriptionDetail.isJudogiBelt,
+    isNewMember: true,
+    newMemberFee: appStore.configuration?.settings.newMemberSubscriptionFee ?? 0,
 });
 
 // -- validation -------------------------------------------------------------------------------------------------------
@@ -744,7 +754,7 @@ const totalAmount = computed((): number => {
             _totalMemberSubscription -= _reduction;
         }
         if (command.value.isNewMember) {
-            _totalMemberSubscription += parseFloat(appStore.configuration.settings.newMemberSubscriptionFee);
+            _totalMemberSubscription += parseFloat(command.value.newMemberFee);
         }
 
         for (const federation of appStore.configuration.federations) {

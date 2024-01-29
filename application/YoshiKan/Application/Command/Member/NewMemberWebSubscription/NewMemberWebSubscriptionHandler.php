@@ -63,7 +63,7 @@ class NewMemberWebSubscriptionHandler
                 throw new \Exception('Membership extension command is not valid.');
             }
 
-            // -- dates calculation ------------------------------------------------------------------------------------
+            // -- dates calculation ----------------------------------
             $currentDate = new \DateTimeImmutable();
             $membershipStart = $currentDate->modify('first day of this month');
             $membershipEnd = $membershipStart->modify('+1 year');
@@ -81,7 +81,7 @@ class NewMemberWebSubscriptionHandler
             $licenseStart = $currentDate->modify('first day of this month');
             $licenseEnd = $licenseStart->modify('+1 year');
 
-            // -- make a subscription ----------------------------------------------------------------------------------
+            // -- make a subscription --------------------------------
             $extraTraining = false;
             if (3 === $command->getNumberOfTraining()) {
                 $extraTraining = true;
@@ -118,6 +118,7 @@ class NewMemberWebSubscriptionHandler
                 0,
                 true,
                 false,
+                $settings->getNewMemberSubscriptionFee(),
             );
 
             $subscription->setNewMemberFields(
@@ -137,7 +138,7 @@ class NewMemberWebSubscriptionHandler
             $subscription = $this->subscriptionRepository->getByUuid($subscription->getUuid());
             $subscriptionId = $subscription->getId();
 
-            // -- compile a result class -------------------------------------------------------------------------------
+            // -- compile a result class -----------------------------
             $result = new \stdClass();
             $result->id = $subscriptionId;
             $result->reference = 'YKS-'.$subscriptionId.': '.$command->getFirstName().' '.$command->getLastName();
