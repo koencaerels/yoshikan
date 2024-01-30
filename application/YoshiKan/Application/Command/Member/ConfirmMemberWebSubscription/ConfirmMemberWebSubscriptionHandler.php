@@ -180,6 +180,7 @@ class ConfirmMemberWebSubscriptionHandler
         $result = new \stdClass();
         $result->id = $subscription->getId();
         $result->reference = 'YKS-'.$subscription->getId().': '.$command->getFirstName().' '.$command->getLastName();
+        $result->sendMail = $command->isSendMail();
 
         return $result;
     }

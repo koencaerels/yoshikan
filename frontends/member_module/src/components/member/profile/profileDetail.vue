@@ -170,11 +170,19 @@
                         </span>
                     </div>
                 </div>
-                <div>
+            </div>
+            <div class="flex gap-4 mt-2 p-2 bg-green-200">
+                <div class="mt-1.5">
+                    <input-switch v-model="switchLicenseCommand.sendMail" id="send-mail"/>
+                </div>
+                <div class="mt-0.5">
+                    <label for="send-mail">E-mail verzenden?</label>
+                </div>
+                <div class="flex-grow">
                     <Button @click="switchLicenseAction()"
                             label="Switch vergunning"
                             :loading="isSwitching"
-                            class="p-button-sm p-button-secondary"
+                            class="p-button-sm p-button-success w-full"
                             icon="pi pi-send"/>
                 </div>
             </div>
@@ -193,7 +201,7 @@ import {ref} from "vue";
 import {useMemberOverviewStore} from "@/store/memberOverview";
 import {useAppStore} from "@/store/app";
 import {useToast} from "primevue/usetoast";
-import {changeMemberLicense} from "@/api/command/changeMemberLicense";
+import {changeMemberLicense, type ChangeMemberLicenseCommand} from "@/api/command/changeMemberLicense";
 
 const memberStore = useMemberStore();
 const memberOverviewStore = useMemberOverviewStore();
@@ -224,9 +232,10 @@ function switchLicense() {
     showSwitchLicenseForm.value = true;
 }
 
-const switchLicenseCommand = ref<SwitchLicenseCommand>({
+const switchLicenseCommand = ref<ChangeMemberLicenseCommand>({
     memberId: memberStore.memberDetail.id,
-    federationId: memberStore.memberDetail.federation.id
+    federationId: memberStore.memberDetail.federation.id,
+    sendMail: true,
 });
 
 async function switchLicenseAction() {

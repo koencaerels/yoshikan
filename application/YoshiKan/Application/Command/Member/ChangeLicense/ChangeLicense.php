@@ -22,6 +22,7 @@ class ChangeLicense
     private function __construct(
         protected int $memberId,
         protected int $federationId,
+        protected bool $sendMail = true,
     ) {
     }
 
@@ -34,6 +35,7 @@ class ChangeLicense
         return new self(
             $json->memberId,
             $json->federationId,
+            (bool) ($json->sendMail ?? true),
         );
     }
 
@@ -49,5 +51,10 @@ class ChangeLicense
     public function getFederationId(): int
     {
         return $this->federationId;
+    }
+
+    public function isSendMail(): bool
+    {
+        return $this->sendMail;
     }
 }

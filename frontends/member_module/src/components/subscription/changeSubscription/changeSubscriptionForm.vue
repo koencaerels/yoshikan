@@ -393,17 +393,25 @@
             <!-- subscription overview -->
             <change-subscription-form-overview :command="command"/>
             <!-- submit button -->
-            <div class="mt-2">
-                <Button v-if="isSaving"
-                        disabled
-                        icon="pi pi-spin pi-spinner"
-                        label="Inschrijven & bericht verzenden"
-                        class="p-button-success w-full"/>
-                <Button v-else
-                        @click="sendMemberSubscription"
-                        icon="pi pi-send"
-                        label="Inschrijven & bericht verzenden"
-                        class="p-button-success w-full"/>
+            <div class="flex gap-4 mt-2 p-2 bg-green-200">
+                <div class="mt-1.5">
+                    <input-switch v-model="command.sendMail" id="send-mail"/>
+                </div>
+                <div class="mt-0.5">
+                    <label for="send-mail">E-mail verzenden?</label>
+                </div>
+                <div class="flex-grow">
+                    <Button v-if="isSaving"
+                            disabled
+                            icon="pi pi-spin pi-spinner"
+                            label="Inschrijven & bericht verzenden"
+                            class="p-button-success w-full"/>
+                    <Button v-else
+                            @click="sendMemberSubscription"
+                            icon="pi pi-send"
+                            label="Inschrijven & bericht verzenden"
+                            class="p-button-success w-full"/>
+                </div>
             </div>
         </div>
 
@@ -508,6 +516,7 @@ const command = ref<changeSubscriptionCommand>({
     isJudogiBelt: memberStore.subscriptionDetail.isJudogiBelt,
     isNewMember: memberStore.subscriptionDetail.isNewMember,
     newMemberFee: memberStore.subscriptionDetail.newMemberFee,
+    sendEmail: true,
 });
 
 // -- validation -------------------------------------------------------------------------------------------------------

@@ -56,6 +56,7 @@ class MemberExtendSubscription
 
         protected string $remarks,
         protected float $total,
+        protected bool $sendMail = true,
     ) {
     }
 
@@ -99,6 +100,7 @@ class MemberExtendSubscription
             boolval($json->isJudogiBelt),
             trim($json->remarks),
             floatval($json->total),
+            boolval($json->sendMail),
         );
     }
 
@@ -254,5 +256,10 @@ class MemberExtendSubscription
     public function getTotal(): float
     {
         return $this->total;
+    }
+
+    public function isSendMail(): bool
+    {
+        return $this->sendMail;
     }
 }

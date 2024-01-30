@@ -69,6 +69,7 @@ class NewMemberSubscription
 
         protected bool $isJudogiBelt,
         protected float $newMemberFee,
+        protected bool $sendMail = true,
     ) {
     }
 
@@ -123,6 +124,7 @@ class NewMemberSubscription
             trim($json->remarks),
             boolval($json->isJudogiBelt),
             floatval($json->newMemberFee),
+            boolval($json->sendMail),
         );
     }
 
@@ -333,5 +335,10 @@ class NewMemberSubscription
     public function getNewMemberFee(): float
     {
         return $this->newMemberFee;
+    }
+
+    public function isSendMail(): bool
+    {
+        return $this->sendMail;
     }
 }

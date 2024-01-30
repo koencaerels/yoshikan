@@ -384,17 +384,25 @@
             <!-- subscription overview -->
             <new-member-form-overview :command="command"/>
             <!-- submit button -->
-            <div class="mt-2">
-                <Button v-if="isSaving"
-                        disabled
-                        icon="pi pi-spin pi-spinner"
-                        label="Inschrijven & bericht verzenden"
-                        class="p-button-success w-full"/>
-                <Button v-else
-                        @click="sendMemberSubscription"
-                        icon="pi pi-send"
-                        label="Inschrijven & bericht verzenden"
-                        class="p-button-success w-full"/>
+            <div class="flex gap-4 mt-2 p-2 bg-green-200">
+                <div class="mt-1.5">
+                    <input-switch v-model="command.sendMail" id="send-mail"/>
+                </div>
+                <div class="mt-0.5">
+                    <label for="send-mail">E-mail verzenden?</label>
+                </div>
+                <div class="flex-grow">
+                    <Button v-if="isSaving"
+                            disabled
+                            icon="pi pi-spin pi-spinner"
+                            label="Inschrijven & bericht verzenden"
+                            class="p-button-success w-full"/>
+                    <Button v-else
+                            @click="sendMemberSubscription"
+                            icon="pi pi-send"
+                            label="Inschrijven & bericht verzenden"
+                            class="p-button-success w-full"/>
+                </div>
             </div>
         </div>
 
@@ -407,10 +415,10 @@ import {computed, ref} from "vue";
 import {email, maxValue, minValue, numeric, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import type {NewMemberSubscriptionCommand} from "@/api/command/subscription/newMemberSubscription";
+import {newMemberSubscription} from "@/api/command/subscription/newMemberSubscription";
 import moment from "moment/moment";
 import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
-import {newMemberSubscription} from "@/api/command/subscription/newMemberSubscription";
 import NewMemberFormOverview from "@/components/member/subscription/newMemberFormOverview.vue";
 import {SubscriptionTypeEnum} from "@/api/query/enum";
 import NewMemberFee from "@/components/subscription/common/newMemberFee.vue";
@@ -470,6 +478,7 @@ const command = ref<NewMemberSubscriptionCommand>({
     remarks: '',
     isJudogiBelt: false,
     newMemberFee: appStore.configuration?.settings.newMemberSubscriptionFee ?? 0,
+    sendMail: true,
 });
 
 // -- validation -------------------------------------------------------------------------------------------------------

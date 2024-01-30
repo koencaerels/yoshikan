@@ -51,6 +51,7 @@ export interface MemberExtendSubscriptionCommand {
 
     total: number;
     remarks: string;
+    sendMail: boolean;
 }
 
 export async function memberExtendSubscription(command: MemberExtendSubscriptionCommand) {

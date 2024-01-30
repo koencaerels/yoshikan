@@ -139,6 +139,7 @@ class ChangeLicenseHandler
         $result = new \stdClass();
         $result->id = $subscriptionId;
         $result->reference = 'YKS-'.$subscriptionId.': '.$member->getFirstname().' '.$member->getLastName();
+        $result->sendMail = $command->isSendMail();
 
         return $result;
     }

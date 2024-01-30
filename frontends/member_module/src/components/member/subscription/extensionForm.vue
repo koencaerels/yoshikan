@@ -392,17 +392,25 @@
             <!-- extension overview -->
             <extension-form-overview :member="props.member" :command="command"></extension-form-overview>
             <!-- submit button -->
-            <div class="mt-2">
-                <Button v-if="isSaving"
-                        disabled
-                        icon="pi pi-spin pi-spinner"
-                        label="Verlengen & bericht verzenden"
-                        class="p-button-success w-full"/>
-                <Button v-else
-                        @click="sendMemberExtension"
-                        icon="pi pi-send"
-                        label="Verlengen & bericht verzenden"
-                        class="p-button-success w-full"/>
+            <div class="flex gap-4 mt-2 p-2 bg-green-200">
+                <div class="mt-1.5">
+                    <input-switch v-model="command.sendMail" id="send-mail"/>
+                </div>
+                <div class="mt-0.5">
+                    <label for="send-mail">E-mail verzenden?</label>
+                </div>
+                <div class="flex-grow">
+                    <Button v-if="isSaving"
+                            disabled
+                            icon="pi pi-spin pi-spinner"
+                            label="Verlengen & bericht verzenden"
+                            class="p-button-success w-full"/>
+                    <Button v-else
+                            @click="sendMemberExtension"
+                            icon="pi pi-send"
+                            label="Verlengen & bericht verzenden"
+                            class="p-button-success w-full"/>
+                </div>
             </div>
         </div>
 
@@ -419,11 +427,10 @@ import {useAppStore} from "@/store/app";
 import {memberStatusColor, showMemberSubscriptionExtendButton} from "@/functions/memberStatus";
 import {licenseStatusColor, showLicenseExtendButton} from "@/functions/licenseStatus";
 import type {MemberExtendSubscriptionCommand} from "@/api/command/subscription/memberExtendSubscription";
+import {memberExtendSubscription} from "@/api/command/subscription/memberExtendSubscription";
 import ExtensionFormOverview from "@/components/member/subscription/extensionFormOverview.vue";
-import {changeMemberDetails} from "@/api/command/changeMemberDetails";
 import {useMemberStore} from "@/store/member";
 import {useToast} from "primevue/usetoast";
-import {memberExtendSubscription} from "@/api/command/subscription/memberExtendSubscription";
 import {SubscriptionTypeEnum} from "@/api/query/enum";
 
 const emit = defineEmits(["submitted"]);
@@ -477,6 +484,7 @@ const command = ref<MemberExtendSubscriptionCommand>({
     remarks: "",
 
     isJudogiBelt: false,
+    sendMail: true,
 });
 
 const isSaving = ref<boolean>(false);
