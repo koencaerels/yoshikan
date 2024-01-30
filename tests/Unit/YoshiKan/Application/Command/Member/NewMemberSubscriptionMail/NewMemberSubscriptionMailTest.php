@@ -12,20 +12,17 @@
 use App\YoshiKan\Application\Command\Member\NewMemberSubscriptionMail\NewMemberSubscriptionMail;
 
 it('can create NewMemberSubscriptionMail instance', function () {
-    // Sample data
     $subscriptionId = 123;
     $fromName = 'John Doe';
     $fromEmail = 'john@example.com';
 
-    // Create NewMemberSubscriptionMail instance
     $newMemberSubscriptionMail = new NewMemberSubscriptionMail($subscriptionId, $fromName, $fromEmail);
 
-    // Assertions
     expect($newMemberSubscriptionMail->getSubscriptionId())->toBe($subscriptionId)
         ->and($newMemberSubscriptionMail->getFromName())->toBe($fromName)
         ->and($newMemberSubscriptionMail->getFromEmail())->toBe($fromEmail)
         ->and($newMemberSubscriptionMail->isChange())->toBeFalse();
-});
+})->group('unit');
 
 it('can create NewMemberSubscriptionMail instance with change flag', function () {
     // Sample data
@@ -33,9 +30,7 @@ it('can create NewMemberSubscriptionMail instance with change flag', function ()
     $fromName = 'John Doe';
     $fromEmail = 'john@example.com';
 
-    // Create NewMemberSubscriptionMail instance with change flag
     $newMemberSubscriptionMail = new NewMemberSubscriptionMail($subscriptionId, $fromName, $fromEmail, true);
 
-    // Assertions
     expect($newMemberSubscriptionMail->isChange())->toBeTrue();
-});
+})->group('unit');

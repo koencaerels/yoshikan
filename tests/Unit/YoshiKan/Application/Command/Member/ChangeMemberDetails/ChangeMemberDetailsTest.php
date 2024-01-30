@@ -12,7 +12,6 @@
 use App\YoshiKan\Application\Command\Member\ChangeMemberDetails\ChangeMemberDetails;
 
 test('change member details', function () {
-    // Arrange
     $id = 1;
     $status = 'active';
     $firstname = 'John';
@@ -53,8 +52,6 @@ test('change member details', function () {
         'contactPhone' => $contactPhone,
     ]);
 
-    // Act
-    // Access getters to retrieve the values
     $resultId = $changeMemberDetails->getId();
     $resultStatus = $changeMemberDetails->getStatus();
     $resultFirstname = $changeMemberDetails->getFirstname();
@@ -74,8 +71,6 @@ test('change member details', function () {
     $resultContactEmail = $changeMemberDetails->getContactEmail();
     $resultContactPhone = $changeMemberDetails->getContactPhone();
 
-    // Assert
-    // Compare each property with the expected values
     expect($resultId)->toBe($id)
         ->and($resultStatus)->toBe($status)
         ->and($resultFirstname)->toBe($firstname)
@@ -94,4 +89,4 @@ test('change member details', function () {
         ->and($resultContactLastname)->toBe($contactLastname)
         ->and($resultContactEmail)->toBe($contactEmail)
         ->and($resultContactPhone)->toBe($contactPhone);
-});
+})->group('unit');

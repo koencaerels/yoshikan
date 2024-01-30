@@ -12,13 +12,11 @@
 use App\YoshiKan\Application\Command\Member\AddPeriod\AddPeriod;
 
 it('can add a period', function () {
-    // Arrange
     $code = 'PER123';
     $name = 'Example Period';
     $startDate = new DateTimeImmutable('2024-01-01');
     $endDate = new DateTimeImmutable('2024-12-31');
 
-    // Act
     $addPeriod = AddPeriod::hydrateFromJson((object) [
         'code' => $code,
         'name' => $name,
@@ -26,9 +24,8 @@ it('can add a period', function () {
         'endDate' => $endDate->format(DateTimeInterface::ATOM),
     ]);
 
-    // Assert
     expect($addPeriod->getCode())->toBe($code)
         ->and($addPeriod->getName())->toBe($name)
         ->and($addPeriod->getStartDate()->format(DateTimeInterface::ATOM))->toBe($startDate->format(DateTimeInterface::ATOM))
         ->and($addPeriod->getEndDate()->format(DateTimeInterface::ATOM))->toBe($endDate->format(DateTimeInterface::ATOM));
-});
+})->group('unit');

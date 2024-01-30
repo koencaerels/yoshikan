@@ -12,7 +12,6 @@
 use App\YoshiKan\Application\Command\Member\SaveSettings\SaveSettings;
 
 it('can hydrate SaveSettings instance from JSON', function () {
-    // Sample JSON data
     $jsonData = (object) [
         'code' => 'DEF456',
         'yearlyFee2Training' => 120.00,
@@ -24,11 +23,7 @@ it('can hydrate SaveSettings instance from JSON', function () {
         'newMemberSubscriptionFeeWithoutGuide' => 200.00,
         'familyDiscount' => 15,
     ];
-
-    // Hydrate SaveSettings instance from JSON
     $settings = SaveSettings::hydrateFromJson($jsonData);
-
-    // Assertions
     expect($settings->getCode())->toBe($jsonData->code)
         ->and($settings->getYearlyFee2Training())->toBe($jsonData->yearlyFee2Training)
         ->and($settings->getYearlyFee1Training())->toBe($jsonData->yearlyFee1Training)
@@ -38,4 +33,4 @@ it('can hydrate SaveSettings instance from JSON', function () {
         ->and($settings->getNewMemberSubscriptionFee())->toBe($jsonData->newMemberSubscriptionFee)
         ->and($settings->getNewMemberSubscriptionFeeWithoutGuide())->toBe($jsonData->newMemberSubscriptionFeeWithoutGuide)
         ->and($settings->getFamilyDiscount())->toBe($jsonData->familyDiscount);
-});
+})->group('unit');

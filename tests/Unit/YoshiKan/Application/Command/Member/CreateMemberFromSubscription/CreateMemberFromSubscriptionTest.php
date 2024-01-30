@@ -16,4 +16,4 @@ it('can create member from subscription', function () {
 
     expect($member->getId())->toBe(123)
         ->and($member->getMemberEmail())->toBe('test@example.com');
-});
+})->group('unit');

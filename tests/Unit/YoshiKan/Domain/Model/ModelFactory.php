@@ -57,7 +57,7 @@ class ModelFactory
             contactPhone: '0123456789',
             firstname: 'Firstname',
             lastname: 'Lastname',
-            dateOfBirth: new \DateTimeImmutable('05/05/2000'),
+            dateOfBirth: new \DateTimeImmutable('05/05/1990'),
             gender: Gender::M,
             type: SubscriptionType::NEW_SUBSCRIPTION,
             numberOfTraining: 1,

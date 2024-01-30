@@ -26,7 +26,7 @@ it('can create UploadMemberImage instance', function () {
     expect($upload->getId())->toBe($id)
         ->and($upload->getFile())->toBe($file)
         ->and($upload->getUploadsFolder())->toBe($uploadsFolder);
-});
+})->group('unit');
 
 afterEach(function () {
     m::close();

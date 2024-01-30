@@ -14,12 +14,10 @@ use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsPayed\MarkSubscrip
 it('can mark subscription as payed', function () {
     $subscriptionId = 123;
 
-    // Test maker method
     $markAsPayed = MarkSubscriptionAsPayed::make($subscriptionId);
     expect($markAsPayed->getId())->toBe($subscriptionId);
 
-    // Test hydrate from JSON method
     $json = (object) ['id' => $subscriptionId];
     $markAsPayed = MarkSubscriptionAsPayed::hydrateFromJson($json);
     expect($markAsPayed->getId())->toBe($subscriptionId);
-});
+})->group('unit');

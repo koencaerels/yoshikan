@@ -12,12 +12,7 @@
 use App\YoshiKan\Application\Command\Member\SetupConfiguration\SetupConfiguration;
 
 it('can create SetupConfiguration instance', function () {
-    // Sample data
     $code = 'sample_code';
-
-    // Create SetupConfiguration instance
     $config = new SetupConfiguration($code);
-
-    // Assertions
     expect($config->getCode())->toBe($code);
-});
+})->group('unit');

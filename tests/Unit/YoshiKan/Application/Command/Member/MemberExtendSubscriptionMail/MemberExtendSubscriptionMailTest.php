@@ -16,9 +16,8 @@ it('can create member extend subscription mail', function () {
     $fromName = 'John Doe';
     $fromEmail = 'john@example.com';
 
-    // Test constructor
     $memberExtendSubscriptionMail = new MemberExtendSubscriptionMail($subscriptionId, $fromName, $fromEmail);
     expect($memberExtendSubscriptionMail->getSubscriptionId())->toBe($subscriptionId)
         ->and($memberExtendSubscriptionMail->getFromName())->toBe($fromName)
         ->and($memberExtendSubscriptionMail->getFromEmail())->toBe($fromEmail);
-});
+})->group('unit');

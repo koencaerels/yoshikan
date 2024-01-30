@@ -108,4 +108,4 @@ it('can hydrate from JSON', function () {
         ->and($subscription->isJudogiBelt())->toBe(true)
         ->and($subscription->getNewMemberFee())->toBe(25.0)
         ->and($subscription->isSendMail())->toBe(true);
-});
+})->group('unit');

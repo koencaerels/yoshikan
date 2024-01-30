@@ -36,4 +36,4 @@ test('change period', function () {
         ->and($changePeriod->getStartDate())->toEqual($startDate)
         ->and($changePeriod->getEndDate())->toEqual($endDate)
         ->and($changePeriod->isActive())->toBe($isActive);
-});
+})->group('unit');

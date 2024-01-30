@@ -26,7 +26,7 @@ it('can create UploadProfileImage instance', function () {
     expect($upload->getId())->toBe($id)
         ->and($upload->getImageBlob())->toBe($file)
         ->and($upload->getUploadsFolder())->toBe($uploadsFolder);
-});
+})->group('unit');
 
 afterEach(function () {
     m::close();

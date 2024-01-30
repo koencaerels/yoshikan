@@ -12,13 +12,11 @@
 use App\YoshiKan\Application\Command\Member\AddFederation\AddFederation;
 
 it('can add a federation', function () {
-    // Arrange
     $code = 'FED123';
     $name = 'Example Federation';
     $yearlySubscriptionFee = 100;
     $publicLabel = 'Public Federation';
 
-    // Act
     $addFederation = AddFederation::hydrateFromJson((object) [
         'code' => $code,
         'name' => $name,
@@ -26,9 +24,8 @@ it('can add a federation', function () {
         'publicLabel' => $publicLabel,
     ]);
 
-    // Assert
     expect($addFederation->getCode())->toBe($code)
         ->and($addFederation->getName())->toBe($name)
         ->and($addFederation->getYearlySubscriptionFee())->toBe($yearlySubscriptionFee)
         ->and($addFederation->getPublicLabel())->toBe($publicLabel);
-});
+})->group('unit');

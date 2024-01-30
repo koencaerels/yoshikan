@@ -12,14 +12,12 @@
 use App\YoshiKan\Application\Command\Member\ChangeGroup\ChangeGroup;
 
 it('can change a group', function () {
-    // Arrange
     $id = 1;
     $code = 'GRP123';
     $name = 'Example Group';
     $minAge = 10;
     $maxAge = 20;
 
-    // Act
     $changeGroup = ChangeGroup::hydrateFromJson((object) [
         'id' => $id,
         'code' => $code,
@@ -28,10 +26,9 @@ it('can change a group', function () {
         'maxAge' => $maxAge,
     ]);
 
-    // Assert
     expect($changeGroup->getId())->toBe($id)
         ->and($changeGroup->getCode())->toBe($code)
         ->and($changeGroup->getName())->toBe($name)
         ->and($changeGroup->getMinAge())->toBe($minAge)
         ->and($changeGroup->getMaxAge())->toBe($maxAge);
-});
+})->group('unit');

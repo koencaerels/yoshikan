@@ -12,17 +12,14 @@
 use App\YoshiKan\Application\Command\Member\AddLocation\AddLocation;
 
 it('can add a location', function () {
-    // Arrange
     $code = 'LOC123';
     $name = 'Example Location';
 
-    // Act
     $addLocation = AddLocation::hydrateFromJson((object) [
         'code' => $code,
         'name' => $name,
     ]);
 
-    // Assert
     expect($addLocation->getCode())->toBe($code)
         ->and($addLocation->getName())->toBe($name);
-});
+})->group('unit');

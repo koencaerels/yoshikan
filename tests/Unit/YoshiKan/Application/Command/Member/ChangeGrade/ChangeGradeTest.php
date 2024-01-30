@@ -12,13 +12,11 @@
 use App\YoshiKan\Application\Command\Member\ChangeGrade\ChangeGrade;
 
 it('can change a grade', function () {
-    // Arrange
     $id = 1;
     $code = 'GRD123';
     $name = 'Example Grade';
     $color = '#FF0000';
 
-    // Act
     $changeGrade = ChangeGrade::hydrateFromJson((object) [
         'id' => $id,
         'code' => $code,
@@ -26,9 +24,8 @@ it('can change a grade', function () {
         'color' => $color,
     ]);
 
-    // Assert
     expect($changeGrade->getId())->toBe($id)
         ->and($changeGrade->getCode())->toBe($code)
         ->and($changeGrade->getName())->toBe($name)
         ->and($changeGrade->getColor())->toBe($color);
-});
+})->group('unit');

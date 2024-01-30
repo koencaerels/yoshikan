@@ -14,12 +14,10 @@ use App\YoshiKan\Application\Command\Member\MarkSubscriptionAsFinished\MarkSubsc
 it('can mark subscription as finished', function () {
     $subscriptionId = 123;
 
-    // Test maker method
     $markAsFinished = MarkSubscriptionAsFinished::make($subscriptionId);
     expect($markAsFinished->getId())->toBe($subscriptionId);
 
-    // Test hydrate from JSON method
     $json = (object) ['id' => $subscriptionId];
     $markAsFinished = MarkSubscriptionAsFinished::hydrateFromJson($json);
     expect($markAsFinished->getId())->toBe($subscriptionId);
-});
+})->group('unit');

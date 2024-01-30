@@ -12,14 +12,12 @@
 use App\YoshiKan\Application\Command\Member\ChangeFederation\ChangeFederation;
 
 it('can change a federation', function () {
-    // Arrange
     $id = 1;
     $code = 'FED123';
     $name = 'Example Federation';
     $yearlySubscriptionFee = 100;
     $publicLabel = 'Public Federation';
 
-    // Act
     $changeFederation = ChangeFederation::hydrateFromJson((object) [
         'id' => $id,
         'code' => $code,
@@ -28,10 +26,9 @@ it('can change a federation', function () {
         'publicLabel' => $publicLabel,
     ]);
 
-    // Assert
     expect($changeFederation->getId())->toBe($id)
         ->and($changeFederation->getCode())->toBe($code)
         ->and($changeFederation->getName())->toBe($name)
         ->and($changeFederation->getYearlySubscriptionFee())->toBe($yearlySubscriptionFee)
         ->and($changeFederation->getPublicLabel())->toBe($publicLabel);
-});
+})->group('unit');

@@ -46,8 +46,8 @@ it('can extend member subscription', function () {
         'sendMail' => true,
     ];
 
-    // Test hydrate from JSON method
     $memberExtendSubscription = MemberExtendSubscription::hydrateFromJson($json);
+
     expect($memberExtendSubscription->getMemberId())->toBe(123)
         ->and($memberExtendSubscription->getFederationId())->toBe(456)
         ->and($memberExtendSubscription->getLocationId())->toBe(789)
@@ -84,4 +84,4 @@ it('can extend member subscription', function () {
         ->and($memberExtendSubscription->getRemarks())->toBe('No remarks')
         ->and($memberExtendSubscription->getTotal())->toBe(150.0)
         ->and($memberExtendSubscription->isSendMail())->toBeTrue();
-});
+})->group('unit');

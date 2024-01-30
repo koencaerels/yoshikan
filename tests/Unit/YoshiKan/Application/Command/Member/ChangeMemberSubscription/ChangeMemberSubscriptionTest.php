@@ -11,9 +11,7 @@
 
 use App\YoshiKan\Application\Command\Member\ChangeMemberSubscription\ChangeMemberSubscription;
 
-// Rewrite the test using Pest's chaining syntax
 test('change member subscription', function () {
-    // Arrange
     $memberId = 1;
     $federationId = 2;
     $membershipStart = new DateTimeImmutable('2023-01-01');
@@ -34,11 +32,8 @@ test('change member subscription', function () {
         'numberOfTraining' => $numberOfTraining,
     ];
 
-    // Act
     $changeMemberSubscription = ChangeMemberSubscription::hydrateFromJson($json);
 
-    // Assert
-    // Chained expect functions to check all properties at once
     expect($changeMemberSubscription->getMemberId())->toBe($memberId)
         ->and($changeMemberSubscription->getFederationId())->toBe($federationId)
         ->and($changeMemberSubscription->getMembershipStart())->toEqual($membershipStart)
@@ -47,4 +42,4 @@ test('change member subscription', function () {
         ->and($changeMemberSubscription->getLicenseEnd())->toEqual($licenseEnd)
         ->and($changeMemberSubscription->isMemberShipIsHalfYear())->toBe($memberShipIsHalfYear)
         ->and($changeMemberSubscription->getNumberOfTraining())->toBe($numberOfTraining);
-});
+})->group('unit');

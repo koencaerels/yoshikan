@@ -11,9 +11,7 @@
 
 use App\YoshiKan\Application\Command\Member\ChangeMemberRemarks\ChangeMemberRemarks;
 
-// Rewrite the test using Pest's chaining syntax
 test('change member remarks', function () {
-    // Arrange
     $id = 1;
     $remarks = 'This member has been exceptionally active in the past few months.';
 
@@ -22,11 +20,8 @@ test('change member remarks', function () {
         'remarks' => $remarks,
     ];
 
-    // Act
     $changeMemberRemarks = ChangeMemberRemarks::hydrateFromJson($json);
 
-    // Assert
-    // Chained expect functions to check all properties at once
     expect($changeMemberRemarks->getId())->toBe($id)
         ->and($changeMemberRemarks->getRemarks())->toBe($remarks);
-});
+})->group('unit');

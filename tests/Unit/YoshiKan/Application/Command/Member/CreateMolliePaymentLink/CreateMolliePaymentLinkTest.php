@@ -16,4 +16,4 @@ it('can create Mollie payment link', function () {
     $paymentLink = CreateMolliePaymentLink::make($subscriptionId);
 
     expect($paymentLink->getSubscriptionId())->toBe($subscriptionId);
-});
+})->group('unit');

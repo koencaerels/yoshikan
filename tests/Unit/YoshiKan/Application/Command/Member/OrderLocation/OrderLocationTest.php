@@ -12,23 +12,13 @@
 use App\YoshiKan\Application\Command\Member\OrderLocation\OrderLocation;
 
 it('can create OrderLocation instance', function () {
-    // Sample data
     $sequence = [1, 2, 3];
-
-    // Create OrderLocation instance
     $orderLocation = new OrderLocation($sequence);
-
-    // Assertions
     expect($orderLocation->getSequence())->toBe($sequence);
-});
+})->group('unit');
 
 it('can hydrate OrderLocation instance from JSON', function () {
-    // Sample JSON data
     $jsonData = (object) ['sequence' => [4, 5, 6]];
-
-    // Hydrate OrderLocation instance from JSON
     $orderLocation = OrderLocation::hydrateFromJson($jsonData);
-
-    // Assertions
     expect($orderLocation->getSequence())->toBe($jsonData->sequence);
-});
+})->group('unit');

@@ -74,6 +74,11 @@ jobs:
       - name: QA PSALM
         run: ./vendor/bin/psalm
           
+      ## —— Backend Tests ———————————————————————————————————————————————————         
+               
+      - name: Execute tests (Unit & Integration Tests) via PestPHP
+        run: ./vendor/bin/pest
+          
       ## —— Yarn ————————————————————————————————————————————————————————————
       
       - name: Nodejs install
@@ -93,7 +98,3 @@ jobs:
           cd frontends/member_module/
           npm install
           npm run build-only
-
-## —— Testing ————————————————————————————————————————————————————————————
-#      - name: Execute tests (Unit & Feature Tests) via PestPHP
-#        run: ./vendor/bin/pest

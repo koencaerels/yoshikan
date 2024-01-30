@@ -12,7 +12,6 @@
 use App\YoshiKan\Application\Command\Member\NewMemberWebSubscription\NewMemberWebSubscription;
 
 it('can hydrate NewMemberWebSubscription from JSON', function () {
-    // Sample JSON object
     $jsonObject = json_decode('{
         "type": "type",
         "federationId": 123,
@@ -42,10 +41,8 @@ it('can hydrate NewMemberWebSubscription from JSON', function () {
         "honeyPot": "pot"
     }');
 
-    // Hydrate from JSON
     $newMemberWebSubscription = NewMemberWebSubscription::hydrateFromJson($jsonObject);
 
-    // Assertions
     expect($newMemberWebSubscription->getType())->toBe($jsonObject->type)
         ->and($newMemberWebSubscription->getFederationId())->toBe($jsonObject->federationId)
         ->and($newMemberWebSubscription->getLocationId())->toBe($jsonObject->locationId)
@@ -72,4 +69,4 @@ it('can hydrate NewMemberWebSubscription from JSON', function () {
         ->and($newMemberWebSubscription->getRemarks())->toBe($jsonObject->remarks)
         ->and($newMemberWebSubscription->isJudogiBelt())->toBe($jsonObject->isJudogiBelt)
         ->and($newMemberWebSubscription->getHoneyPot())->toBe($jsonObject->honeyPot);
-});
+})->group('unit');

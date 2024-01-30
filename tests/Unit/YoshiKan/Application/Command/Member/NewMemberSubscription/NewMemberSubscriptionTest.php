@@ -12,7 +12,6 @@
 use App\YoshiKan\Application\Command\Member\NewMemberSubscription\NewMemberSubscription;
 
 it('can hydrate NewMemberSubscription from JSON', function () {
-    // Sample JSON object
     $jsonObject = json_decode('{
         "type": "type",
         "federationId": 123,
@@ -58,10 +57,8 @@ it('can hydrate NewMemberSubscription from JSON', function () {
         "sendMail": true
     }');
 
-    // Hydrate from JSON
     $newMemberSubscription = NewMemberSubscription::hydrateFromJson($jsonObject);
 
-    // Assertions
     expect($newMemberSubscription->getType())->toBe($jsonObject->type)
         ->and($newMemberSubscription->getFederationId())->toBe($jsonObject->federationId)
         ->and($newMemberSubscription->getLocationId())->toBe($jsonObject->locationId)
@@ -104,4 +101,4 @@ it('can hydrate NewMemberSubscription from JSON', function () {
         ->and($newMemberSubscription->isJudogiBelt())->toBe($jsonObject->isJudogiBelt)
         ->and($newMemberSubscription->getNewMemberFee())->toBe($jsonObject->newMemberFee)
         ->and($newMemberSubscription->isSendMail())->toBe($jsonObject->sendMail);
-});
+})->group('unit');

@@ -18,4 +18,4 @@ it('can delete member image', function () {
 
     expect($deleteImageCommand->getId())->toBe($imageId)
         ->and($deleteImageCommand->getUploadFolder())->toBe($uploadFolder);
-});
+})->group('unit');

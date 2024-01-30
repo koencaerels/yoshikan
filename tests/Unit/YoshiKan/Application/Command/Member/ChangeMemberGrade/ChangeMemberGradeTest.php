@@ -27,4 +27,4 @@ test('change member grade', function () {
     expect($changeMemberGrade->getId())->toBe($id)
         ->and($changeMemberGrade->getGradeId())->toBe($gradeId)
         ->and($changeMemberGrade->getRemark())->toBe($remark);
-});
+})->group('unit');

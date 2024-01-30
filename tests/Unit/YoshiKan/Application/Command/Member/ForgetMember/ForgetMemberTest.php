@@ -20,4 +20,4 @@ it('can forget member', function () {
     $json = (object) ['memberId' => $memberId];
     $forgetMember = ForgetMember::hydrateFromJson($json);
     expect($forgetMember->getMemberId())->toBe($memberId);
-});
+})->group('unit');
