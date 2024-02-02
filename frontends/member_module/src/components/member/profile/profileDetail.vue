@@ -34,12 +34,26 @@
                     <div class="clear-left"/>
                 </div>
                 <div class="block">
-                    <div class="pt-2 text-xs text-gray-500"
-                         v-if="memberStore.memberDetail?.memberSubscriptionIsHalfYear">
-                        Halfjaarlijks
-                    </div>
-                    <div v-else class="pt-2 text-xs text-gray-500">
-                        Jaarlijks
+                    <div class="flex gap-4">
+                        <div class="pt-2 text-xs text-gray-500 pl-4"
+                             v-if="memberStore.memberDetail?.memberSubscriptionIsHalfYear">
+                            Halfjaarlijks
+                        </div>
+                        <div v-else class="pt-2 text-xs text-gray-500 pl-4">
+                            Jaarlijks
+                        </div>
+                        <div class="flex-grow">&nbsp;</div>
+                        <div class="pt-2 text-xs text-gray-500 pr-4">
+                            <div v-if="memberStore.memberDetail.numberOfTraining == 1">
+                                1 training per week
+                            </div>
+                            <div v-if="memberStore.memberDetail.numberOfTraining == 2">
+                                2 trainingen per week
+                            </div>
+                            <div v-if="memberStore.memberDetail.numberOfTraining > 2">
+                                3-5 trainingen per week
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right">
