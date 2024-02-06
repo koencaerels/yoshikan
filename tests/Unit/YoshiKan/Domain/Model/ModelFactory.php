@@ -21,10 +21,24 @@ use App\YoshiKan\Domain\Model\Member\Member;
 use App\YoshiKan\Domain\Model\Member\Settings;
 use App\YoshiKan\Domain\Model\Member\Subscription;
 use App\YoshiKan\Domain\Model\Member\SubscriptionType;
+use Bolt\Entity\User;
 use Symfony\Component\Uid\Uuid;
 
 class ModelFactory
 {
+
+    public static function makeUser(int $id): User
+    {
+        $user = new User();
+        $user->setId($id);
+        $user->setEmail('test@test.com');
+        $user->setUsername('username');
+        $user->setPassword('password');
+        $user->setRoles(['ROLE_USER']);
+        $user->setDisplayName('DisplayName');
+        return $user;
+    }
+
     public static function makeMember(Uuid $uuid): Member
     {
         return Member::make(

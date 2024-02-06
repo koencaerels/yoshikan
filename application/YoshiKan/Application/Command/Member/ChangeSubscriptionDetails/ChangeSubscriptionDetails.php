@@ -127,7 +127,7 @@ class ChangeSubscriptionDetails
             trim($json->remarks),
             boolval($json->isJudogiBelt),
             floatval($json->newMemberFee),
-            boolval($json->isSendMail),
+            boolval($json->sendMail),
         );
     }
 
