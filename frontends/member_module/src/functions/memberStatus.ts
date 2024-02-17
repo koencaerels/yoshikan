@@ -6,7 +6,7 @@ export function memberStatusColor(member: Member): string {
     let today: number = parseInt(moment().format('YYYYMM'));
 
     if (member.memberSubscriptionIsPayed) {
-        let end: number = parseInt(moment(member.memberSubscriptionEnd).format('YYYYMM'));
+        let end: number = parseInt(moment(member.memberSubscriptionEnd).subtract(1, 'months').format('YYYYMM'));
         if (end <= today) {
             color = 'bg-yellow-200';
         }
@@ -20,7 +20,7 @@ export function memberStatusColor(member: Member): string {
 export function showMemberSubscriptionExtendButton(member: Member): boolean {
 
     let today: number = parseInt(moment().format('YYYYMM'));
-    let end: number = parseInt(moment(member.memberSubscriptionEnd).format('YYYYMM'));
+    let end: number = parseInt(moment(member.memberSubscriptionEnd).subtract(1, 'months').format('YYYYMM'));
 
     return (end <= today);
 

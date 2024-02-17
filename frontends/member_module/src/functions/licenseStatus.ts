@@ -7,7 +7,7 @@ export function licenseStatusColor(member: Member): string {
     let today: number = parseInt(moment().format('YYYYMM'));
 
     if (member.licenseIsPayed) {
-        let end: number = parseInt(moment(member.licenseEnd).format('YYYYMM'));
+        let end: number = parseInt(moment(member.licenseEnd).subtract(1, 'months').format('YYYYMM'));
         if (end <= today) {
             color = 'bg-yellow-200';
         }
@@ -21,7 +21,7 @@ export function licenseStatusColor(member: Member): string {
 export function showLicenseExtendButton(member: Member): boolean {
 
     let today: number = parseInt(moment().format('YYYYMM'));
-    let end: number = parseInt(moment(member.licenseEnd).format('YYYYMM'));
+    let end: number = parseInt(moment(member.licenseEnd).subtract(1, 'months').format('YYYYMM'));
 
     return (end <= today);
 
