@@ -165,22 +165,22 @@
                     </div>
 
                     <div class="text-xl mt-4">Contact (ouders)</div>
-                    <div class="flex flex-row mt-1">
+                    <div class="flex flex-row mt-1 gap-2">
+                        <div class="basis-1/2">
+                            <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
+                            <span class="p-input-icon-right w-full">
+                                <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
+                                <i v-if="!new$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>
+                                <i v-if="new$.contactFirstname.$invalid" class="pi pi-times text-red-600"/>
+                            </span>
+                        </div>
                         <div class="basis-1/2">
                             <div class="mb-1"><label class="text-xs">Contact Naam *</label></div>
                             <span class="p-input-icon-right w-full">
-                            <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
-                            <i v-if="!new$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
-                            <i v-if="new$.contactLastname.$invalid" class="pi pi-times text-red-600"/>
-                        </span>
-                        </div>
-                        <div class="basis-1/2 ml-2">
-                            <div class="mb-1"><label class="text-xs">Voornaam *</label></div>
-                            <span class="p-input-icon-right w-full">
-                            <InputText class="w-full p-inputtext-sm" v-model="command.contactFirstname"/>
-                            <i v-if="!new$.contactFirstname.$invalid" class="pi pi-check text-green-600"/>
-                            <i v-if="new$.contactFirstname.$invalid" class="pi pi-times text-red-600"/>
-                        </span>
+                                <InputText class="w-full p-inputtext-sm" v-model="command.contactLastname"/>
+                                <i v-if="!new$.contactLastname.$invalid" class="pi pi-check text-green-600"/>
+                                <i v-if="new$.contactLastname.$invalid" class="pi pi-times text-red-600"/>
+                            </span>
                         </div>
                     </div>
                     <div class="flex flex-row mt-1">
