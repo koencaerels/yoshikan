@@ -56,7 +56,8 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right">
+                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail) && memberStore.memberDetail.status === 'actief'"
+                     class="text-right mt-2">
                     <Button @click="showExtensionFormFn()"
                             label="Verleng lidgeld"
                             class="p-button-sm p-button-secondary"
@@ -89,17 +90,19 @@
                         {{ memberStore.memberDetail.federation.name }}
                     </div>
                 </div>
-                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right">
-                    <Button @click="showExtensionFormFn()"
-                            label="Verleng vergunning"
-                            class="p-button-sm p-button-secondary"
-                            icon="pi pi-send"/>
-                </div>
-                <div v-else class="text-right">
-                    <Button @click="switchLicense()"
-                            label="Switch vergunning"
-                            class="p-button-sm p-button-secondary"
-                            icon="pi pi-send"/>
+                <div v-if="memberStore.memberDetail.status === 'actief'">
+                    <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right mt-2">
+                        <Button @click="showExtensionFormFn()"
+                                label="Verleng vergunning"
+                                class="p-button-sm p-button-secondary"
+                                icon="pi pi-send"/>
+                    </div>
+                    <div v-else class="text-right mt-2">
+                        <Button @click="switchLicense()"
+                                label="Switch vergunning"
+                                class="p-button-sm p-button-secondary"
+                                icon="pi pi-send"/>
+                    </div>
                 </div>
             </div>
         </div>
