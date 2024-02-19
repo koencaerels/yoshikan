@@ -12,19 +12,18 @@
 use App\YoshiKan\Domain\Model\Common\ChecksumEntity;
 
 it('creates a content code', function () {
-
-    $checksumEntity = new class () {
+    $checksumEntity = new class() {
         use ChecksumEntity;
 
         private string $firstname = 'firstname';
         private string $lastname = 'lastname';
-        private \DateTime $createdAt;
-        private \DateTime $updatedAt;
+        private DateTime $createdAt;
+        private DateTime $updatedAt;
 
         public function __construct()
         {
-            $this->createdAt = new \DateTime();
-            $this->updatedAt = new \DateTime();
+            $this->createdAt = new DateTime();
+            $this->updatedAt = new DateTime();
         }
     };
     $contentString = hash('sha256', $_ENV['APP_SECRET']);
@@ -34,5 +33,4 @@ it('creates a content code', function () {
     $checksumEntity->setChecksum();
 
     expect($checksumEntity->getChecksum())->toBe($checksum);
-
 })->group('unit');

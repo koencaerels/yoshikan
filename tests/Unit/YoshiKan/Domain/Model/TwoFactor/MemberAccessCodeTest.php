@@ -1,7 +1,7 @@
 <?php
 
-use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
 use App\Tests\Unit\YoshiKan\Domain\Model\ModelFactory;
+use App\YoshiKan\Domain\Model\TwoFactor\MemberAccessCode;
 use Bolt\Entity\User;
 use Symfony\Component\Uid\Uuid;
 

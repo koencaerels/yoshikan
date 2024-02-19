@@ -26,7 +26,6 @@ use Symfony\Component\Uid\Uuid;
 
 class ModelFactory
 {
-
     public static function makeUser(int $id): User
     {
         $user = new User();
@@ -36,6 +35,7 @@ class ModelFactory
         $user->setPassword('password');
         $user->setRoles(['ROLE_USER']);
         $user->setDisplayName('DisplayName');
+
         return $user;
     }
 

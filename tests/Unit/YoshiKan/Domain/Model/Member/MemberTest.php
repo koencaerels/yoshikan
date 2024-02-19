@@ -17,7 +17,7 @@ it('can create a member', function () {
         uuid: $uuid,
         firstname: 'John',
         lastname: 'Doe',
-        dateOfBirth: new \DateTimeImmutable('1990-01-01'),
+        dateOfBirth: new DateTimeImmutable('1990-01-01'),
         gender: $gender,
         grade: $grade,
         location: $location,
@@ -33,7 +33,7 @@ it('can create a member', function () {
     );
     expect($member->getFirstname())->toBe('John')
         ->and($member->getLastname())->toBe('Doe')
-        ->and($member->getDateOfBirth())->toBeInstanceOf(\DateTimeImmutable::class)
+        ->and($member->getDateOfBirth())->toBeInstanceOf(DateTimeImmutable::class)
         ->and($member->getGender())->toBe(Gender::M)
         ->and($member->getGrade())->toBe($grade)
         ->and($member->getLocation())->toBe($location)
@@ -57,7 +57,7 @@ it('can change member details', function () {
         uuid: $uuid,
         firstname: 'John',
         lastname: 'Doe',
-        dateOfBirth: new \DateTimeImmutable('1990-01-01'),
+        dateOfBirth: new DateTimeImmutable('1990-01-01'),
         gender: $gender,
         grade: $grade,
         location: $location,
@@ -75,7 +75,7 @@ it('can change member details', function () {
         firstname: 'Jane',
         lastname: 'Smith',
         gender: Gender::V,
-        dateOfBirth: new \DateTimeImmutable('1995-05-05'),
+        dateOfBirth: new DateTimeImmutable('1995-05-05'),
         status: MemberStatus::ACTIVE,
         location: ModelFactory::makeLocation(Uuid::v4()),
         nationalRegisterNumber: '98765432109',
@@ -92,7 +92,7 @@ it('can change member details', function () {
     );
     expect($member->getFirstname())->toBe('Jane')
         ->and($member->getLastname())->toBe('Smith')
-        ->and($member->getDateOfBirth())->toBeInstanceOf(\DateTimeImmutable::class)
+        ->and($member->getDateOfBirth())->toBeInstanceOf(DateTimeImmutable::class)
         ->and($member->getGender())->toBe(Gender::V)
         ->and($member->getStatus())->toBe(MemberStatus::ACTIVE)
         ->and($member->getLocation())->not()->toBe($location)

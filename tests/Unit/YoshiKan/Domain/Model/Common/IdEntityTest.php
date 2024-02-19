@@ -13,8 +13,7 @@ use App\YoshiKan\Domain\Model\Common\IdEntity;
 use Symfony\Component\Uid\Uuid;
 
 it('creates identifiers for an object', function () {
-
-    $entityId = new class () {
+    $entityId = new class() {
         use IdEntity;
     };
     $uuid = Uuid::v4();
@@ -22,5 +21,4 @@ it('creates identifiers for an object', function () {
 
     expect($entityId->getId())->toBe(1)
         ->and($entityId->getUuid())->toBe($uuid);
-
 })->group('unit');

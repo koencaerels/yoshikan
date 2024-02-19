@@ -9,7 +9,7 @@ it('can create a grade log', function () {
     $member = ModelFactory::makeMember(Uuid::v4());
     $fromGrade = ModelFactory::makeGrade(Uuid::v4());
     $toGrade = ModelFactory::makeGrade(Uuid::v4());
-    $date = new \DateTimeImmutable();
+    $date = new DateTimeImmutable();
     $remark = 'Promoted to next grade';
     $gradeLog = GradeLog::make(
         uuid: $uuid,

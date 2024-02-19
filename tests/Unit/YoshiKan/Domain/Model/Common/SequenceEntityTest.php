@@ -12,11 +12,9 @@
 use App\YoshiKan\Domain\Model\Common\SequenceEntity;
 
 it('creates sequences for an object', function () {
-
-    $sequenceEntity = new class () {
+    $sequenceEntity = new class() {
         use SequenceEntity;
     };
     $sequenceEntity->setSequence(1);
     expect($sequenceEntity->getSequence())->toBe(1);
-
 })->group('unit');
