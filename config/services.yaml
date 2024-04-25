@@ -202,3 +202,10 @@ services:
     App\YoshiKan\Infrastructure\Web\Controller\:
         resource: '../application/YoshiKan/Infrastructure/Web/Controller'
         tags: [ 'controller.service_arguments' ]
+        
+    App\YoshiKan\Infrastructure\CLI\CreateApiDocumentation:
+        autowire: true
+        tags:
+            - { name: console.command }
+        
+    Nelmio\ApiDocBundle\ApiDocGenerator: '@nelmio_api_doc.generator.default'
