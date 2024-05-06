@@ -214,4 +214,15 @@ final class MemberRepository extends ServiceEntityRepository implements \App\Yos
 
         return $q->getQuery()->getResult();
     }
+
+    /**
+     * @return Member[]
+     */
+    public function getAll(): array
+    {
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q->addOrderBy('t.id', 'DESC');
+
+        return $q->getQuery()->getResult();
+    }
 }

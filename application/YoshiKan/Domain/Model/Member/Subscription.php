@@ -396,6 +396,11 @@ class Subscription
         $this->addressCity = $addressCity;
     }
 
+    public function setContactEmail(string $contactEmail): void
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
     public function fullChange(
         string $contactFirstname,
         string $contactLastname,
