@@ -41,17 +41,13 @@ final class GradeRepository extends ServiceEntityRepository implements \App\Yosh
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Grade $model): ?int
+    public function save(Grade $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Grade $model): bool

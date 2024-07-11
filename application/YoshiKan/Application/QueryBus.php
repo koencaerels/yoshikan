@@ -35,7 +35,7 @@ class QueryBus
     use GetMemberTrait;
 
     protected BasePermissionService $permission;
-    private const ADMIN = 1;
+    private const int ADMIN = 1;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Constructor

@@ -41,17 +41,13 @@ final class LocationRepository extends ServiceEntityRepository implements \App\Y
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Location $model): ?int
+    public function save(Location $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Location $model): bool

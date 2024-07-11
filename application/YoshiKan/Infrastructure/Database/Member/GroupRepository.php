@@ -41,17 +41,13 @@ final class GroupRepository extends ServiceEntityRepository implements \App\Yosh
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Group $model): ?int
+    public function save(Group $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Group $model): bool

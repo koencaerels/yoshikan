@@ -33,17 +33,13 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(SubscriptionItem $model): ?int
+    public function save(SubscriptionItem $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(SubscriptionItem $model): bool

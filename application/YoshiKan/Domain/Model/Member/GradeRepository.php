@@ -19,7 +19,7 @@ interface GradeRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Grade $model): ?int;
+    public function save(Grade $model): int;
 
     public function delete(Grade $model): bool;
 

@@ -10,7 +10,7 @@ interface MemberImageRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(MemberImage $model): ?int;
+    public function save(MemberImage $model): int;
 
     public function delete(MemberImage $model): bool;
 

@@ -42,17 +42,13 @@ final class MemberAccessCodeRepository extends ServiceEntityRepository implement
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(MemberAccessCode $model): ?int
+    public function save(MemberAccessCode $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(MemberAccessCode $model): bool

@@ -10,7 +10,7 @@ interface SubscriptionItemRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(SubscriptionItem $model): ?int;
+    public function save(SubscriptionItem $model): int;
 
     public function delete(SubscriptionItem $model): bool;
 

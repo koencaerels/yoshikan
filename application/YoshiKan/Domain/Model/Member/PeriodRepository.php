@@ -19,7 +19,7 @@ interface PeriodRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Period $model): ?int;
+    public function save(Period $model): int;
 
     public function delete(Period $model): bool;
 

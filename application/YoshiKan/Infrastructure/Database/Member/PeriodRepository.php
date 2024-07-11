@@ -41,17 +41,13 @@ final class PeriodRepository extends ServiceEntityRepository implements \App\Yos
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Period $model): ?int
+    public function save(Period $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Period $model): bool

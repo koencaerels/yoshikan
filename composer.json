@@ -4,7 +4,7 @@
     "description": "Yoshi Kan, judoschool voor jong en oud.",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "beberlei/doctrineextensions": "^1.3",
         "bobdenotter/configuration-notices": "^1.3",
         "bobdenotter/sitemap": "^1.3",

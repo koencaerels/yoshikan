@@ -19,7 +19,7 @@ interface GroupRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Group $model): ?int;
+    public function save(Group $model): int;
 
     public function delete(Group $model): bool;
 

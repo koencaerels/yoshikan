@@ -19,7 +19,7 @@ interface JudogiRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Judogi $model): ?int;
+    public function save(Judogi $model): int;
 
     public function delete(Judogi $model): bool;
 

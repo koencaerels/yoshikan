@@ -19,7 +19,7 @@ interface MemberRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Member $model): ?int;
+    public function save(Member $model): int;
 
     public function delete(Member $model): bool;
 

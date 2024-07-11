@@ -10,7 +10,7 @@ interface FederationRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Federation $model): ?int;
+    public function save(Federation $model): int;
 
     public function delete(Federation $model): bool;
 

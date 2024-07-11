@@ -19,7 +19,7 @@ interface GradeLogRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(GradeLog $model): ?int;
+    public function save(GradeLog $model): int;
 
     public function delete(GradeLog $model): bool;
 

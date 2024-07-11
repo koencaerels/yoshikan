@@ -41,17 +41,13 @@ final class JudogiRepository extends ServiceEntityRepository implements \App\Yos
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Judogi $model): ?int
+    public function save(Judogi $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Judogi $model): bool

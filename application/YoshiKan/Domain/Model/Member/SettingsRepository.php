@@ -19,7 +19,7 @@ interface SettingsRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Settings $model): ?int;
+    public function save(Settings $model): int;
 
     public function delete(Settings $model): bool;
 

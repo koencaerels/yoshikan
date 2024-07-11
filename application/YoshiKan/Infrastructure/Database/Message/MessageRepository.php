@@ -34,17 +34,13 @@ final class MessageRepository extends ServiceEntityRepository implements \App\Yo
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Message $model): ?int
+    public function save(Message $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Message $model): bool

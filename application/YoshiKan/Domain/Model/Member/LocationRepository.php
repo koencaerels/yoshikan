@@ -19,7 +19,7 @@ interface LocationRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Location $model): ?int;
+    public function save(Location $model): int;
 
     public function delete(Location $model): bool;
 

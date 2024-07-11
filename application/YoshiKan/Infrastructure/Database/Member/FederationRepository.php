@@ -41,17 +41,13 @@ final class FederationRepository extends ServiceEntityRepository implements \App
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(Federation $model): ?int
+    public function save(Federation $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(Federation $model): bool

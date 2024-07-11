@@ -18,8 +18,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BasePermissionService
 {
-    protected const NOT_ALLOWED_DATA = 'Action not allowed for this user.';
-    protected const NOT_ALLOWED_ROLE = 'Action not allowed for this user.';
+    protected const string NOT_ALLOWED_DATA = 'Action not allowed for this user.';
+    protected const string NOT_ALLOWED_ROLE = 'Action not allowed for this user.';
 
     // ————————————————————————————————————————————————————————————————————
     // Constructor

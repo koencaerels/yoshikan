@@ -20,7 +20,7 @@ interface MemberAccessCodeRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(MemberAccessCode $model): ?int;
+    public function save(MemberAccessCode $model): int;
 
     public function delete(MemberAccessCode $model): bool;
 

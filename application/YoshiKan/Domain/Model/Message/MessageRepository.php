@@ -12,7 +12,7 @@ interface MessageRepository
 {
     public function nextIdentity(): Uuid;
 
-    public function save(Message $model): ?int;
+    public function save(Message $model): int;
 
     public function delete(Message $model): bool;
 

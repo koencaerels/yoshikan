@@ -32,17 +32,13 @@ final class MemberImageRepository extends ServiceEntityRepository implements \Ap
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(MemberImage $model): ?int
+    public function save(MemberImage $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
         $em->persist($model);
-        $id = 0;
-        if ($model->getId()) {
-            $id = $model->getId();
-        }
 
-        return $id;
+        return $model->getId() ?? 0;
     }
 
     public function delete(MemberImage $model): bool
