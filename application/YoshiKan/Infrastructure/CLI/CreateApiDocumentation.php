@@ -15,7 +15,7 @@ class CreateApiDocumentation extends Command
     // Constructor
     // ——————————————————————————————————————————————————————————————————————————
 
-    public function __construct(private ApiDocGenerator $apiDocGenerator)
+    public function __construct(/*private ApiDocGenerator $apiDocGenerator*/)
     {
         parent::__construct('openapi:gen');
     }
@@ -26,13 +26,13 @@ class CreateApiDocumentation extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Start generating OpenAPI documentation');
-        $documentation = $this->apiDocGenerator->generate();
-        $json = json_encode($documentation, \JSON_PRETTY_PRINT);
-        $jsonPath = './frontends/member_module/src/api/client/schema.json';
-        file_put_contents($jsonPath, $json);
-        $output->writeln('Done generating OpenAPI documentation');
-
-        return Command::SUCCESS;
+//        $output->writeln('Start generating OpenAPI documentation');
+//        $documentation = $this->apiDocGenerator->generate();
+//        $json = json_encode($documentation, \JSON_PRETTY_PRINT);
+//        $jsonPath = './frontends/member_module/src/api/client/schema.json';
+//        file_put_contents($jsonPath, $json);
+//        $output->writeln('Done generating OpenAPI documentation');
+//
+//        return Command::SUCCESS;
     }
 }
