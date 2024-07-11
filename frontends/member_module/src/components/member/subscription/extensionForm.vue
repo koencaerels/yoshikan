@@ -23,7 +23,7 @@
                 <div class="basis-5/6">
                     <div class="flex gap-4">
                         <div
-                            class="text-center rounded-full bg-blue-100 text-black px-2 font-bold text-xs w-[4rem] h-[1rem] mr-2 mt-1">
+                            class="text-center rounded-full bg-blue-100 text-black px-2 font-bold text-xs w-[5rem] h-[1rem] mr-2 mt-1">
                             YK-{{ command.memberId }}
                         </div>
                         <div class="text-base font-bold">

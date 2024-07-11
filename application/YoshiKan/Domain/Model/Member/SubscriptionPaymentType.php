@@ -17,5 +17,5 @@ enum SubscriptionPaymentType: string
 {
     case TRANSFER = 'overschrijving';
     case MOLLIE = 'mollie';
-    case CASH = 'cash';
+    case CONTANT = 'contant';
 }

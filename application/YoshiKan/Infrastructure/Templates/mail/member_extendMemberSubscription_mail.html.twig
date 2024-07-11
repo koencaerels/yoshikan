@@ -25,13 +25,14 @@
         verzoeken wij je vriendelijk om een bedrag van <strong>{{ subscription.total }} €</strong> over te maken naar
         het volgende bankrekeningnummer: <strong>BE37 7330 0101 8328</strong> met vermelding van de referentie
         <strong>"YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}"</strong>.
+        <br>Je kunt het bedrag ook contant betalen tijdens één van de volgende trainingen.
     </p>
-    {% if (subscription.paymentLink is not empty) %}
-    <p>
-        Of betaal online via deze Mollie-link:
-        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.
-    </p>
-    {% endif %}
+{#    {% if (subscription.paymentLink is not empty) %}#}
+{#    <p>#}
+{#        Of betaal online via deze Mollie-link:#}
+{#        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.#}
+{#    </p>#}
+{#    {% endif %}#}
     <p>
         Als {{ subscription.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje. Alvast bedankt.
     </p>

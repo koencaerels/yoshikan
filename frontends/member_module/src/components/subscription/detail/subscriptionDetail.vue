@@ -64,7 +64,7 @@
                 Judoka
             </div>
             <div v-if="memberStore.subscriptionDetail.memberId">
-                <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs mt-1">
+                <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[5rem] mt-1">
                     YK-{{ memberStore.subscriptionDetail.memberId }}
                 </div>
             </div>
@@ -234,6 +234,13 @@
 
     <ConfirmPopup/>
 
+    <!-- -- mark subscription as paid ------------------------------------------------------------------------------ -->
+    <Dialog v-model:visible="showMarkSubscriptionAsPaid"
+            header="Geef type betaling in"
+            :modal="true">
+        <mark-subscription-as-paid @paid="markAsPaidHandler"/>
+    </Dialog>
+
     <!-- -- message detail ----------------------------------------------------------------------------------------- -->
     <Dialog v-model:visible="showMessageDetail"
             v-if="memberStore.messageDetail"
@@ -269,8 +276,6 @@ import moment from "moment/moment";
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
 import {useAppStore} from "@/store/app";
-import type {MarkSubscriptionAsPayedCommand} from "@/api/command/subscription/markSubscriptionAsPayed";
-import {markSubscriptionAsPayed} from "@/api/command/subscription/markSubscriptionAsPayed";
 import type {MarkSubscriptionAsCanceledCommand} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {markSubscriptionAsCanceled} from "@/api/command/subscription/markSubscriptionAsCanceled";
 import {SubscriptionStatusEnum} from "@/api/query/enum";
@@ -282,6 +287,7 @@ import {
     type MarkSubscriptionAsFinishedCommand
 } from "@/api/command/subscription/markSubscriptionAsFinished";
 import ChangeSubscriptionForm from "@/components/subscription/changeSubscription/changeSubscriptionForm.vue";
+import MarkSubscriptionAsPaid from "@/components/subscription/dialog/MarkSubscriptionAsPaid.vue";
 
 const memberStore = useMemberStore();
 const isLoading = ref<boolean>(false);
@@ -293,7 +299,20 @@ const showMessageDetail = ref<boolean>(false);
 const apiUrl = import.meta.env.VITE_API_URL as string;
 const emit = defineEmits(["paid", "canceled", "subscription-reviewed", "finished", "subscription-changed"]);
 
-// -- review subscription functions ------------------------------------------------------------------------------------
+// -- mark subscription as paid functions ----------------------------------
+
+const showMarkSubscriptionAsPaid = ref<boolean>(false);
+
+function markAsPaid() {
+    showMarkSubscriptionAsPaid.value = true;
+}
+
+function markAsPaidHandler() {
+    showMarkSubscriptionAsPaid.value = false;
+    emit('paid');
+}
+
+// -- review subscription functions ---------------------------------------
 
 const showReviewSubscription = ref<boolean>(false);
 
@@ -306,7 +325,7 @@ function subscriptionReviewed() {
     emit('subscription-reviewed');
 }
 
-// -- change subscription functions ------------------------------------------------------------------------------------
+// -- change subscription functions ---------------------------------------
 
 const showChangeSubscription = ref<boolean>(false);
 
@@ -329,30 +348,6 @@ async function showMessageDetailFn(messageId: number) {
 function printSubscription() {
     let url = apiUrl + '/subscriptions/print?ids=' + memberStore.subscriptionDetail.id;
     window.open(url, '_blank');
-}
-
-// -- payed function ---------------------------------------------
-
-const commandPay = ref<MarkSubscriptionAsPayedCommand>({
-    id: memberStore.subscriptionDetail?.id ?? 0,
-});
-
-async function markAsPaid() {
-    if (commandPay.value.id !== 0) {
-        isLoading.value = true;
-        let result = await markSubscriptionAsPayed(commandPay.value);
-        toaster.add({
-            severity: "success",
-            summary: "Betaling voor de inschrijving is geconfirmeerd.",
-            detail: "",
-            life: appStore.toastLifeTime,
-        });
-        await memberStore.reloadSubscriptionDetail();
-        await memberStore.reloadMemberDetail();
-        memberStore.increaseCounter();
-        isLoading.value = false;
-        emit('paid');
-    }
 }
 
 // -- finish function ---------------------------------------------

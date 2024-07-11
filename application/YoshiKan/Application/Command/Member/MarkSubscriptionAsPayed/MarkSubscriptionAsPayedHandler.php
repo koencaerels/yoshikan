@@ -42,8 +42,9 @@ class MarkSubscriptionAsPayedHandler
         $subscription = $this->subscriptionRepository->getById($command->getId());
 
         if (SubscriptionStatus::AWAITING_PAYMENT === $subscription->getStatus()) {
+            $type = SubscriptionPaymentType::from($command->getType());
             $subscription->changeStatus(SubscriptionStatus::PAYED);
-            $subscription->setPaymentTypeInfo(SubscriptionPaymentType::TRANSFER);
+            $subscription->setPaymentTypeInfo($type);
             $this->subscriptionRepository->save($subscription);
             $result = true;
         }

@@ -22,13 +22,14 @@
         van volgende referentie
         "<strong>YKS-{{ subscription.id }} {{ subscription.lastname }} {{ subscription.firstname }}</strong>".
         Zo kunnen we je betaling snel identificeren.
+        <br>Je kunt het bedrag ook contant betalen tijdens één van de volgende trainingen.
     </p>
-    {% if (subscription.paymentLink is not empty) %}
-    <p>
-        Of betaal online via deze Mollie-link:
-        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.
-    </p>
-    {% endif %}
+{#    {% if (subscription.paymentLink is not empty) %}#}
+{#    <p>#}
+{#        Of betaal online via deze Mollie-link:#}
+{#        <a href="{{ subscription.paymentLink }}" target="_blank">{{ subscription.paymentLink }}</a>.#}
+{#    </p>#}
+{#    {% endif %}#}
     <p>
         Wanneer we je betaling hebben ontvangen, zullen we je officieel
         inschrijven en krijg je toegang tot al onze trainingen en evenementen.

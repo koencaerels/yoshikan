@@ -87,7 +87,7 @@
             <Column field="id" sortable header="Lidnr." class="text-xs">
                 <template #body="{data}">
                     <div @click="showDetailDialogFullFn(data.id)"
-                         class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[4rem]">
+                         class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[5rem]">
                         YK-{{ data.id }}
                     </div>
                 </template>

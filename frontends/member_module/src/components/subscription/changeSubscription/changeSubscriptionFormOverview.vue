@@ -34,9 +34,8 @@
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
                 Zo kunnen we je betaling snel identificeren.
             </p>
-            <p class="mt-1">
-                Of betaal online via deze Mollie-link:
-                <a href="#" class="text-blue-500">https://paymentlink.mollie.com/payment/xxxxx/</a>.
+            <p>
+                Je kunt het bedrag ook contant betalen tijdens één van de volgende trainingen.
             </p>
             <p class="mt-1">
                 Wanneer we je betaling hebben ontvangen, zullen we je officieel inschrijven

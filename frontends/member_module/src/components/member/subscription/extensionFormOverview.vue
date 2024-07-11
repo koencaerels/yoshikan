@@ -29,7 +29,7 @@
         </div>
 
         <div class="mt-4">
-            <span v-if="command.type==='hernieuwing_lidmaatschap'">Het lidmaatschap</span>
+            <span v-if="command.type==='hernieuwing-lidmaatschap'">Het lidmaatschap</span>
             <span v-if="command.type==='hernieuwing_vergunning'">De vergunning</span>
             <span v-if="command.type==='volledige_hernieuwing'">Het lidmaatschap en de vergunning</span>
             is verlopen of staat op het punt binnenkort te verlopen.
@@ -43,10 +43,7 @@
             met vermelding van de referentie
             <span class="font-bold"> "YKS-xxx
             {{ props.command.lastname }} {{ props.command.firstname }}".</span>
-
-            <br><br>Of betaal online via deze Mollie-link:
-            <a href="#" class="text-blue-500">https://paymentlink.mollie.com/payment/xxxxx/</a>.
-
+            Je kunt het bedrag ook contant betalen tijdens één van de volgende trainingen.
             <br><br>Als {{ props.command.firstname }} niet langer lid wenst te zijn, geef dan ons een seintje.
             Alvast bedankt.
         </div>

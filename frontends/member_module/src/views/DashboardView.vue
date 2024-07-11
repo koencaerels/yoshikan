@@ -46,14 +46,15 @@
                     </div>
                 </div>
 
-                <div class="mt-6">
-                    <div class="rounded-xl p-2 bg-blue-100">
-                        <a href="https://my.mollie.com/dashboard/" target="_blank">
-                            <div class="text-center"><img src="../assets/euro.png" width="50" class="mx-auto"></div>
-                            <div class="text-center">Mollie Dashboard</div>
-                        </a>
-                    </div>
-                </div>
+<!--                <div class="mt-6">-->
+<!--                    <div class="rounded-xl p-2 bg-blue-100">-->
+<!--                        <a href="https://my.mollie.com/dashboard/" target="_blank">-->
+<!--                            <div class="text-center"><img src="../assets/euro.png" width="50" class="mx-auto"></div>-->
+<!--                            <div class="text-center">Mollie Dashboard</div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+
             </div>
             <div class="basis-1/6 text-sm">
                 <div v-for="locationReport in appStore.dashboardNumbers.locationReports" class="mb-2">
@@ -169,7 +170,3 @@ const setChartDataFederations = () => {
 };
 
 </script>
-
-<style scoped>
-
-</style>

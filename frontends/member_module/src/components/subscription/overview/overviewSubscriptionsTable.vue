@@ -1,3 +1,14 @@
+<!--
+/*
+* This file is part of the Yoshi-Kan software.
+*
+* (c) Koen Caerels
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+-->
+
 <template>
     <!-- header -->
     <div id="memberOverviewHeader" class="p-1 bg-gradient-to-r text-white" :class="headerColor">
@@ -148,7 +159,7 @@
                     <div v-else class="text-gray-500 text-center ml-2">
                         <div v-if="data.memberId !== null"
                              @click="showDetailDialogFullFn(data.memberId)"
-                             class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[4rem] cursor-pointer">
+                             class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[5rem] cursor-pointer">
                             YK-{{ data.memberId }}
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import axios from "axios";
 
 export interface MarkSubscriptionAsPayedCommand {
     id: number;
+    type: string;
 }
 
 export async function markSubscriptionAsPayed(command: MarkSubscriptionAsPayedCommand) {

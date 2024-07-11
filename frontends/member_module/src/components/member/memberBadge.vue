@@ -19,7 +19,7 @@
                 <div class="float-right pr-2 mt-2">
                     <div class="flex rounded-full bg-gray-300 text-xs">
                         <div class="text-gray-500 px-2">{{ member.status }}&nbsp;&nbsp;&nbsp;</div>
-                        <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold">
+                        <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold w-[5rem]">
                             YK-{{ member.id }}
                         </div>
                     </div>

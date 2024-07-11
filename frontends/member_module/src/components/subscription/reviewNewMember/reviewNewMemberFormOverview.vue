@@ -27,17 +27,17 @@
             <p class="mt-2">
                 Om de inschrijving definitief te maken en ervoor te zorgen dat je volop kunt genieten van onze
                 judolessen, verzoeken wij je vriendelijk om een bedrag van
-                <span class="font-bold">{{ props.command.total }} €</span> over te maken
-                naar onze bankrekening op het volgende nummer:
+                <span class="font-bold">{{ props.command.total }} €</span>
+                over te maken naar onze bankrekening op het volgende nummer:
                 <span class="font-bold">BE37 7330 0101 8328</span>
                 met vermelding van volgende referentie
-                <span class="font-bold"> "YKS-{{props.command.subscriptionId}}
-            {{ props.command.lastname }} {{ props.command.firstname }}".</span>
+                <span class="font-bold">
+                    "YKS-{{props.command.subscriptionId}} {{ props.command.lastname }} {{ props.command.firstname }}".
+                </span>
                 Zo kunnen we je betaling snel identificeren.
             </p>
-            <p class="mt-1">
-                Of betaal online via deze Mollie-link:
-                <a href="#" class="text-blue-500">https://paymentlink.mollie.com/payment/xxxxx/</a>.
+            <p>
+                Je kunt het bedrag ook contant betalen tijdens één van de volgende trainingen.
             </p>
             <p class="mt-1">
                 Wanneer we je betaling hebben ontvangen, zullen we je officieel inschrijven

@@ -66,17 +66,17 @@ class ImportActiveMembersHandler
 
             $dto = new \stdClass();
             $dto->firstName = (string) $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-            $dto->lastName = mb_strtoupper($worksheet->getCellByColumnAndRow(1, $row)->getValue());
+            $dto->lastName = mb_strtoupper((string) $worksheet->getCellByColumnAndRow(1, $row)->getValue());
             $dto->dateOfBirth = Date::excelToDateTimeObject($worksheet->getCellByColumnAndRow(4, $row)->getValue())->format(\DateTimeInterface::ATOM);
             $dto->nationalNumber = (string) $worksheet->getCellByColumnAndRow(5, $row)->getValue();
             $dto->street = (string) $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-            $dto->city = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+            $dto->city = (string) $worksheet->getCellByColumnAndRow(6, $row)->getValue();
             $dto->postalCode = (string) $worksheet->getCellByColumnAndRow(7, $row)->getValue();
             $dto->contactPhone = (string) $worksheet->getCellByColumnAndRow(8, $row)->getValue();
             $dto->contactEmail = (string) $worksheet->getCellByColumnAndRow(9, $row)->getValue();
             $dto->gender = Gender::X;
-            $dto->location = $this->locationRepository->getById(LocationMapping::getLocationId($worksheet->getCellByColumnAndRow(26, $row)->getValue()));
-            $dto->grade = $this->gradeRepository->getById(GradeMapping::getGradeId($worksheet->getCellByColumnAndRow(25, $row)->getValue()));
+            $dto->location = $this->locationRepository->getById(LocationMapping::getLocationId((string) $worksheet->getCellByColumnAndRow(26, $row)->getValue()));
+            $dto->grade = $this->gradeRepository->getById(GradeMapping::getGradeId((string) $worksheet->getCellByColumnAndRow(25, $row)->getValue()));
             $dto->sporta = (bool) $worksheet->getCellByColumnAndRow(23, $row)->getValue();
             $dto->jv = (bool) $worksheet->getCellByColumnAndRow(24, $row)->getValue();
             if ($dto->sporta) {

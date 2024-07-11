@@ -21,6 +21,7 @@ class MarkSubscriptionAsPayed
 
     private function __construct(
         protected int $id,
+        protected string $type,
     ) {
     }
 
@@ -28,15 +29,16 @@ class MarkSubscriptionAsPayed
     // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
-    public static function make(int $subscriptionId): self
+    public static function make(int $subscriptionId, string $type): self
     {
-        return new self($subscriptionId);
+        return new self($subscriptionId, $type);
     }
 
     public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
             $json->id,
+            $json->type
         );
     }
 
@@ -47,5 +49,10 @@ class MarkSubscriptionAsPayed
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

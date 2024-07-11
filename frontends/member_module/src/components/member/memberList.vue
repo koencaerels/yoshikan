@@ -164,8 +164,8 @@
                 <div class="flex-none text-xs w-[1rem] text-gray-300 ml-2">
                     <font-awesome-icon icon="fa-solid fa-pen"/>
                 </div>
-                <div class="flex-none w-16">
-                    <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
+                <div class="flex-none w-24">
+                    <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[5rem]">
                         YK-{{ member.id }}
                     </div>
                 </div>
@@ -202,8 +202,8 @@
                     <div class="flex-none w-8 pl-2">
                         <edit-button @click="loadMemberDetail(member.id)"/>
                     </div>
-                    <div class="flex-none w-16 mt-1.5">
-                        <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs">
+                    <div class="flex-none w-24 mt-1.5">
+                        <div class="text-center rounded-full bg-blue-900 text-white px-2 font-bold text-xs w-[5rem]">
                             YK-{{ member.id }}
                         </div>
                     </div>
