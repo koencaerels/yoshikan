@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <title>Yoshi Kan - API Reference</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<script id="api-reference" data-url="{{ path('api_documentation_schema') }}"></script>
+{# data-proxy-url="https://api.scalar.com/request-proxy"
+    <!-- You can also set a full configuration object like this -->
+    <!-- easier for nested objects -->
+#}
+<script>
+    var configuration = {
+        theme: 'purple',
+    }
+    var apiReference = document.getElementById('api-reference')
+    apiReference.dataset.configuration = JSON.stringify(configuration)
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+</body>
+</html>

@@ -104,6 +104,7 @@ class ConfirmMemberWebSubscriptionHandler
             licenseTotal: $command->getLicenseTotal(),
             licenseIsPartSubscription: $command->isLicenseIsPartSubscription(),
             licenseIsPayed: $command->isLicenseIsPayed(),
+            newMemberFee: $command->getNewMemberFee(),
         );
         $subscription->setNewMemberFields(
             nationalRegisterNumber: $command->getNationalRegisterNumber(),
@@ -179,6 +180,7 @@ class ConfirmMemberWebSubscriptionHandler
         $result = new \stdClass();
         $result->id = $subscription->getId();
         $result->reference = 'YKS-'.$subscription->getId().': '.$command->getFirstName().' '.$command->getLastName();
+        $result->sendMail = $command->isSendMail();
 
         return $result;
     }

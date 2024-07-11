@@ -28,6 +28,7 @@ export interface Settings {
     halfYearlyFee1Training: string;
     extraTrainingFee: string;
     newMemberSubscriptionFee: string;
+    newMemberSubscriptionFeeWithoutGuide: string;
     familyDiscount: string;
 }
 
@@ -124,6 +125,7 @@ export interface Subscription {
     licenseEnd: Date;
     licenseTotal: number;
     licenseIsPartSubscription: boolean;
+    newMemberFee: number;
     // -- associations
     member: Member;
     location: Location;

@@ -86,6 +86,20 @@
         </div>
         <div class="flex flex-row mt-2">
             <div class="basis-1/3 mt-2">
+                Nieuw leden pakket zonder gids
+            </div>
+            <div class="basis-1/6">
+                <span class="p-input-icon-right">
+                    <InputText class="p-inputtext-sm w-full"
+                               v-model="command.newMemberSubscriptionFeeWithoutGuide"/>
+                    <i v-if="!v$.newMemberSubscriptionFeeWithoutGuide.$invalid" class="pi pi-check text-green-600"/>
+                    <i v-if="v$.newMemberSubscriptionFeeWithoutGuide.$invalid" class="pi pi-times text-red-600"/>
+                </span>
+            </div>
+            <div class="basis-1/12 mt-2 ml-2">€</div>
+        </div>
+        <div class="flex flex-row mt-2">
+            <div class="basis-1/3 mt-2">
                 Korting andere gezinsleden
             </div>
             <div class="basis-1/6">
@@ -142,6 +156,7 @@ const command = ref<SaveSettingsCommand>({
     halfYearlyFee1Training: appStore.configuration?.settings.halfYearlyFee1Training ?? '0',
     extraTrainingFee: appStore.configuration?.settings.extraTrainingFee ?? '0',
     newMemberSubscriptionFee: appStore.configuration?.settings.newMemberSubscriptionFee ?? '0',
+    newMemberSubscriptionFeeWithoutGuide: appStore.configuration?.settings.newMemberSubscriptionFeeWithoutGuide ?? '0',
     familyDiscount: appStore.configuration?.settings.familyDiscount ?? '0',
 });
 
@@ -152,6 +167,7 @@ const rules = {
     halfYearlyFee1Training: {required, numeric},
     extraTrainingFee: {required, numeric},
     newMemberSubscriptionFee: {required, numeric},
+    newMemberSubscriptionFeeWithoutGuide: {required, numeric},
     familyDiscount: {required, numeric},
 };
 

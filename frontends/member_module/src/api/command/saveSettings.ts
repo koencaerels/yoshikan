@@ -17,6 +17,7 @@ export interface SaveSettingsCommand {
     halfYearlyFee1Training: string;
     extraTrainingFee: string;
     newMemberSubscriptionFee: string;
+    newMemberSubscriptionFeeWithoutGuide: string;
     familyDiscount: string;
 }
 

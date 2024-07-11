@@ -70,6 +70,8 @@ class ConfirmMemberWebSubscription
         protected string $remarks,
 
         protected bool $isJudogiBelt,
+        protected float $newMemberFee,
+        protected bool $sendMail = true,
     ) {
     }
 
@@ -124,6 +126,8 @@ class ConfirmMemberWebSubscription
             floatval($json->total),
             trim($json->remarks),
             boolval($json->isJudogiBelt),
+            floatval($json->newMemberFee),
+            boolval($json->sendMail),
         );
     }
 
@@ -334,5 +338,15 @@ class ConfirmMemberWebSubscription
     public function getMemberId(): int
     {
         return $this->memberId;
+    }
+
+    public function getNewMemberFee(): float
+    {
+        return $this->newMemberFee;
+    }
+
+    public function isSendMail(): bool
+    {
+        return $this->sendMail;
     }
 }

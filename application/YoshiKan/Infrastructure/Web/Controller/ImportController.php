@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Web\Controller;
 
+use App\YoshiKan\Application\Command\Import\FixEmail\FixEmailHandler;
 use App\YoshiKan\Application\Command\Import\ImportActiveMember\ImportActiveMembersHandler;
 use App\YoshiKan\Application\Command\Import\ImportSubscriptionArchive\ImportSubscriptionArchiveHandler;
 use App\YoshiKan\Domain\Model\Member\Federation;
@@ -114,6 +115,38 @@ class ImportController extends AbstractController
         $result = $importHandler->importGrades();
 
         $response = 'Imported!';
+
+        return new JsonResponse($response, 200, []);
+    }
+
+    #[IsGranted('ROLE_DEVELOPER')]
+    #[Route('/mm/fWXCq7sBpYQngXil/import/fix/subscriptions', name: 'import_fix_subscription_emails', methods: ['GET'])]
+    public function fixSubscriptionEmails(Request $request): Response
+    {
+        $fixHandler = new FixEmailHandler(
+            $this->entityManager,
+            $this->entityManager->getRepository(Member::class),
+            $this->entityManager->getRepository(Subscription::class),
+        );
+        $fixHandler->fixSubscriptions();
+
+        $response = 'Fixed!';
+
+        return new JsonResponse($response, 200, []);
+    }
+
+    #[IsGranted('ROLE_DEVELOPER')]
+    #[Route('/mm/fWXCq7sBpYQngXil/import/fix/members', name: 'import_fix_member_emails', methods: ['GET'])]
+    public function fixMemberEmails(Request $request): Response
+    {
+        $fixHandler = new FixEmailHandler(
+            $this->entityManager,
+            $this->entityManager->getRepository(Member::class),
+            $this->entityManager->getRepository(Subscription::class),
+        );
+        $fixHandler->fixMembers();
+
+        $response = 'Fixed!';
 
         return new JsonResponse($response, 200, []);
     }

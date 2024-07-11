@@ -63,6 +63,7 @@ class SubscriptionReadModel implements \JsonSerializable
         protected LocationReadModel $location,
         protected FederationReadModel $federation,
         protected array $subscriptionitems,
+        protected float $newMemberFee,
         protected ?int $memberId,
         protected ?int $messageId,
     ) {
@@ -100,20 +101,25 @@ class SubscriptionReadModel implements \JsonSerializable
         $json->isPaymentOverviewSend = $this->isPaymentOverviewSend();
         $json->isPrinted = $this->isPrinted();
         $json->nationalRegisterNumber = $this->getNationalRegisterNumber();
+
         $json->addressStreet = $this->getAddressStreet();
         $json->addressNumber = $this->getAddressNumber();
         $json->addressBox = $this->getAddressBox();
         $json->addressZip = $this->getAddressZip();
         $json->addressCity = $this->getAddressCity();
+
         $json->memberSubscriptionStart = $this->getMemberSubscriptionStart()->format(\DateTimeInterface::ATOM);
         $json->memberSubscriptionEnd = $this->getMemberSubscriptionEnd()->format(\DateTimeInterface::ATOM);
         $json->memberSubscriptionTotal = $this->getMemberSubscriptionTotal();
         $json->memberSubscriptionIsPartSubscription = $this->memberSubscriptionIsPartSubscription();
         $json->memberSubscriptionIsHalfYear = $this->isMemberSubscriptionIsHalfYear();
+        $json->newMemberFee = $this->getNewMemberFee();
+
         $json->licenseStart = $this->getLicenseStart()->format(\DateTimeInterface::ATOM);
         $json->licenseEnd = $this->getLicenseEnd()->format(\DateTimeInterface::ATOM);
         $json->licenseTotal = $this->getLicenseTotal();
         $json->licenseIsPartSubscription = $this->licenseIsPartSubscription();
+
         $json->location = $this->getLocation();
         $json->federation = $this->getFederation();
         $json->subscriptionitems = $this->getSubscriptionitems();
@@ -189,6 +195,7 @@ class SubscriptionReadModel implements \JsonSerializable
             LocationReadModel::hydrateFromModel($model->getLocation()),
             FederationReadModel::hydrateFromModel($model->getFederation()),
             $itemCollection->getCollection(),
+            $model->getNewMemberFee(),
             $memberId,
             $messageId
         );
@@ -406,5 +413,10 @@ class SubscriptionReadModel implements \JsonSerializable
     public function getMessageId(): ?int
     {
         return $this->messageId;
+    }
+
+    public function getNewMemberFee(): float
+    {
+        return $this->newMemberFee;
     }
 }

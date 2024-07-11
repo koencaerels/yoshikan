@@ -73,7 +73,12 @@ class ImportActiveMembersHandler
             $dto->city = (string) $worksheet->getCellByColumnAndRow(6, $row)->getValue();
             $dto->postalCode = (string) $worksheet->getCellByColumnAndRow(7, $row)->getValue();
             $dto->contactPhone = (string) $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-            $dto->contactEmail = (string) $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+
+            $contactEmail = 'judo.yoshikan@gmail.com';
+            if ('' !== (string) $worksheet->getCellByColumnAndRow(9, $row)->getValue()) {
+                $contactEmail = (string) $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+            }
+            $dto->contactEmail = $contactEmail;
             $dto->gender = Gender::X;
             $dto->location = $this->locationRepository->getById(LocationMapping::getLocationId((string) $worksheet->getCellByColumnAndRow(26, $row)->getValue()));
             $dto->grade = $this->gradeRepository->getById(GradeMapping::getGradeId((string) $worksheet->getCellByColumnAndRow(25, $row)->getValue()));

@@ -61,4 +61,9 @@ interface MemberRepository
      * @return Member[]
      */
     public function getActiveMembersByLocation(Location $location): array;
+
+    /**
+     * @return Member[]
+     */
+    public function getAll(): array;
 }

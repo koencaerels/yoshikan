@@ -1,0 +1,4340 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Yoshi Kan API Reference",
+        "description": "Yoshi Kan ledenbeheer en website",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "\/api\/contents": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Retrieves the collection of Content resources.",
+                "description": "Retrieves the collection of Content resources.",
+                "operationId": "getContentCollection",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "contentType",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "contentType[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "createdAt",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "createdAt[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "modifiedAt",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "modifiedAt[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publishedAt",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "publishedAt[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "depublishedAt",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "depublishedAt[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Content collection",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Content-get_content"
+                                    }
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "required": [
+                                        "hydra:member"
+                                    ],
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Content.jsonld-get_content"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "type": "object",
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Content-get_content"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Creates a Content resource.",
+                "description": "Creates a Content resource.",
+                "operationId": "postContentCollection",
+                "requestBody": {
+                    "description": "The new Content resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content-api_write"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content.jsonld-api_write"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content-api_write"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Content resource created",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content.jsonld-get_content"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetContentItem": {
+                                "operationId": "getContentItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/contents\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/contents\/{id}": {
+            "get": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Retrieves a Content resource.",
+                "description": "Retrieves a Content resource.",
+                "operationId": "getContentItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Content resource",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content.jsonld-get_content"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Replaces the Content resource.",
+                "description": "Replaces the Content resource.",
+                "operationId": "putContentItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Content resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content-api_write"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content.jsonld-api_write"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Content-api_write"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Content resource updated",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content.jsonld-get_content"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Content-get_content"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetContentItem": {
+                                "operationId": "getContentItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/contents\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Content"
+                ],
+                "summary": "Removes the Content resource.",
+                "description": "Removes the Content resource.",
+                "operationId": "deleteContentItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Content resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/contents\/{id}\/fields": {
+            "get": {
+                "tags": [
+                    "Field",
+                    "Content"
+                ],
+                "summary": "Retrieves a Content resource.",
+                "description": "Retrieves a Content resource.",
+                "operationId": "api_contents_fields_get_subresourceContentSubresource",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Content identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "sortorder",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortorder[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "version",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "version[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Content resource",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Field-get_field"
+                                    }
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "required": [
+                                        "hydra:member"
+                                    ],
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Field.jsonld-get_field"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "type": "object",
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Field-get_field"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/fields": {
+            "get": {
+                "tags": [
+                    "Field"
+                ],
+                "summary": "Retrieves the collection of Field resources.",
+                "description": "Retrieves the collection of Field resources.",
+                "operationId": "getFieldCollection",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "sortorder",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortorder[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "version",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "version[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Field collection",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Field-get_field"
+                                    }
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "required": [
+                                        "hydra:member"
+                                    ],
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Field.jsonld-get_field"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "type": "object",
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Field-get_field"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "Field"
+                ],
+                "summary": "Creates a Field resource.",
+                "description": "Creates a Field resource.",
+                "operationId": "postFieldCollection",
+                "requestBody": {
+                    "description": "The new Field resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field-api_write"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field.jsonld-api_write"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field-api_write"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Field resource created",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field.jsonld-get_field"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetFieldItem": {
+                                "operationId": "getFieldItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/fields\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/fields\/{id}": {
+            "get": {
+                "tags": [
+                    "Field"
+                ],
+                "summary": "Retrieves a Field resource.",
+                "description": "Retrieves a Field resource.",
+                "operationId": "getFieldItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Field resource",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field.jsonld-get_field"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Field"
+                ],
+                "summary": "Replaces the Field resource.",
+                "description": "Replaces the Field resource.",
+                "operationId": "putFieldItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Field resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field-api_write"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field.jsonld-api_write"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Field-api_write"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Field resource updated",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field.jsonld-get_field"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Field-get_field"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetFieldItem": {
+                                "operationId": "getFieldItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/fields\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Field"
+                ],
+                "summary": "Removes the Field resource.",
+                "description": "Removes the Field resource.",
+                "operationId": "deleteFieldItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Field resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/relations": {
+            "get": {
+                "tags": [
+                    "Relation"
+                ],
+                "summary": "Retrieves the collection of Relation resources.",
+                "description": "Retrieves the collection of Relation resources.",
+                "operationId": "getRelationCollection",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fromContent",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fromContent[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "toContent",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "toContent[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "position",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Relation collection",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                    }
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "required": [
+                                        "hydra:member"
+                                    ],
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Relation.jsonld-get_relation"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "type": "object",
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "Relation"
+                ],
+                "summary": "Creates a Relation resource.",
+                "description": "Creates a Relation resource.",
+                "operationId": "postRelationCollection",
+                "requestBody": {
+                    "description": "The new Relation resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation.jsonld"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Relation resource created",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation.jsonld-get_relation"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetRelationItem": {
+                                "operationId": "getRelationItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/relations\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/api\/relations\/{id}": {
+            "get": {
+                "tags": [
+                    "Relation"
+                ],
+                "summary": "Retrieves a Relation resource.",
+                "description": "Retrieves a Relation resource.",
+                "operationId": "getRelationItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Relation resource",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation.jsonld-get_relation"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Relation"
+                ],
+                "summary": "Replaces the Relation resource.",
+                "description": "Replaces the Relation resource.",
+                "operationId": "putRelationItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Relation resource",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation"
+                            }
+                        },
+                        "application\/ld+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation.jsonld"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/Relation"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Relation resource updated",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            },
+                            "application\/ld+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation.jsonld-get_relation"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Relation-get_relation"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetRelationItem": {
+                                "operationId": "getRelationItem",
+                                "parameters": {
+                                    "id": "$response.body#\/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET \/api\/relations\/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Relation"
+                ],
+                "summary": "Removes the Relation resource.",
+                "description": "Removes the Relation resource.",
+                "operationId": "deleteRelationItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Relation resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "\/mm\/api": {
+            "get": {
+                "operationId": "get_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_mm_api_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/grade\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_ordergrade",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_ordergrade",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/grade\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addgrade",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addgrade",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/grade\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changegrade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changegrade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/group\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_ordergroup",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_ordergroup",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/group\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addgroup",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addgroup",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/group\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changegroup",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changegroup",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/period\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_orderperiod",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_orderperiod",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/period\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addperiod",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addperiod",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/period\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changeperiod",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changeperiod",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/location\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_orderlocation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_orderlocation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/location\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addlocation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addlocation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/location\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changelocation",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changelocation",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/judogi\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_orderjudogi",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_orderjudogi",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/judogi\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addjudogi",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addjudogi",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/judogi\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changejudogi",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changejudogi",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/settings": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_savesettings",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_savesettings",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/configuration": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getconfiguration",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/configuration\/setup": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_setupconfiguration",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscription\/{id}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getsubscriptionbyid",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscription\/{id}\/mark-as-paid": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_marksubscriptionaspayed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_marksubscriptionaspayed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscription\/{id}\/mark-as-finished": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_marksubscriptionasfinished",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_marksubscriptionasfinished",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscription\/{id}\/cancel": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_marksubscriptionascanceled",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_marksubscriptionascanceled",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscription\/{status}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getallsubscriptions",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscriptions\/export": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_exportsubscriptions",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscriptions\/print": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_printsubscriptions",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/subscriptions\/print\/empty": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_printemptysubscriptionsform",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/active": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_listactivemembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/search": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_searchmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_searchmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_searchmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/suggest": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_suggestmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_suggestmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_suggestmembers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getmemberbyid",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/change-details": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changememberdetails",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changememberdetails",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/forget": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_forgetmember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_forgetmember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/change-grade": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changemembergrade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changemembergrade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/change-remarks": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changememberremarks",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changememberremarks",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/change-subscription": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changemembersubscription",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changemembersubscription",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/upload": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_app_yoshikan_infrastructure_web_memberapi_uploadmemberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/profile-image-upload": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_app_yoshikan_infrastructure_web_memberapi_uploadmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/profile-image": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getmemberprofileimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/extend-subscription": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_extendmembersubscription",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_extendmembersubscription",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/change-license": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changememberlicense",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changememberlicense",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/messages": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getmemberimages",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/{id}\/subscriptions": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getmembersubscriptions",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/new-subscription": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_newmembersubscription",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_newmembersubscription",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/confirm-web-subscription": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_confirmwebsubscription",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_confirmwebsubscription",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/change-subscription-details": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changesubscriptiondetails",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changesubscriptiondetails",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/overview-due-payments": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_downloadoverviewduepayments",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/list\/location\/{locationId}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_downloadmemberlist",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/list\/location\/{locationId}\/excel": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_downloadmemberlistasexcel",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/member-image\/{id}\/stream": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_streammemberimagebyid",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/member-image\/{id}\/delete": {
+            "delete": {
+                "operationId": "delete_app_yoshikan_infrastructure_web_memberapi_deletememberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_app_yoshikan_infrastructure_web_memberapi_deletememberimage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/federation\/order": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_orderfederation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_orderfederation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/federation\/add": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_addfederation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_addfederation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/federation\/{id}": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_changefederation",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_changefederation",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/message\/{id}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getmessagebyid",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/message\/{id}\/resend": {
+            "put": {
+                "operationId": "put_app_yoshikan_infrastructure_web_memberapi_resendmessage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_app_yoshikan_infrastructure_web_memberapi_resendmessage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/get-dashboard-numbers": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_getdashboardnumbers",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/request-access": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_requestaccesstothemembermodule",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/member\/validate-access\/{verificationCode}": {
+            "get": {
+                "operationId": "get_app_yoshikan_infrastructure_web_memberapi_validateaccesstothemembermodule",
+                "parameters": [
+                    {
+                        "name": "verificationCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/message": {
+            "get": {
+                "operationId": "get_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_mm_api_message_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/mm\/api\/product": {
+            "get": {
+                "operationId": "get_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_mm_api_product_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Content-api_write": {
+                "description": "",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "depublishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "fields": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Field-api_write"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Content-get_content": {
+                "description": "",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "depublishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "fieldValues": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "taxonomyValues": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "authorName": {
+                        "type": "string",
+                        "readOnly": true,
+                        "nullable": true
+                    },
+                    "extras": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Content.jsonld-api_write": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "depublishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "fields": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Field.jsonld-api_write"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Content.jsonld-get_content": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "depublishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "fieldValues": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "taxonomyValues": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "authorName": {
+                        "type": "string",
+                        "readOnly": true,
+                        "nullable": true
+                    },
+                    "extras": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Field-api_write": {
+                "description": "",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "$ref": "#\/components\/schemas\/Content-api_write"
+                    },
+                    "value": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Field-get_field": {
+                "description": "",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "definition": {
+                        "$ref": "#\/components\/schemas\/FieldType-get_field"
+                    },
+                    "value": {
+                        "readOnly": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Field.jsonld-api_write": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "$ref": "#\/components\/schemas\/Content.jsonld-api_write"
+                    },
+                    "value": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Field.jsonld-get_field": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "definition": {
+                        "$ref": "#\/components\/schemas\/FieldType.jsonld-get_field"
+                    },
+                    "value": {
+                        "readOnly": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "FieldType-get_field": {
+                "description": "",
+                "type": "object"
+            },
+            "FieldType.jsonld-get_field": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Relation": {
+                "description": "",
+                "properties": {
+                    "fromContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "toContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "writeOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Relation-get_relation": {
+                "description": "",
+                "properties": {
+                    "fromContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "toContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                },
+                "type": "object"
+            },
+            "Relation.jsonld": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "fromContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "toContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "writeOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Relation.jsonld-get_relation": {
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http:\/\/www.w3.org\/ns\/hydra\/core#"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "@type": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "fromContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "toContent": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "security": []
+}

@@ -31,6 +31,7 @@ class SettingsReadModel implements \JsonSerializable
         protected float $halfYearlyFee1Training,
         protected float $extraTrainingFee,
         protected float $newMemberSubscriptionFee,
+        protected float $newMemberSubscriptionFeeWithoutGuide,
         protected int $familyDiscount,
     ) {
     }
@@ -51,6 +52,7 @@ class SettingsReadModel implements \JsonSerializable
         $json->halfYearlyFee1Training = $this->getHalfYearlyFee1Training();
         $json->extraTrainingFee = $this->getExtraTrainingFee();
         $json->newMemberSubscriptionFee = $this->getNewMemberSubscriptionFee();
+        $json->newMemberSubscriptionFeeWithoutGuide = $this->getNewMemberSubscriptionFeeWithoutGuide();
         $json->familyDiscount = $this->getFamilyDiscount();
 
         return $json;
@@ -72,6 +74,7 @@ class SettingsReadModel implements \JsonSerializable
             $model->getHalfYearlyFee1Training(),
             $model->getExtraTrainingFee(),
             $model->getNewMemberSubscriptionFee(),
+            $model->getNewMemberSubscriptionFeeWithoutGuide(),
             $model->getFamilyDiscount(),
         );
     }
@@ -128,5 +131,10 @@ class SettingsReadModel implements \JsonSerializable
     public function getFamilyDiscount(): int
     {
         return $this->familyDiscount;
+    }
+
+    public function getNewMemberSubscriptionFeeWithoutGuide(): float
+    {
+        return $this->newMemberSubscriptionFeeWithoutGuide;
     }
 }

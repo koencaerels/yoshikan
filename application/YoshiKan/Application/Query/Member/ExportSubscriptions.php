@@ -110,6 +110,8 @@ class ExportSubscriptions
         $sheet->setCellValue([7, $rowCounter], 'Adres');
         $sheet->setCellValue([8, $rowCounter], 'Postcode');
         $sheet->setCellValue([9, $rowCounter], 'Gemeente');
+        $sheet->setCellValue([10, $rowCounter], 'Email');
+        $sheet->setCellValue([11, $rowCounter], 'Telefoon');
 
         // -- data -----------------------------------------------------------------
         ++$rowCounter;
@@ -126,6 +128,9 @@ class ExportSubscriptions
             $sheet->setCellValue([7, $rowCounter], $member->getAddressStreet().' '.$member->getAddressNumber().' '.$member->getAddressBox());
             $sheet->setCellValue([8, $rowCounter], $member->getAddressZip());
             $sheet->setCellValue([9, $rowCounter], $member->getAddressCity());
+            $sheet->setCellValue([10, $rowCounter], $member->getContactEmail());
+            $sheet->setCellValue([11, $rowCounter], $member->getContactPhone());
+
             ++$rowCounter;
         }
 
@@ -154,6 +159,7 @@ class ExportSubscriptions
             'members' => $members,
             'generatedOn' => $generatedOn,
             'locationName' => $location->getName(),
+            'locationCode' => $location->getCode(),
         ]);
 
         $options = new Options();
@@ -164,7 +170,7 @@ class ExportSubscriptions
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
 
-        $fileName = $generatedOn->format('YmdHis').'_YoshiKan_Leden_'.$locationCode.'.pdf';
+        $fileName = $generatedOn->format('Ymd').'_YoshiKan_Leden_'.$locationCode.'.pdf';
         $dompdf->stream($fileName, ['Attachment' => false]);
 
         exit;

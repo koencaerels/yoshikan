@@ -109,6 +109,7 @@ class ChangeSubscriptionDetailsHandler
             licenseTotal: $command->getLicenseTotal(),
             licenseIsPartSubscription: $subscription->isLicenseIsPartSubscription(),
             licenseIsPayed: $subscription->isLicenseIsPayed(),
+            newMemberFee: $command->getNewMemberFee(),
         );
         $subscription->setNewMemberFields(
             nationalRegisterNumber: $command->getNationalRegisterNumber(),
@@ -188,6 +189,7 @@ class ChangeSubscriptionDetailsHandler
         $result = new \stdClass();
         $result->id = $subscription->getId();
         $result->reference = 'YKS-'.$subscription->getId().': '.$command->getFirstName().' '.$command->getLastName();
+        $result->sendMail = $command->isSendMail();
 
         return $result;
     }

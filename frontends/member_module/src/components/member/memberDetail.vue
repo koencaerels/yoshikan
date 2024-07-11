@@ -11,7 +11,7 @@
 
 <template>
     <div id="memberDetail" class="p-4" v-if="memberStore.memberDetail">
-        <div class="flex text-sm mb-4">
+        <div class="flex text-sm mb-4 gap-4">
 
             <div v-if="(type == 'partial')"
                  class="bg-gray-200 rounded-full px-2 py-1">
@@ -25,21 +25,31 @@
                     <i class="pi pi-times"></i>
                 </router-link>
             </div>
-            <div class="ml-4">
+            <div class="">
                 Wijzig >
             </div>
-            <div class="ml-2 cursor-pointer underline text-blue-400" @click="(showDialogDetails = true)">
+            <div class="cursor-pointer underline text-blue-600 underline-offset-4" @click="(showDialogDetails = true)">
                 Profiel
             </div>
-            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogGrade = true)">
+            <div class="cursor-pointer underline text-blue-600 underline-offset-4" @click="(showDialogGrade = true)">
                 Graad
             </div>
-            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogRemarks = true)">
+            <div class="cursor-pointer underline text-blue-600 underline-offset-4" @click="(showDialogRemarks = true)">
                 Opmerkingen
             </div>
-            <div class="ml-4 cursor-pointer underline text-blue-400" @click="(showDialogProfileImage = true)">
+            <div class="cursor-pointer underline text-blue-600 underline-offset-4" @click="(showDialogProfileImage = true)">
                 Profiel foto
             </div>
+
+            <div class="flex-grow"/>
+            <div class="cursor-pointer underline text-blue-300 underline-offset-4" @click="(showDialogMemberSubscriptionAdmin = true)">
+                Admin Lidmaatschap
+            </div>
+            <div class="cursor-pointer underline text-blue-300 underline-offset-4" @click="forgetMemberEvent($event)">
+                Vergeet Lid
+            </div>
+
+            <ConfirmPopup/>
         </div>
 
         <!-- -- member badge --------------------------------------------------------------------------------------- -->
@@ -152,6 +162,14 @@
         <dialog-change-profile-image v-on:saved="hideProfileImageDialog"/>
     </Dialog>
 
+    <Dialog v-model:visible="showDialogMemberSubscriptionAdmin"
+        position="top"
+        v-if="memberStore.memberDetail"
+        :header="'ADMIN > Wijzig inschrijf details voor '+memberStore.memberDetail.firstname+' '+memberStore.memberDetail.lastname"
+        :modal="true">
+        <dialog-member-subscription-admin v-on:saved="hideMemberSubscriptionAdminDialog"/>
+    </Dialog>
+
 </template>
 
 <script setup lang="ts">
@@ -171,15 +189,20 @@ import AddButton from "@/components/common/addButton.vue";
 import ProfileDetail from "@/components/member/profile/profileDetail.vue";
 import OverviewSubscriptions from "@/components/member/memberDetail/overviewSubscriptions.vue";
 import OverviewMessages from "@/components/member/memberDetail/overviewMessages.vue";
+import {forgetMember, type ForgetMemberCommand} from "@/api/command/forgetMember";
+import {useConfirm} from "primevue/useconfirm";
+import DialogMemberSubscriptionAdmin from "@/components/member/dialogMemberSubscriptionAdmin.vue";
 
 const memberStore = useMemberStore();
 const showDialogDetails = ref<boolean>(false);
 const showDialogGrade = ref<boolean>(false);
 const showDialogRemarks = ref<boolean>(false);
 const showDialogProfileImage = ref<boolean>(false);
+const showDialogMemberSubscriptionAdmin = ref<boolean>(false);
 const showNewSubscription = ref<boolean>(false);
 const toaster = useToast();
 const appStore = useAppStore();
+const confirm = useConfirm();
 
 const props = defineProps<{
     type: 'dialog' | 'detail' | 'partial',
@@ -198,6 +221,10 @@ function hideDetailDialog() {
     showDialogDetails.value = false;
 }
 
+function hideMemberSubscriptionAdminDialog() {
+    showDialogMemberSubscriptionAdmin.value = false;
+}
+
 function hideProfileImageDialog() {
     memberStore.reloadMemberDetail();
     toaster.add({
@@ -211,6 +238,43 @@ function hideProfileImageDialog() {
 
 function subscribeHandler() {
     showNewSubscription.value = false;
+}
+
+// -- forget member -------------------------------------------------------------------------------------------------
+
+function forgetMemberEvent(event: MouseEvent) {
+    const target = event.currentTarget;
+    if (target instanceof HTMLElement) {
+        confirm.require({
+            target: target,
+            message: "Ben je zeker? Alle gegevens van dit lid zullen verwijderd worden. Deze actie kan niet ongedaan gemaakt worden.",
+            icon: "pi pi-exclamation-triangle",
+            acceptLabel: "Ja",
+            rejectLabel: "Nee",
+            acceptIcon: "pi pi-check",
+            rejectIcon: "pi pi-times",
+            accept: () => {
+                const command:ForgetMemberCommand = {
+                    id: memberStore.memberId,
+                };
+                forgetMember(command).then(() => {
+                    toaster.add({
+                        severity: "success",
+                        summary: "Alle gegevens van dit lid werden verwijderd.",
+                        detail: "",
+                        life: appStore.toastLifeTime,
+                    });
+                    memberStore.memberId = 0;
+                    memberStore.memberDetail = undefined;
+                    memberStore.increaseCounter();
+                    memberStore.increaseMemberCounter();
+                });
+            },
+            reject: () => {
+                // callback to execute when user rejects the action
+            },
+        });
+    }
 }
 
 </script>

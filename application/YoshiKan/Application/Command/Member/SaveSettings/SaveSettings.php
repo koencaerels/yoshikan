@@ -27,6 +27,7 @@ class SaveSettings
         protected float $halfYearlyFee1Training,
         protected float $extraTrainingFee,
         protected float $newMemberSubscriptionFee,
+        protected float $newMemberSubscriptionFeeWithoutGuide,
         protected int $familyDiscount,
     ) {
     }
@@ -45,6 +46,7 @@ class SaveSettings
             floatval($json->halfYearlyFee1Training),
             floatval($json->extraTrainingFee),
             floatval($json->newMemberSubscriptionFee),
+            floatval($json->newMemberSubscriptionFeeWithoutGuide),
             intval($json->familyDiscount),
         );
     }
@@ -86,6 +88,11 @@ class SaveSettings
     public function getNewMemberSubscriptionFee(): float
     {
         return $this->newMemberSubscriptionFee;
+    }
+
+    public function getNewMemberSubscriptionFeeWithoutGuide(): float
+    {
+        return $this->newMemberSubscriptionFeeWithoutGuide;
     }
 
     public function getFamilyDiscount(): int

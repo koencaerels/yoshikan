@@ -255,6 +255,10 @@ class Member
         );
     }
 
+    // ------------------------------------------------------------------------
+    // -- change details
+    // ------------------------------------------------------------------------
+
     public function changeDetails(
         string $firstname,
         string $lastname,
@@ -305,6 +309,32 @@ class Member
         $this->contactPhone = $contactPhone;
     }
 
+    // ------------------------------------------------------------------------
+    // -- admin function to overload the subscription dates and settings
+    // ------------------------------------------------------------------------
+
+    public function changeSubscription(
+        \DateTimeImmutable $memberShipStart,
+        \DateTimeImmutable $memberShipEnd,
+        bool $isHalfYearSubscription,
+        int $numberOfTraining,
+        Federation $federation,
+        \DateTimeImmutable $licenseStart,
+        \DateTimeImmutable $licenseEnd,
+    ): void {
+        $this->memberSubscriptionStart = $memberShipStart;
+        $this->memberSubscriptionEnd = $memberShipEnd;
+        $this->memberSubscriptionIsHalfYear = $isHalfYearSubscription;
+        $this->numberOfTraining = $numberOfTraining;
+        $this->federation = $federation;
+        $this->licenseStart = $licenseStart;
+        $this->licenseEnd = $licenseEnd;
+    }
+
+    // ------------------------------------------------------------------------
+    // -- set subscription dates
+    // ------------------------------------------------------------------------
+
     public function setSubscriptionDates(
         \DateTimeImmutable $start,
         \DateTimeImmutable $end,
@@ -321,6 +351,10 @@ class Member
         $this->memberSubscriptionIsPayed = true;
     }
 
+    // ------------------------------------------------------------------------
+    // -- set license dates
+    // ------------------------------------------------------------------------
+
     public function setLicenseDates(
         \DateTimeImmutable $start,
         \DateTimeImmutable $end,
@@ -335,10 +369,17 @@ class Member
         $this->licenseIsPayed = true;
     }
 
+    // -------------------------------------------------------------------------
+    // -- set grade
+    // -------------------------------------------------------------------------
     public function changeGrade(Grade $grade): void
     {
         $this->grade = $grade;
     }
+
+    // -------------------------------------------------------------------------
+    // -- set remarks
+    // -------------------------------------------------------------------------
 
     public function changeRemarks(string $remarks): void
     {

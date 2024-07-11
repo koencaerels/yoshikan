@@ -12,6 +12,7 @@ import axios from "axios";
 export interface ChangeMemberLicenseCommand {
     memberId: number;
     federationId: number;
+    sendMail: boolean;
 }
 
 export async function changeMemberLicense(command: ChangeMemberLicenseCommand) {

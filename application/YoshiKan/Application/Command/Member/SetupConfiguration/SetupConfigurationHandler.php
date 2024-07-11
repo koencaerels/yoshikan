@@ -57,6 +57,7 @@ class SetupConfigurationHandler
             130,
             50,
             10,
+            5,
             10,
         );
         $this->settingsRepository->save($settings);

@@ -119,10 +119,28 @@ class ApiController extends AbstractController
     }
 
     // ———————————————————————————————————————————————————————————————————————————
+    // API Documentation
+    // ———————————————————————————————————————————————————————————————————————————
+
+    #[Route('/mm/api/docs', name: 'api_documentation', condition: '%kernel.debug% === 1')]
+    public function apiDocumentation(): Response
+    {
+        return $this->render('api/api_documentation.html.twig');
+    }
+
+    #[Route('/mm/api/docs/schema', name: 'api_documentation_schema', condition: '%kernel.debug% === 1')]
+    public function apiDocumentationSchema(): JsonResponse
+    {
+        $schemaFile = $this->appKernel->getProjectDir().'/frontends/member_module/src/api/client/schema.json';
+
+        return new JsonResponse(json_decode(file_get_contents($schemaFile)), 200, $this->apiAccess);
+    }
+
+    // ———————————————————————————————————————————————————————————————————————————
     // Index
     // ———————————————————————————————————————————————————————————————————————————
 
-    #[Route('/inschrijving/api', name: 'inschrijving_api_index')]
+    #[Route('/inschrijving/api', name: 'inschrijving_api_index', condition: '%kernel.debug% === 1')]
     public function index(): JsonResponse
     {
         $response = 'Api endpoint for subscriptions';

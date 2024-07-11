@@ -68,6 +68,14 @@ trait MemberRoutes
         return new JsonResponse($response, 200, $this->apiAccess);
     }
 
+    #[Route('/mm/api/member/{id}/forget', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function forgetMember(int $id, Request $request): JsonResponse
+    {
+        $response = $this->commandBus->forgetMember($id);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
     #[Route('/mm/api/member/{id}/change-grade', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
     public function changeMemberGrade(int $id, Request $request): JsonResponse
     {
@@ -82,6 +90,15 @@ trait MemberRoutes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeMemberRemarks($command);
+
+        return new JsonResponse($response, 200, $this->apiAccess);
+    }
+
+    #[Route('/mm/api/member/{id}/change-subscription', requirements: ['id' => '\d+'], methods: ['POST', 'PUT'])]
+    public function changeMemberSubscription(int $id, Request $request): JsonResponse
+    {
+        $command = json_decode($request->request->get('command'));
+        $response = $this->commandBus->changeMemberSubscription($command);
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -139,8 +156,10 @@ trait MemberRoutes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->memberExtendSubscription($command);
 
-        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+        if (true === $response->sendMail) {
+            $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+            $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+        }
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -151,8 +170,10 @@ trait MemberRoutes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeLicense($command);
 
-        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+        if (true === $response->sendMail) {
+            $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+            $result_mail = $this->commandBus->sendMemberExtendSubscriptionMail($response->id);
+        }
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -185,8 +206,10 @@ trait MemberRoutes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->memberNewSubscription($command);
 
-        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        if (true === $response->sendMail) {
+            $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+            $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        }
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -200,8 +223,10 @@ trait MemberRoutes
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->confirmMemberWebSubscription($command);
 
-        $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
-        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        if (true === $response->sendMail) {
+            $result_mollie = $this->commandBus->createMolliePaymentLink($response->id);
+            $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id);
+        }
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }
@@ -214,7 +239,10 @@ trait MemberRoutes
     {
         $command = json_decode($request->request->get('command'));
         $response = $this->commandBus->changeSubscriptionDetails($command);
-        $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id, true);
+
+        if (true === $response->sendMail) {
+            $result_mail = $this->commandBus->sendMemberNewSubscriptionMail($response->id, true);
+        }
 
         return new JsonResponse($response, 200, $this->apiAccess);
     }

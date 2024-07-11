@@ -34,15 +34,30 @@
                     <div class="clear-left"/>
                 </div>
                 <div class="block">
-                    <div class="pt-2 text-xs text-gray-500"
-                         v-if="memberStore.memberDetail?.memberSubscriptionIsHalfYear">
-                        Halfjaarlijks
-                    </div>
-                    <div v-else class="pt-2 text-xs text-gray-500">
-                        Jaarlijks
+                    <div class="flex gap-4">
+                        <div class="pt-2 text-xs text-gray-500 pl-4"
+                             v-if="memberStore.memberDetail?.memberSubscriptionIsHalfYear">
+                            Halfjaarlijks
+                        </div>
+                        <div v-else class="pt-2 text-xs text-gray-500 pl-4">
+                            Jaarlijks
+                        </div>
+                        <div class="flex-grow">&nbsp;</div>
+                        <div class="pt-2 text-xs text-gray-500 pr-4">
+                            <div v-if="memberStore.memberDetail.numberOfTraining == 1">
+                                1 training per week
+                            </div>
+                            <div v-if="memberStore.memberDetail.numberOfTraining == 2">
+                                2 trainingen per week
+                            </div>
+                            <div v-if="memberStore.memberDetail.numberOfTraining > 2">
+                                3-5 trainingen per week
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right">
+                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail) && memberStore.memberDetail.status === 'actief'"
+                     class="text-right mt-2">
                     <Button @click="showExtensionFormFn()"
                             label="Verleng lidgeld"
                             class="p-button-sm p-button-secondary"
@@ -75,17 +90,19 @@
                         {{ memberStore.memberDetail.federation.name }}
                     </div>
                 </div>
-                <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right">
-                    <Button @click="showExtensionFormFn()"
-                            label="Verleng vergunning"
-                            class="p-button-sm p-button-secondary"
-                            icon="pi pi-send"/>
-                </div>
-                <div v-else class="text-right">
-                    <Button @click="switchLicense()"
-                            label="Switch vergunning"
-                            class="p-button-sm p-button-secondary"
-                            icon="pi pi-send"/>
+                <div v-if="memberStore.memberDetail.status === 'actief'">
+                    <div v-if="showMemberSubscriptionExtendButton(memberStore.memberDetail)" class="text-right mt-2">
+                        <Button @click="showExtensionFormFn()"
+                                label="Verleng vergunning"
+                                class="p-button-sm p-button-secondary"
+                                icon="pi pi-send"/>
+                    </div>
+                    <div v-else class="text-right mt-2">
+                        <Button @click="switchLicense()"
+                                label="Switch vergunning"
+                                class="p-button-sm p-button-secondary"
+                                icon="pi pi-send"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -170,11 +187,19 @@
                         </span>
                     </div>
                 </div>
-                <div>
+            </div>
+            <div class="flex gap-4 mt-2 p-2 bg-green-200">
+                <div class="mt-1.5">
+                    <input-switch v-model="switchLicenseCommand.sendMail" id="send-mail"/>
+                </div>
+                <div class="mt-0.5">
+                    <label for="send-mail">E-mail verzenden?</label>
+                </div>
+                <div class="flex-grow">
                     <Button @click="switchLicenseAction()"
                             label="Switch vergunning"
                             :loading="isSwitching"
-                            class="p-button-sm p-button-secondary"
+                            class="p-button-sm p-button-success w-full"
                             icon="pi pi-send"/>
                 </div>
             </div>
@@ -193,7 +218,7 @@ import {ref} from "vue";
 import {useMemberOverviewStore} from "@/store/memberOverview";
 import {useAppStore} from "@/store/app";
 import {useToast} from "primevue/usetoast";
-import {changeMemberLicense} from "@/api/command/changeMemberLicense";
+import {changeMemberLicense, type ChangeMemberLicenseCommand} from "@/api/command/changeMemberLicense";
 
 const memberStore = useMemberStore();
 const memberOverviewStore = useMemberOverviewStore();
@@ -224,9 +249,10 @@ function switchLicense() {
     showSwitchLicenseForm.value = true;
 }
 
-const switchLicenseCommand = ref<SwitchLicenseCommand>({
+const switchLicenseCommand = ref<ChangeMemberLicenseCommand>({
     memberId: memberStore.memberDetail.id,
-    federationId: memberStore.memberDetail.federation.id
+    federationId: memberStore.memberDetail.federation.id,
+    sendMail: true,
 });
 
 async function switchLicenseAction() {
