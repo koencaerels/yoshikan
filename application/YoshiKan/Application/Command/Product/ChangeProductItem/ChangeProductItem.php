@@ -11,56 +11,33 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Product;
+namespace App\YoshiKan\Application\Command\Product\ChangeProductItem;
 
-use App\YoshiKan\Domain\Model\Product\Judogi;
-
-class JudogiReadModel implements \JsonSerializable
+class ChangeProductItem
 {
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
     // —————————————————————————————————————————————————————————————————————————
 
-    public function __construct(
+    private function __construct(
         protected int $id,
-        protected string $uuid,
         protected string $code,
         protected string $name,
-        protected string $size,
         protected float $price,
     ) {
     }
 
     // —————————————————————————————————————————————————————————————————————————
-    // What to render as json
+    // Hydrate from a json command
     // —————————————————————————————————————————————————————————————————————————
 
-    public function jsonSerialize(): \stdClass
-    {
-        $json = new \stdClass();
-        $json->id = $this->getId();
-        $json->uuid = $this->getUuid();
-        $json->code = $this->getCode();
-        $json->name = $this->getName();
-        $json->size = $this->getSize();
-        $json->price = $this->getPrice();
-
-        return $json;
-    }
-
-    // —————————————————————————————————————————————————————————————————————————
-    // Hydrate from model
-    // —————————————————————————————————————————————————————————————————————————
-
-    public static function hydrateFromModel(Judogi $model): self
+    public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
-            $model->getId(),
-            $model->getUuid()->toRfc4122(),
-            $model->getCode(),
-            $model->getName(),
-            $model->getSize(),
-            $model->getPrice(),
+            $json->id,
+            trim($json->code),
+            trim($json->name),
+            floatval($json->price),
         );
     }
 
@@ -73,11 +50,6 @@ class JudogiReadModel implements \JsonSerializable
         return $this->id;
     }
 
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
-
     public function getCode(): string
     {
         return $this->code;
@@ -86,11 +58,6 @@ class JudogiReadModel implements \JsonSerializable
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getSize(): string
-    {
-        return $this->size;
     }
 
     public function getPrice(): float

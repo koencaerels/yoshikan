@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Product\OrderJudogi;
+namespace App\YoshiKan\Application\Command\Product\OrderProductGroup;
 
-trait OrderJudogiTrait
+trait OrderProductGroupTrait
 {
     /**
      * @throws \Exception
      */
-    public function orderJudogi(\stdClass $jsonCommand): bool
+    public function orderProductGroup(\stdClass $jsonCommand): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 

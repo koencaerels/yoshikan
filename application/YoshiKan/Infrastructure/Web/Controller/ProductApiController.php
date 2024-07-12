@@ -13,6 +13,12 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Infrastructure\Web\Controller;
 
+use App\YoshiKan\Application\ProductCommandBus;
+use App\YoshiKan\Application\ProductQueryBus;
+use App\YoshiKan\Domain\Model\Product\Product;
+use App\YoshiKan\Domain\Model\Product\ProductGroup;
+use App\YoshiKan\Domain\Model\Product\ProductItem;
+use App\YoshiKan\Domain\Model\Product\ProductItemBatch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,6 +43,8 @@ class ProductApiController extends AbstractController
 
     protected array $apiAccess;
     protected string $uploadFolder;
+    protected ProductCommandBus $commandBus;
+    protected ProductQueryBus $queryBus;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -58,6 +66,30 @@ class ProductApiController extends AbstractController
 
         $this->uploadFolder = $appKernel->getProjectDir().'/'.$_SERVER['UPLOAD_FOLDER'].'/';
         $this->setTwigLoader($this->appKernel);
+
+        $this->queryBus = new ProductQueryBus(
+            security: $this->security,
+            entityManager: $this->entityManager,
+            isolationMode: $isolationMode,
+            twig: $this->twig,
+            uploadFolder: $this->uploadFolder,
+            productGroupRepository: $this->entityManager->getRepository(ProductGroup::class),
+            productRepository: $this->entityManager->getRepository(Product::class),
+            productItemRepository: $this->entityManager->getRepository(ProductItem::class),
+            productItemBatchRepository: $this->entityManager->getRepository(ProductItemBatch::class),
+        );
+
+        $this->commandBus = new ProductCommandBus(
+            security: $this->security,
+            entityManager: $this->entityManager,
+            isolationMode: $isolationMode,
+            twig: $this->twig,
+            uploadFolder: $this->uploadFolder,
+            productGroupRepository: $this->entityManager->getRepository(ProductGroup::class),
+            productRepository: $this->entityManager->getRepository(Product::class),
+            productItemRepository: $this->entityManager->getRepository(ProductItem::class),
+            productItemBatchRepository: $this->entityManager->getRepository(ProductItemBatch::class),
+        );
     }
 
     private function setTwigLoader(KernelInterface $appKernel): void

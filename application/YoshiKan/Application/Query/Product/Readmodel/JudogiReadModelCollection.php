@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Query\Product;
+namespace App\YoshiKan\Application\Query\Product\Readmodel;
 
 class JudogiReadModelCollection implements \JsonSerializable
 {

@@ -11,20 +11,20 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Product\OrderJudogi;
+namespace App\YoshiKan\Application\Command\Product\ChangeProductItemBatch;
 
-trait OrderJudogiTrait
+trait ChangeProductItemBatchTrait
 {
     /**
      * @throws \Exception
      */
-    public function orderJudogi(\stdClass $jsonCommand): bool
+    public function changeProductItemBatch(\stdClass $jsonCommand): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = OrderJudogi::hydrateFromJson($jsonCommand);
-        $handler = new OrderJudogiHandler($this->judogiRepository);
-        $handler->go($command);
+        $command = ChangeProductItemBatch::hydrateFromJson($jsonCommand);
+        $handler = new ChangeProductItemBatchHandler($this->productItemBatchRepository);
+        $handler->change($command);
         $this->entityManager->flush();
 
         return true;

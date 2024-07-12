@@ -11,20 +11,24 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Product\OrderJudogi;
+namespace App\YoshiKan\Application\Command\Product\AddProductItem;
 
-trait OrderJudogiTrait
+trait AddProductItemTrait
 {
     /**
      * @throws \Exception
      */
-    public function orderJudogi(\stdClass $jsonCommand): bool
+    public function addProductItem(\stdClass $jsonCommand): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = OrderJudogi::hydrateFromJson($jsonCommand);
-        $handler = new OrderJudogiHandler($this->judogiRepository);
-        $handler->go($command);
+        $command = AddProductItem::hydrateFromJson($jsonCommand);
+        $handler = new AddProductItemHandler(
+            productItemRepository: $this->productItemRepository,
+            productRepository: $this->productRepository,
+        );
+        $handler->add($command);
+
         $this->entityManager->flush();
 
         return true;

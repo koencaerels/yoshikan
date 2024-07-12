@@ -92,6 +92,16 @@ class ProductItemBatch
         );
     }
 
+    public function change(
+        string $code,
+        string $name,
+        float $cost,
+    ): void {
+        $this->code = $code;
+        $this->name = $name;
+        $this->cost = $cost;
+    }
+
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————

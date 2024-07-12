@@ -11,19 +11,19 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Product\OrderJudogi;
+namespace App\YoshiKan\Application\Command\Product\ChangeProductGroup;
 
-trait OrderJudogiTrait
+trait ChangeProductGroupTrait
 {
     /**
      * @throws \Exception
      */
-    public function orderJudogi(\stdClass $jsonCommand): bool
+    public function changeProductGroup(\stdClass $jsonCommand): bool
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = OrderJudogi::hydrateFromJson($jsonCommand);
-        $handler = new OrderJudogiHandler($this->judogiRepository);
+        $command = ChangeProductGroup::hydrateFromJson($jsonCommand);
+        $handler = new ChangeProductGroupHandler($this->productGroupRepository);
         $handler->go($command);
         $this->entityManager->flush();
 

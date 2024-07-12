@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Member\Readmodel;
 
-use App\YoshiKan\Application\Query\Product\JudogiReadModelCollection;
+use App\YoshiKan\Application\Query\Product\Readmodel\JudogiReadModelCollection;
 
 class ConfigurationReadModel implements \JsonSerializable
 {
