@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Member;
+namespace App\YoshiKan\Infrastructure\Web\Controller\Routes\Product;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -11,22 +11,20 @@
 
 declare(strict_types=1);
 
-namespace App\YoshiKan\Application\Command\Product\ChangeProduct;
+namespace App\YoshiKan\Application\Query\Product;
 
-trait ChangeProductTrait
+use App\YoshiKan\Application\Query\Product\Readmodel\ProductGroupReadModelCollection;
+
+trait GetProductTrait
 {
     /**
      * @throws \Exception
      */
-    public function changeProduct(\stdClass $jsonCommand): bool
+    public function getProductTree(): ProductGroupReadModelCollection
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
+        $query = new GetProduct($this->productGroupRepository);
 
-        $command = ChangeProduct::hydrateFromJson($jsonCommand);
-        $handler = new ChangeProductHandler($this->productRepository);
-        $handler->go($command);
-        $this->entityManager->flush();
-
-        return true;
+        return $query->getProductTree();
     }
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application;
 
+use App\YoshiKan\Application\Query\Product\GetProductTrait;
 use App\YoshiKan\Application\Security\BasePermissionService;
 use App\YoshiKan\Domain\Model\Product\ProductGroupRepository;
 use App\YoshiKan\Domain\Model\Product\ProductItemBatchRepository;
@@ -27,6 +28,8 @@ class ProductQueryBus
     // ——————————————————————————————————————————————————————————————————————————
     // —— Traits
     // ——————————————————————————————————————————————————————————————————————————
+
+    use GetProductTrait;
 
     // ——————————————————————————————————————————————————————————————————————————
     // —— Security

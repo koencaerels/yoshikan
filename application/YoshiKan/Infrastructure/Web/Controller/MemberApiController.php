@@ -34,7 +34,6 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\ConfigurationRoutes
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\FederationRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\GradeRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\GroupRoutes;
-use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\JudogiRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\LocationRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\MemberImageRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\MemberRoutes;
@@ -42,6 +41,7 @@ use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\PeriodRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\SettingsRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Member\SubscriptionRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Message\MessageRoutes;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Product\JudogiRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\Reporting\ReportingRoutes;
 use App\YoshiKan\Infrastructure\Web\Controller\Routes\TwoFactor\TwoFactorRoutes;
 use Bolt\Entity\User;

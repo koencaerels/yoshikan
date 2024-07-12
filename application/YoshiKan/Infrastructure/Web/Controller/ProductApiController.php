@@ -19,6 +19,7 @@ use App\YoshiKan\Domain\Model\Product\Product;
 use App\YoshiKan\Domain\Model\Product\ProductGroup;
 use App\YoshiKan\Domain\Model\Product\ProductItem;
 use App\YoshiKan\Domain\Model\Product\ProductItemBatch;
+use App\YoshiKan\Infrastructure\Web\Controller\Routes\Product\ProductRoutes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,6 +37,8 @@ class ProductApiController extends AbstractController
     // ——————————————————————————————————————————————————————————————————————————
     // Routes
     // ——————————————————————————————————————————————————————————————————————————
+
+    use ProductRoutes;
 
     // ——————————————————————————————————————————————————————————————————————————
     // Attributes
