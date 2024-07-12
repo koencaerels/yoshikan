@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class JudogiRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Product\JudogiRepository
 {
-    public const NO_ENTITY_FOUND = 'no_judogi_found';
+    public const string NO_ENTITY_FOUND = 'no_judogi_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

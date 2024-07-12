@@ -12,7 +12,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class MemberImageRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\MemberImageRepository
 {
-    public const NO_ENTITY_FOUND = 'no_member_image_found';
+    public const string NO_ENTITY_FOUND = 'no_member_image_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class GroupRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\GroupRepository
 {
-    public const NO_ENTITY_FOUND = 'no_group_found';
+    public const string NO_ENTITY_FOUND = 'no_group_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class MessageRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Message\MessageRepository
 {
-    public const NO_ENTITY_FOUND = 'no_message_found';
+    public const string NO_ENTITY_FOUND = 'no_message_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

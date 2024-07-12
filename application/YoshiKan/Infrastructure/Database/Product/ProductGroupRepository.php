@@ -1,19 +1,27 @@
 <?php
 
+/*
+ * This file is part of the Yoshi-Kan software.
+ *
+ * (c) Koen Caerels
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
-namespace App\YoshiKan\Infrastructure\Database\Member;
+namespace App\YoshiKan\Infrastructure\Database\Product;
 
-use App\YoshiKan\Domain\Model\Member\Subscription;
-use App\YoshiKan\Domain\Model\Member\SubscriptionItem;
+use App\YoshiKan\Domain\Model\Product\ProductGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
-final class SubscriptionItemRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\SubscriptionItemRepository
+final class ProductGroupRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Product\ProductGroupRepository
 {
-    public const string NO_ENTITY_FOUND = 'No subscription item found.';
+    public const string NO_ENTITY_FOUND = 'no_product_group_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
@@ -21,7 +29,7 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SubscriptionItem::class);
+        parent::__construct($registry, ProductGroup::class);
     }
 
     public function nextIdentity(): Uuid
@@ -33,7 +41,7 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
     // Single entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function save(SubscriptionItem $model): int
+    public function save(ProductGroup $model): int
     {
         $model->setChecksum();
         $em = $this->getEntityManager();
@@ -42,7 +50,7 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
         return $model->getId() ?? 0;
     }
 
-    public function delete(SubscriptionItem $model): bool
+    public function delete(ProductGroup $model): bool
     {
         $em = $this->getEntityManager();
         $em->remove($model);
@@ -50,7 +58,7 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
         return true;
     }
 
-    public function getById(int $id): SubscriptionItem
+    public function getById(int $id): ProductGroup
     {
         $model = $this->find($id);
         if (is_null($model)) {
@@ -60,7 +68,7 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
         return $model;
     }
 
-    public function getByUuid(Uuid $uuid): SubscriptionItem
+    public function getByUuid(Uuid $uuid): ProductGroup
     {
         $model = $this->createQueryBuilder('t')
             ->andWhere('t.uuid = :uuid')
@@ -78,12 +86,10 @@ final class SubscriptionItemRepository extends ServiceEntityRepository implement
     // Multiple entity functions
     // —————————————————————————————————————————————————————————————————————————
 
-    public function getBySubscription(Subscription $subscription): array
+    public function getAll(): array
     {
-        $q = $this->createQueryBuilder('t')->andWhere('0 = 0')
-            ->andWhere('t.subscription= :subscriptionId')
-            ->setParameter('subscriptionId', $subscription->getId())
-            ->addOrderBy('t.sequence', 'ASC');
+        $q = $this->createQueryBuilder('t')->andWhere('0 = 0');
+        $q->addOrderBy('t.id', 'DESC');
 
         return $q->getQuery()->getResult();
     }

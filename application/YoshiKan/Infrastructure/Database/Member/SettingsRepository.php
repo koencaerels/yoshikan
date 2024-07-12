@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class SettingsRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\SettingsRepository
 {
-    public const NO_ENTITY_FOUND = 'no_settings_found';
+    public const string NO_ENTITY_FOUND = 'no_settings_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

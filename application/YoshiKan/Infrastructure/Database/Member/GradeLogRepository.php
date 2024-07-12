@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class GradeLogRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\GradeLogRepository
 {
-    public const NO_ENTITY_FOUND = 'no_grade_log_found';
+    public const string NO_ENTITY_FOUND = 'no_grade_log_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

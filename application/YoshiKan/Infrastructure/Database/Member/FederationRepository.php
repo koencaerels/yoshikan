@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class FederationRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\FederationRepository
 {
-    public const NO_ENTITY_FOUND = 'no_federation_found';
+    public const string NO_ENTITY_FOUND = 'no_federation_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

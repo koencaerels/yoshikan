@@ -25,7 +25,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class MemberRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\MemberRepository
 {
-    public const NO_ENTITY_FOUND = 'no_member_found';
+    public const string NO_ENTITY_FOUND = 'no_member_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor

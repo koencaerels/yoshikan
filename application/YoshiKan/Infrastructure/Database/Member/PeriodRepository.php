@@ -21,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class PeriodRepository extends ServiceEntityRepository implements \App\YoshiKan\Domain\Model\Member\PeriodRepository
 {
-    public const NO_ENTITY_FOUND = 'no_period_found';
+    public const string NO_ENTITY_FOUND = 'no_period_found';
 
     // —————————————————————————————————————————————————————————————————————————
     // Constructor
