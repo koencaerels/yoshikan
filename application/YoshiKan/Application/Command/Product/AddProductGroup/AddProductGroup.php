@@ -20,7 +20,6 @@ class AddProductGroup
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string $uuid,
         protected string $code,
         protected string $name,
     ) {
@@ -33,7 +32,6 @@ class AddProductGroup
     public static function hydrateFromJson($json): self
     {
         return new self(
-            $json->uuid,
             $json->code,
             $json->name,
         );
@@ -42,11 +40,6 @@ class AddProductGroup
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
 
     public function getCode(): string
     {

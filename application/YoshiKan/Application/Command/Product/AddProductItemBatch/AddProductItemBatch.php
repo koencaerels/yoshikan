@@ -20,7 +20,6 @@ class AddProductItemBatch
     // —————————————————————————————————————————————————————————————————————————
 
     private function __construct(
-        protected string $uuid,
         protected string $code,
         protected string $name,
         protected float $cost,
@@ -36,7 +35,6 @@ class AddProductItemBatch
     public static function hydrateFromJson($json): self
     {
         return new self(
-            $json->uuid,
             $json->code,
             $json->name,
             $json->cost,
@@ -48,11 +46,6 @@ class AddProductItemBatch
     // —————————————————————————————————————————————————————————————————————————
     // Getters
     // —————————————————————————————————————————————————————————————————————————
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
 
     public function getCode(): string
     {

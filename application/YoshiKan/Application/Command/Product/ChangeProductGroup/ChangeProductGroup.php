@@ -33,7 +33,7 @@ class ChangeProductGroup
     public static function hydrateFromJson(\stdClass $json): self
     {
         return new self(
-            $json->id,
+            intval($json->id),
             trim($json->code),
             trim($json->name),
         );
