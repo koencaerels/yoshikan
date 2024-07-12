@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 trait ProductRoutes
 {
-
     // ——————————————————————————————————————————————————————————————————————————
     // Get the complete product tree
     // ——————————————————————————————————————————————————————————————————————————
