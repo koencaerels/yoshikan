@@ -24,7 +24,7 @@ trait ChangeProductTrait
 
         $command = ChangeProduct::hydrateFromJson($jsonCommand);
         $handler = new ChangeProductHandler($this->productRepository);
-        $handler->go($command);
+        $handler->change($command);
         $this->entityManager->flush();
 
         return true;

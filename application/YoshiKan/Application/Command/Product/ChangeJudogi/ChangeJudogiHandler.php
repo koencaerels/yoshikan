@@ -30,7 +30,7 @@ class ChangeJudogiHandler
     // Commands
     // —————————————————————————————————————————————————————————————————————————
 
-    public function go(ChangeJudogi $command): bool
+    public function change(ChangeJudogi $command): bool
     {
         $model = $this->judogiRepo->getById($command->getId());
         $model->change(

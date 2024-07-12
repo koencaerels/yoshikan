@@ -22,8 +22,8 @@ trait OrderProductGroupTrait
     {
         $this->permission->CheckRole(['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_CHIEF_EDITOR']);
 
-        $command = OrderJudogi::hydrateFromJson($jsonCommand);
-        $handler = new OrderJudogiHandler($this->judogiRepository);
+        $command = OrderProductGroup::hydrateFromJson($jsonCommand);
+        $handler = new OrderProductGroupHandler($this->productGroupRepository);
         $handler->go($command);
         $this->entityManager->flush();
 

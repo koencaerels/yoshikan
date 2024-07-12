@@ -21,7 +21,7 @@ trait ChangeJudogiTrait
 
         $command = ChangeJudogi::hydrateFromJson($jsonCommand);
         $handler = new ChangeJudogiHandler($this->judogiRepository);
-        $handler->go($command);
+        $handler->change($command);
         $this->entityManager->flush();
 
         return true;

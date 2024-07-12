@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace App\YoshiKan\Application\Query\Product\Readmodel;
 
-use App\YoshiKan\Domain\Model\Product;
+use App\YoshiKan\Domain\Model\Product\Product;
 
 class ProductReadModel implements \JsonSerializable
 {
